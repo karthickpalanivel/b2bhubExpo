@@ -1,12 +1,202 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
-import Footer from "../components/Footer";
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+import {
+  BuildingOffice2Icon,
+  ArrowUturnLeftIcon,
+  CogIcon,
+  GiftIcon,
+  TruckIcon,
+  ChevronRightIcon,
+  ArrowLeftIcon,
+  GiftTopIcon,
+} from "react-native-heroicons/solid";
+
+import {
+  IdentificationIcon,
+  InformationCircleIcon,
+  CurrencyRupeeIcon,
+  PhoneIcon,
+} from "react-native-heroicons/outline";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
+  const handleLogout = () => {
+    console.log("Logout button clicked");
+  };
+
+  const goback = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       <ScrollView>
-        <Text>ProfileScreen</Text>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity style={styles.iconButton} onPress={goback}>
+            <ArrowLeftIcon size={hp(3.5)} strokeWidth={4.5} color={"#fff"} />
+          </TouchableOpacity>
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: "5%",
+              }}
+            >
+              <BuildingOffice2Icon color={"white"} size={hp(5)} />
+              <Text style={styles.companyName}>VTS Retailers</Text>
+            </View>
+            <View>
+              <Text style={styles.phoneNumber}>+91 9685743210</Text>
+            </View>
+          </View>
+          <View style={styles.profileImageContainer}>
+            <Image
+              source={require("../assets/profileImage.png")}
+              style={styles.avatarImage}
+            />
+          </View>
+        </View>
+
+        <View style={styles.businessContainer}>
+          <Text style={styles.business}>Manage your Business</Text>
+        </View>
+        <View style={styles.detailsContainer}>
+          {/* accounts button */}
+          <Pressable
+            style={[
+              styles.profileScreenDetailsContainer,
+              { borderTopLeftRadius: 9, borderTopRightRadius: 9 },
+            ]}
+            onPress={() => navigation.navigate("AccountDetails")}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <IdentificationIcon color={"#4870F4"} size={hp(5)} />
+              <Text style={styles.contextName}>Accounts </Text>
+            </View>
+            <ChevronRightIcon
+              color={"#4870F4"}
+              size={hp(3.5)}
+              strokeWidth={4.5}
+            />
+          </Pressable>
+
+          {/* Delivery Details button */}
+
+          <Pressable
+            style={[styles.profileScreenDetailsContainer]}
+            onPress={() => navigation.navigate("DeliveryDetails")}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TruckIcon color={"#4870F4"} size={hp(5)} />
+              <Text style={styles.contextName}>Deliveries</Text>
+            </View>
+            <ChevronRightIcon
+              color={"#4870F4"}
+              size={hp(3.5)}
+              strokeWidth={4.5}
+            />
+          </Pressable>
+
+          {/* Rewards and offers button */}
+
+          <Pressable
+            style={[styles.profileScreenDetailsContainer]}
+            onPress={() => navigation.navigate("OfferRewardsDetails")}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <GiftIcon color={"#4870F4"} size={hp(5)} />
+              <Text style={styles.contextName}>Rewards & Offers</Text>
+            </View>
+            <ChevronRightIcon
+              color={"#4870F4"}
+              size={hp(3.5)}
+              strokeWidth={4.5}
+            />
+          </Pressable>
+
+          {/* Settings and policy button */}
+
+          <Pressable
+            style={[styles.profileScreenDetailsContainer]}
+            onPress={() => navigation.navigate("Settings")}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <CogIcon color={"#4870F4"} size={hp(5)} />
+              <Text style={styles.contextName}>
+                Settings & Privacy Policies
+              </Text>
+            </View>
+            <ChevronRightIcon
+              color={"#4870F4"}
+              size={hp(3.5)}
+              strokeWidth={4.5}
+            />
+          </Pressable>
+
+          {/* Payment and shipping details button */}
+
+          <Pressable
+            style={[
+              styles.profileScreenDetailsContainer,
+              { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
+            ]}
+            onPress={() => navigation.navigate("PaymentShippingDetails")}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <CurrencyRupeeIcon color={"#4870F4"} size={hp(5)} />
+              <Text style={styles.contextName}>Business Details</Text>
+            </View>
+            <ChevronRightIcon
+              color={"#4870F4"}
+              size={hp(3.5)}
+              strokeWidth={4.5}
+            />
+          </Pressable>
+        </View>
+
+        {/* help desk container starts */}
+
+        <View style={styles.helpDeskContainer}>
+          <Text style={styles.helpDeskText}>Need Help</Text>
+        </View>
+
+        <View
+          style={[
+            styles.profileScreenDetailsContainer,
+            { borderRadius: 9, marginTop: wp(5) },
+          ]}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <PhoneIcon color={"#4870F4"} size={hp(5)} />
+            <Text style={styles.contextName}>Reach Us</Text>
+          </View>
+          <TouchableOpacity style={styles.callContainer}>
+            <Text style={styles.callText}>Call</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity style={styles.logoutContainer} onPress={handleLogout}>
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -17,6 +207,113 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F1F1F1",
+  },
+
+  headerContainer: {
+    paddingHorizontal: "5%",
+    flexDirection: "row",
+    backgroundColor: "#4870F4",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: hp(20),
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+
+  avatarImage: {
+    height: hp(10),
+    width: hp(10),
+    borderRadius: 100,
+  },
+
+  companyName: {
+    fontSize: hp(2.5),
+    color: "white",
+    marginLeft: "6%",
+  },
+
+  phoneNumber: {
+    color: "white",
+    fontSize: hp(2),
+  },
+  businessContainer: {
+    width: "50%",
+    padding: "2%",
+    marginLeft: "3%",
+    marginTop: "5%",
+    backgroundColor: "#4870F4",
+    borderRadius: 999,
+  },
+
+  profileImageContainer: {
+    elevation: 30,
+    borderRadius: 999,
+  },
+  business: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: wp(4),
+    color: "white",
+  },
+  detailsContainer: {
+    Width: "90%",
+    marginTop: "5%",
+    elevation: 7,
+  },
+  profileScreenDetailsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: "5%",
+    padding: "4%",
+    backgroundColor: "white",
+    elevation: 2,
+  },
+  contextName: {
+    fontSize: hp(2),
+    marginLeft: hp(1),
+    color: "#5D5D5D",
+  },
+
+  callContainer: {
+    paddingHorizontal: wp(4),
+    paddingVertical: wp(1),
+    marginRight: wp(2),
+    backgroundColor: "#4870F4",
+    borderRadius: wp(1),
+  },
+  callText: {
+    fontSize: wp(4.6),
+    color: "white",
+  },
+  helpDeskContainer: {
+    width: wp(25),
+    padding: "2%",
+    marginLeft: "3%",
+    marginTop: "5%",
+    backgroundColor: "#4870F4",
+    borderRadius: 999,
+  },
+  helpDeskText: {
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: wp(4),
+    color: "white",
+  },
+
+  logoutContainer: {
+    width: wp(90),
+    marginLeft: wp(5),
+    marginVertical: hp(5),
+    backgroundColor: "#4870F4",
+    padding: wp(2),
+    borderRadius: 999,
+  },
+  logoutText: {
+    textAlign: "center",
+    fontSize: wp(4.5),
+    color: "white",
+    fontWeight: "bold",
   },
 });

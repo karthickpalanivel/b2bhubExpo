@@ -1,0 +1,49 @@
+import {
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+} from "react-native";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { ArrowLeftIcon } from "react-native-heroicons/outline";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+const ProfileHeaderLayout = ({ header }) => {
+  const navigation = useNavigation();
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  return (
+    <View style={styles.headerContainer}>
+      <TouchableOpacity onPress={goBack}>
+        <ArrowLeftIcon size={hp(3)} strokeWidth={2} color={"#000"} />
+      </TouchableOpacity>
+      <Text style={styles.header}>{header}</Text>
+    </View>
+  );
+};
+
+export default ProfileHeaderLayout;
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    height: hp(10),
+    width: wp(100),
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: hp(3),
+    paddingLeft: hp(3),
+    backgroundColor: "#fff",
+    elevation: 3,
+  },
+  header: {
+    fontSize: wp(5),
+    marginLeft: wp(3),
+  },
+});

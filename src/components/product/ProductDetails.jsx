@@ -139,17 +139,19 @@ const ProductDetails = ({ route }) => {
           <Text
             style={{
               color: "white",
-              fontSize: 23,
+              fontSize: wp(8),
               fontWeight: "bold",
               marginTop: "2%",
+              textDecorationLine: "underline"
             }}
           >
             Description:
           </Text>
           <Text
             style={{
-              fontSize: 18,
+              fontSize: wp(5),
               color: "white",
+              marginTop: "3%",
               marginLeft: "10%",
             }}
           >
@@ -161,8 +163,8 @@ const ProductDetails = ({ route }) => {
           <Text
             style={{
               color: "white",
-              fontSize: 18,
-              marginTop: '4%',
+              fontSize: wp(5),
+              marginTop: "4%",
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
   },
 
   productName: {
-    fontSize: 24,
+    fontSize: wp(9),
     color: "white",
     fontWeight: "bold",
     margin: 16,
@@ -260,7 +262,7 @@ const styles = StyleSheet.create({
   },
 
   pictureName: {
-    fontSize: wp(8),
+    fontSize: wp(9),
     color: "white",
     fontWeight: "bold",
   },
@@ -290,6 +292,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "3%",
     backgroundColor: "white",
     width: "42%",
+    elevation: 3,
     padding: 10,
     borderRadius: 999,
   },
@@ -299,13 +302,14 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
 
-  offerPrice: {
-    color: "black",
-    fontSize: 15,
+  offerText: {
+    marginHorizontal: wp(3),
+    fontSize: wp(5),
   },
   mrpPrice: {
     color: "#FF5858",
     textDecorationLine: "line-through",
+    fontSize: wp(5)
   },
 
   detailsHeader: {
@@ -337,7 +341,7 @@ const styles = StyleSheet.create({
 
   offerPrice: {
     color: "white",
-    fontSize: 20,
+    fontSize: wp(8),
     fontWeight: "bold",
   },
 });

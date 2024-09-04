@@ -5,14 +5,14 @@ const QuantityButton = () => {
   const [quantity, setQuantity] = useState(0);
 
   const addQty = () => {
-    return setQuantity((prev) => prev + 1);
+    return setQuantity((prev) => prev + 10);
   };
 
   const subQty = () => {
     if (quantity <= 0) {
       return;
     }
-    setQuantity((prev) => prev - 1);
+    setQuantity((prev) => prev - 10);
   };
 
   return (

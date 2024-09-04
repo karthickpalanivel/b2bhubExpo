@@ -35,7 +35,7 @@ export default function Product({
             <View style={styles.iconContainer}>
               <ChevronLeftIcon
                 size={hp(3.5)}
-                strokeWidth={4.5}
+                strokeWidth={wp(0.8)}
                 color={"black"}
               />
             </View>

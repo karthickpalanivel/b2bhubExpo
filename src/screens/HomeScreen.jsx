@@ -8,6 +8,7 @@ import {
   BackHandler,
   Pressable,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import React, { useState, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -16,7 +17,11 @@ import {
   MagnifyingGlassIcon,
   Bars3Icon,
 } from "react-native-heroicons/outline";
-import { MapPinIcon } from "react-native-heroicons/solid";
+import {
+  MapPinIcon,
+  LanguageIcon,
+  XCircleIcon,
+} from "react-native-heroicons/solid";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -32,10 +37,17 @@ import BannerOne from "../components/Banner/BannerOne";
 import { useFonts } from "expo-font";
 import { Cookie_400Regular } from "@expo-google-fonts/cookie";
 import Footer from "../components/Footer";
+import { Modal } from "react-native";
 
 const HomeScreen = () => {
+  
   const [activeCategory, setActiveCategory] = useState("");
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [language, setLanguage] = useState("English");
+  const [languageHeader, setLanguageHeader] = useState("Select Language");
+  const show = () => setModalVisible(true);
+  const hide = () => setModalVisible(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -53,16 +65,99 @@ const HomeScreen = () => {
     navigation.navigate("Profile");
   };
 
-  const handleFocusInput = () => {
-    let searchBar = document.querySelector(".searchBar");
-    searchBar.focus();
-  };
-
   let name = "John";
   let userName = name.toUpperCase();
+
+  const tamilLanguage = () => {
+    setLanguage("தமிழ்");
+    setLanguageHeader("மொழியை தேர்ந்தெடுங்கள்");
+    hide();
+  };
+
+  const englishLanguage = () => {
+    setLanguage("English");
+    setLanguageHeader("Select Language");
+    hide();
+  };
+
+  const japaneseLanguage = () => {
+    setLanguage("日本語");
+    setLanguageHeader("好きな語を選んでください");
+    hide();
+  };
+
+  const teluguLanguage = () => {
+    setLanguage("తెలుగు");
+    setLanguageHeader("మీ భాషను ఎంచుకోండి");
+    hide();
+  };
+  const LanguageModal = ({ visible, setVisible }) => {
+    return (
+      <Modal
+        visible={visible}
+        animationType="slide"
+        onRequestClose={hide}
+        transparent
+      >
+        <SafeAreaView style={{ alignItems: "center", marginTop: hp(32) }}>
+          <View style={styles.languageModalContainer}>
+            <View>
+              <TouchableOpacity>
+                <XCircleIcon
+                  size={wp(8)}
+                  color="black"
+                  style={styles.iconX}
+                  onPress={hide}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                fontSize: hp(3),
+                textAlign: "center",
+                marginTop: wp(5),
+                color: "white",
+              }}
+            >
+              {languageHeader}
+            </Text>
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={tamilLanguage}
+            >
+              <Text style={styles.languageText}>தமிழ்</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={japaneseLanguage}
+            >
+              <Text style={styles.languageText}>日本語</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={teluguLanguage}
+            >
+              <Text style={styles.languageText}>తెలుగు</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={englishLanguage}
+            >
+              <Text style={styles.languageText}>English</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
+      <LanguageModal visible={modalVisible} setVisible={setModalVisible} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContainer}
@@ -83,11 +178,34 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.headerContainer}>
-          <Text style={styles.userName}>Hello, {userName}</Text>
-          {/* <View style={styles.iconContainer}>
-            <MapPinIcon size={hp(2)} color="red" />
-            <Text style={styles.city}>Chennai</Text>
-          </View> */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View>
+              <Text style={styles.userName}>Hello, {userName}</Text>
+              <View style={styles.iconContainer}>
+                <MapPinIcon size={hp(2)} color="#f59e0b" />
+                <Text style={{ fontSize: wp(4), color: "#f59e0b" }}>
+                  Chennai
+                </Text>
+              </View>
+            </View>
+            <View>
+              <View style={{ flexDirection: "row" }}>
+                <LanguageIcon size={hp(2)} color="#f59e0b" />
+                <Text style={{ color: "#475569" }}>Language</Text>
+              </View>
+              <TouchableOpacity onPress={() => setModalVisible(show)}>
+                <Text style={{ color: "#f59e0b", textAlign: "right" }}>
+                  {language}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           <View>
             <Text style={styles.punchOne}>Start your business</Text>
           </View>
@@ -180,6 +298,7 @@ const styles = StyleSheet.create({
 
   iconContainer: {
     flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
 
@@ -231,5 +350,28 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 9999,
     padding: 12,
+  },
+
+  languageModalContainer: {
+    width: wp(80),
+    backgroundColor: "#f59e0b",
+    elevation: 4,
+    borderRadius: wp(3),
+  },
+  languageText: {
+    fontSize: hp(2.5),
+    color: "white",
+    borderBottomWidth: 0.2,
+    borderColor: "white",
+  },
+  languageContainer: {
+    alignItems: "center",
+    padding: hp(2),
+    borderRadius: 4,
+  },
+  iconX: {
+    position: "absolute",
+    right: -10,
+    top: -10,
   },
 });

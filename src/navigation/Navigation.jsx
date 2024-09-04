@@ -12,6 +12,13 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ProductScreen from "../screens/ProductScreen";
 import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
+import AccountSettings from "../screens/ProfileScreenContains/AccountSettings";
+import DeliveryScreen from "../screens/ProfileScreenContains/DeliveryScreen";
+import OffersRewards from "../screens/ProfileScreenContains/OffersRewards";
+import PaymentShippingScreen from "../screens/ProfileScreenContains/PaymentShippingScreen";
+import SettingsScreen from "../screens/ProfileScreenContains/SettingsScreen";
+import EditScreen from "../screens/ProfileScreenContains/EditScreen";
+import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
 
 //variables
 const Stack = createNativeStackNavigator();
@@ -32,6 +39,18 @@ export default function Navigation() {
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
         {/* <Stack.Screen name="Notifications" component={NotificationScreen} /> */}
+
+        {/* Profile Screen navigation */}
+        <Stack.Screen name="AccountDetails" component={AccountSettings} />
+        <Stack.Screen name="DeliveryDetails" component={DeliveryScreen} />
+        <Stack.Screen name="OfferRewardsDetails" component={OffersRewards} />
+        <Stack.Screen
+          name="PaymentShippingDetails"
+          component={PaymentShippingScreen}
+        />
+        <Stack.Screen name="EditScreen" component={EditScreen} />
+        <Stack.Screen name="PasswordEdit" component={PasswordEditScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

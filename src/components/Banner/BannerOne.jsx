@@ -33,7 +33,7 @@ const BannerOne = () => {
   };
 
   const renderItem = (data) => (
-    <Pressable key={data.text} style={styles.item} onPress={productPage}>
+    <Pressable key={data.text} style={styles.item}>
       <Image source={data.image} style={styles.item} />
     </Pressable>
   );

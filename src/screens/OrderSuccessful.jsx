@@ -11,7 +11,7 @@ const OrderSuccessful = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.navigate("Home"), 1700);
+    setTimeout(() => navigation.navigate("Home"), 1600);
   }, []);
 
   return (
@@ -39,9 +39,10 @@ const styles = StyleSheet.create({
     height: hp(100),
   },
   orderSuccess: {
+    flex: 1,
     position: "absolute",
     top: hp(60),
-    left: "25%",
+    left: wp(15),
     fontSize: 25,
     fontColor: "black",
     fontWeight: "bold",
