@@ -20,7 +20,7 @@ const Radio = () => {
 
         <View style={styles.radioButton}>
           <RadioButton.Android
-            value="option2"
+            value="VTS PAY"
             status={selectedValue === "option2" ? "checked" : "unchecked"}
             onPress={() => setSelectedValue("option2")}
             color="#007BFF"
@@ -30,7 +30,7 @@ const Radio = () => {
 
         <View style={styles.radioButton}>
           <RadioButton.Android
-            value="option3"
+            value="Net Banking"
             status={selectedValue === "option3" ? "checked" : "unchecked"}
             onPress={() => setSelectedValue("option3")}
             color="#007BFF"

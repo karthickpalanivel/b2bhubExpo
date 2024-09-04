@@ -38,6 +38,7 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const handleLogout = () => {
+    navigation.navigate("Login");
     console.log("Logout button clicked");
   };
 
