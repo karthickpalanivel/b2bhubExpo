@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
 
   detailsHeader: {
-    marginTop: "35%",
+    marginTop: wp(30),
     marginRight: "10%",
   },
 

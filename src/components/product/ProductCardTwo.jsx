@@ -92,7 +92,7 @@ const ProductCardTwo = ({ props }) => {
           <View>
             <View style={styles.cartBtns}>
               <Feather name="shopping-cart" style={styles.icon} fill="green" />
-              <Text style={styles.order}>Add to cart</Text>
+              <Text style={styles.order}>Show Product</Text>
             </View>
           </View>
         </View>
