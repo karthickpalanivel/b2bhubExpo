@@ -11,7 +11,6 @@ const CountdownTimer = () => (
       source={require("../../assets/offer/giftBox.png")}
       style={styles.giftBox}
     />
-
     <TimerCountDown />
   </View>
 );

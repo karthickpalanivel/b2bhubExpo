@@ -40,7 +40,6 @@ import Footer from "../components/Footer";
 import { Modal } from "react-native";
 
 const HomeScreen = () => {
-  
   const [activeCategory, setActiveCategory] = useState("");
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
@@ -225,13 +224,11 @@ const HomeScreen = () => {
         </View>
 
         {/* Search bar */}
-        <Pressable style={styles.searchBarContainer}>
-          <TextInput
-            placeholder="Search Dal"
-            placeholderTextColor={"grey"}
-            style={styles.searchBar}
-            className="searchBar"
-          />
+        <Pressable
+          style={styles.searchBarContainer}
+          onPress={() => navigation.navigate("Search Bar")}
+        >
+          <Text style={styles.searchBarText}>Search </Text>
 
           <TouchableOpacity style={styles.searchIconContainer}>
             <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color="grey" />
@@ -333,8 +330,9 @@ const styles = StyleSheet.create({
     color: "#475569",
   },
 
-  searchBar: {
+  searchBarText: {
     width: "85%",
+    color: "grey",
   },
   searchBarContainer: {
     marginHorizontal: "5%",

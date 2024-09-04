@@ -22,7 +22,7 @@ const ProfileHeaderLayout = ({ header }) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={goBack}>
-        <ArrowLeftIcon size={hp(3)} strokeWidth={2} color={"#000"} />
+        <ArrowLeftIcon size={hp(3)} strokeWidth={2} color={"#fff"} />
       </TouchableOpacity>
       <Text style={styles.header}>{header}</Text>
     </View>
@@ -39,11 +39,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: hp(3),
     paddingLeft: hp(3),
-    backgroundColor: "#fff",
+    backgroundColor: "#4870F4",
     elevation: 3,
   },
   header: {
     fontSize: wp(5),
     marginLeft: wp(3),
+    color: "white",
   },
 });

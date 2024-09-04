@@ -25,7 +25,7 @@ const ProductCardTwo = ({ props }) => {
   };
 
   const onMoreDetails = (id) => {
-    navigation.navigate("Orders", { _id: id });
+    navigation.navigate("ProductDetails", { _id: id });
   };
   // "Orders", { _id: id }
 

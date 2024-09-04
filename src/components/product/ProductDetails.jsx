@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -14,14 +15,15 @@ import {
   ChevronLeftIcon,
   ShoppingCartIcon,
 } from "react-native-heroicons/outline";
+
+import { MapPinIcon, StarIcon } from "react-native-heroicons/solid";
+
 import { HeartIcon } from "react-native-heroicons/solid";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
 import { useNavigation } from "@react-navigation/native";
-import QuantityButton from "../button/QuantityButton";
 import ProductCardTwo from "./ProductCardTwo";
 
 //component starts
@@ -33,6 +35,8 @@ const ProductDetails = ({ route }) => {
   const { params } = route;
   const [productName, setProductName] = useState("");
   const [data, setData] = useState(false);
+
+  const [tonsInput, setTonsInput] = useState(100);
 
   useEffect(() => {
     const getProduct = ProductData.find((item) => {
@@ -82,6 +86,8 @@ const ProductDetails = ({ route }) => {
     const discountPrice = Math.round(price - (price * discount) / 100);
     return discountPrice;
   };
+
+  const onChangeText = (text) => {};
   return (
     <ScrollView style={styles.productDetailContainer}>
       <StatusBar style={"light"} />
@@ -94,15 +100,14 @@ const ProductDetails = ({ route }) => {
             />
           </View>
           <View style={styles.detailsHeader}>
-            <View style={{ width: "70%" }}>
+            <View>
               <Text style={styles.productName}>{product?.name}</Text>
             </View>
             <View
               style={{
-                width: "90%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginLeft: "5%",
+                width: wp(40),
+                
+                marginLeft: wp(5),
               }}
             >
               {product.offer > 1 ? (
@@ -120,58 +125,56 @@ const ProductDetails = ({ route }) => {
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-evenly",
+
                   marginVertical: "10%",
                 }}
               >
                 <View style={styles.ratingBack}>
-                  <Image
-                    source={require("../../assets/rating/star.png")}
-                    style={styles.ratingImage}
-                  />
+                  <Image source={require('../../assets/rating/roundStar.png')} style={styles.ratingImage}/>
+                  <Text style={styles.ratingText}>{product.rating} /5</Text>
                 </View>
-                <Text>{product.rating}</Text>
               </View>
             </View>
           </View>
         </View>
-        <View>
+        <View style={styles.descriptionContainer}>
           <Text
             style={{
               color: "white",
-              fontSize: wp(8),
+              fontSize: wp(6),
               fontWeight: "bold",
-              marginTop: "2%",
-              textDecorationLine: "underline"
+              marginTop: hp(2),
+              textDecorationLine: "underline",
             }}
           >
             Description:
           </Text>
           <Text
             style={{
-              fontSize: wp(5),
+              fontSize: wp(4),
               color: "white",
-              marginTop: "3%",
-              marginLeft: "10%",
+              marginLeft: wp(5),
             }}
           >
             {product.description}
           </Text>
         </View>
 
-        <View>
+        <TouchableOpacity style={styles.addressContainer}>
+          <MapPinIcon size={hp(3)} color={"white"} />
           <Text
             style={{
               color: "white",
-              fontSize: wp(5),
-              marginTop: "4%",
+              fontSize: wp(4),
               fontWeight: "bold",
               textAlign: "center",
             }}
           >
             Delivered to: 123, down st, Chennai - 600006
           </Text>
-        </View>
+        </TouchableOpacity>
+
+
       </View>
 
       <View
@@ -190,7 +193,16 @@ const ProductDetails = ({ route }) => {
             <Text style={styles.offerText}>Add to Cart</Text>
           </Pressable>
         </View>
-        <QuantityButton />
+
+        <View style={styles.inputTonContainer}>
+          <TextInput
+            placeholder={"Enter in Tons"}
+            style={styles.inputTons}
+            value={tonsInput}
+            onChangeText={(text) => setTonsInput(text)}
+            maxLength={10}
+          />
+        </View>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.iconButton} onPress={goback}>
@@ -211,7 +223,7 @@ const ProductDetails = ({ route }) => {
 
       {/* product Card two */}
       {ProductData?.map((item) => {
-        if (product.pictureName == item.pictureName) {
+        if (product.pictureName == item.pictureName && product._id !== item._id) {
           return <ProductCardTwo props={item} />;
         }
       })}
@@ -235,7 +247,8 @@ const styles = StyleSheet.create({
   },
 
   productName: {
-    fontSize: wp(9),
+    fontSize: wp(6),
+    width: wp(50),
     color: "white",
     fontWeight: "bold",
     margin: 16,
@@ -266,6 +279,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  inputTonContainer: {
+    width: wp(50),
+    marginTop: hp(1),
+    borderRadius: 9999,
+    marginRight: hp(1),
+    backgroundColor: "white",
+    elevation: 4,
+  },
 
   iconContainer: {
     width: "100%",
@@ -274,6 +295,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 50,
     justifyContent: "space-between",
+  },
+
+  inputTons: {
+    width: wp(30),
+    padding: hp(0.1),
+    height: hp(6),
+    paddingLeft: hp(2),
+    borderRadius: 9999,
   },
 
   iconButton: {
@@ -289,17 +318,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: "3%",
+    marginLeft: "3%",
     backgroundColor: "white",
-    width: "42%",
+    width: wp(45),
     elevation: 3,
     padding: 10,
     borderRadius: 999,
   },
 
   ratingBack: {
-    backgroundColor: "white",
-    borderRadius: 999,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  ratingText: {
+    fontSize: hp(2.2),
+    color: "white",
+    fontWeight: "bold",
   },
 
   offerText: {
@@ -309,7 +344,7 @@ const styles = StyleSheet.create({
   mrpPrice: {
     color: "#FF5858",
     textDecorationLine: "line-through",
-    fontSize: wp(5)
+    fontSize: wp(4),
   },
 
   detailsHeader: {
@@ -331,17 +366,25 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 999,
   },
-
+  descriptionContainer: {
+    width: wp(90),
+  },
+  addressContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: hp(2),
+  },
   ratingImage: {
-    width: "25%",
-    height: 20,
-    resizeMode: "center",
+    width: wp(6),
+    height: wp(6),
+    marginRight: wp(3),
   },
   grade: {},
 
   offerPrice: {
     color: "white",
-    fontSize: wp(8),
+    fontSize: wp(6),
     fontWeight: "bold",
   },
 });

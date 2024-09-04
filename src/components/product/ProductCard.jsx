@@ -43,7 +43,7 @@ const ProductCard = ({ props, index }) => {
           source={{ uri: props.imageUrl }}
           style={{
             width: "100%",
-            height: isThree ? hp(30) : hp(20),
+            height: hp(20),
             borderRadius: 30,
           }}
         />

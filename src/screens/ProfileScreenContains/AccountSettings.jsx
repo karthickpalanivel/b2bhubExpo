@@ -34,11 +34,11 @@ export const DetailsBar = ({ topic, value, setValue, screen }) => {
 
   return (
     <View style={styles.detailBarContainer}>
-      <View style={styles.valueContainer}>
-        <Text>{topic}</Text>
+      <View>
+        <Text style={{ color: "white" }}>{topic}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
-      <TouchableOpacity style={styles.editContainer} onPress={showModal}>
+      <TouchableOpacity onPress={showModal}>
         <Text style={styles.editText}>Edit</Text>
       </TouchableOpacity>
 
@@ -55,7 +55,7 @@ export const DetailsBar = ({ topic, value, setValue, screen }) => {
               <TouchableOpacity>
                 <XCircleIcon
                   size={wp(8)}
-                  color="black"
+                  color="white"
                   style={styles.icon}
                   onPress={hide}
                 />
@@ -64,6 +64,7 @@ export const DetailsBar = ({ topic, value, setValue, screen }) => {
                 style={styles.textInput}
                 onChangeText={setValue}
                 placeholder={"New " + topic}
+                placeholderTextColor={"#4870F4"}
               />
             </View>
             <TouchableOpacity
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.3,
     borderBottomColor: 0.1,
     width: "90%",
-    backgroundColor: "white",
+    backgroundColor: "#4870F4",
   },
   detailBarContainer: {
     padding: hp(2),
@@ -174,9 +175,11 @@ const styles = StyleSheet.create({
 
   editText: {
     fontSize: hp(2.5),
+    color: "white",
   },
   value: {
     fontSize: hp(2.2),
+    color: "white",
   },
   fill: {
     position: "absolute",
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
     width: wp(90),
     padding: wp(4),
-    backgroundColor: "white",
+    backgroundColor: "#4870F4",
     paddingLeft: wp(5),
   },
 
@@ -210,18 +213,19 @@ const styles = StyleSheet.create({
     borderWidth: 0.2,
     padding: wp(2),
     borderRadius: wp(1),
+    backgroundColor: "white",
   },
 
   conformContainer: {
     marginTop: hp(2),
     marginLeft: wp(1),
     width: wp(20),
-    backgroundColor: "#4870F4",
+    backgroundColor: "white",
     padding: wp(3),
     borderRadius: 10,
   },
   conformText: {
-    color: "white",
+    color: "#4870F4",
     fontWeight: "bold",
     textAlign: "center",
   },

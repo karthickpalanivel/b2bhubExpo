@@ -19,7 +19,7 @@ import PaymentShippingScreen from "../screens/ProfileScreenContains/PaymentShipp
 import SettingsScreen from "../screens/ProfileScreenContains/SettingsScreen";
 import EditScreen from "../screens/ProfileScreenContains/EditScreen";
 import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
-
+import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
 //variables
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +35,8 @@ export default function Navigation() {
         <Stack.Screen name="Products" component={ProductScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Sucessfull" component={OrderSuccessful} />
+
+        <Stack.Screen name="Search Bar" component={SearchBarScreen} />
 
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
