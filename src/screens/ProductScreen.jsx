@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
-import Footer from "../components/Footer";
-
+import { StatusBar } from "expo-status-bar";
 const ProductScreen = () => {
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <ScrollView>
         <Text>ProductScreen</Text>
       </ScrollView>

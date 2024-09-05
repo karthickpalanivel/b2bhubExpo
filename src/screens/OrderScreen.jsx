@@ -7,6 +7,8 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
+
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { ProductData } from "../data/ProductData";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
@@ -20,7 +22,6 @@ import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
 
 const OrderScreen = ({ route }) => {
   const [product, setProduct] = useState(null);
-  const [quantiy, setQuantity] = useState(100);
   const { params } = route;
   const navigation = useNavigation();
 
@@ -50,6 +51,7 @@ const OrderScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <View style={styles.headerBar}>
         <TouchableOpacity style={styles.iconButton} onPress={goback}>
           <ArrowLeftIcon size={hp(3.5)} strokeWidth={2.5} color={"black"} />
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
   actionText: {
     fontSize: wp(4),
     color: "white",
-    fontWeight: "600"
+    fontWeight: "600",
   },
 
   headerBar: {

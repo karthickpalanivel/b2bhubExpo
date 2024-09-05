@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: "#333",
   },
+
   input: {
     width: width * 0.8,
     height: 50,
@@ -114,8 +115,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     borderColor: "#ddd",
-    borderWidth: 1,
   },
+  
   password: {
     fontSize: 10,
     fontWeight: "bold",
@@ -124,17 +125,20 @@ const styles = StyleSheet.create({
     textAlign: "right",
     justifyContent: "flex-end",
   },
+  
   button: {
     backgroundColor: "#4CAF50",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 8,
+    padding: wp(3),
+    width: wp(80),
+    borderRadius: 9999,
     marginVertical: 10,
   },
+  
   buttonText: {
     color: "#fff",
     fontSize: wp(4),
     fontWeight: "bold",
+    textAlign: "center",
   },
   toggleButton: {
     marginTop: wp(2),

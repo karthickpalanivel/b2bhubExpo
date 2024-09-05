@@ -2,14 +2,13 @@ import {
   Image,
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-
+import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -45,7 +44,7 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <ScrollView>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.iconButton} onPress={goback}>

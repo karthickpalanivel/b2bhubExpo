@@ -90,6 +90,21 @@ export const ProductData = [
       "https://www.indianasapplepie.com/cdn/shop/articles/IMG-8317_1600x.jpg?v=1673739164",
   },
   {
+    _id: 7,
+    name: "Urad Dal - Maharastra",
+    price: 100,
+    offer: 20,
+    grade: "A",
+    rating: "4.7",
+    category: "dal",
+    quantity: "10",
+    description:
+      "pulses that, although commonly called lentils, are actually related to cowpeas and mung beans.",
+    imageUrl:
+      "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
+    pictureName: "Urad Dal",
+  },
+  {
     _id: 8,
     name: "Urad Dal Rajasthan",
     price: 100,
@@ -163,20 +178,5 @@ export const ProductData = [
       "They are a rich source of protein. They are also a very good source of folic acid and fiber and contain phytochemicals called saponins, which can act as antioxidants.",
     imageUrl:
       "https://c1.wallpaperflare.com/preview/115/189/240/daal-chana-lentils-indian.jpg",
-  },
-  {
-    _id: 7,
-    name: "Urad Dal - Maharastra",
-    price: 100,
-    offer: 20,
-    grade: "A",
-    rating: "4.7",
-    category: "dal",
-    quantity: "10",
-    description:
-      "pulses that, although commonly called lentils, are actually related to cowpeas and mung beans.",
-    imageUrl:
-      "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
-    pictureName: "Urad Dal",
   },
 ];

@@ -90,7 +90,7 @@ const ProductDetails = ({ route }) => {
   const onChangeText = (text) => {};
   return (
     <ScrollView style={styles.productDetailContainer}>
-      <StatusBar style={"light"} />
+      <StatusBar style={"auto"} />
       <View style={styles.topBar}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={styles.imageContainer}>

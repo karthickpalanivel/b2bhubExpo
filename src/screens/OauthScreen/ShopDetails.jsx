@@ -49,13 +49,21 @@ const ShopDetails = () => {
           placeholder="Shop Name"
           placeholderTextColor="#999"
           keyboardType="email-address"
-         
+          className="shopName"
         />
         <Text style={{ width: width * 0.8, fontSize: 14 }}>GST Number</Text>
         <TextInput
           style={styles.input}
           placeholder="GST Number"
           placeholderTextColor="#999"
+          className="gstNumber"
+        />
+        <Text style={{ width: width * 0.8, fontSize: 14 }}>PAN number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="PAN Number"
+          placeholderTextColor="#999"
+          className="panNumber"
         />
       </View>
       <View style={{ width: wp(80), marginTop: hp(2) }}></View>
@@ -102,15 +110,16 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#4CAF50",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 8,
+    padding: wp(3),
+    width: wp(80),
+    borderRadius: 9999,
     marginVertical: 10,
   },
   buttonText: {
     color: "#fff",
     fontSize: wp(4),
     fontWeight: "bold",
+    textAlign: "center",
   },
   toggleButton: {
     marginTop: wp(2),

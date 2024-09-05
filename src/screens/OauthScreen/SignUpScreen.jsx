@@ -120,15 +120,16 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#4CAF50",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 8,
+    padding: wp(3),
+    width: wp(80),
+    borderRadius: 9999,
     marginVertical: 10,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: wp(4),
     fontWeight: "bold",
+    textAlign: "center",
   },
   toggleButton: {
     marginTop: 5,
