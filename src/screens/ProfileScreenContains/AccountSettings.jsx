@@ -1,6 +1,5 @@
 import {
   Image,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,

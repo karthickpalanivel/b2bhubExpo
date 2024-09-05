@@ -119,14 +119,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   button: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#fff",
     padding: wp(3),
+    borderWidth: 0.1,
+    elevation: 2,
     width: wp(80),
     borderRadius: 9999,
-    marginVertical: 10,
+    marginVertical: wp(2.5),
   },
+
   buttonText: {
-    color: "#fff",
+    color: "#4870F4",
     fontSize: wp(4),
     fontWeight: "bold",
     textAlign: "center",

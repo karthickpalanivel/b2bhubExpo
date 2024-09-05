@@ -8,10 +8,26 @@ import {
   Alert,
   Pressable,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const navigation = useNavigation();
+
+  //   navigation function
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  // utilities
 
   const validateEmail = (text) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,17 +43,24 @@ const ForgotPasswordScreen = () => {
     setIsValidEmail(true);
     console.log("OTP Sent to:", email);
     Alert.alert("OTP Sent", `An OTP has been sent to ${email}.`);
+    navigation.navigate("OtpConformScreen")
   };
 
   return (
     <View style={styles.container}>
-      <Pressable
-        style={{ backgroundColor: "#C0C0C0", width: "20%", borderRadius: 10 }}
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: wp(10),
+          alignItems: "center",
+          marginVertical: hp(3),
+        }}
       >
-        <Text style={{ textAlign: "center", fontSize: 18 }}>Back</Text>
-      </Pressable>
-      <Text style={styles.header}>Forgot Password</Text>
-
+        <Pressable onPress={goBack}>
+          <ChevronLeftIcon size={hp(5)} color={"grey"} />
+        </Pressable>
+        <Text style={styles.header}>Forgot Password</Text>
+      </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Email</Text>
 
@@ -66,48 +89,49 @@ const ForgotPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: wp(5),
     backgroundColor: "#fff",
     justifyContent: "flex-start",
     alignContent: "center",
   },
   header: {
-    fontSize: 24,
+    fontSize: wp(6),
     fontWeight: "bold",
     textAlign: "left",
-    marginBottom: 40,
+    marginLeft: wp(3),
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: wp(5),
   },
   label: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: wp(4),
+    marginBottom: wp(3),
+    marginLeft: wp(1),
   },
   input: {
     borderWidth: 1,
     borderColor: "#ddd",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+    borderRadius: wp(2.5),
+    paddingHorizontal: wp(2.5),
+    paddingVertical: wp(3),
   },
   errorInput: {
     borderColor: "red",
   },
   errorText: {
     color: "red",
-    marginTop: 5,
+    marginTop: wp(2.5),
   },
   sendOtpButton: {
     backgroundColor: "#007bff",
-    paddingVertical: 15,
-    borderRadius: 8,
+    paddingVertical: wp(3),
+    borderRadius: wp(100),
     justifyContent: "center",
     alignItems: "center",
   },
   sendOtpText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: wp(4),
     fontWeight: "bold",
   },
 });

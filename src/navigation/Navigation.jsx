@@ -24,6 +24,8 @@ import LoginScreen from "../screens/OauthScreen/LoginScreen";
 import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
 import ShopDetails from "../screens/OauthScreen/ShopDetails";
 import PaymentSummary from "../components/product/Payment";
+import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
+import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
 //variables
 const Stack = createNativeStackNavigator();
 
@@ -42,11 +44,13 @@ export default function Navigation() {
 
         <Stack.Screen name="Search Bar" component={SearchBarScreen} />
 
-        {/* Login Page */}
+        {/* Authentication Page */}
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="EntryShopDetails" component={ShopDetails} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="OtpConformScreen" component={OTPAndPasswordScreen} />
 
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
