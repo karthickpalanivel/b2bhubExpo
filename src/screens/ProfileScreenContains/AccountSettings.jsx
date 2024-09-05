@@ -18,7 +18,7 @@ import {
 } from "react-native-responsive-screen";
 import { XCircleIcon } from "react-native-heroicons/outline";
 
-export const DetailsBar = ({ topic, value, setValue, screen }) => {
+export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
 
   const show = () => setVisible(true);
@@ -38,9 +38,11 @@ export const DetailsBar = ({ topic, value, setValue, screen }) => {
         <Text style={{ color: "white" }}>{topic}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
-      <TouchableOpacity onPress={showModal}>
-        <Text style={styles.editText}>Edit</Text>
-      </TouchableOpacity>
+      {edit && (
+        <TouchableOpacity onPress={showModal}>
+          <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+      )}
 
       <Modal
         visible={visible}
@@ -85,7 +87,9 @@ const AccountSettings = () => {
   const [phone, setPhone] = useState("9856743102");
   const [email, setEmail] = useState("vtsretailer@vts.com");
   const [city, setCity] = useState("Chennai");
-  const [password, setPassword] = useState("*********");
+  const [password, setPassword] = useState("123324345436");
+  const [companyName, setCompanyName] = useState("VTS Retailers");
+
   return (
     <View>
       <ProfileHeaderLayout header="Accounts" />
@@ -106,33 +110,35 @@ const AccountSettings = () => {
         <View style={{ alignItems: "center" }}>
           <View style={styles.detailsBar}>
             <DetailsBar
-              topic={"Name"}
-              value={userName}
-              setValue={setUserName}
-              screen="EditScreen"
+              topic={"Company Name"}
+              value={companyName}
+              setValue={setCompanyName}
+              edit={true}
             />
             <DetailsBar
               topic={"Phone"}
               value={phone}
               setValue={setPhone}
-              screen="EditScreen"
+              edit={true}
             />
             <DetailsBar
               topic={"Email"}
               value={email}
               setValue={setEmail}
-              screen="EditScreen"
+              edit={true}
             />
             <DetailsBar
-              topic={"City"}
-              value={city}
-              setValue={setCity}
-              screen="EditScreen"
+              topic={"Name"}
+              value={userName}
+              setValue={setUserName}
+              edit={true}
             />
+            <DetailsBar topic={"Pan"} value={"ASDFC*****"} edit={false} />
             <DetailsBar
-              topic={"Password"}
+              topic={"GST Number"}
               value={password}
               setValue={setPassword}
+              edit={false}
             />
           </View>
         </View>

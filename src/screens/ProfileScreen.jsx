@@ -104,7 +104,10 @@ const ProfileScreen = () => {
           {/* Delivery Details button */}
 
           <Pressable
-            style={[styles.profileScreenDetailsContainer]}
+            style={[
+              styles.profileScreenDetailsContainer,
+              { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
+            ]}
             onPress={() => navigation.navigate("DeliveryDetails")}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -156,7 +159,7 @@ const ProfileScreen = () => {
 
           {/* Payment and shipping details button */}
 
-          <Pressable
+          {/* <Pressable
             style={[
               styles.profileScreenDetailsContainer,
               { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
@@ -172,7 +175,7 @@ const ProfileScreen = () => {
               size={hp(3.5)}
               strokeWidth={4.5}
             />
-          </Pressable>
+          </Pressable> */}
         </View>
 
         {/* help desk container starts */}
@@ -212,7 +215,7 @@ const ProfileScreen = () => {
           ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <EnvelopeIcon size={hp(5)} color={"#4870F4"}/>
+            <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
             <Text style={styles.contextName}>support@b2bhubindia.com</Text>
           </View>
           <TouchableOpacity
