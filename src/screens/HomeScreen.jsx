@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   BellIcon,
@@ -37,7 +37,7 @@ import { useFonts } from "expo-font";
 import { Cookie_400Regular } from "@expo-google-fonts/cookie";
 import Footer from "../components/Footer";
 import { Modal } from "react-native";
-
+import Animated, { FadeInDown } from "react-native-reanimated";
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const navigation = useNavigation();
@@ -245,6 +245,7 @@ const HomeScreen = () => {
           setProductActiveData={setActiveCategory}
         />
       </ScrollView>
+      
     </View>
   );
 };
@@ -370,5 +371,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: -10,
     top: -10,
+  },
+
+  whatsappIcon: {
+    width: wp(20),
+    height: wp(20),
+    position: "absolute",
+    right: wp(10),
+    bottom: wp(10),
+    backgroundColor: "rgba(255,255,255,0)",
   },
 });

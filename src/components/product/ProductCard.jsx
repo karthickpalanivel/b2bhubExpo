@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 const ProductCard = ({ props, index }) => {
   const navigation = useNavigation();
   let isEven = index % 2 === 0;
-  let isThree = props._id % 3 === 0;
 
   const onMoreDetails = (id) => {
     navigation.navigate("ProductDetails", { _id: id });
@@ -48,21 +47,12 @@ const ProductCard = ({ props, index }) => {
           }}
         />
         <Text style={styles.productName}>
-          {props.name.length > 20
-            ? props.name.slice(0, 17) + "..."
+          {props.name.length > 15
+            ? props.name.slice(0, 15) + "..."
             : props.name}
         </Text>
         <View>
-          {props.offer > 1 ? (
-            <>
-              <Text style={styles.offerPrice}>
-                ₹{calculatePrice(props.price, props.offer)}/ Kg
-              </Text>
-              <Text style={styles.mrpPrice}>₹{props.price}/ Kg</Text>
-            </>
-          ) : (
-            <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
-          )}
+          <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
         </View>
       </Pressable>
     </Animated.View>

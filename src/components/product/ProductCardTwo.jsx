@@ -51,13 +51,13 @@ const ProductCardTwo = ({ props }) => {
             <Image source={{ uri: props.imageUrl }} style={styles.styleImage} />
           </View>
 
-          {props.offer ? (
+          {/* {props.offer ? (
             <View style={styles.offerContainer}>
               <Text style={styles.offer}>20%</Text>
             </View>
           ) : (
             ""
-          )}
+          )} */}
         </View>
         <View style={styles.details}>
           <View style={styles.textDetails}>
@@ -66,16 +66,10 @@ const ProductCardTwo = ({ props }) => {
             </Text>
 
             <View>
-              {props.offer > 1 ? (
-                <>
-                  <Text style={styles.offerPrice}>
-                    ₹{calculatePrice(props.price, props.offer)}/ Kg
-                  </Text>
-                  <Text style={styles.mrpPrice}>₹{props.price}/ Kg</Text>
-                </>
-              ) : (
-                <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
-              )}
+              <Text style={styles.offerPrice}>
+                ₹{calculatePrice(props.price, props.offer)}/ Kg
+              </Text>
+              
             </View>
           </View>
           <View style={styles.ratingImage}>

@@ -27,6 +27,7 @@ import {
   IdentificationIcon,
   CurrencyRupeeIcon,
   PhoneIcon,
+  EnvelopeIcon,
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 
@@ -40,6 +41,10 @@ const ProfileScreen = () => {
 
   const goback = () => {
     navigation.goBack();
+  };
+
+  const connectionToWhatsapp = () => {
+    console.log("whatsapp");
   };
 
   return (
@@ -115,7 +120,7 @@ const ProfileScreen = () => {
 
           {/* Rewards and offers button */}
 
-          <Pressable
+          {/* <Pressable
             style={[styles.profileScreenDetailsContainer]}
             onPress={() => navigation.navigate("OfferRewardsDetails")}
           >
@@ -128,11 +133,11 @@ const ProfileScreen = () => {
               size={hp(3.5)}
               strokeWidth={4.5}
             />
-          </Pressable>
+          </Pressable> */}
 
           {/* Settings and policy button */}
 
-          <Pressable
+          {/* <Pressable
             style={[styles.profileScreenDetailsContainer]}
             onPress={() => navigation.navigate("Settings")}
           >
@@ -147,7 +152,7 @@ const ProfileScreen = () => {
               size={hp(3.5)}
               strokeWidth={4.5}
             />
-          </Pressable>
+          </Pressable> */}
 
           {/* Payment and shipping details button */}
 
@@ -179,15 +184,42 @@ const ProfileScreen = () => {
         <View
           style={[
             styles.profileScreenDetailsContainer,
-            { borderRadius: 9, marginTop: wp(5) },
+            {
+              borderTopLeftRadius: 9,
+              borderTopRightRadius: 9,
+              marginTop: hp(2),
+            },
           ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <PhoneIcon color={"#4870F4"} size={hp(5)} />
+            <Image
+              source={require("../assets/whatsapp.png")}
+              style={styles.whatsapp}
+            />
             <Text style={styles.contextName}>Reach Us</Text>
           </View>
-          <TouchableOpacity style={styles.callContainer}>
-            <Text style={styles.callText}>Call</Text>
+          <TouchableOpacity
+            style={styles.callContainer}
+            onPress={connectionToWhatsapp}
+          >
+            <Text style={styles.callText}>Chat</Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={[
+            styles.profileScreenDetailsContainer,
+            { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
+          ]}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <EnvelopeIcon size={hp(5)} color={"#4870F4"}/>
+            <Text style={styles.contextName}>support@b2bhubindia.com</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.callContainer}
+            onPress={connectionToWhatsapp}
+          >
+            <Text style={styles.callText}>Mail</Text>
           </TouchableOpacity>
         </View>
 
@@ -214,8 +246,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: hp(20),
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: wp(4),
+    borderBottomRightRadius: wp(4),
   },
 
   avatarImage: {
@@ -268,7 +300,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   contextName: {
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     marginLeft: hp(1),
     color: "#5D5D5D",
   },
@@ -312,5 +344,9 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     color: "white",
     fontWeight: "bold",
+  },
+  whatsapp: {
+    width: hp(5),
+    height: hp(5),
   },
 });

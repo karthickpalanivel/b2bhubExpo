@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Pressable,
   TextInput,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -25,18 +26,52 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import ProductCardTwo from "./ProductCardTwo";
+import TermsAndConditionsModal from "./TermsandCondition";
 
 //component starts
 const ProductDetails = ({ route }) => {
   const [product, setProduct] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  //const [quantity, setQuantity] = useState(1);
   const navigation = useNavigation();
   const { params } = route;
   const [productName, setProductName] = useState("");
+
   const [data, setData] = useState(false);
 
   const [tonsInput, setTonsInput] = useState(100);
+  //modal
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalQuantity, setModalQuantity] = useState(100);
+  const [showSummary, setShowSummary] = useState(false);
+  const [termsVisible, setTermsVisible] = useState(false);
+  const [modalTermVisible, setModalTermVisible] = useState(false);
+  //showSummary
+  const handleContinue = () => {
+    setShowSummary(true);
+  };
+  const handlePayment = () => {
+    // Handle payment logic here
+    setModalVisible(false);
+    setModalTermVisible(true);
+    setTermsVisible(true);
+  };
+  const calculateTotal = () => {
+    const totalPrice = 500 * modalQuantity;
+    const gst = totalPrice * 0;
+    const totalAmount = totalPrice + gst;
+
+    return { totalPrice, gst, totalAmount };
+  };
+
+  /*
+  setModalVisible(false);
+    setModalTermVisible(false)
+    setshowSummary(false);
+    setTermsVisible(false);
+  */
+
+  const { totalPrice, gst, totalAmount } = calculateTotal();
 
   useEffect(() => {
     const getProduct = ProductData.find((item) => {
@@ -48,6 +83,13 @@ const ProductDetails = ({ route }) => {
       productName.includes(product?.pictureName) && setData(true);
     }
     console.log(getProduct);
+
+    setTimeout(() => {
+      setModalVisible(false);
+      setModalTermVisible(false);
+      setShowSummary(false);
+      setTermsVisible(false);
+    }, 50);
   }, [params?._id]);
 
   const goback = () => {
@@ -90,7 +132,7 @@ const ProductDetails = ({ route }) => {
   const onChangeText = (text) => {};
   return (
     <ScrollView style={styles.productDetailContainer}>
-      <StatusBar style={"auto"} />
+      <StatusBar style={"light"} />
       <View style={styles.topBar}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={styles.imageContainer}>
@@ -106,22 +148,16 @@ const ProductDetails = ({ route }) => {
             <View
               style={{
                 width: wp(40),
-                
+
                 marginLeft: wp(5),
               }}
             >
-              {product.offer > 1 ? (
-                <View>
-                  <Text style={styles.offerPrice}>
-                    ₹{calculatePrice(product.price, product.offer)}/ Kg
-                  </Text>
-                  <Text style={styles.mrpPrice}>₹{product.price}/ Kg</Text>
-                </View>
-              ) : (
-                <Text style={[styles.offerPrice, styles.withoutOffer]}>
-                  ₹{product.price}/ Kg
+              <View>
+                <Text style={styles.offerPrice}>
+                  ₹{calculatePrice(product.price, product.offer)}/ Kg
                 </Text>
-              )}
+              </View>
+
               <View
                 style={{
                   flexDirection: "row",
@@ -130,7 +166,10 @@ const ProductDetails = ({ route }) => {
                 }}
               >
                 <View style={styles.ratingBack}>
-                  <Image source={require('../../assets/rating/roundStar.png')} style={styles.ratingImage}/>
+                  <Image
+                    source={require("../../assets/rating/roundStar.png")}
+                    style={styles.ratingImage}
+                  />
                   <Text style={styles.ratingText}>{product.rating} /5</Text>
                 </View>
               </View>
@@ -160,7 +199,7 @@ const ProductDetails = ({ route }) => {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.addressContainer}>
+        {/* <TouchableOpacity style={styles.addressContainer}>
           <MapPinIcon size={hp(3)} color={"white"} />
           <Text
             style={{
@@ -172,37 +211,103 @@ const ProductDetails = ({ route }) => {
           >
             Delivered to: 123, down st, Chennai - 600006
           </Text>
-        </TouchableOpacity>
-
-
+        </TouchableOpacity> */}
+        <View style={styles.iconContainerText}>
+          <Pressable
+            style={styles.clockIconContainer}
+            onPress={() => setModalVisible(true)}
+          >
+            <ShoppingCartIcon size={hp(5)} strokeWidth={1.5} color={"black"} />
+            <Text style={styles.offerText}>Order Now</Text>
+          </Pressable>
+        </View>
       </View>
 
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginTop: "6%",
         }}
       >
-        <View style={styles.iconContainerText}>
-          <Pressable
-            style={styles.clockIconContainer}
-            onPress={() => orderPage(product._id)}
-          >
-            <ShoppingCartIcon size={hp(5)} strokeWidth={1.5} color={"black"} />
-            <Text style={styles.offerText}>Add to Cart</Text>
-          </Pressable>
-        </View>
+        {/*Modal view */}
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+          animationType="slide"
+        >
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+              {!showSummary ? (
+                <>
+                  <Text style={styles.modalTitle}>Select Quantity</Text>
 
-        <View style={styles.inputTonContainer}>
-          <TextInput
-            placeholder={"Enter in Tons"}
-            style={styles.inputTons}
-            value={tonsInput}
-            onChangeText={(text) => setTonsInput(text)}
-            maxLength={10}
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Quantity in Tones"
+                    keyboardType="numeric"
+                    value={modalQuantity.toString()}
+                    onChangeText={(text) => setModalQuantity(Number(text))}
+                  />
+
+                  <TouchableOpacity
+                    style={styles.continueButton}
+                    onPress={handleContinue}
+                  >
+                    <Text style={styles.continueButtonText}>Continue</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.modalTitle}>Order Summary</Text>
+                  <View style={styles.table}>
+                    <View style={styles.tableRow}>
+                      <Text style={styles.tableCell}>Total Price</Text>
+                      <Text style={styles.tableCell}>
+                        Rs {totalPrice.toFixed(0)}
+                      </Text>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <Text style={styles.tableCell}>GST (0%)</Text>
+                      <Text style={styles.tableCell}>Rs {gst.toFixed(0)}</Text>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <Text style={styles.tableCell}>Total Amount</Text>
+                      <Text style={styles.tableCell}>
+                        Rs {totalAmount.toFixed(0)}
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.paymentButton}
+                    onPress={handlePayment}
+                  >
+                    <Text style={styles.paymentButtonText}>
+                      Proceed to Payment
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          transparent={true}
+          visible={modalTermVisible}
+          onRequestClose={() => setModalTermVisible(false)}
+          animationType="slide"
+        >
+          <TermsAndConditionsModal
+            visible={termsVisible}
+            onClose={() => setTermsVisible(false)}
           />
-        </View>
+        </Modal>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.iconButton} onPress={goback}>
@@ -223,7 +328,10 @@ const ProductDetails = ({ route }) => {
 
       {/* product Card two */}
       {ProductData?.map((item) => {
-        if (product.pictureName == item.pictureName && product._id !== item._id) {
+        if (
+          product.pictureName == item.pictureName &&
+          product._id !== item._id
+        ) {
           return <ProductCardTwo props={item} />;
         }
       })}
@@ -317,13 +425,14 @@ const styles = StyleSheet.create({
   iconContainerText: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginLeft: "3%",
     backgroundColor: "white",
-    width: wp(45),
+    width: wp(85),
     elevation: 3,
-    padding: 10,
+    padding: 5,
     borderRadius: 999,
+    marginTop: "6%",
   },
 
   ratingBack: {
@@ -386,5 +495,93 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: wp(6),
     fontWeight: "bold",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: "90%",
+    maxWidth: 400,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 5,
+    position: "relative",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    padding: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  picker: {
+    height: 50,
+    width: "100%",
+    marginBottom: 15,
+  },
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    marginBottom: 15,
+    paddingVertical: 5,
+    fontSize: 16,
+  },
+  continueButton: {
+    backgroundColor: "#4870F4",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  continueButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  paymentButton: {
+    backgroundColor: "#4870F4",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  paymentButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  table: {
+    width: "100%",
+    marginVertical: 15,
+    borderRadius: 10,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  tableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  tableCell: {
+    fontSize: 16,
+    color: "#333",
   },
 });

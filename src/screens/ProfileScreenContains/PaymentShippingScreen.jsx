@@ -1,11 +1,20 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  TextInput,
+} from "react-native";
+import React, { useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import { useNavigation } from "@react-navigation/native";
+import { Modal } from "react-native";
+import { XCircleIcon } from "react-native-heroicons/solid";
 //icons
 import {
   InformationCircleIcon,
@@ -20,13 +29,63 @@ import {
   MapPinIcon,
   DocumentIcon,
   BuildingOfficeIcon,
-  BanknotesIcon
+  BanknotesIcon,
 } from "react-native-heroicons/solid";
+import { shadow } from "react-native-paper";
 
 const PaymentShippingScreen = () => {
+  const navigation = useNavigation();
+  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState("");
+  const show = () => setVisible(true);
+  const hide = () => setVisible(false);
+  const changeValue = () => {
+    hide();
+  };
+
+  const showModal = () => {
+    hide();
+    show();
+  };
   return (
     <View>
       <ProfileHeaderLayout header={"Business Details"} />
+      <View style={styles.detailBarContainer}>
+        <Modal
+          visible={visible}
+          animationType="slide"
+          animationDuration={1000}
+          onRequestClose={hide}
+          transparent
+        >
+          <SafeAreaView style={styles.fill}>
+            <View style={styles.inputContainer}>
+              <View>
+                <TouchableOpacity>
+                  <XCircleIcon
+                    size={wp(8)}
+                    color="white"
+                    style={styles.icon}
+                    onPress={hide}
+                  />
+                </TouchableOpacity>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={setValue}
+                  placeholder={"Edit"}
+                  placeholderTextColor={"#4870F4"}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={changeValue}
+                style={styles.conformContainer}
+              >
+                <Text style={styles.conformText}>confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </Modal>
+      </View>
 
       <View style={styles.businessContainer}>
         <InformationCircleIcon size={wp(10)} color={"white"} />
@@ -46,9 +105,11 @@ const PaymentShippingScreen = () => {
               <Text style={{ color: "#7F7F7F" }}>VTS Retailers</Text>
             </View>
           </View>
-          <View>
-            <ChevronRightIcon color="black" size={wp(10)} />
-          </View>
+          <TouchableOpacity onPress={show}>
+            <View style={styles.editContainer}>
+              <Text style={styles.editText}>Edit</Text>
+            </View>
+          </TouchableOpacity>
         </TouchableOpacity>
         <TouchableOpacity style={styles.businessDetailsContainer}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -62,11 +123,13 @@ const PaymentShippingScreen = () => {
               <Text style={{ color: "#7F7F7F" }}>29GGGGG1314R9Z6</Text>
             </View>
           </View>
-          <View>
-            <ChevronRightIcon color="black" size={wp(10)} />
-          </View>
+          <TouchableOpacity>
+            <View style={styles.editContainer}>
+              <Text style={styles.editText}>Edit</Text>
+            </View>
+          </TouchableOpacity>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.businessDetailsContainer}>
+        {/* <TouchableOpacity style={styles.businessDetailsContainer}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MapPinIcon
               color="#4870F4"
@@ -83,10 +146,10 @@ const PaymentShippingScreen = () => {
           <View>
             <ChevronRightIcon color="black" size={wp(10)} />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      <View style={styles.businessContainer}>
+      {/* <View style={styles.businessContainer}>
         <WalletIcon size={wp(10)} color={"white"} />
         <Text style={styles.business}>Payment Details</Text>
       </View>
@@ -110,7 +173,7 @@ const PaymentShippingScreen = () => {
             <ChevronRightIcon color="black" size={wp(10)} />
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -152,5 +215,47 @@ const styles = StyleSheet.create({
   businessName: {
     justifyContent: "space-around",
     marginLeft: wp(3),
+  },
+  inputContainer: {
+    marginLeft: wp(10),
+    borderWidth: 0.3,
+    elevation: 3,
+    borderRadius: wp(1),
+    width: wp(90),
+    padding: wp(4),
+    backgroundColor: "#4870F4",
+    paddingLeft: wp(5),
+  },
+  textInput: {
+    marginTop: hp(5),
+    borderWidth: 0.2,
+    padding: wp(2),
+    borderRadius: wp(1),
+    backgroundColor: "white",
+  },
+
+  conformContainer: {
+    marginTop: hp(2),
+    marginLeft: wp(1),
+    width: wp(20),
+    backgroundColor: "white",
+    padding: wp(3),
+    borderRadius: 10,
+  },
+  conformText: {
+    color: "#4870F4",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  icon: {
+    position: "absolute",
+    right: 0,
+  },
+  fill: {
+    position: "absolute",
+    bottom: hp(10),
+    alignItems: "center",
+    width: wp(90),
+    height: hp(20),
   },
 });

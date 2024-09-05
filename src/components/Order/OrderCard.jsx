@@ -8,44 +8,63 @@ import {
 
 const OrderCard = ({ props }) => {
   return (
-    <TouchableOpacity style={styles.orderContainer}>
-      <View style={styles.container}>
-        <Text>Order id: {props._id}</Text>
-        <Text>Date: {props.date}</Text>
-      </View>
-      <View style={styles.container}>
-        <Text>Price: ₹{props.productPrice}</Text>
-        <Text>Quantity: {props.tonsQuantity} tons</Text>
-      </View>
-      <View style={styles.container}>
-        <View>
-          <TouchableOpacity style={styles.iconContainer}>
-            <EyeIcon size={wp(5)} color={"#4870F4"} />
-            <Text style={styles.documentText}>InVoice</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconContainer}>
-            <EyeIcon size={wp(5)} color={"#4870F4"} />
-            <Text style={styles.documentText}>Receipt</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          {props.paymentVerification ? (
-            <Text style={styles.completed}> Completed</Text>
-          ) : (
-            <Text style={styles.process}> Under Process</Text>
-          )}
+    <View style={styles.orderContainer}>
+      {props.paymentVerification ? (
+        <>
+          <View style={styles.container}>
+            <Text>Order id: {props._id}</Text>
+            <Text>Date: {props.date}</Text>
+          </View>
+          <View style={styles.container}>
+            <Text>Price: ₹{props.productPrice}</Text>
+            <Text>Quantity: {props.tonsQuantity} tons</Text>
+          </View>
+          <View style={styles.container}>
+            <View>
+              <TouchableOpacity style={styles.iconContainer}>
+                <EyeIcon size={wp(5)} color={"#4870F4"} />
+                <Text style={styles.documentText}>InVoice</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconContainer}>
+                <EyeIcon size={wp(5)} color={"#4870F4"} />
+                <Text style={styles.documentText}>Receipt</Text>
+              </TouchableOpacity>
+            </View>
 
-          {/* <Text>
-          Order Staus:
-          {props.paymentVerification ? (
-            <Text>Verified</Text>
-          ) : (
-            <Text>Under Process</Text>
-          )}
-        </Text> */}
-        </View>
-      </View>
-    </TouchableOpacity>
+            <View>
+              <Text style={styles.completed}> Completed</Text>
+            </View>
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.container}>
+            <Text>Order id: {props._id}</Text>
+            <Text>Date: {props.date}</Text>
+          </View>
+          <View style={styles.container}>
+            <Text>Price: ₹{props.productPrice}</Text>
+            <Text>Quantity: {props.tonsQuantity} tons</Text>
+          </View>
+          <View style={styles.container}>
+            <View>
+              <TouchableOpacity style={styles.iconContainer}>
+                <EyeIcon size={wp(5)} color={"#4870F4"} />
+                <Text style={styles.documentText}>InVoice</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconContainer}>
+                <EyeIcon size={wp(5)} color={"#4870F4"} />
+                <Text style={styles.documentText}>Receipt</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text style={styles.process}> Under Process</Text>
+            </View>
+          </View>
+        </>
+      )}
+    </View>
   );
 };
 
