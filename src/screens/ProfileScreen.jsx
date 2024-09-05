@@ -17,18 +17,15 @@ import {
 
 import {
   BuildingOffice2Icon,
-  ArrowUturnLeftIcon,
   CogIcon,
   GiftIcon,
   TruckIcon,
   ChevronRightIcon,
   ArrowLeftIcon,
-  GiftTopIcon,
 } from "react-native-heroicons/solid";
 
 import {
   IdentificationIcon,
-  InformationCircleIcon,
   CurrencyRupeeIcon,
   PhoneIcon,
 } from "react-native-heroicons/outline";

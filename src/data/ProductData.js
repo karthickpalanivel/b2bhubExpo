@@ -1,8 +1,8 @@
 export const ProductData = [
   {
     _id: 1,
-    name: "Desi Tur Dal",
-    pictureName: "Tur Dal",
+    name: "Desi Toor Dal",
+    pictureName: "Toor Dal",
     grade: "A",
     price: 116,
     offer: 20,
@@ -16,8 +16,8 @@ export const ProductData = [
   },
   {
     _id: 2,
-    name: "Mysore Tur Dal",
-    pictureName: "Tur Dal",
+    name: "Mysore Toor Dal",
+    pictureName: "Toor Dal",
     price: 116,
     offer: 20,
     grade: "B",
@@ -31,8 +31,8 @@ export const ProductData = [
   },
   {
     _id: 3,
-    name: "Bengal Tur Dal",
-    pictureName: "Tur Dal",
+    name: "Bengal Toor Dal",
+    pictureName: "Toor Dal",
     price: 116,
     grade: "C",
     offer: 20,
@@ -103,7 +103,6 @@ export const ProductData = [
       "pulses that, although commonly called lentils, are actually related to cowpeas and mung beans.",
     imageUrl:
       "https://biobasics.org/cdn/shop/files/order-organic-urad-dal-without-skin-online-at-bio-basics.png?v=1695100963",
-    pictureName: "udarDal",
   },
   {
     _id: 9,

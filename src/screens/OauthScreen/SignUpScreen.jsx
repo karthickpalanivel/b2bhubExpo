@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  SafeAreaView,
 } from "react-native";
 import {
   widthPercentageToDP as wp,

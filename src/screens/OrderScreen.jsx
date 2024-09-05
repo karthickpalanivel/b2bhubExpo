@@ -5,19 +5,22 @@ import {
   TouchableOpacity,
   Image,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ProductData } from "../data/ProductData";
-import { ChevronLeftIcon, ArrowLeftIcon } from "react-native-heroicons/outline";
+import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import Radio from "../components/button/Radio";
+import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
 
 const OrderScreen = ({ route }) => {
   const [product, setProduct] = useState(null);
+  const [quantiy, setQuantity] = useState(100);
   const { params } = route;
   const navigation = useNavigation();
 
@@ -53,56 +56,70 @@ const OrderScreen = ({ route }) => {
         </TouchableOpacity>
         <Text style={styles.headerText}>Order Summary</Text>
       </View>
-
-      {product ? (
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.card}>
-            <Image
-              source={{ uri: product?.imageUrl }}
-              style={styles.imagePage}
-            />
-            <View style={styles.cardTextContainer}>
-              <View style={styles.textRatingContainer}>
-                <Text
-                  style={{
-                    fontSize: hp(2.0),
-                    fontWeight: "bold",
-                  }}
-                >
-                  {product.name}
-                </Text>
-                {product.offer > 1 ? (
-                  <Text style={styles.offerPrice}>
-                    ₹{calculatePrice(product.price, product.offer)}/ Kg
-                  </Text>
-                ) : (
-                  <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
-                )}
-                <View>
-                  <Image
-                    source={require("../assets/rating/ratingSample.png")}
-                    style={styles.ratingImage}
-                  />
-                </View>
-
-                <View>
+      <ScrollView>
+        {product ? (
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.card}>
+              <Image
+                source={{ uri: product?.imageUrl }}
+                style={styles.imagePage}
+              />
+              <View style={styles.cardTextContainer}>
+                <View style={styles.textRatingContainer}>
                   <Text
                     style={{
-                      fontWeight: "500",
-                      color: "black",
+                      fontSize: hp(2),
+                      fontWeight: "bold",
+                      color: "white",
                     }}
                   >
-                    Will be delivered within next 3 days
+                    {product.name}
                   </Text>
+                  {product.offer > 1 ? (
+                    <Text style={styles.offerPrice}>
+                      ₹{calculatePrice(product.price, product.offer)}/ Kg
+                    </Text>
+                  ) : (
+                    <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
+                  )}
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Image
+                      source={require("../assets/rating/roundStar.png")}
+                      style={styles.ratingImage}
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        marginLeft: wp(2),
+                      }}
+                    >
+                      {product.rating}/5
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TouchableOpacity style={styles.actionContainer}>
+                      <PencilSquareIcon color="white" size={hp(2)} />
+                      <Text style={styles.actionText}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.actionContainer}>
+                      <TrashIcon color="white" size={hp(2)} />
+                      <Text style={styles.actionText}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-      ) : (
-        <Text>Loading product details...</Text>
-      )}
-
+        ) : (
+          <Text>Loading product details...</Text>
+        )}
+      </ScrollView>
       <View style={styles.radioContainer}>
         <Radio />
       </View>
@@ -129,19 +146,32 @@ const styles = StyleSheet.create({
   },
 
   cardTextContainer: {
+    width: wp(60),
     flexDirection: "row",
     textAlign: "left",
+    marginLeft: wp(2),
   },
   textRatingContainer: {},
   card: {
-    width: "90%",
+    width: wp(90),
     flexDirection: "row",
-    marginVertical: "10%",
-    borderColor: "black",
-    padding: "2%",
+    marginVertical: wp(10),
+    borderColor: "white",
+    padding: wp(2),
     borderRadius: 10,
     elevation: 5,
-    backgroundColor: "white",
+    backgroundColor: "#4870F4",
+  },
+
+  actionContainer: {
+    flexDirection: "row",
+    marginTop: wp(4),
+  },
+
+  actionText: {
+    fontSize: wp(4),
+    color: "white",
+    fontWeight: "600"
   },
 
   headerBar: {
@@ -153,21 +183,21 @@ const styles = StyleSheet.create({
   offerPrice: {
     marginLeft: "5%",
     fontSize: 15,
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     marginVertical: "2%",
   },
 
   ratingImage: {
-    width: "65%",
-    height: 50,
+    marginTop: wp(2),
+    width: wp(5),
+    height: wp(5),
     resizeMode: "center",
   },
   imagePage: {
     width: wp(30),
     height: wp(30),
-    marginTop: "1%",
-    marginHorizontal: "1%",
+    margin: wp(1),
     borderRadius: 10,
   },
 
@@ -176,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     borderWidth: 0.1,
     width: wp(12),
-    borderColor: "black",
+    borderColor: "white",
     marginHorizontal: "5%",
     backgroundColor: "white",
     elevation: 4,
@@ -187,7 +217,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     elevation: 3,
   },
-  imageCard: {},
   placeOrderContainer: {
     width: "80%",
     alignItems: "center",
