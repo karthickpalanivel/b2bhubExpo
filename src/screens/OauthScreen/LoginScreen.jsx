@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, {useState, useCallback} from "react";
 import {
   View,
   Text,
@@ -13,13 +13,42 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
+import axios from "axios"
+import {useFocusEffect} from "@react-navigation/native";
 
-import { useFocusEffect } from "@react-navigation/native";
+//backend api integration
 
-const { width } = Dimensions.get("window");
+const {width} = Dimensions.get("window");
 
 const LoginScreen = () => {
+  const [Email, setEmail] = useState("");
+  // const [PAN, setPAN] = useState("");
+  // const [gstNo, setGstNo] = useState("")
+  // const [phoneNo, setPhoneNo] = useState("")
+  // const [CompanyName, setCompanyName] = useState("")
+  const [Password, setPassword] = useState("");
+
+  async function HandleLogin() {
+    await axios
+      .post("https://erp-backend-new-ketl.onrender.com/b2b/login", {
+        email: Email,
+        pwd: Password,
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          console.log("success");
+          
+          navigation.navigate("Home");
+        } else window.alert(res.message);
+      })
+      .catch((error) => {
+        window.alert(error);
+        return;
+      });
+  }
+
   const navigation = useNavigation();
 
   const navigateToSignUp = () => {
@@ -48,35 +77,39 @@ const LoginScreen = () => {
         <View style={styles.container}>
           <Image
             source={require("../../assets/logo.png")}
-            style={{ height: 120, width: 120 }}
+            style={{height: 120, width: 120}}
           />
         </View>
         <Text style={styles.title}>Login</Text>
-        <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
+        <Text style={{width: width * 0.8, fontSize: 14, marginTop: 2}}>
           Email
         </Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
+          value={Email}
+          onChangeText={setEmail}
           placeholderTextColor="#999"
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
+        <Text style={{width: width * 0.8, fontSize: 14}}>Password</Text>
         <TextInput
           style={styles.input}
           placeholder="Password"
+          value={Password}
+          onChangeText={setPassword}
           placeholderTextColor="#999"
           secureTextEntry
         />
       </View>
-      <View style={{ width: wp(80), marginTop: hp(2) }}>
+      <View style={{width: wp(80), marginTop: hp(2)}}>
         <TouchableOpacity>
-          <Text style={{ textAlign: "right" }}>Forget Password?</Text>
+          <Text style={{textAlign: "right"}}>Forget Password?</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <View style={{justifyContent: "center", alignItems: "center"}}>
+        <TouchableOpacity style={styles.button} onPress={HandleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -116,7 +149,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderColor: "#ddd",
   },
-  
+
   password: {
     fontSize: 10,
     fontWeight: "bold",
@@ -125,7 +158,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     justifyContent: "flex-end",
   },
-  
+
   button: {
     backgroundColor: "#4CAF50",
     padding: wp(3),
@@ -133,7 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     marginVertical: 10,
   },
-  
+
   buttonText: {
     color: "#fff",
     fontSize: wp(4),
