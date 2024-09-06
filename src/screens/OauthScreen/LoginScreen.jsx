@@ -15,16 +15,22 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
-
+import AppLoading from "expo-app-loading";
 const { width } = Dimensions.get("window");
+import {
+  ChevronLeftIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from "react-native-heroicons/outline";
+import { EntryExitTransition } from "react-native-reanimated";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowpassword] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isResetting, setIsResetting] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const navigateToSignUp = () => {
@@ -50,61 +56,98 @@ const LoginScreen = () => {
     }, [])
   );
 
+  const handleShowPassword = () => {
+    setShowpassword(!showPassword);
+  };
+
   return (
-    <View style={styles.full}>
-      <View>
-        <View style={styles.container}>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={{ height: 120, width: 120 }}
-          />
+    <>
+      {isLoading ? (
+        <AppLoading />
+      ) : (
+        <View style={styles.full}>
+          <View>
+            <View style={styles.container}>
+              <ChevronLeftIcon
+                size={wp(6)}
+                color={"grey"}
+                style={styles.icon}
+              />
+              <Image
+                source={require("../../assets/logo.png")}
+                style={{ height: wp(30), width: wp(30) }}
+              />
+            </View>
+            <Text style={styles.title}>Login</Text>
+            <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
+              Email
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="#999"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              autoCapitalize="none"
+            />
+            <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
+            <View
+              style={{
+                width: wp(80),
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TextInput
+                style={[styles.input, { flex: 1 }]}
+                placeholder="Password"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                placeholderTextColor="#999"
+                secureTextEntry={showPassword} // This should now dynamically change
+              />
+              <TouchableOpacity
+                onPress={handleShowPassword}
+                style={{ marginLeft: wp(2) }}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon size={wp(5)} color={"grey"} />
+                ) : (
+                  <EyeIcon size={wp(5)} color={"grey"} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ width: wp(80), marginTop: hp(2) }}>
+            <TouchableOpacity onPress={navigateToForgotPassword}>
+              <Text
+                style={{
+                  textAlign: "right",
+                  color: "#4870F4",
+                  fontWeight: "bold",
+                }}
+              >
+                Forget Password?
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.toggleButton}
+              onPress={navigateToSignUp}
+            >
+              <Text style={styles.toggleText}>
+                Click here to Create a new Account!
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={styles.title}>Login</Text>
-        <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-          Email
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          autoCapitalize="none"
-        />
-        <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          placeholderTextColor="#999"
-          secureTextEntry
-        />
-      </View>
-      <View style={{ width: wp(80), marginTop: hp(2) }}>
-        <TouchableOpacity onPress={navigateToForgotPassword}>
-          <Text
-            style={{ textAlign: "right", color: "#4870F4", fontWeight: "bold" }}
-          >
-            Forget Password?
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.toggleButton}
-          onPress={navigateToSignUp}
-        >
-          <Text style={styles.toggleText}>
-            Click here to Create a new Account!
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      )}
+    </>
   );
 };
 
@@ -116,6 +159,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
+    flexDirection: "row",
     alignItems: "center",
   },
   title: {
@@ -134,16 +178,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderColor: "#ddd",
   },
-
-  password: {
-    fontSize: wp(3),
-    fontWeight: "bold",
-    marginTop: wp(0.5),
-    marginHorizontal: wp(10),
-    textAlign: "right",
-    justifyContent: "flex-end",
+  eyeIcon: {
+    position: "absolute",
+    right: wp(2.5),
+    top: hp(-5.5),
   },
-
   button: {
     backgroundColor: "#fff",
     padding: wp(3),

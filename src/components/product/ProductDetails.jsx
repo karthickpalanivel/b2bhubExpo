@@ -195,7 +195,7 @@ const ProductDetails = ({ route }) => {
               marginLeft: wp(5),
             }}
           >
-            {product.description}
+            {/* {product.description} */}
           </Text>
         </View>
 

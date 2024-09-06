@@ -5,12 +5,16 @@ export const ProductData = [
     pictureName: "Dal",
     grade: "A",
     price: 116,
-
     rating: "4.8",
     category: "dal",
     quantity: "10",
-    description:
-      "a perennial legume that belongs to the Fabaceae family, which is also known as pigeon pea.",
+    description: {
+      Speciality: "High in Protein",
+      IsOrganic: "Organic",
+      Quality: "A Grade",
+      Mositure: "Dry",
+      ShelfLife: "6 Months",
+    },
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -23,8 +27,13 @@ export const ProductData = [
     grade: "A",
     rating: "4.5",
     quantity: "10",
-    description:
-      "the split version of whole mung beans also known as green gram (with or without skin).",
+    description: {
+      Speciality: "High in Protein",
+      IsOrganic: "Organic",
+      Quality: "A Grade",
+      StorageInstruction: "Cool and dry place",
+      ShelfLife: "6 Months",
+    },
     imageUrl:
       "https://st5.depositphotos.com/5653638/61983/i/450/depositphotos_619836364-stock-photo-moong-dal-namkeen-traditional-indian.jpg",
   },
@@ -38,8 +47,12 @@ export const ProductData = [
     rating: "4.7",
     category: "dal",
     quantity: "10",
-    description:
-      "pulses that, although commonly called lentils, are actually related to cowpeas and mung beans.",
+    description: {
+      Speciality: "High in Protein",
+      IsOrganic: "Organic",
+      Quality: "A Grade",
+      ShelfLife: "6 Months",
+    },
     imageUrl:
       "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
     pictureName: "Dal",
@@ -55,8 +68,12 @@ export const ProductData = [
     rating: "4.6",
     category: "dal",
     quantity: "5",
-    description:
-      "They are a rich source of protein. They are also a very good source of folic acid and fiber and contain phytochemicals called saponins, which can act as antioxidants.",
+    description: {
+      Speciality: "High in Protein",
+      IsOrganic: "Organic",
+      Quality: "A Grade",
+      ShelfLife: "6 Months",
+    },
     imageUrl:
       "https://c1.wallpaperflare.com/preview/115/189/240/daal-chana-lentils-indian.jpg",
   },

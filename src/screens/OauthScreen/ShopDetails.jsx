@@ -6,7 +6,6 @@ import {
   TextInput,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
   Image,
 } from "react-native";
 import {
@@ -28,6 +27,8 @@ const ShopDetails = () => {
 
   const [shopName, setShopName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
+  const [panNumber, setPanNumber] = useState("");
+
   return (
     <Animated.View
       entering={FadeInDown.delay(200).duration(2000).springify().damping(12)}
@@ -40,13 +41,13 @@ const ShopDetails = () => {
             style={{ height: 120, width: 120 }}
           />
         </View>
-        <Text style={styles.title}>Shop Details</Text>
+        <Text style={styles.title}>Company Details</Text>
         <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-          Name
+          Company Name
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Shop Name"
+          placeholder="Company Name"
           placeholderTextColor="#999"
           keyboardType="email-address"
           className="shopName"
@@ -85,38 +86,33 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 28,
+    fontSize: wp(5),
     fontWeight: "bold",
-    marginVertical: 10,
+    marginVertical: wp(2.5),
     color: "#333",
   },
   input: {
     width: width * 0.8,
-    height: 50,
+    height: wp(12.5),
     backgroundColor: "#f5f5f5",
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginVertical: 10,
+    borderRadius: wp(2),
+    paddingHorizontal: wp(3.5),
+    marginVertical: wp(2.5),
     borderColor: "#ddd",
     borderWidth: 1,
   },
-  password: {
-    fontSize: 10,
-    fontWeight: "bold",
-    marginTop: 2,
-    marginHorizontal: 90,
-    textAlign: "right",
-    justifyContent: "flex-end",
-  },
   button: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#fff",
     padding: wp(3),
+    borderWidth: 0.1,
+    elevation: 2,
     width: wp(80),
     borderRadius: 9999,
-    marginVertical: 10,
+    marginVertical: wp(2.5),
   },
+
   buttonText: {
-    color: "#fff",
+    color: "#4870F4",
     fontSize: wp(4),
     fontWeight: "bold",
     textAlign: "center",
