@@ -7,12 +7,15 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
+import AppLoading from "expo-app-loading";
+import { CompanyData } from "../data/CompanyData";
 
 import {
   BuildingOffice2Icon,
@@ -25,14 +28,18 @@ import {
 
 import {
   IdentificationIcon,
-  CurrencyRupeeIcon,
-  PhoneIcon,
   EnvelopeIcon,
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+
+  const [companyName, setCompanyName] = useState(CompanyData.companyName);
+  const [phone, setPhone] = useState(CompanyData.phone);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = () => {
     navigation.navigate("Login");
@@ -47,190 +54,207 @@ const ProfileScreen = () => {
     console.log("whatsapp");
   };
 
+  // logic from backend need to be applied
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ScrollView>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity style={styles.iconButton} onPress={goback}>
-            <ArrowLeftIcon size={hp(3.5)} strokeWidth={4.5} color={"#fff"} />
-          </TouchableOpacity>
-          <View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: "5%",
-              }}
-            >
-              <BuildingOffice2Icon color={"white"} size={hp(5)} />
-              <Text style={styles.companyName}>VTS Retailers</Text>
+    <>
+      {isLoading ? (
+        <AppLoading>
+          <AppLoaderAnimation />
+        </AppLoading>
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="light" backgroundColor="#4870F4" />
+          <ScrollView>
+            <View style={styles.headerContainer}>
+              <TouchableOpacity style={styles.iconButton} onPress={goback}>
+                <ArrowLeftIcon
+                  size={hp(3.5)}
+                  strokeWidth={4.5}
+                  color={"#fff"}
+                />
+              </TouchableOpacity>
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: "5%",
+                  }}
+                >
+                  <BuildingOffice2Icon color={"white"} size={hp(5)} />
+                  <Text style={styles.companyName}>{companyName}</Text>
+                </View>
+                <View>
+                  <Text style={styles.phoneNumber}>{phone}</Text>
+                </View>
+              </View>
+              <View style={styles.profileImageContainer}>
+                <Image
+                  source={require("../assets/profileImage.png")}
+                  style={styles.avatarImage}
+                />
+              </View>
             </View>
-            <View>
-              <Text style={styles.phoneNumber}>+91 9685743210</Text>
+
+            <View style={styles.businessContainer}>
+              <Text style={styles.business}>Manage your Business</Text>
             </View>
-          </View>
-          <View style={styles.profileImageContainer}>
-            <Image
-              source={require("../assets/profileImage.png")}
-              style={styles.avatarImage}
-            />
-          </View>
-        </View>
+            <View style={styles.detailsContainer}>
+              {/* accounts button */}
+              <Pressable
+                style={[
+                  styles.profileScreenDetailsContainer,
+                  { borderTopLeftRadius: 9, borderTopRightRadius: 9 },
+                ]}
+                onPress={() => navigation.navigate("AccountDetails")}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <IdentificationIcon color={"#4870F4"} size={hp(5)} />
+                  <Text style={styles.contextName}>Accounts </Text>
+                </View>
+                <ChevronRightIcon
+                  color={"#4870F4"}
+                  size={hp(3.5)}
+                  strokeWidth={4.5}
+                />
+              </Pressable>
 
-        <View style={styles.businessContainer}>
-          <Text style={styles.business}>Manage your Business</Text>
-        </View>
-        <View style={styles.detailsContainer}>
-          {/* accounts button */}
-          <Pressable
-            style={[
-              styles.profileScreenDetailsContainer,
-              { borderTopLeftRadius: 9, borderTopRightRadius: 9 },
-            ]}
-            onPress={() => navigation.navigate("AccountDetails")}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <IdentificationIcon color={"#4870F4"} size={hp(5)} />
-              <Text style={styles.contextName}>Accounts </Text>
-            </View>
-            <ChevronRightIcon
-              color={"#4870F4"}
-              size={hp(3.5)}
-              strokeWidth={4.5}
-            />
-          </Pressable>
+              {/* Delivery Details button */}
 
-          {/* Delivery Details button */}
+              <Pressable
+                style={[
+                  styles.profileScreenDetailsContainer,
+                  { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
+                ]}
+                onPress={() => navigation.navigate("DeliveryDetails")}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <TruckIcon color={"#4870F4"} size={hp(5)} />
+                  <Text style={styles.contextName}>Deliveries</Text>
+                </View>
+                <ChevronRightIcon
+                  color={"#4870F4"}
+                  size={hp(3.5)}
+                  strokeWidth={4.5}
+                />
+              </Pressable>
 
-          <Pressable
-            style={[
-              styles.profileScreenDetailsContainer,
-              { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
-            ]}
-            onPress={() => navigation.navigate("DeliveryDetails")}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TruckIcon color={"#4870F4"} size={hp(5)} />
-              <Text style={styles.contextName}>Deliveries</Text>
-            </View>
-            <ChevronRightIcon
-              color={"#4870F4"}
-              size={hp(3.5)}
-              strokeWidth={4.5}
-            />
-          </Pressable>
+              {/* Rewards and offers button */}
 
-          {/* Rewards and offers button */}
-
-          {/* <Pressable
-            style={[styles.profileScreenDetailsContainer]}
-            onPress={() => navigation.navigate("OfferRewardsDetails")}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <GiftIcon color={"#4870F4"} size={hp(5)} />
-              <Text style={styles.contextName}>Rewards & Offers</Text>
-            </View>
-            <ChevronRightIcon
-              color={"#4870F4"}
-              size={hp(3.5)}
-              strokeWidth={4.5}
-            />
-          </Pressable> */}
-
-          {/* Settings and policy button */}
-
-          {/* <Pressable
-            style={[styles.profileScreenDetailsContainer]}
-            onPress={() => navigation.navigate("Settings")}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CogIcon color={"#4870F4"} size={hp(5)} />
-              <Text style={styles.contextName}>
-                Settings & Privacy Policies
-              </Text>
-            </View>
-            <ChevronRightIcon
-              color={"#4870F4"}
-              size={hp(3.5)}
-              strokeWidth={4.5}
-            />
-          </Pressable> */}
-
-          {/* Payment and shipping details button */}
-
-          {/* <Pressable
-            style={[
-              styles.profileScreenDetailsContainer,
-              { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
-            ]}
-            onPress={() => navigation.navigate("PaymentShippingDetails")}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CurrencyRupeeIcon color={"#4870F4"} size={hp(5)} />
-              <Text style={styles.contextName}>Business Details</Text>
-            </View>
-            <ChevronRightIcon
-              color={"#4870F4"}
-              size={hp(3.5)}
-              strokeWidth={4.5}
-            />
-          </Pressable> */}
-        </View>
-
-        {/* help desk container starts */}
-
-        <View style={styles.helpDeskContainer}>
-          <Text style={styles.helpDeskText}>Need Help</Text>
-        </View>
-
-        <View
-          style={[
-            styles.profileScreenDetailsContainer,
-            {
-              borderTopLeftRadius: 9,
-              borderTopRightRadius: 9,
-              marginTop: hp(2),
-            },
-          ]}
+              {/* <Pressable
+          style={[styles.profileScreenDetailsContainer]}
+          onPress={() => navigation.navigate("OfferRewardsDetails")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image
-              source={require("../assets/whatsapp.png")}
-              style={styles.whatsapp}
-            />
-            <Text style={styles.contextName}>Reach Us</Text>
+            <GiftIcon color={"#4870F4"} size={hp(5)} />
+            <Text style={styles.contextName}>Rewards & Offers</Text>
           </View>
-          <TouchableOpacity
-            style={styles.callContainer}
-            onPress={connectionToWhatsapp}
-          >
-            <Text style={styles.callText}>Chat</Text>
-          </TouchableOpacity>
-        </View>
-        <View
+          <ChevronRightIcon
+            color={"#4870F4"}
+            size={hp(3.5)}
+            strokeWidth={4.5}
+          />
+        </Pressable> */}
+
+              {/* Settings and policy button */}
+
+              {/* <Pressable
+          style={[styles.profileScreenDetailsContainer]}
+          onPress={() => navigation.navigate("Settings")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <CogIcon color={"#4870F4"} size={hp(5)} />
+            <Text style={styles.contextName}>
+              Settings & Privacy Policies
+            </Text>
+          </View>
+          <ChevronRightIcon
+            color={"#4870F4"}
+            size={hp(3.5)}
+            strokeWidth={4.5}
+          />
+        </Pressable> */}
+
+              {/* Payment and shipping details button */}
+
+              {/* <Pressable
           style={[
             styles.profileScreenDetailsContainer,
             { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
           ]}
+          onPress={() => navigation.navigate("PaymentShippingDetails")}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
-            <Text style={styles.contextName}>support@b2bhubindia.com</Text>
+            <CurrencyRupeeIcon color={"#4870F4"} size={hp(5)} />
+            <Text style={styles.contextName}>Business Details</Text>
           </View>
-          <TouchableOpacity
-            style={styles.callContainer}
-            onPress={connectionToWhatsapp}
-          >
-            <Text style={styles.callText}>Mail</Text>
-          </TouchableOpacity>
-        </View>
+          <ChevronRightIcon
+            color={"#4870F4"}
+            size={hp(3.5)}
+            strokeWidth={4.5}
+          />
+        </Pressable> */}
+            </View>
 
-        <TouchableOpacity style={styles.logoutContainer} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+            {/* help desk container starts */}
+
+            <View style={styles.helpDeskContainer}>
+              <Text style={styles.helpDeskText}>Need Help</Text>
+            </View>
+
+            <View
+              style={[
+                styles.profileScreenDetailsContainer,
+                {
+                  borderTopLeftRadius: 9,
+                  borderTopRightRadius: 9,
+                  marginTop: hp(2),
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Image
+                  source={require("../assets/whatsapp.png")}
+                  style={styles.whatsapp}
+                />
+                <Text style={styles.contextName}>Reach Us</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.callContainer}
+                onPress={connectionToWhatsapp}
+              >
+                <Text style={styles.callText}>Chat</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={[
+                styles.profileScreenDetailsContainer,
+                { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
+              ]}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
+                <Text style={styles.contextName}>support@b2bhubindia.com</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.callContainer}
+                onPress={connectionToWhatsapp}
+              >
+                <Text style={styles.callText}>Mail</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              style={styles.logoutContainer}
+              onPress={handleLogout}
+            >
+              <Text style={styles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      )}
+    </>
   );
 };
 

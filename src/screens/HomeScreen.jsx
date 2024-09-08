@@ -38,12 +38,16 @@ import { Cookie_400Regular } from "@expo-google-fonts/cookie";
 import Footer from "../components/Footer";
 import { Modal } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import AppLoading from "expo-app-loading";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [language, setLanguage] = useState("English");
   const [languageHeader, setLanguageHeader] = useState("Select Language");
+  const [isLoading, setIsLoading] = useState(false);
+
   const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
 
@@ -63,9 +67,16 @@ const HomeScreen = () => {
     navigation.navigate("Profile");
   };
 
+  const navigateAppLoader = () => {
+    navigation.navigate("Apploader");
+  };
+
+  // user name details
+
   let name = "John";
   let userName = name.toUpperCase();
 
+  // language details
   const tamilLanguage = () => {
     setLanguage("தமிழ்");
     setLanguageHeader("மொழியை தேர்ந்தெடுங்கள்");
@@ -89,6 +100,7 @@ const HomeScreen = () => {
     setLanguageHeader("మీ భాషను ఎంచుకోండి");
     hide();
   };
+
   const LanguageModal = ({ visible, setVisible }) => {
     return (
       <Modal
@@ -97,7 +109,7 @@ const HomeScreen = () => {
         onRequestClose={hide}
         transparent
       >
-        <SafeAreaView style={{ alignItems: "center", marginTop: hp(32) }}>
+        <SafeAreaView style={styles.safeAreaContent}>
           <View style={styles.languageModalContainer}>
             <View>
               <TouchableOpacity>
@@ -153,100 +165,114 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
-      <LanguageModal visible={modalVisible} setVisible={setModalVisible} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContainer}
-      >
-        <View style={styles.avatarContainer}>
-          <Pressable style={styles.logoContainer}>
-            <Image
-              source={require("../assets/logo.png")}
-              style={styles.logoImage}
-            />
-          </Pressable>
-          <Pressable onPress={profileScreen}>
-            <Image
-              source={require("../assets/profileImage.png")}
-              style={styles.avatarImage}
-            />
-          </Pressable>
-        </View>
-
-        <View style={styles.headerContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
+    <>
+      {isLoading ? (
+        <AppLoading>
+          <AppLoaderAnimation />
+        </AppLoading>
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="auto" backgroundColor="white" />
+          <LanguageModal visible={modalVisible} setVisible={setModalVisible} />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollViewContainer}
           >
-            <View>
-              <Text style={styles.userName}>Hello, {userName}</Text>
-              <View style={styles.iconContainer}>
-                <MapPinIcon size={hp(2)} color="#f59e0b" />
-                <Text style={{ fontSize: wp(4), color: "#f59e0b" }}>
-                  Chennai
-                </Text>
-              </View>
+            <View style={styles.avatarContainer}>
+              <Pressable style={styles.logoContainer}>
+                <Image
+                  source={require("../assets/logo.png")}
+                  style={styles.logoImage}
+                />
+              </Pressable>
+              <Pressable onPress={profileScreen}>
+                <Image
+                  source={require("../assets/profileImage.png")}
+                  style={styles.avatarImage}
+                />
+              </Pressable>
             </View>
-            <View>
-              <View style={{ flexDirection: "row" }}>
-                <LanguageIcon size={hp(2)} color="#f59e0b" />
-                <Text style={{ color: "#475569" }}>Language</Text>
+
+            <View style={styles.headerContainer}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <View>
+                  <Text style={styles.userName}>Hello, {userName}</Text>
+                  <View style={styles.iconContainer}>
+                    <MapPinIcon size={hp(2)} color="#f59e0b" />
+                    <Text style={{ fontSize: wp(4), color: "#f59e0b" }}>
+                      Chennai
+                    </Text>
+                  </View>
+                </View>
+                <View>
+                  <Pressable
+                    style={{ flexDirection: "row" }}
+                    onPress={navigateAppLoader}
+                  >
+                    <LanguageIcon size={hp(2)} color="#f59e0b" />
+                    <Text style={{ color: "#475569" }}>Language</Text>
+                  </Pressable>
+                  <TouchableOpacity onPress={() => setModalVisible(show)}>
+                    <Text style={{ color: "#f59e0b", textAlign: "right" }}>
+                      {language}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <TouchableOpacity onPress={() => setModalVisible(show)}>
-                <Text style={{ color: "#f59e0b", textAlign: "right" }}>
-                  {language}
-                </Text>
+              <View>
+                <Text style={styles.punchOne}>Start your business</Text>
+              </View>
+              <Text style={styles.punchTwo}>
+                From your <Text style={styles.city}>City</Text>
+              </Text>
+
+              {/* <View>
+          <LottieView
+            style={styles.lottieIcon}
+            source={require("../assets/lottie/welcomeLottie.json")}
+            autoPlay
+            loop
+          />
+          <Text>Lottie icon</Text>
+        </View> */}
+            </View>
+
+            {/* Search bar */}
+            <Pressable
+              style={styles.searchBarContainer}
+              onPress={() => navigation.navigate("Search Bar")}
+            >
+              <Text style={styles.searchBarText}>Search </Text>
+
+              <TouchableOpacity style={styles.searchIconContainer}>
+                <MagnifyingGlassIcon
+                  size={hp(2.5)}
+                  strokeWidth={3}
+                  color="grey"
+                />
               </TouchableOpacity>
-            </View>
-          </View>
-          <View>
-            <Text style={styles.punchOne}>Start your business</Text>
-          </View>
-          <Text style={styles.punchTwo}>
-            From your <Text style={styles.city}>City</Text>
-          </Text>
+            </Pressable>
 
-          {/* <View>
-            <LottieView
-              style={styles.lottieIcon}
-              source={require("../assets/lottie/welcomeLottie.json")}
-              autoPlay
-              loop
+            <Categories
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
             />
-            <Text>Lottie icon</Text>
-          </View> */}
+            <BannerOne />
+            <Product
+              category={categoriesData}
+              productActiveData={activeCategory}
+              setProductActiveData={setActiveCategory}
+            />
+          </ScrollView>
         </View>
-
-        {/* Search bar */}
-        <Pressable
-          style={styles.searchBarContainer}
-          onPress={() => navigation.navigate("Search Bar")}
-        >
-          <Text style={styles.searchBarText}>Search </Text>
-
-          <TouchableOpacity style={styles.searchIconContainer}>
-            <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color="grey" />
-          </TouchableOpacity>
-        </Pressable>
-
-        <Categories
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-        />
-        <BannerOne />
-        <Product
-          category={categoriesData}
-          productActiveData={activeCategory}
-          setProductActiveData={setActiveCategory}
-        />
-      </ScrollView>
-      
-    </View>
+      )}
+    </>
   );
 };
 
@@ -350,6 +376,16 @@ const styles = StyleSheet.create({
     padding: 12,
   },
 
+  safeAreaContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: wp(100),
+    height: hp(100),
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
+  },
   languageModalContainer: {
     width: wp(80),
     backgroundColor: "#f59e0b",

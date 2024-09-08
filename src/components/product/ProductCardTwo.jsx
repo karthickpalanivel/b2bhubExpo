@@ -61,15 +61,10 @@ const ProductCardTwo = ({ props }) => {
         </View>
         <View style={styles.details}>
           <View style={styles.textDetails}>
-            <Text style={styles.productName}>
-              {props.name.substring(0, 9) + "..."}
-            </Text>
+            <Text style={styles.productName}>{props.name.substring(0, 9)}</Text>
 
             <View>
-              <Text style={styles.offerPrice}>
-                ₹{calculatePrice(props.price, props.offer)}/ Kg
-              </Text>
-              
+              <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
             </View>
           </View>
           <View style={styles.ratingImage}>

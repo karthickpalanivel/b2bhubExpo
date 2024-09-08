@@ -16,10 +16,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { XCircleIcon } from "react-native-heroicons/outline";
+import { StatusBar } from "expo-status-bar";
+import AppLoading from "expo-app-loading";
+import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import { CompanyData } from "../../data/CompanyData";
 
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
-
   const show = () => setVisible(true);
   const hide = () => setVisible(false);
   const changeValue = () => {
@@ -33,6 +36,7 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
 
   return (
     <View style={styles.detailBarContainer}>
+      <StatusBar style="light" backgroundColor="#4870F4" />
       <View>
         <Text style={{ color: "white" }}>{topic}</Text>
         <Text style={styles.value}>{value}</Text>
@@ -82,67 +86,77 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
 };
 
 const AccountSettings = () => {
-  const [userName, setUserName] = useState("John Wick");
-  const [phone, setPhone] = useState("9856743102");
-  const [email, setEmail] = useState("vtsretailer@vts.com");
-  const [city, setCity] = useState("Chennai");
-  const [password, setPassword] = useState("123324345436");
-  const [companyName, setCompanyName] = useState("VTS Retailers");
+  // const [userName, setUserName] = useState("John Wick");
+  const [phone, setPhone] = useState(CompanyData.phone);
+  const [email, setEmail] = useState(CompanyData.email);
+  // const [city, setCity] = useState("Chennai");
+  const [gstNumber, setGstNumber] = useState(CompanyData.gstNumber);
+  const [companyName, setCompanyName] = useState(CompanyData.companyName);
+  const [panNumber, setPanNumber] = useState(CompanyData.panNumber);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <View>
-      <ProfileHeaderLayout header="Accounts" />
-      <ScrollView>
-        <View
-          style={{
-            alignItems: "center",
-            marginTop: hp(5),
-          }}
-        >
-          <View style={styles.profileImageContainer}>
-            <Image
-              source={require("../../assets/profileImage.png")}
-              style={styles.avatarImage}
-            />
-          </View>
+    <>
+      {isLoading ? (
+        <AppLoading>
+          <AppLoaderAnimation />
+        </AppLoading>
+      ) : (
+        <View>
+          <ProfileHeaderLayout header="Accounts" />
+          <ScrollView>
+            <View
+              style={{
+                alignItems: "center",
+                marginTop: hp(5),
+              }}
+            >
+              <View style={styles.profileImageContainer}>
+                <Image
+                  source={require("../../assets/profileImage.png")}
+                  style={styles.avatarImage}
+                />
+              </View>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <View style={styles.detailsBar}>
+                <DetailsBar
+                  topic={"Company Name"}
+                  value={companyName}
+                  setValue={setCompanyName}
+                  edit={true}
+                />
+                <DetailsBar
+                  topic={"Phone"}
+                  value={phone}
+                  setValue={setPhone}
+                  edit={true}
+                />
+                <DetailsBar
+                  topic={"Email"}
+                  value={email}
+                  setValue={setEmail}
+                  edit={true}
+                />
+                
+                <DetailsBar
+                  topic={"GST Number"}
+                  value={gstNumber}
+                  setValue={setGstNumber}
+                  edit={false}
+                />
+                <DetailsBar
+                  topic={"Pan Number"}
+                  value={panNumber}
+                  setValue={setPanNumber}
+                  edit={false}
+                />
+              </View>
+            </View>
+          </ScrollView>
         </View>
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.detailsBar}>
-            <DetailsBar
-              topic={"Company Name"}
-              value={companyName}
-              setValue={setCompanyName}
-              edit={true}
-            />
-            <DetailsBar
-              topic={"Phone"}
-              value={phone}
-              setValue={setPhone}
-              edit={true}
-            />
-            <DetailsBar
-              topic={"Email"}
-              value={email}
-              setValue={setEmail}
-              edit={true}
-            />
-            <DetailsBar
-              topic={"Name"}
-              value={userName}
-              setValue={setUserName}
-              edit={true}
-            />
-            <DetailsBar topic={"Pan"} value={"ASDFC*****"} edit={false} />
-            <DetailsBar
-              topic={"GST Number"}
-              value={password}
-              setValue={setPassword}
-              edit={false}
-            />
-          </View>
-        </View>
-      </ScrollView>
-    </View>
+      )}
+    </>
   );
 };
 

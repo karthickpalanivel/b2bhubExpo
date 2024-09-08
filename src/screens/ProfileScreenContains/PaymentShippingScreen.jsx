@@ -8,10 +8,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
 import { XCircleIcon } from "react-native-heroicons/solid";
@@ -31,7 +28,15 @@ import {
   BuildingOfficeIcon,
   BanknotesIcon,
 } from "react-native-heroicons/solid";
-import { shadow } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+
+
+
 
 const PaymentShippingScreen = () => {
   const navigation = useNavigation();
@@ -49,7 +54,9 @@ const PaymentShippingScreen = () => {
   };
   return (
     <View>
+      <StatusBar style="auto" backgroundColor="#4870F4" />
       <ProfileHeaderLayout header={"Business Details"} />
+
       <View style={styles.detailBarContainer}>
         <Modal
           visible={visible}

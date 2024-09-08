@@ -1,4 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Modal } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import { orderData } from "../../data/OrderData";
@@ -8,13 +12,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { StatusBar } from "expo-status-bar";
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
-  const[visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(true);
   const navigation = useNavigation();
   return (
-    <View>
+    <View style={styles.container}>
       <ProfileHeaderLayout header={"Deliveries & Orders"} />
+      <StatusBar style="light" backgroundColor="#4870F4" />
       {orderData.length !== 0 ? (
         <Text style={styles.orderHeader}>Orders</Text>
       ) : (
@@ -40,8 +46,6 @@ const DeliveryScreen = () => {
           </View>
         </>
       )}
-
-      
     </View>
   );
 };
@@ -51,7 +55,7 @@ export default DeliveryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#fefefe",
   },
   imageCard: {
     width: wp(100),

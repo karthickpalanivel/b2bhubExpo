@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  Pressable,
   ScrollView,
 } from "react-native";
 import {
@@ -17,8 +18,10 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import ShopDetails from "./ShopDetails";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
-
+import AppLoading from "expo-app-loading";
+import LottieView from "lottie-react-native";
 const { width } = Dimensions.get("window");
+import { StatusBar } from "expo-status-bar";
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
@@ -40,56 +43,70 @@ const SignUpScreen = () => {
   };
 
   return (
-    <Animated.View
-      entering={FadeInDown.delay(200).duration(1500).springify().damping(12)}
-      style={styles.full}
-    >
-      <ScrollView>
-        <View>
-          <View style={styles.container}>
-            <Image
-              source={require("../../assets/logo.png")}
-              style={{ height: 120, width: 120 }}
-            />
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <ChevronLeftIcon size={hp(3.5)} color={"black"} />
-            <Text style={styles.title}>Create Account</Text>
-          </View>
-          <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-            Email
-          </Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            placeholderTextColor="#999"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            placeholderTextColor="#999"
-            secureTextEntry
-          />
-          <Text style={{ width: width * 0.8, fontSize: 14 }}>Phone Number</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Phone Number"
-            value={phone}
-            onChangeText={setPhone}
-            placeholderTextColor="#999"
-            keyboardType="phone-pad"
-            maxLenght={10}
-            inputMode="tel"
-          />
-        </View>
-        {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <>
+      {isLoading ? (
+        <AppLoading>
+          <View style={styles.appLoading}></View>
+        </AppLoading>
+      ) : (
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .duration(1500)
+            .springify()
+            .damping(12)}
+          style={styles.full}
+        >
+          <StatusBar style="auto" backgroundColor="white" />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View>
+              <View style={styles.container}>
+                <Image
+                  source={require("../../assets/logo.png")}
+                  style={{ height: wp(40), width: wp(40) }}
+                />
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Pressable onPress={navigateToLogin}>
+                  <ChevronLeftIcon size={hp(3.5)} color={"black"} />
+                </Pressable>
+                <Text style={styles.title}>Create Account</Text>
+              </View>
+              <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
+                Email
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                placeholderTextColor="#999"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+              <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                placeholderTextColor="#999"
+                secureTextEntry
+              />
+              <Text style={{ width: width * 0.8, fontSize: 14 }}>
+                Phone Number
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                value={phone}
+                onChangeText={setPhone}
+                placeholderTextColor="#999"
+                keyboardType="phone-pad"
+                maxLenght={10}
+                inputMode="tel"
+              />
+            </View>
+            {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity style={styles.button} onPress={navigateToShopDetails}>
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
@@ -97,58 +114,62 @@ const SignUpScreen = () => {
           <Text style={styles.toggleText}>Already Have a account?</Text>
         </TouchableOpacity>
       </View> */}
-        <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-          Company Name
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Company Name"
-          placeholderTextColor="#999"
-          value={companyName}
-          onChangeText={setCompanyName}
-          keyboardType="email-address"
-          className="shopName"
-        />
-        <Text style={{ width: width * 0.8, fontSize: 14 }}>GST Number</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="GST Number"
-          placeholderTextColor="#999"
-          value={gstNumber}
-          onChangeText={setGstNumber}
-          className="gstNumber"
-        />
-        <Text style={{ width: width * 0.8, fontSize: 14 }}>PAN number</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="PAN Number"
-          value={panNumber}
-          onChangeText={setPanNumber}
-          placeholderTextColor="#999"
-          className="panNumber"
-        />
+            <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
+              Company Name
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Company Name"
+              placeholderTextColor="#999"
+              value={companyName}
+              onChangeText={setCompanyName}
+              keyboardType="email-address"
+              className="shopName"
+            />
+            <Text style={{ width: width * 0.8, fontSize: 14 }}>GST Number</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="GST Number"
+              placeholderTextColor="#999"
+              value={gstNumber}
+              onChangeText={setGstNumber}
+              className="gstNumber"
+            />
+            <Text style={{ width: width * 0.8, fontSize: 14 }}>PAN number</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="PAN Number"
+              value={panNumber}
+              onChangeText={setPanNumber}
+              placeholderTextColor="#999"
+              className="panNumber"
+            />
 
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <TouchableOpacity style={styles.button} onPress={navigateToHome}>
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <TouchableOpacity style={styles.toggleButton} onPress={navigateToLogin}>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <TouchableOpacity style={styles.button} onPress={navigateToHome}>
+                <Text style={styles.buttonText}>Sign Up</Text>
+              </TouchableOpacity>
+            </View>
+            {/* <TouchableOpacity style={styles.toggleButton} onPress={navigateToLogin}>
         <Text style={styles.toggleText}>Already Have a account?</Text>
       </TouchableOpacity> */}
-      </ScrollView>
-    </Animated.View>
+          </ScrollView>
+        </Animated.View>
+      )}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   full: {
     flex: 1,
+
     backgroundColor: "#ffffff",
     justifyContent: "center",
     alignItems: "center",
   },
   container: {
+    marginTop: wp(5),
     alignItems: "center",
   },
 
@@ -159,8 +180,8 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   input: {
-    width: width * 0.8,
-    height: 50,
+    width: wp(80),
+    height: wp(10),
     backgroundColor: "#f5f5f5",
     borderRadius: 8,
     paddingHorizontal: 15,
