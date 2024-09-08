@@ -33,7 +33,7 @@ const OrderScreen = ({ route }) => {
       return item?._id === params?._id;
     });
     setProduct(getProduct);
-    console.log(getProduct);
+    // console.log(getProduct);
   }, [params?._id]);
 
   const goback = () => {

@@ -16,10 +16,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import ShopDetails from "./ShopDetails";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import AppLoading from "expo-app-loading";
-import LottieView from "lottie-react-native";
 const { width } = Dimensions.get("window");
 import { StatusBar } from "expo-status-bar";
 

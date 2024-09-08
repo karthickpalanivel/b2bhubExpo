@@ -43,7 +43,7 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     navigation.navigate("Login");
-    console.log("Logout button clicked");
+    // console.log("Logout button clicked");
   };
 
   const goback = () => {
@@ -51,7 +51,7 @@ const ProfileScreen = () => {
   };
 
   const connectionToWhatsapp = () => {
-    console.log("whatsapp");
+    // console.log("whatsapp");
   };
 
   // logic from backend need to be applied

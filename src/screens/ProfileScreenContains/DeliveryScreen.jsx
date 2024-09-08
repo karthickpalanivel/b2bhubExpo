@@ -30,7 +30,7 @@ const DeliveryScreen = () => {
         orderData?.map((item) => {
           return (
             <>
-              <OrderCard props={item} />
+              <OrderCard props={item} key={item._id}/>
             </>
           );
         })

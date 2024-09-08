@@ -213,8 +213,7 @@ const HomeScreen = () => {
                 <View>
                   <Pressable
                     style={{ flexDirection: "row" }}
-                    onPress={navigateAppLoader}
-                  >
+                    >
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569" }}>Language</Text>
                   </Pressable>

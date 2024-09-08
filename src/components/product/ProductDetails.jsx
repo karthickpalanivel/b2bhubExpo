@@ -83,7 +83,7 @@ const ProductDetails = ({ route }) => {
     {
       productName.includes(product?.pictureName) && setData(true);
     }
-    console.log(getProduct);
+    // console.log(getProduct);
 
     setTimeout(() => {
       setModalVisible(false);

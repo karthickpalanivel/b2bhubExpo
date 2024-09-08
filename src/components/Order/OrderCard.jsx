@@ -30,7 +30,6 @@ const OrderCard = ({ props }) => {
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-
             <View>
               <Text style={styles.completed}> Completed</Text>
             </View>
@@ -57,7 +56,6 @@ const OrderCard = ({ props }) => {
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-
             <View>
               <Text style={styles.process}> Under Process</Text>
             </View>

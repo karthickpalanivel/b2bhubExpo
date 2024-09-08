@@ -16,12 +16,12 @@ const ProductCardTwo = ({ props }) => {
   };
   // utilities
   const orderNow = () => {
-    console.log(props.name);
+    // console.log(props.name);
     navigation.navigate("Cart");
   };
 
   const addedToCart = () => {
-    console.log(props);
+    // console.log(props);
   };
 
   const onMoreDetails = (id) => {
