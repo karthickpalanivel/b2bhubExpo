@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  BackHandler,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -20,6 +21,7 @@ import { ChevronLeftIcon } from "react-native-heroicons/outline";
 const { width } = Dimensions.get("window");
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
@@ -40,6 +42,18 @@ const SignUpScreen = () => {
     navigation.navigate("Home");
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [])
+  );
+
   return (
     <>
       {isLoading ? (
@@ -54,22 +68,29 @@ const SignUpScreen = () => {
         >
           <StatusBar style="auto" backgroundColor="white" />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View>
-              <View style={styles.container}>
-                <Pressable onPress={navigateToLogin}>
-                  <ChevronLeftIcon
-                    size={hp(3.5)}
-                    color={"white"}
-                    style={styles.icon}
-                  />
-                </Pressable>
-                <Image
-                  source={require("../../assets/logo.png")}
-                  style={styles.logo}
+            <View style={styles.container}>
+              <Pressable onPress={navigateToLogin}>
+                <ChevronLeftIcon
+                  size={hp(3.5)}
+                  color={"white"}
+                  style={styles.icon}
                 />
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={styles.title}>Create Account</Text>
+              </Pressable>
+              <Image
+                source={require("../../assets/logo.png")}
+                style={styles.logo}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginVertical: wp(2),
+                }}
+              >
+                <Text style={styles.title}>Register</Text>
               </View>
 
               {/* <Text style={styles.label}>Email</Text> */}
@@ -104,55 +125,64 @@ const SignUpScreen = () => {
                 maxLenght={10}
                 inputMode="tel"
               />
-            </View>
-            {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <TouchableOpacity style={styles.button} onPress={navigateToShopDetails}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.toggleButton} onPress={navigateToLogin}>
-          <Text style={styles.toggleText}>Already Have a account?</Text>
-        </TouchableOpacity>
-      </View> */}
 
-            {/* <Text style={styles.label}>Company Name</Text> */}
-            <TextInput
-              style={styles.input}
-              placeholder="Company Name"
-              placeholderTextColor="#999"
-              value={companyName}
-              onChangeText={setCompanyName}
-              keyboardType="email-address"
-              className="shopName"
-            />
+              {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <TouchableOpacity style={styles.button} onPress={navigateToShopDetails}>
+                  <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.toggleButton} onPress={navigateToLogin}>
+                  <Text style={styles.toggleText}>Already Have a account?</Text>
+                </TouchableOpacity>
+                </View> */}
 
-            {/* <Text style={styles.label}>GST Number</Text> */}
-            <TextInput
-              style={styles.input}
-              placeholder="GST Number"
-              placeholderTextColor="#999"
-              value={gstNumber}
-              onChangeText={setGstNumber}
-              className="gstNumber"
-            />
+              {/* <Text style={styles.label}>Company Name</Text> */}
+              <TextInput
+                style={styles.input}
+                placeholder="Company Name"
+                placeholderTextColor="#999"
+                value={companyName}
+                onChangeText={setCompanyName}
+                keyboardType="email-address"
+                className="shopName"
+              />
 
-            {/* <Text style={styles.label}>PAN number</Text> */}
-            <TextInput
-              style={styles.input}
-              placeholder="PAN Number"
-              value={panNumber}
-              onChangeText={setPanNumber}
-              placeholderTextColor="#999"
-              className="panNumber"
-            />
+              {/* <Text style={styles.label}>GST Number</Text> */}
+              <TextInput
+                style={styles.input}
+                placeholder="GST Number"
+                placeholderTextColor="#999"
+                value={gstNumber}
+                onChangeText={setGstNumber}
+                className="gstNumber"
+              />
 
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <TouchableOpacity style={styles.button} onPress={navigateToHome}>
-                <Text style={styles.buttonText}>Sign Up</Text>
+              {/* <Text style={styles.label}>PAN number</Text> */}
+              <TextInput
+                style={styles.input}
+                placeholder="PAN Number"
+                value={panNumber}
+                onChangeText={setPanNumber}
+                placeholderTextColor="#999"
+                className="panNumber"
+              />
+
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={navigateToHome}
+                >
+                  <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                style={styles.toggleButton}
+                onPress={navigateToLogin}
+              >
+                <Text style={styles.toggleText}>
+                  Already Have a account? Login here
+                </Text>
               </TouchableOpacity>
             </View>
-            {/* <TouchableOpacity style={styles.toggleButton} onPress={navigateToLogin}>
-        <Text style={styles.toggleText}>Already Have a account?</Text>
-      </TouchableOpacity> */}
           </ScrollView>
         </Animated.View>
       )}
@@ -167,18 +197,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  
   container: {
     marginTop: hp(8),
-
     flexDirection: "row",
+  },
+
+  inputContainer: {
+    width: wp(90),
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingBottom: wp(10),
+    marginTop: wp(10),
+    borderRadius: wp(5),
   },
 
   logo: {
     height: wp(30),
     width: wp(30),
     borderRadius: 999,
-    marginLeft: wp(18),
+    marginLeft: wp(22),
   },
+
   label: {
     width: width * 0.8,
     fontSize: 14,
@@ -187,10 +227,13 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: wp(7),
+
     fontWeight: "bold",
     marginVertical: wp(2.5),
-    color: "#fff",
+    color: "#D53C46",
+    textAlign: "center",
   },
+
   input: {
     width: wp(80),
     height: wp(10),
@@ -200,7 +243,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderColor: "#999",
     borderWidth: 1,
+    elevation: 1,
   },
+
   // password: {
   //   fontSize: 10,
   //   fontWeight: "bold",
@@ -209,12 +254,14 @@ const styles = StyleSheet.create({
   //   textAlign: "right",
   //   justifyContent: "flex-end",
   // },
+
+
   button: {
     backgroundColor: "#fff",
     padding: wp(3),
     borderWidth: 0.1,
     elevation: 2,
-    width: wp(80),
+    width: wp(70),
     borderRadius: 9999,
     marginVertical: wp(2.5),
   },
@@ -225,14 +272,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
   toggleButton: {
     marginTop: 5,
   },
+  
   toggleText: {
-    fontSize: wp(4),
+    fontSize: wp(3.8),
     color: "#D53C46",
     fontWeight: "bold",
+    textAlign: "left",
   },
+
 });
 
 export default SignUpScreen;

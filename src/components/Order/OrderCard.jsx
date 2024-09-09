@@ -5,10 +5,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 const OrderCard = ({ props }) => {
   return (
-    <View style={styles.orderContainer}>
+    <Animated.View
+      entering={FadeInDown.delay(200)
+      .duration(1500)
+      .springify()
+      .damping(12)} style={styles.orderContainer}>
       {props.paymentVerification ? (
         <>
           <View style={styles.container}>
@@ -62,7 +67,7 @@ const OrderCard = ({ props }) => {
           </View>
         </>
       )}
-    </View>
+    </Animated.View>
   );
 };
 

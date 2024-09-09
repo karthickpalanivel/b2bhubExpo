@@ -205,7 +205,7 @@ const HomeScreen = () => {
                 <View>
                   <Pressable
                     style={{ flexDirection: "row" }}
-                    // onPress={navigation.navigate("Apploader")}
+                    onPress={() => navigation.navigate("Invoice")}
                   >
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569" }}>Language</Text>
@@ -225,14 +225,14 @@ const HomeScreen = () => {
               </Text>
 
               {/* <View>
-          <LottieView
-            style={styles.lottieIcon}
-            source={require("../assets/lottie/welcomeLottie.json")}
-            autoPlay
-            loop
-          />
-          <Text>Lottie icon</Text>
-        </View> */}
+            <LottieView
+              style={styles.lottieIcon}
+              source={require("../assets/lottie/welcomeLottie.json")}
+              autoPlay
+              loop
+            />
+            <Text>Lottie icon</Text>
+          </View> */}
             </View>
 
             {/* Search bar */}
@@ -240,7 +240,7 @@ const HomeScreen = () => {
               style={styles.searchBarContainer}
               onPress={() => navigation.navigate("Search Bar")}
             >
-              <Text style={styles.searchBarText}>Search </Text>
+              <Text style={styles.searchBarText}>Search</Text>
 
               <TouchableOpacity style={styles.searchIconContainer}>
                 <MagnifyingGlassIcon

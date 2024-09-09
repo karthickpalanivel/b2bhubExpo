@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f59e0b",
     paddingVertical: 10,
   },
+  // #f59e0b
   image: {
     width: wp(50),
     height: wp(50),

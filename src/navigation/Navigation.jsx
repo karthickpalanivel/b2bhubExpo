@@ -27,6 +27,10 @@ import PaymentSummary from "../components/product/Payment";
 import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
 import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
+import GenerateReactNativeInvoice from "../components/InVoice/GenerateReactNativeInvoice";
+import PdfGeneration from "../components/InVoice/PdfGeneration";
+
 //variables
 const Stack = createNativeStackNavigator();
 
@@ -37,10 +41,9 @@ export default function Navigation() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
-
         {/* App loader */}
 
-        <Stack.Screen name="Apploader" component={AppLoaderAnimation}/>
+        <Stack.Screen name="Apploader" component={AppLoaderAnimation} />
 
         {/* Bottom Navbar Screens */}
         <Stack.Screen name="Home" component={HomeScreen} />
@@ -57,7 +60,10 @@ export default function Navigation() {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="EntryShopDetails" component={ShopDetails} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Stack.Screen name="OtpConformScreen" component={OTPAndPasswordScreen} />
+        <Stack.Screen
+          name="OtpConformScreen"
+          component={OTPAndPasswordScreen}
+        />
 
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
@@ -77,6 +83,11 @@ export default function Navigation() {
         <Stack.Screen name="EditScreen" component={EditScreen} />
         <Stack.Screen name="PasswordEdit" component={PasswordEditScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+
+        <Stack.Screen name="Invoice" component={PdfGeneration} />
+
+        {/* Sellers Screens */}
+        <Stack.Screen name="SellerHome" component={SellerHomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

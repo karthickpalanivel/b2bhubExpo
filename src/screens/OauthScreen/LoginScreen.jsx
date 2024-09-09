@@ -6,30 +6,35 @@ import {
   TextInput,
   StyleSheet,
   BackHandler,
-  Dimensions,
   Image,
+  SafeAreaView,
+  Alert,
 } from "react-native";
+
+import Toggle from "react-native-toggle-element";
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
-const { width } = Dimensions.get("window");
-import {
-  ChevronLeftIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from "react-native-heroicons/outline";
+import AppLoading from "expo-app-loading";
+import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
-import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import Animated, { FadeInRight } from "react-native-reanimated";
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowpassword] = useState(true);
-  const [showForgot, setShowForgot] = useState(false);
+  // const [showPassword, setShowpassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleValue, setToggleValue] = useState(false); //false->buyer,true->seller
+  const [sellerPassword, setSellerPassword] = useState(""); // State to store password
+
+  const [viewPassword, setViewPassword] = useState(true); // State to toggle password visibility
+  // const [email, setEmail] = useState(''); // State to store email buyyer
+  const [sellerEmail, setSellerEmail] = useState(""); //state to store email of seller
 
   const navigation = useNavigation();
 
@@ -37,8 +42,28 @@ const LoginScreen = () => {
     navigation.navigate("SignUp");
   };
 
-  const handleLogin = () => {
-    navigation.navigate("Home");
+  const handleBuyerSubmit = () => {
+    if (buyerEmail && password) {
+      // Print email and password to the console
+      console.log("Email:", buyerEmail);
+      console.log("Password:", password);
+      // Optionally, you can show an alert as well
+      navigation.navigate("Home");
+    } else {
+      Alert.alert("Error", "Please enter both email and password.");
+    }
+  };
+
+  const handleSellerSubmit = () => {
+    if (sellerEmail && sellerPassword) {
+      // Print email and password to the console
+      console.log("Email:", sellerEmail);
+      console.log("Password:", sellerPassword);
+      // Optionally, you can show an alert as well
+      navigation.navigate("SellerHome");
+    } else {
+      Alert.alert("Error", "Please enter both email and password.");
+    }
   };
 
   const navigateToForgotPassword = () => {
@@ -56,165 +81,245 @@ const LoginScreen = () => {
     }, [])
   );
 
-  const handleShowPassword = () => {
-    setShowpassword(!showPassword);
-  };
-
   return (
     <>
+      <StatusBar style={"light"} />
       {isLoading ? (
-        <AppLoaderAnimation />
+        <AppLoading />
       ) : (
-        <View style={styles.full}>
-          <StatusBar style="auto" backgroundColor="white"/>
-          <View>
-            <ChevronLeftIcon size={wp(6)} color={"grey"} style={styles.icon} />
-            <View style={styles.container}>
-              <Image
-                source={require("../../assets/logo.png")}
-                style={{ height: wp(30), width: wp(30) }}
-              />
-            </View>
-            <Text style={styles.title}>Login</Text>
-            <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-              Email
-            </Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="#999"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              autoCapitalize="none"
+        <SafeAreaView style={styles.container}>
+          {/* Add logo */}
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/B2BlogoRounded.png")}
+              style={styles.logo}
             />
-            <Text style={{ width: wp(80), fontSize: wp(5) }}>Password</Text>
-            <View
-              style={{
-                width: wp(80),
-                flexDirection: "row",
-                alignItems: "center",
+          </View>
+
+          {/* style={{textAlign: 'center'}} */}
+          <View style={{ alignItems: "center" }}>
+            <Toggle
+              value={toggleValue}
+              onPress={(newState) => setToggleValue(newState)}
+              leftComponent={<Text>Buyer</Text>}
+              rightComponent={<Text>Seller</Text>}
+              trackBarStyle={{
+                borderColor: "#f7e2e2",
+                backgroundColor: "#f7e2e2",
+                justifyContent: "center",
               }}
-            >
-              <TextInput
-                style={[styles.input, { flex: 1 }]}
-                placeholder="Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                placeholderTextColor="#999"
-                secureTextEntry={showPassword}
-              />
-              <View>
-                <TouchableOpacity onPress={handleShowPassword}>
-                  {showPassword ? (
-                    <EyeSlashIcon
-                      size={wp(5)}
-                      color={"grey"}
-                      style={styles.eyeIcon}
-                    />
-                  ) : (
-                    <EyeIcon
-                      size={wp(5)}
-                      color={"grey"}
-                      style={styles.eyeIcon}
-                    />
-                  )}
+              trackBar={{
+                borderWidth: 2,
+                width: wp(60),
+              }}
+              thumbButton={{
+                width: wp(30),
+                height: hp(5),
+                radius: wp(10),
+
+                activeBackgroundColor: "#fff",
+                inActiveBackgroundColor: "#fff",
+              }}
+            />
+          </View>
+          {!toggleValue ? (
+            <>
+              <View style={styles.loginCard}>
+                <Text style={styles.title}>Buyer Login</Text>
+
+                <Text style={styles.inputName}>Email</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  value={buyerEmail}
+                  onChangeText={(text) => setBuyerEmail(text)} // Capture email input
+                />
+
+                <Text style={styles.inputName}>Password</Text>
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={styles.passwordInput}
+                    placeholder="Password"
+                    secureTextEntry={viewPassword} // Show/hide password
+                    value={password}
+                    onChangeText={(text) => setPassword(text)} // Capture password input
+                  />
+                  <TouchableOpacity
+                    style={styles.eyeIcon}
+                    onPress={() => setViewPassword(!viewPassword)}
+                  >
+                    {viewPassword ? (
+                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                    ) : (
+                      <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                  style={styles.forgetPassword}
+                  onPress={navigateToForgotPassword}
+                >
+                  <Text style={styles.forget}>Forget Password ?</Text>
+                </TouchableOpacity>
+
+                {/* Submit Button */}
+                <TouchableOpacity
+                  style={styles.submitButton}
+                  onPress={handleBuyerSubmit}
+                >
+                  <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
               </View>
-            </View>
-          </View>
-          <View style={{ width: wp(80), marginTop: hp(2) }}>
-            <TouchableOpacity onPress={navigateToForgotPassword}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: "#4870F4",
-                  fontWeight: "bold",
-                }}
+            </>
+          ) : (
+            <>
+              <Animated.View
+                entering={FadeInRight.delay(50)
+                  .duration(1500)
+                  .springify()
+                  .damping(12)}
+                style={styles.loginCard}
               >
-                Forget Password?
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.toggleButton}
-              onPress={navigateToSignUp}
-            >
-              <Text style={styles.toggleText}>
-                Click here to Create a new Account!
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+                <Text style={styles.title}>Seller Login</Text>
+
+                <Text style={styles.inputName}>Email</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  value={sellerEmail}
+                  onChangeText={(text) => setSellerEmail(text)} // Capture email input
+                />
+
+                <Text style={styles.inputName}>Password</Text>
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={styles.passwordInput}
+                    placeholder="Password"
+                    secureTextEntry={viewPassword} // Show/hide password
+                    value={sellerPassword}
+                    onChangeText={(text) => setSellerPassword(text)} // Capture password input
+                  />
+                  <TouchableOpacity
+                    style={styles.eyeIcon}
+                    onPress={() => setViewPassword(!viewPassword)}
+                  >
+                    {viewPassword ? (
+                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                    ) : (
+                      <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                  style={styles.forgetPassword}
+                  onPress={navigateToForgotPassword}
+                >
+                  <Text style={styles.forget}>Forget Password ?</Text>
+                </TouchableOpacity>
+
+                {/* Submit Button */}
+                <TouchableOpacity
+                  style={styles.submitButton}
+                  onPress={handleSellerSubmit}
+                >
+                  <Text style={styles.submitButtonText}>Login</Text>
+                </TouchableOpacity>
+              </Animated.View>
+            </>
+          )}
+        </SafeAreaView>
       )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  full: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   container: {
-    flexDirection: "row",
+    backgroundColor: "#d53c46",
+    height: "100%",
+    alignContent: "center",
+  },
+  logoContainer: {
+    
+    marginTop: hp(10),
+    marginLeft: wp(35),
+    marginBottom: hp(3),
+    borderRadius: 999,
+    borderWidth: 0.1,
+    width: wp(30),
+    height: wp(30),
+  },
+  logo: {
+    width: wp(30),
+    height: wp(30),
+  },
+  loginCard: {
     alignItems: "center",
+    width: wp("88%"),
+    height: hp("48%"),
+    margin: wp("5%"),
+    padding: wp(2),
+    backgroundColor: "#FFFFFF",
+    borderRadius: wp(8),
   },
   title: {
-    fontSize: wp(7),
+    fontSize: wp(8),
+    margin: wp(5),
+    color: "#d53c46",
     fontWeight: "bold",
-    marginVertical: wp(2.5),
-    color: "#333",
   },
-
+  inputName: {
+    width: wp(70),
+    fontSize: wp(4),
+    marginBottom: wp(2),
+  },
   input: {
-    width: wp(80),
-    height: wp(12.5),
-    backgroundColor: "#f5f5f5",
-    borderRadius: wp(2),
-    paddingHorizontal: wp(4),
-    marginVertical: 10,
-    borderColor: "#ddd",
+    borderColor: "gray",
+    width: wp("75%"),
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: wp(2),
+    backgroundColor: "white",
+    elevation: 2,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp("75%"),
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingRight: 10,
+    borderColor: "gray",
+    backgroundColor: "white",
+    elevation: 2,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 10,
   },
   eyeIcon: {
-    position: "absolute",
-    right: wp(2.5),
-    top: hp(-1.5),
+    padding: 10,
   },
-  button: {
-    backgroundColor: "#fff",
-    padding: wp(3),
-    borderWidth: 0.1,
-    elevation: 2,
-    width: wp(80),
-    borderRadius: 9999,
-    marginVertical: wp(2.5),
+  submitButton: {
+    backgroundColor: "#d53c46",
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    marginTop: 10,
   },
-
-  buttonText: {
-    color: "#4870F4",
+  submitButtonText: {
+    color: "white",
     fontSize: wp(4),
-    fontWeight: "bold",
-    textAlign: "center",
   },
-  toggleButton: {
-    marginTop: wp(2),
+  forgetPassword: {
+    marginLeft: wp(45),
+    marginVertical: wp(4),
   },
-  toggleText: {
-    color: "#4870F4",
-    fontSize: wp(4),
-    fontWeight: "bold",
-  },
-  icon: {
-    position: "absolute",
-    top: wp(-20),
-    zIndex: 100,
+  forget: {
+    color: "#d53c46",
   },
 });
 export default LoginScreen;
