@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,10 +17,50 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import ShopDetails from "./ShopDetails";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
-
+import axios from "axios";
 const { width } = Dimensions.get("window");
+import * as Font from "expo-font";
 
 const SignUpScreen = () => {
+
+  async function handleSignup() {
+    await axios
+      .post("https://erp-backend-new-ketl.onrender.com/b2b/customer-registration", {
+        Email:email,
+        PAN: panNumber,
+        gstNo:gstNumber,
+        phoneNo:phone,
+        CompanyName :companyName,
+        Password:password,
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          console.log("success");
+          
+          navigation.navigate("Home");
+        } else window.alert(res.message);
+      })
+      .catch((error) => {
+        window.alert(error);
+        return;
+      });
+  }
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -129,7 +169,7 @@ const SignUpScreen = () => {
         />
 
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <TouchableOpacity style={styles.button} onPress={navigateToHome}>
+          <TouchableOpacity style={styles.button} onPress={()=>handleSignup()}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -154,7 +194,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: wp(7),
-    fontWeight: "bold",
+    fontFamily:"QuicksandBold",
     marginVertical: wp(2.5),
     color: "#333",
   },

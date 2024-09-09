@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,30 +16,63 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
 const { width } = Dimensions.get("window");
 import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "react-native-heroicons/outline";
-import { EntryExitTransition } from "react-native-reanimated";
+import axios from "axios"
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowpassword] = useState(true);
   const [showForgot, setShowForgot] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
+
+  async function handleLogin() {
+    await axios
+      .post("https://erp-backend-new-ketl.onrender.com/b2b/login", {
+        email: email,
+        pwd: password,
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          console.log("success");
+          
+          navigation.navigate("Home");
+        } else window.alert(res.message);
+      })
+      .catch((error) => {
+        window.alert(error);
+        return;
+      });
+  }
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
 
   const navigateToSignUp = () => {
     navigation.navigate("SignUp");
   };
 
-  const handleLogin = () => {
-    navigation.navigate("Home");
-  };
+  
 
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
@@ -63,7 +96,9 @@ const LoginScreen = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading />
+        <View>
+          <Text>Loading</Text>
+        </View>
       ) : (
         <View style={styles.full}>
           <View>
@@ -78,7 +113,7 @@ const LoginScreen = () => {
                 style={{ height: wp(30), width: wp(30) }}
               />
             </View>
-            <Text style={styles.title}>Login</Text>
+            <Text style={[styles.title]}>Login</Text>
             <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
               Email
             </Text>
@@ -133,7 +168,7 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity style={styles.button} onPress={()=>handleLogin()}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -167,6 +202,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: wp(2.5),
     color: "#333",
+    fontFamily:"QuicksandBold",
   },
 
   input: {
@@ -205,7 +241,7 @@ const styles = StyleSheet.create({
   toggleText: {
     color: "#4870F4",
     fontSize: wp(4),
-    fontWeight: "bold",
+    fontFamily:"QuicksandBold"
   },
 });
 export default LoginScreen;
