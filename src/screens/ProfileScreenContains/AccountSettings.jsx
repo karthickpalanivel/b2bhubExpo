@@ -17,7 +17,6 @@ import {
 } from "react-native-responsive-screen";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
-import AppLoading from "expo-app-loading";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
 
@@ -98,9 +97,7 @@ const AccountSettings = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
-          <AppLoaderAnimation />
-        </AppLoading>
+        <AppLoaderAnimation />
       ) : (
         <View>
           <ProfileHeaderLayout header="Accounts" />
@@ -138,7 +135,7 @@ const AccountSettings = () => {
                   setValue={setEmail}
                   edit={true}
                 />
-                
+
                 <DetailsBar
                   topic={"GST Number"}
                   value={gstNumber}

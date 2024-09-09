@@ -17,9 +17,9 @@ import {
 } from "react-native-responsive-screen";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
-import AppLoading from "expo-app-loading";
 const { width } = Dimensions.get("window");
 import { StatusBar } from "expo-status-bar";
+import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
@@ -43,9 +43,7 @@ const SignUpScreen = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
-          <View style={styles.appLoading}></View>
-        </AppLoading>
+        <AppLoaderAnimation />
       ) : (
         <Animated.View
           entering={FadeInDown.delay(200)
@@ -58,20 +56,23 @@ const SignUpScreen = () => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               <View style={styles.container}>
+                <Pressable onPress={navigateToLogin}>
+                  <ChevronLeftIcon
+                    size={hp(3.5)}
+                    color={"white"}
+                    style={styles.icon}
+                  />
+                </Pressable>
                 <Image
                   source={require("../../assets/logo.png")}
-                  style={{ height: wp(40), width: wp(40) }}
+                  style={styles.logo}
                 />
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Pressable onPress={navigateToLogin}>
-                  <ChevronLeftIcon size={hp(3.5)} color={"black"} />
-                </Pressable>
                 <Text style={styles.title}>Create Account</Text>
               </View>
-              <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-                Email
-              </Text>
+
+              {/* <Text style={styles.label}>Email</Text> */}
               <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -81,7 +82,8 @@ const SignUpScreen = () => {
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
-              <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
+
+              {/* <Text style={styles.label}>Password</Text> */}
               <TextInput
                 style={styles.input}
                 placeholder="Password"
@@ -90,9 +92,8 @@ const SignUpScreen = () => {
                 placeholderTextColor="#999"
                 secureTextEntry
               />
-              <Text style={{ width: width * 0.8, fontSize: 14 }}>
-                Phone Number
-              </Text>
+
+              {/* <Text style={styles.label}>Phone Number</Text> */}
               <TextInput
                 style={styles.input}
                 placeholder="Phone Number"
@@ -112,9 +113,8 @@ const SignUpScreen = () => {
           <Text style={styles.toggleText}>Already Have a account?</Text>
         </TouchableOpacity>
       </View> */}
-            <Text style={{ width: width * 0.8, fontSize: 14, marginTop: 2 }}>
-              Company Name
-            </Text>
+
+            {/* <Text style={styles.label}>Company Name</Text> */}
             <TextInput
               style={styles.input}
               placeholder="Company Name"
@@ -124,7 +124,8 @@ const SignUpScreen = () => {
               keyboardType="email-address"
               className="shopName"
             />
-            <Text style={{ width: width * 0.8, fontSize: 14 }}>GST Number</Text>
+
+            {/* <Text style={styles.label}>GST Number</Text> */}
             <TextInput
               style={styles.input}
               placeholder="GST Number"
@@ -133,7 +134,8 @@ const SignUpScreen = () => {
               onChangeText={setGstNumber}
               className="gstNumber"
             />
-            <Text style={{ width: width * 0.8, fontSize: 14 }}>PAN number</Text>
+
+            {/* <Text style={styles.label}>PAN number</Text> */}
             <TextInput
               style={styles.input}
               placeholder="PAN Number"
@@ -161,40 +163,52 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
   full: {
     flex: 1,
-
-    backgroundColor: "#ffffff",
+    backgroundColor: "#D53C46",
     justifyContent: "center",
     alignItems: "center",
   },
   container: {
-    marginTop: wp(5),
-    alignItems: "center",
+    marginTop: hp(8),
+
+    flexDirection: "row",
+  },
+
+  logo: {
+    height: wp(30),
+    width: wp(30),
+    borderRadius: 999,
+    marginLeft: wp(18),
+  },
+  label: {
+    width: width * 0.8,
+    fontSize: 14,
+    color: "white",
   },
 
   title: {
     fontSize: wp(7),
     fontWeight: "bold",
     marginVertical: wp(2.5),
-    color: "#333",
+    color: "#fff",
   },
   input: {
     width: wp(80),
     height: wp(10),
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff",
     borderRadius: 8,
     paddingHorizontal: 15,
     marginVertical: 10,
-    borderColor: "#ddd",
+    borderColor: "#999",
     borderWidth: 1,
   },
-  password: {
-    fontSize: 10,
-    fontWeight: "bold",
-    marginTop: 2,
-    marginHorizontal: 90,
-    textAlign: "right",
-    justifyContent: "flex-end",
-  },
+  // password: {
+  //   fontSize: 10,
+  //   fontWeight: "bold",
+  //   marginTop: 2,
+  //   marginHorizontal: 90,
+  //   textAlign: "right",
+  //   justifyContent: "flex-end",
+  // },
   button: {
     backgroundColor: "#fff",
     padding: wp(3),
@@ -206,7 +220,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "#4870F4",
+    color: "#D53C46",
     fontSize: wp(4),
     fontWeight: "bold",
     textAlign: "center",
@@ -215,8 +229,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   toggleText: {
-    color: "#4870F4",
     fontSize: wp(4),
+    color: "#D53C46",
     fontWeight: "bold",
   },
 });

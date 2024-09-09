@@ -15,7 +15,6 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
-import AppLoading from "expo-app-loading";
 const { width } = Dimensions.get("window");
 import {
   ChevronLeftIcon,
@@ -23,6 +22,7 @@ import {
   EyeSlashIcon,
 } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
+import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -63,7 +63,7 @@ const LoginScreen = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading />
+        <AppLoaderAnimation />
       ) : (
         <View style={styles.full}>
           <StatusBar style="auto" backgroundColor="white"/>

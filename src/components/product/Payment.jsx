@@ -39,9 +39,9 @@ const PaymentSummary = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
+ 
           <AppLoaderAnimation />
-        </AppLoading>
+  
       ) : (
         <ScrollView style={styles.container}>
           <StatusBar backgroundColor="white" />

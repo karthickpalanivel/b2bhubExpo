@@ -32,13 +32,7 @@ import { categoriesData } from "../data/Categories";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BannerOne from "../components/Banner/BannerOne";
 
-// fonts
-import { useFonts } from "expo-font";
-import { Cookie_400Regular } from "@expo-google-fonts/cookie";
-import Footer from "../components/Footer";
 import { Modal } from "react-native";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import AppLoading from "expo-app-loading";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -167,9 +161,7 @@ const HomeScreen = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
-          <AppLoaderAnimation />
-        </AppLoading>
+        <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
           <StatusBar style="auto" backgroundColor="white" />
@@ -213,7 +205,8 @@ const HomeScreen = () => {
                 <View>
                   <Pressable
                     style={{ flexDirection: "row" }}
-                    >
+                    // onPress={navigation.navigate("Apploader")}
+                  >
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569" }}>Language</Text>
                   </Pressable>

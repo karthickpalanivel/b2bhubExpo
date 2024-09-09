@@ -19,7 +19,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Radio from "../components/button/Radio";
 import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
-import AppLoading from "expo-app-loading";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 
 const OrderScreen = ({ route }) => {
@@ -55,9 +54,7 @@ const OrderScreen = ({ route }) => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
-          <AppLoaderAnimation />
-        </AppLoading>
+        <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
           <StatusBar style="auto" backgroundColor="#4870F4" />

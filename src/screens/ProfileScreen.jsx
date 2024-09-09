@@ -13,8 +13,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
-import AppLoading from "expo-app-loading";
 import { CompanyData } from "../data/CompanyData";
 
 import {
@@ -59,9 +57,7 @@ const ProfileScreen = () => {
   return (
     <>
       {isLoading ? (
-        <AppLoading>
-          <AppLoaderAnimation />
-        </AppLoading>
+        <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
           <StatusBar style="light" backgroundColor="#4870F4" />

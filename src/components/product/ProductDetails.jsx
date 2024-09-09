@@ -25,7 +25,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import ProductCardTwo from "./ProductCardTwo";
 import TermsAndConditionsModal from "./TermsandCondition";
-import AppLoading from "expo-app-loading";
+
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 
 //component starts
@@ -135,9 +135,7 @@ const ProductDetails = ({ route }) => {
     <>
       {isLoading ? (
         <>
-          <AppLoading>
-            <AppLoaderAnimation />
-          </AppLoading>
+          <AppLoaderAnimation />
         </>
       ) : (
         <ScrollView style={styles.productDetailContainer}>
