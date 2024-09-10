@@ -18,7 +18,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+        
+      },
+      "package": "com.vts.B2BHubIndia"
     },
     "web": {
       "favicon": "./assets/favicon.png"
