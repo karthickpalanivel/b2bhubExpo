@@ -1,23 +1,45 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View, } from "react-native";
+import React, { useEffect, useState }  from "react";
 import { EyeIcon } from "react-native-heroicons/outline";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import * as Font from "expo-font";
+
 
 const OrderCard = ({ props }) => {
-  return (
-    <View style={styles.orderContainer}>
-      {props.paymentVerification ? (
+
+const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
+
+
+
+  return ( isLoading ? (<View><Text>is Loading</Text></View>): (<View style={styles.orderContainer}>
+      {props.payment_status === 1 ? (
         <>
+        <Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
-            <Text>Order id: {props._id}</Text>
-            <Text>Date: {props.date}</Text>
+            
+            <Text>Order id: {props.orderId}</Text>
+            <Text>Date: {props.date_of_order}</Text>
           </View>
           <View style={styles.container}>
-            <Text>Price: ₹{props.productPrice}</Text>
-            <Text>Quantity: {props.tonsQuantity} tons</Text>
+            <Text>Price: ₹{props.total_amount}</Text>
+            <Text>Quantity: {props.product_quantity} tons</Text>
           </View>
           <View style={styles.container}>
             <View>
@@ -30,7 +52,6 @@ const OrderCard = ({ props }) => {
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-
             <View>
               <Text style={styles.completed}> Completed</Text>
             </View>
@@ -38,13 +59,14 @@ const OrderCard = ({ props }) => {
         </>
       ) : (
         <>
+        <Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
-            <Text>Order id: {props._id}</Text>
-            <Text>Date: {props.date}</Text>
+            <Text>Order id: {props.orderId}</Text>
+            <Text>Date: {props.date_of_order}</Text>
           </View>
           <View style={styles.container}>
-            <Text>Price: ₹{props.productPrice}</Text>
-            <Text>Quantity: {props.tonsQuantity} tons</Text>
+            <Text>Price: ₹{props.total_amount}</Text>
+            <Text>Quantity: {props.product_quantity} tons</Text>
           </View>
           <View style={styles.container}>
             <View>
@@ -57,14 +79,14 @@ const OrderCard = ({ props }) => {
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-
             <View>
               <Text style={styles.process}> Under Process</Text>
             </View>
           </View>
         </>
       )}
-    </View>
+    </View>)
+    
   );
 };
 

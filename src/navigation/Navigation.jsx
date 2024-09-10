@@ -26,6 +26,7 @@ import ShopDetails from "../screens/OauthScreen/ShopDetails";
 import PaymentSummary from "../components/product/Payment";
 import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
 import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 //variables
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,12 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+
+
+        {/* App loader */}
+
+        <Stack.Screen name="Apploader" component={AppLoaderAnimation}/>
+
         {/* Bottom Navbar Screens */}
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Orders" component={OrderScreen} />

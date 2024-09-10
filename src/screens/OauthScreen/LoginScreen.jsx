@@ -18,12 +18,15 @@ import { useFocusEffect } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 const { width } = Dimensions.get("window");
+import axios from "axios";
 import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "react-native-heroicons/outline";
-import axios from "axios"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { EntryExitTransition } from "react-native-reanimated";
+import { StatusBar } from "expo-status-bar";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +46,22 @@ const LoginScreen = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
-          console.log("success");
+          const customer = res.data.user;
+          console.log(customer);
+          try {
+            AsyncStorage.setItem('loginstate','true');
+            AsyncStorage.setItem('userEmail',email);
+            AsyncStorage.setItem('customerId',customer.customerId);
+            AsyncStorage.setItem('companyname',customer.CompanyName);
+            AsyncStorage.setItem('phone',customer.phoneNo);
+            AsyncStorage.setItem('gst',customer.gstNo);
+            AsyncStorage.setItem('email',customer.Email);
+            AsyncStorage.setItem('token',res.data.token)
+            
+          } catch (e) {
+            // saving error
+            console.error(e)
+          }
           
           navigation.navigate("Home");
         } else window.alert(res.message);
@@ -72,8 +90,6 @@ const LoginScreen = () => {
     navigation.navigate("SignUp");
   };
 
-  
-
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
   };
@@ -97,17 +113,14 @@ const LoginScreen = () => {
     <>
       {isLoading ? (
         <View>
-          <Text>Loading</Text>
+          <Text>loading</Text>
         </View>
       ) : (
         <View style={styles.full}>
+          <StatusBar style="auto" backgroundColor="white"/>
           <View>
+            <ChevronLeftIcon size={wp(6)} color={"grey"} style={styles.icon} />
             <View style={styles.container}>
-              <ChevronLeftIcon
-                size={wp(6)}
-                color={"grey"}
-                style={styles.icon}
-              />
               <Image
                 source={require("../../assets/logo.png")}
                 style={{ height: wp(30), width: wp(30) }}
@@ -126,7 +139,7 @@ const LoginScreen = () => {
               onChangeText={(text) => setEmail(text)}
               autoCapitalize="none"
             />
-            <Text style={{ width: width * 0.8, fontSize: 14 }}>Password</Text>
+            <Text style={{ width: wp(80), fontSize: wp(5) }}>Password</Text>
             <View
               style={{
                 width: wp(80),
@@ -140,18 +153,25 @@ const LoginScreen = () => {
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 placeholderTextColor="#999"
-                secureTextEntry={showPassword} // This should now dynamically change
+                secureTextEntry={showPassword}
               />
-              <TouchableOpacity
-                onPress={handleShowPassword}
-                style={{ marginLeft: wp(2) }}
-              >
-                {showPassword ? (
-                  <EyeSlashIcon size={wp(5)} color={"grey"} />
-                ) : (
-                  <EyeIcon size={wp(5)} color={"grey"} />
-                )}
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity onPress={handleShowPassword}>
+                  {showPassword ? (
+                    <EyeSlashIcon
+                      size={wp(5)}
+                      color={"grey"}
+                      style={styles.eyeIcon}
+                    />
+                  ) : (
+                    <EyeIcon
+                      size={wp(5)}
+                      color={"grey"}
+                      style={styles.eyeIcon}
+                    />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           <View style={{ width: wp(80), marginTop: hp(2) }}>
@@ -217,7 +237,7 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: "absolute",
     right: wp(2.5),
-    top: hp(-5.5),
+    top: hp(-1.5),
   },
   button: {
     backgroundColor: "#fff",
@@ -242,6 +262,11 @@ const styles = StyleSheet.create({
     color: "#4870F4",
     fontSize: wp(4),
     fontFamily:"QuicksandBold"
+  },
+  icon: {
+    position: "absolute",
+    top: wp(-20),
+    zIndex: 100,
   },
 });
 export default LoginScreen;

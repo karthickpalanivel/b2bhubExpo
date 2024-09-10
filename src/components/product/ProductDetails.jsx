@@ -17,8 +17,6 @@ import {
   ShoppingCartIcon,
 } from "react-native-heroicons/outline";
 
-import { MapPinIcon, StarIcon } from "react-native-heroicons/solid";
-
 import { HeartIcon } from "react-native-heroicons/solid";
 import {
   widthPercentageToDP as wp,
@@ -27,6 +25,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import ProductCardTwo from "./ProductCardTwo";
 import TermsAndConditionsModal from "./TermsandCondition";
+
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 
 //component starts
 const ProductDetails = ({ route }) => {
@@ -46,6 +46,7 @@ const ProductDetails = ({ route }) => {
   const [showSummary, setShowSummary] = useState(false);
   const [termsVisible, setTermsVisible] = useState(false);
   const [modalTermVisible, setModalTermVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   //showSummary
   const handleContinue = () => {
     setShowSummary(true);
@@ -82,7 +83,7 @@ const ProductDetails = ({ route }) => {
     {
       productName.includes(product?.pictureName) && setData(true);
     }
-    console.log(getProduct);
+    // console.log(getProduct);
 
     setTimeout(() => {
       setModalVisible(false);
@@ -131,211 +132,229 @@ const ProductDetails = ({ route }) => {
 
   const onChangeText = (text) => {};
   return (
-    <ScrollView style={styles.productDetailContainer}>
-      <StatusBar style={"light"} />
-      <View style={styles.topBar}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: product?.imageUrl }}
-              style={styles.imagePage}
-            />
-          </View>
-          <View style={styles.detailsHeader}>
-            <View>
-              <Text style={styles.productName}>{product?.name}</Text>
-            </View>
+    <>
+      {isLoading ? (
+        <>
+          <AppLoaderAnimation />
+        </>
+      ) : (
+        <ScrollView style={styles.productDetailContainer}>
+          <StatusBar style={"auto"} backgroundColor="#fbbf24" />
+          <View style={styles.topBar}>
             <View
-              style={{
-                width: wp(40),
-
-                marginLeft: wp(5),
-              }}
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <View>
-                <Text style={styles.offerPrice}>
-                  ₹{calculatePrice(product.price, product.offer)}/ Kg
-                </Text>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: product?.imageUrl }}
+                  style={styles.imagePage}
+                />
               </View>
+              <View style={styles.detailsHeader}>
+                <View>
+                  <Text style={styles.productName}>{product?.name}</Text>
+                </View>
+                <View
+                  style={{
+                    width: wp(40),
 
-              <View
-                style={{
-                  flexDirection: "row",
+                    marginLeft: wp(5),
+                  }}
+                >
+                  <View>
+                    <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
+                  </View>
 
-                  marginVertical: "10%",
-                }}
-              >
-                <View style={styles.ratingBack}>
-                  <Image
-                    source={require("../../assets/rating/roundStar.png")}
-                    style={styles.ratingImage}
-                  />
-                  <Text style={styles.ratingText}>{product.rating} /5</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+
+                      marginVertical: "10%",
+                    }}
+                  >
+                    <View style={styles.ratingBack}>
+                      <Image
+                        source={require("../../assets/rating/roundStar.png")}
+                        style={styles.ratingImage}
+                      />
+                      <Text style={styles.ratingText}>{product.rating} /5</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text
-            style={{
-              color: "white",
-              fontSize: wp(6),
-              fontWeight: "bold",
-              marginTop: hp(2),
-              textDecorationLine: "underline",
-            }}
-          >
-            Description:
-          </Text>
-          <Text
-            style={{
-              fontSize: wp(4),
-              color: "white",
-              marginLeft: wp(5),
-            }}
-          >
-            {/* {product.description} */}
-          </Text>
-        </View>
-
-        {/* <TouchableOpacity style={styles.addressContainer}>
-          <MapPinIcon size={hp(3)} color={"white"} />
-          <Text
-            style={{
-              color: "white",
-              fontSize: wp(4),
-              fontWeight: "bold",
-              textAlign: "center",
-            }}
-          >
-            Delivered to: 123, down st, Chennai - 600006
-          </Text>
-        </TouchableOpacity> */}
-        <View style={styles.iconContainerText}>
-          <Pressable
-            style={styles.clockIconContainer}
-            onPress={() => setModalVisible(true)}
-          >
-            <ShoppingCartIcon size={hp(5)} strokeWidth={1.5} color={"black"} />
-            <Text style={styles.offerText}>Order Now</Text>
-          </Pressable>
-        </View>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        {/*Modal view */}
-        <Modal
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-          animationType="slide"
-        >
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContent}>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
+            <View style={styles.descriptionContainer}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: wp(6),
+                  fontWeight: "bold",
+                  marginTop: hp(2),
+                  textDecorationLine: "underline",
+                }}
               >
-                <Text style={styles.closeButtonText}>X</Text>
-              </TouchableOpacity>
-              {!showSummary ? (
-                <>
-                  <Text style={styles.modalTitle}>Select Quantity</Text>
+                Description:
+              </Text>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  color: "white",
+                  marginLeft: wp(5),
+                }}
+              >
+                {/* {product.description} */}
+              </Text>
+            </View>
 
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Quantity in Tones"
-                    keyboardType="numeric"
-                    value={modalQuantity.toString()}
-                    onChangeText={(text) => setModalQuantity(Number(text))}
-                  />
-
-                  <TouchableOpacity
-                    style={styles.continueButton}
-                    onPress={handleContinue}
-                  >
-                    <Text style={styles.continueButtonText}>Continue</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <>
-                  <Text style={styles.modalTitle}>Order Summary</Text>
-                  <View style={styles.table}>
-                    <View style={styles.tableRow}>
-                      <Text style={styles.tableCell}>Total Price</Text>
-                      <Text style={styles.tableCell}>
-                        Rs {totalPrice.toFixed(0)}
-                      </Text>
-                    </View>
-                    <View style={styles.tableRow}>
-                      <Text style={styles.tableCell}>GST (0%)</Text>
-                      <Text style={styles.tableCell}>Rs {gst.toFixed(0)}</Text>
-                    </View>
-                    <View style={styles.tableRow}>
-                      <Text style={styles.tableCell}>Total Amount</Text>
-                      <Text style={styles.tableCell}>
-                        Rs {totalAmount.toFixed(0)}
-                      </Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.paymentButton}
-                    onPress={handlePayment}
-                  >
-                    <Text style={styles.paymentButtonText}>
-                      Proceed to Payment
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              )}
+            {/* <TouchableOpacity style={styles.addressContainer}>
+        <MapPinIcon size={hp(3)} color={"white"} />
+        <Text
+          style={{
+            color: "white",
+            fontSize: wp(4),
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Delivered to: 123, down st, Chennai - 600006
+        </Text>
+      </TouchableOpacity> */}
+            <View style={styles.iconContainerText}>
+              <Pressable
+                style={styles.clockIconContainer}
+                onPress={() => setModalVisible(true)}
+              >
+                <ShoppingCartIcon
+                  size={hp(5)}
+                  strokeWidth={1.5}
+                  color={"black"}
+                />
+                <Text style={styles.offerText}>Order Now</Text>
+              </Pressable>
             </View>
           </View>
-        </Modal>
-        <Modal
-          transparent={true}
-          visible={modalTermVisible}
-          onRequestClose={() => setModalTermVisible(false)}
-          animationType="slide"
-        >
-          <TermsAndConditionsModal
-            visible={termsVisible}
-            onClose={() => setTermsVisible(false)}
-          />
-        </Modal>
-      </View>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={goback}>
-          <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={"#fbbf24"} />
-        </TouchableOpacity>
-        <Text style={styles.pictureName}>{product?.pictureName}</Text>
-        <Pressable
-          style={styles.iconButton}
-          onPress={() => setFavorite(!favorite)}
-        >
-          <HeartIcon
-            size={hp(4)}
-            strokeWidth={2.5}
-            color={favorite ? "red" : "gray"}
-          />
-        </Pressable>
-      </View>
 
-      {/* product Card two */}
-      {ProductData?.map((item) => {
-        if (
-          product.pictureName == item.pictureName &&
-          product._id !== item._id
-        ) {
-          return <ProductCardTwo props={item} />;
-        }
-      })}
-    </ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            {/*Modal view */}
+            <Modal
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+              animationType="slide"
+            >
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContent}>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.closeButtonText}>X</Text>
+                  </TouchableOpacity>
+                  {!showSummary ? (
+                    <>
+                      <Text style={styles.modalTitle}>Select Quantity</Text>
+
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Quantity in Tones"
+                        keyboardType="numeric"
+                        value={modalQuantity.toString()}
+                        onChangeText={(text) => setModalQuantity(Number(text))}
+                      />
+
+                      <TouchableOpacity
+                        style={styles.continueButton}
+                        onPress={handleContinue}
+                      >
+                        <Text style={styles.continueButtonText}>Continue</Text>
+                      </TouchableOpacity>
+                    </>
+                  ) : (
+                    <>
+                      <Text style={styles.modalTitle}>Order Summary</Text>
+                      <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>Total Price</Text>
+                          <Text style={styles.tableCell}>
+                            Rs {totalPrice.toFixed(0)}
+                          </Text>
+                        </View>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>GST (0%)</Text>
+                          <Text style={styles.tableCell}>
+                            Rs {gst.toFixed(0)}
+                          </Text>
+                        </View>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>Total Amount</Text>
+                          <Text style={styles.tableCell}>
+                            Rs {totalAmount.toFixed(0)}
+                          </Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={styles.paymentButton}
+                        onPress={handlePayment}
+                      >
+                        <Text style={styles.paymentButtonText}>
+                          Proceed to Payment
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  )}
+                </View>
+              </View>
+            </Modal>
+            <Modal
+              transparent={true}
+              visible={modalTermVisible}
+              onRequestClose={() => setModalTermVisible(false)}
+              animationType="slide"
+            >
+              <TermsAndConditionsModal
+                visible={termsVisible}
+                onClose={() => setTermsVisible(false)}
+              />
+            </Modal>
+          </View>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconButton} onPress={goback}>
+              <ChevronLeftIcon
+                size={hp(3.5)}
+                strokeWidth={4.5}
+                color={"#fbbf24"}
+              />
+            </TouchableOpacity>
+            <Text style={styles.pictureName}>{product?.pictureName}</Text>
+            <Pressable
+              style={styles.iconButton}
+              onPress={() => setFavorite(!favorite)}
+            >
+              <HeartIcon
+                size={hp(4)}
+                strokeWidth={2.5}
+                color={favorite ? "red" : "gray"}
+              />
+            </Pressable>
+          </View>
+
+          {/* product Card two */}
+          {ProductData?.map((item) => {
+            if (
+              product.pictureName == item.pictureName &&
+              product._id !== item._id
+            ) {
+              return <ProductCardTwo props={item} />;
+            }
+          })}
+        </ScrollView>
+      )}
+    </>
   );
 };
 

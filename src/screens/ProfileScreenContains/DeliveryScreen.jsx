@@ -1,30 +1,89 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Modal } from "react-native";
-import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import { orderData } from "../../data/OrderData";
 import { useNavigation } from "@react-navigation/native";
 import OrderCard from "../../components/Order/OrderCard";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Font from "expo-font";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import axios from "axios"
+import { StatusBar } from "expo-status-bar";
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
-  const[visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(true);
   const navigation = useNavigation();
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [isFetching ,setIsFetching] = useState(true);
+  const [token, setToken] = useState("");
+  const [loading, setloading] = useState(true);
+
+  AsyncStorage.getItem('token')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      setToken(value)
+      setIsFetching(true)
+    const url = 'https://erp-backend-new-ketl.onrender.com/sales/viewOrders'
+    axios
+      .post(url,{},{headers: {
+        Authorization: `Bearer ${value}`,
+        "Content-Type": "application/json",
+      }})
+      .then((res) => {
+        setOrderDetails(res.data.reverse());
+        setIsFetching(false)
+        
+      })
+      .catch((err) => console.log(err));
+    } else {
+      // No value found
+      console.log('No value found');
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setloading(false);
+    }
+
+    loadFonts();
+  }, []);
+
+
+
   return (
-    <View>
+    <View style={styles.container}>
       <ProfileHeaderLayout header={"Deliveries & Orders"} />
-      {orderData.length !== 0 ? (
+      <StatusBar style="light" backgroundColor="#4870F4" />
+      {orderDetails.length !== 0 ? (
         <Text style={styles.orderHeader}>Orders</Text>
       ) : (
         <></>
       )}
-      {orderData.length !== 0 ? (
-        orderData?.map((item) => {
+      {orderDetails.length !== 0 ? (
+        orderDetails?.map((item) => {
           return (
             <>
-              <OrderCard props={item} />
+              <OrderCard props={item} key={item.orderId}/>
             </>
           );
         })
@@ -40,8 +99,6 @@ const DeliveryScreen = () => {
           </View>
         </>
       )}
-
-      
     </View>
   );
 };
@@ -51,7 +108,7 @@ export default DeliveryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#fefefe",
   },
   imageCard: {
     width: wp(100),

@@ -19,9 +19,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Radio from "../components/button/Radio";
 import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 
 const OrderScreen = ({ route }) => {
   const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { params } = route;
   const navigation = useNavigation();
 
@@ -30,7 +32,7 @@ const OrderScreen = ({ route }) => {
       return item?._id === params?._id;
     });
     setProduct(getProduct);
-    console.log(getProduct);
+    // console.log(getProduct);
   }, [params?._id]);
 
   const goback = () => {
@@ -50,86 +52,99 @@ const OrderScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <View style={styles.headerBar}>
-        <TouchableOpacity style={styles.iconButton} onPress={goback}>
-          <ArrowLeftIcon size={hp(3.5)} strokeWidth={2.5} color={"black"} />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Order Summary</Text>
-      </View>
-      <ScrollView>
-        {product ? (
-          <View style={{ alignItems: "center" }}>
-            <View style={styles.card}>
-              <Image
-                source={{ uri: product?.imageUrl }}
-                style={styles.imagePage}
-              />
-              <View style={styles.cardTextContainer}>
-                <View style={styles.textRatingContainer}>
-                  <Text
-                    style={{
-                      fontSize: hp(2),
-                      fontWeight: "bold",
-                      color: "white",
-                    }}
-                  >
-                    {product.name}
-                  </Text>
-                  {product.offer > 1 ? (
-                    <Text style={styles.offerPrice}>
-                      ₹{calculatePrice(product.price, product.offer)}/ Kg
-                    </Text>
-                  ) : (
-                    <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
-                  )}
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Image
-                      source={require("../assets/rating/roundStar.png")}
-                      style={styles.ratingImage}
-                    />
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "bold",
-                        marginLeft: wp(2),
-                      }}
-                    >
-                      {product.rating}/5
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <TouchableOpacity style={styles.actionContainer}>
-                      <PencilSquareIcon color="white" size={hp(2)} />
-                      <Text style={styles.actionText}>Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionContainer}>
-                      <TrashIcon color="white" size={hp(2)} />
-                      <Text style={styles.actionText}>Delete</Text>
-                    </TouchableOpacity>
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="auto" backgroundColor="#4870F4" />
+          <View style={styles.headerBar}>
+            <TouchableOpacity style={styles.iconButton} onPress={goback}>
+              <ArrowLeftIcon size={hp(3.5)} strokeWidth={2.5} color={"black"} />
+            </TouchableOpacity>
+            <Text style={styles.headerText}>Order Summary</Text>
+          </View>
+          <ScrollView>
+            {product ? (
+              <View style={{ alignItems: "center" }}>
+                <View style={styles.card}>
+                  <Image
+                    source={{ uri: product?.imageUrl }}
+                    style={styles.imagePage}
+                  />
+                  <View style={styles.cardTextContainer}>
+                    <View style={styles.textRatingContainer}>
+                      <Text
+                        style={{
+                          fontSize: hp(2),
+                          fontWeight: "bold",
+                          color: "white",
+                        }}
+                      >
+                        {product.name}
+                      </Text>
+                      {product.offer > 1 ? (
+                        <Text style={styles.offerPrice}>
+                          ₹{calculatePrice(product.price, product.offer)}/ Kg
+                        </Text>
+                      ) : (
+                        <Text style={styles.offerPrice}>
+                          ₹{product.price}/ Kg
+                        </Text>
+                      )}
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Image
+                          source={require("../assets/rating/roundStar.png")}
+                          style={styles.ratingImage}
+                        />
+                        <Text
+                          style={{
+                            color: "white",
+                            fontWeight: "bold",
+                            marginLeft: wp(2),
+                          }}
+                        >
+                          {product.rating}/5
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <TouchableOpacity style={styles.actionContainer}>
+                          <PencilSquareIcon color="white" size={hp(2)} />
+                          <Text style={styles.actionText}>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.actionContainer}>
+                          <TrashIcon color="white" size={hp(2)} />
+                          <Text style={styles.actionText}>Delete</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
+            ) : (
+              <Text>Loading product details...</Text>
+            )}
+          </ScrollView>
+          <View style={styles.radioContainer}>
+            <Radio />
           </View>
-        ) : (
-          <Text>Loading product details...</Text>
-        )}
-      </ScrollView>
-      <View style={styles.radioContainer}>
-        <Radio />
-      </View>
 
-      <Pressable style={styles.placeOrderContainer} onPress={orderSuccessful}>
-        <Text style={styles.placeOrder}>Place Order</Text>
-      </Pressable>
-    </View>
+          <Pressable
+            style={styles.placeOrderContainer}
+            onPress={orderSuccessful}
+          >
+            <Text style={styles.placeOrder}>Place Order</Text>
+          </Pressable>
+        </View>
+      )}
+    </>
   );
 };
 

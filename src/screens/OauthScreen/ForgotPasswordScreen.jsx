@@ -41,7 +41,7 @@ const ForgotPasswordScreen = () => {
       return;
     }
     setIsValidEmail(true);
-    console.log("OTP Sent to:", email);
+    // console.log("OTP Sent to:", email);
     Alert.alert("OTP Sent", `An OTP has been sent to ${email}.`);
     navigation.navigate("OtpConformScreen")
   };
