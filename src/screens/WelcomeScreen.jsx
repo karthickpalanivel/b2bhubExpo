@@ -25,7 +25,7 @@ export default function WelcomeScreen() {
       300
     );
 
-    setTimeout(() => navigation.navigate("Home"), 2500);
+    setTimeout(() => navigation.navigate("SellerHome"), 2500);
   }, []);
   return (
     <View style={styles.container}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f59e0b",
+    backgroundColor: "#d53c46",
     paddingVertical: 10,
   },
   // #f59e0b

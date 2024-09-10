@@ -11,11 +11,14 @@ import {
 import { Modal } from "react-native";
 import React, { useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
 import { XCircleIcon } from "react-native-heroicons/outline";
+
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
@@ -94,6 +97,9 @@ const AccountSettings = () => {
   const [panNumber, setPanNumber] = useState(CompanyData.panNumber);
   const [isLoading, setIsLoading] = useState(false);
 
+  const address = `${CompanyData.address1}, \n${CompanyData.address2}, \n${CompanyData.city} - ${CompanyData.pincode}, \n${CompanyData.state}`;
+  const [userAddress, setUserAddress] = useState(address);
+
   return (
     <>
       {isLoading ? (
@@ -148,6 +154,13 @@ const AccountSettings = () => {
                   setValue={setPanNumber}
                   edit={false}
                 />
+
+                {/* <DetailsBar
+                  topic={"Address"}
+                  value={userAddress}
+                  setValue={setUserAddress}
+                  edit={false}
+                /> */}
               </View>
             </View>
           </ScrollView>

@@ -8,7 +8,6 @@ import HomeScreen from "../screens/HomeScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ProductDetails from "../components/product/ProductDetails";
 import ProfileScreen from "../screens/ProfileScreen";
-// import NotificationScreen from "../screens/NotificationScreen";
 import ProductScreen from "../screens/ProductScreen";
 import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
@@ -28,8 +27,9 @@ import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
 import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
-import GenerateReactNativeInvoice from "../components/InVoice/GenerateReactNativeInvoice";
 import PdfGeneration from "../components/InVoice/PdfGeneration";
+import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
+import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
 
 //variables
 const Stack = createNativeStackNavigator();
@@ -83,11 +83,13 @@ export default function Navigation() {
         <Stack.Screen name="EditScreen" component={EditScreen} />
         <Stack.Screen name="PasswordEdit" component={PasswordEditScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
-
+        <Stack.Screen name="paymentSummary" component={PaymentSummary} />
         <Stack.Screen name="Invoice" component={PdfGeneration} />
 
         {/* Sellers Screens */}
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />
+        <Stack.Screen name="ModifyProduct" component={ModifyProductList} />
+        <Stack.Screen name="SellerProfile" component={SellerProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );

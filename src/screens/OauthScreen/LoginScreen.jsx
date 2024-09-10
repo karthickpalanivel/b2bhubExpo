@@ -110,13 +110,11 @@ const LoginScreen = () => {
               }}
               trackBar={{
                 borderWidth: 2,
-                width: wp(60),
+                width: wp(70),
               }}
               thumbButton={{
-                width: wp(30),
-                height: hp(5),
+                width: wp(35),
                 radius: wp(10),
-
                 activeBackgroundColor: "#fff",
                 inActiveBackgroundColor: "#fff",
               }}
@@ -242,7 +240,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   logoContainer: {
-    
     marginTop: hp(10),
     marginLeft: wp(35),
     marginBottom: hp(3),

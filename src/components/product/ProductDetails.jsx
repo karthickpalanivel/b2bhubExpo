@@ -27,6 +27,8 @@ import ProductCardTwo from "./ProductCardTwo";
 import TermsAndConditionsModal from "./TermsandCondition";
 
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { Picker } from "@react-native-picker/picker";
+
 
 //component starts
 const ProductDetails = ({ route }) => {
@@ -41,12 +43,16 @@ const ProductDetails = ({ route }) => {
 
   const [tonsInput, setTonsInput] = useState(100);
   //modal
+
+
+  const [selectGrade, setSelectGrade] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalQuantity, setModalQuantity] = useState(100);
   const [showSummary, setShowSummary] = useState(false);
   const [termsVisible, setTermsVisible] = useState(false);
   const [modalTermVisible, setModalTermVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   //showSummary
   const handleContinue = () => {
     setShowSummary(true);
@@ -90,7 +96,7 @@ const ProductDetails = ({ route }) => {
       setModalTermVisible(false);
       setShowSummary(false);
       setTermsVisible(false);
-    }, 50);
+    }, 5);
   }, [params?._id]);
 
   const goback = () => {
@@ -207,18 +213,18 @@ const ProductDetails = ({ route }) => {
             </View>
 
             {/* <TouchableOpacity style={styles.addressContainer}>
-        <MapPinIcon size={hp(3)} color={"white"} />
-        <Text
-          style={{
-            color: "white",
-            fontSize: wp(4),
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
-          Delivered to: 123, down st, Chennai - 600006
-        </Text>
-      </TouchableOpacity> */}
+              <MapPinIcon size={hp(3)} color={"white"} />
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: wp(4),
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Delivered to: 123, down st, Chennai - 600006
+              </Text>
+            </TouchableOpacity> */}
             <View style={styles.iconContainerText}>
               <Pressable
                 style={styles.clockIconContainer}
@@ -257,8 +263,14 @@ const ProductDetails = ({ route }) => {
                   </TouchableOpacity>
                   {!showSummary ? (
                     <>
-                      <Text style={styles.modalTitle}>Select Quantity</Text>
 
+
+                      <Text style={styles.modalTitle}>Select Quantity</Text>
+                      <Picker
+                    
+                      >
+                        
+                      </Picker>
                       <TextInput
                         style={styles.input}
                         placeholder="Quantity in Tones"

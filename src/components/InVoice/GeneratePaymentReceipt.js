@@ -3,6 +3,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import pnb from "../assets/PNB.png"
 import logo from "../assets/b2blogo.png"
+
+
 const GenerateReceipt = async (order,pid) => {
 
   const name = order.companyname
