@@ -371,8 +371,8 @@ const GeneratePayslips = async (invoicedata) => {
   };
 
   function convertToWords() {
-    var amount = parseFloat(document.getElementById("amount").value);
-    var words = numberToWords(amount);
+    let amount = parseFloat(document.getElementById("amount").value);
+    let words = numberToWords(amount);
     document.getElementById("amount_in_words").value = "INR " + words + " Only";
   }
   // function getCurrentDate() {
@@ -406,9 +406,9 @@ const GeneratePayslips = async (invoicedata) => {
   }
 
   function numberToWords(amount) {
-    var words = "";
-    var fraction = Math.round((amount - Math.floor(amount)) * 100);
-    var units = [
+    let words = "";
+    let fraction = Math.round((amount - Math.floor(amount)) * 100);
+    let units = [
       "Zero",
       "One",
       "Two",
@@ -420,7 +420,7 @@ const GeneratePayslips = async (invoicedata) => {
       "Eight",
       "Nine",
     ];
-    var teens = [
+    let teens = [
       "Eleven",
       "Twelve",
       "Thirteen",
@@ -431,7 +431,7 @@ const GeneratePayslips = async (invoicedata) => {
       "Eighteen",
       "Nineteen",
     ];
-    var tens = [
+    let tens = [
       "Ten",
       "Twenty",
       "Thirty",
@@ -442,11 +442,11 @@ const GeneratePayslips = async (invoicedata) => {
       "Eighty",
       "Ninety",
     ];
-    var thousands = ["", "Thousand", "Lakh", "Crore"];
+    let thousands = ["", "Thousand", "Lakh", "Crore"];
 
     function convertChunk(num) {
-      var str = "";
-      var hundred = Math.floor(num / 100);
+      let str = "";
+      let hundred = Math.floor(num / 100);
       num = num % 100;
       if (hundred > 0) {
         str += units[hundred] + " Hundred ";
@@ -454,7 +454,7 @@ const GeneratePayslips = async (invoicedata) => {
       if (num > 10 && num < 20) {
         str += teens[num - 11] + " ";
       } else {
-        var ten = Math.floor(num / 10);
+        let ten = Math.floor(num / 10);
         num = num % 10;
         if (ten > 0) {
           str += tens[ten - 1] + " ";
@@ -469,11 +469,11 @@ const GeneratePayslips = async (invoicedata) => {
     if (amount === 0) {
       words = "Zero";
     } else {
-      var crore = Math.floor(amount / 10000000);
-      var lakh = Math.floor((amount % 10000000) / 100000);
-      var thousand = Math.floor((amount % 100000) / 1000);
-      var hundred = Math.floor((amount % 1000) / 100);
-      var remainder = amount % 100;
+      let crore = Math.floor(amount / 10000000);
+      let lakh = Math.floor((amount % 10000000) / 100000);
+      let thousand = Math.floor((amount % 100000) / 1000);
+      let hundred = Math.floor((amount % 1000) / 100);
+      let remainder = amount % 100;
 
       if (crore > 0) {
         words += convertChunk(crore) + " Crore ";

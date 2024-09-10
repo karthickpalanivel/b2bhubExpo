@@ -5,25 +5,50 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
+import PdfGeneration from "../InVoice/PdfGeneration";
 
 const OrderCard = ({ props }) => {
+  function getCurrentDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const month = monthNames[today.getMonth()]; // Get the month name
+    const year = today.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  const navigateToInvoice = () => {};
+
   return (
     <Animated.View
-      entering={FadeInDown.delay(200)
-      .duration(1500)
-      .springify()
-      .damping(12)} style={styles.orderContainer}>
-      {props.paymentVerification ? (
+      entering={FadeInRight.delay(200).duration(2000).springify().damping(12)}
+      style={styles.orderContainer}
+    >
+      {props.payment_status ? (
         <>
           <View style={styles.container}>
-            <Text>Order id: {props._id}</Text>
+            <Text>{props.product_name}</Text>
             <Text>Date: {props.date}</Text>
           </View>
           <View style={styles.container}>
-            <Text>Price: ₹{props.productPrice}</Text>
-            <Text>Quantity: {props.tonsQuantity} tons</Text>
+            <Text>Order id: {props.invoiceId}</Text>
+            <Text>Quantity: {props.product_quantity} tons</Text>
           </View>
+          <Text>Price: ₹{props.total_amount}</Text>
           <View style={styles.container}>
             <View>
               <TouchableOpacity style={styles.iconContainer}>
@@ -36,21 +61,31 @@ const OrderCard = ({ props }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <Text style={styles.completed}> Completed</Text>
+              <Text style={styles.completed}>Completed</Text>
             </View>
           </View>
         </>
       ) : (
         <>
           <View style={styles.container}>
-            <Text>Order id: {props._id}</Text>
+            <Text>{props.product_name}</Text>
+
             <Text>Date: {props.date}</Text>
           </View>
+
           <View style={styles.container}>
-            <Text>Price: ₹{props.productPrice}</Text>
-            <Text>Quantity: {props.tonsQuantity} tons</Text>
+            <View>
+              <Text>Order id: {props.invoiceId}</Text>
+              <Text>Price: ₹{props.total_amount}</Text>
+            </View>
+            <View>
+              <Text>Quantity: {props.product_quantity} tons</Text>
+              <Text style={[styles.process, { marginVertical: wp(1) }]}>
+                Under Process
+              </Text>
+            </View>
           </View>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <View>
               <TouchableOpacity style={styles.iconContainer}>
                 <EyeIcon size={wp(5)} color={"#4870F4"} />
@@ -61,10 +96,7 @@ const OrderCard = ({ props }) => {
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-            <View>
-              <Text style={styles.process}> Under Process</Text>
-            </View>
-          </View>
+          </View> */}
         </>
       )}
     </Animated.View>
@@ -104,5 +136,6 @@ const styles = StyleSheet.create({
   process: {
     color: "#E64242",
     fontWeight: "bold",
+    textAlign: "right",
   },
 });

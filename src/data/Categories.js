@@ -1,11 +1,5 @@
 export const categoriesData = [
   {
-    id: 4,
-    name: "Urad Dal",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/51AukbcQQEL._AC_UF350,350_QL80_.jpg",
-  },
-  {
     id: 5,
     name: "Tur Dal",
     imageUrl:
@@ -16,6 +10,12 @@ export const categoriesData = [
     name: "Moong Dal",
     imageUrl:
       "https://biobasics.org/cdn/shop/files/order-organic-urad-dal-without-skin-online-at-bio-basics.png?v=1695100963",
+  },
+  {
+    id: 4,
+    name: "Urad Dal",
+    imageUrl:
+      "https://m.media-amazon.com/images/I/51AukbcQQEL._AC_UF350,350_QL80_.jpg",
   },
   {
     id: 7,

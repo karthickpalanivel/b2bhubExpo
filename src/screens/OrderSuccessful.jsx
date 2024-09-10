@@ -13,7 +13,7 @@ const OrderSuccessful = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.navigate("Home"), 1600);
+    setTimeout(() => navigation.navigate("DeliveryDetails"), 1600);
   }, []);
 
   return (
