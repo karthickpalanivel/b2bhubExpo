@@ -15,6 +15,13 @@ export const ProductData = [
       Mositure: "Dry",
       ShelfLife: "6 Months",
     },
+    grades: [
+      "Fatka Toor Dal",
+      "Imported Toor Dal",
+      "Desi Toor Dal",
+      "Polished Toor Dal",
+      "Unpolished Toor Dal",
+    ],
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -34,6 +41,7 @@ export const ProductData = [
       StorageInstruction: "Cool and dry place",
       ShelfLife: "6 Months",
     },
+    grades: ["Mysore Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
     imageUrl:
       "https://st5.depositphotos.com/5653638/61983/i/450/depositphotos_619836364-stock-photo-moong-dal-namkeen-traditional-indian.jpg",
   },
@@ -53,6 +61,7 @@ export const ProductData = [
       Quality: "A Grade",
       ShelfLife: "6 Months",
     },
+    grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
     imageUrl:
       "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
     pictureName: "Dal",
@@ -74,6 +83,7 @@ export const ProductData = [
       Quality: "A Grade",
       ShelfLife: "6 Months",
     },
+    grades: ["Premium Gram Dal", "Imported Gram Dal"],
     imageUrl:
       "https://c1.wallpaperflare.com/preview/115/189/240/daal-chana-lentils-indian.jpg",
   },

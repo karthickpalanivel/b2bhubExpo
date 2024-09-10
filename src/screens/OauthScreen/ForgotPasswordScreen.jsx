@@ -43,45 +43,45 @@ const ForgotPasswordScreen = () => {
     setIsValidEmail(true);
     // console.log("OTP Sent to:", email);
     Alert.alert("OTP Sent", `An OTP has been sent to ${email}.`);
-    navigation.navigate("OtpConformScreen")
+    navigation.navigate("OtpConformScreen");
   };
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: wp(10),
-          alignItems: "center",
-          marginVertical: hp(3),
-        }}
-      >
-        <Pressable onPress={goBack}>
-          <ChevronLeftIcon size={hp(5)} color={"grey"} />
-        </Pressable>
-        <Text style={styles.header}>Forgot Password</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
+      <Pressable onPress={goBack} style={styles.goBackContainer}>
+        <ChevronLeftIcon size={hp(3.5)} color={"#D53C46"} strokeWidth={3}/>
+      </Pressable>
+      <View style={styles.content}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.header}>Forgot Password</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          {/* <Text style={styles.label}>Email</Text> */}
 
-        <TextInput
-          style={[styles.input, !isValidEmail && styles.errorInput]}
-          placeholder="Enter your email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        {!isValidEmail && (
-          <Text style={styles.errorText}>
-            Please enter a valid email address
-          </Text>
-        )}
-      </View>
+          <TextInput
+            style={[styles.input, !isValidEmail && styles.errorInput]}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          {!isValidEmail && (
+            <Text style={styles.errorText}>
+              Please enter a valid email address
+            </Text>
+          )}
+        </View>
 
-      <TouchableOpacity onPress={handleSendOTP} style={styles.sendOtpButton}>
-        <Text style={styles.sendOtpText}>Send OTP</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleSendOTP} style={styles.sendOtpButton}>
+          <Text style={styles.sendOtpText}>Send OTP</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -90,15 +90,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: wp(5),
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
+    backgroundColor: "#D53C46",
     alignContent: "center",
+  },
+
+  content: {
+    paddingVertical: wp(10),
+    backgroundColor: "white",
+    alignItems: 'center',
+    borderRadius: wp(5),
   },
   header: {
     fontSize: wp(6),
     fontWeight: "bold",
     textAlign: "left",
     marginLeft: wp(3),
+    marginBottom: hp(1),
   },
   inputContainer: {
     marginBottom: wp(5),
@@ -109,6 +116,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(1),
   },
   input: {
+    width: wp(80),
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: wp(2.5),
@@ -118,19 +126,31 @@ const styles = StyleSheet.create({
   errorInput: {
     borderColor: "red",
   },
+  goBackContainer:{
+    marginVertical: hp(2),
+    width: hp(5),
+    height: hp(5),
+    justifyContent: "center",
+    alignItems: 'center',
+    borderRadius: 999,
+    backgroundColor: "white",
+  },
   errorText: {
     color: "red",
     marginTop: wp(2.5),
   },
   sendOtpButton: {
-    backgroundColor: "#007bff",
+    width: "80%",
+    backgroundColor: "white",
     paddingVertical: wp(3),
-    borderRadius: wp(100),
+    borderRadius: wp(80),
+    borderWidth: 0.1,
+    elevation: 2,
     justifyContent: "center",
     alignItems: "center",
   },
   sendOtpText: {
-    color: "#fff",
+    color: "#D53C46",
     fontSize: wp(4),
     fontWeight: "bold",
   },

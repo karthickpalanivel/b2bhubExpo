@@ -7,6 +7,10 @@ import {
 } from "react-native-responsive-screen";
 import * as Font from "expo-font";
 
+import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
+import PdfGeneration from "../InVoice/PdfGeneration";
+
+
 
 const OrderCard = ({ props }) => {
 
@@ -27,20 +31,48 @@ const [isLoading, setIsLoading] = useState(true);
   }, []);
 
 
+const OrderCard = ({ props }) => {
+  function getCurrentDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const month = monthNames[today.getMonth()]; // Get the month name
+    const year = today.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
 
-  return ( isLoading ? (<View><Text>is Loading</Text></View>): (<View style={styles.orderContainer}>
-      {props.payment_status === 1 ? (
+  const navigateToInvoice = () => {};
+
+  return (
+    <Animated.View
+      entering={FadeInRight.delay(200).duration(2000).springify().damping(12)}
+      style={styles.orderContainer}
+    >
+      {props.payment_status ? (
         <>
         <Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
-            
-            <Text>Order id: {props.orderId}</Text>
-            <Text>Date: {props.date_of_order}</Text>
+            <Text>{props.product_name}</Text>
+            <Text>Date: {props.date}</Text>
           </View>
           <View style={styles.container}>
-            <Text>Price: ₹{props.total_amount}</Text>
+            <Text>Order id: {props.invoiceId}</Text>
             <Text>Quantity: {props.product_quantity} tons</Text>
           </View>
+          <Text>Price: ₹{props.total_amount}</Text>
           <View style={styles.container}>
             <View>
               <TouchableOpacity style={styles.iconContainer}>
@@ -53,7 +85,7 @@ const [isLoading, setIsLoading] = useState(true);
               </TouchableOpacity>
             </View>
             <View>
-              <Text style={styles.completed}> Completed</Text>
+              <Text style={styles.completed}>Completed</Text>
             </View>
           </View>
         </>
@@ -61,14 +93,24 @@ const [isLoading, setIsLoading] = useState(true);
         <>
         <Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
-            <Text>Order id: {props.orderId}</Text>
-            <Text>Date: {props.date_of_order}</Text>
+            <Text>{props.product_name}</Text>
+
+            <Text>Date: {props.date}</Text>
           </View>
+
           <View style={styles.container}>
-            <Text>Price: ₹{props.total_amount}</Text>
-            <Text>Quantity: {props.product_quantity} tons</Text>
+            <View>
+              <Text>Order id: {props.invoiceId}</Text>
+              <Text>Price: ₹{props.total_amount}</Text>
+            </View>
+            <View>
+              <Text>Quantity: {props.product_quantity} tons</Text>
+              <Text style={[styles.process, { marginVertical: wp(1) }]}>
+                Under Process
+              </Text>
+            </View>
           </View>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <View>
               <TouchableOpacity style={styles.iconContainer}>
                 <EyeIcon size={wp(5)} color={"#4870F4"} />
@@ -79,17 +121,13 @@ const [isLoading, setIsLoading] = useState(true);
                 <Text style={styles.documentText}>Receipt</Text>
               </TouchableOpacity>
             </View>
-            <View>
-              <Text style={styles.process}> Under Process</Text>
-            </View>
-          </View>
+          </View> */}
         </>
       )}
-    </View>)
-    
+    </Animated.View>
   );
 };
-
+}
 export default OrderCard;
 
 const styles = StyleSheet.create({
@@ -123,5 +161,6 @@ const styles = StyleSheet.create({
   process: {
     color: "#E64242",
     fontWeight: "bold",
+    textAlign: "right",
   },
 });

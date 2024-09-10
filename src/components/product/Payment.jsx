@@ -9,7 +9,14 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import { StatusBar } from "expo-status-bar";
+import { ArrowLeftIcon } from "react-native-heroicons/outline";
+import PdfGeneration from "../InVoice/PdfGeneration";
 
 // CustomCheckBox Component
 export const CustomCheckBox = ({ value, onValueChange }) => (
@@ -24,30 +31,61 @@ export const CustomCheckBox = ({ value, onValueChange }) => (
 // PaymentSummary Component
 const PaymentSummary = () => {
   const [companyName, setCompanyName] = useState("");
+  const [orderId, setOrderId] = useState(1);
   const [phoneNo, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
   const [gstNo, setGstNo] = useState("");
+  const [addressOne, setAddressOne] = useState("");
+  const [addressTwo, setAddressTwo] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [landmark, setLandmark] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [requestSample, setRequestSample] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const nav = useNavigation();
 
+  const navigation = useNavigation();
+
+  const orderPlaced = () => {
+    const orderItems = {
+      companyName: companyName,
+      orderId: orderId,
+      phoneNo: phoneNo,
+      email: email,
+      gstNo: gstNo,
+      addressOne: addressOne,
+      addressTwo: addressTwo,
+      city: city,
+      state: state,
+      landmark: landmark,
+      zipCode: zipCode,
+      requestSample: requestSample ? "Yes" : "No",
+    };
+    console.log(orderItems);
+    navigation.navigate("Sucessfull");
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
   return (
     <>
       {isLoading ? (
- 
-          <AppLoaderAnimation />
-  
+        <AppLoaderAnimation />
       ) : (
         <ScrollView style={styles.container}>
           <StatusBar backgroundColor="white" />
           {/* Total Price Card */}
+          <View style={styles.headerContainer}>
+            <TouchableOpacity onPress={goBack} style={styles.icon}>
+              <ArrowLeftIcon color="#4870F4" size={hp(3)} strokeWidth={2} />
+            </TouchableOpacity>
+            <Text style={styles.goback}>Go back for Changes</Text>
+          </View>
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Payment Summary</Text>
+            <View>
+              <Text style={styles.cardTitle}>Payment Summary</Text>
+            </View>
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Total Price</Text>
@@ -112,6 +150,21 @@ const PaymentSummary = () => {
               onChangeText={setGstNo}
             />
             <Text style={styles.cardTitle}>Delivery Address</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Address Line 1"
+              value={addressOne}
+              onChangeText={setAddressOne}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Address Line 2"
+              value={addressTwo}
+              onChangeText={setAddressTwo}
+            />
+
             <TextInput
               style={styles.input}
               placeholder="City"
@@ -164,8 +217,9 @@ const PaymentSummary = () => {
             <Text style={styles.cardContent}>
               The samples can be sent to the provided address on request.
             </Text>
+
             <Pressable
-              onPress={() => nav.navigate("Sucessfull")}
+              onPress={orderPlaced}
               style={{
                 backgroundColor: "#4870F4",
                 padding: 8,
@@ -207,9 +261,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardTitle: {
+    marginVertical: wp(5),
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 10,
     color: "#4870F4",
   },
   cardContent: {
@@ -284,6 +338,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     marginBottom: 15,
+  },
+
+  headerContainer: {
+    width: hp(30),
+    marginBottom: wp(5),
+    padding: wp(3),
+    backgroundColor: "white",
+    borderRadius: 999,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  goback: {
+    fontSize: wp(4),
+    marginLeft: wp(5),
+    color: "#4870F4",
+    fontWeight: "bold",
+  },
+  header: {
+    fontSize: wp(5),
+    marginLeft: wp(3),
+    color: "white",
   },
 });
 

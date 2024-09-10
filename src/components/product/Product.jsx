@@ -36,7 +36,7 @@ export default function Product({
               <ChevronLeftIcon
                 size={hp(3.5)}
                 strokeWidth={wp(0.8)}
-                color={"black"}
+                color={"#475569"}
               />
             </View>
           )}

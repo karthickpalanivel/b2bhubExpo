@@ -16,7 +16,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 // Data import
 import { categoriesData } from "../data/Categories";
 import { categoryByProduct } from "../data/Categories";
-import { toorDal, moongDal, uradDal, gramDal } from "../data/ProductScreenData";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Categories({ activeCategory, setActiveCategory }) {
   return (
@@ -31,7 +31,7 @@ export default function Categories({ activeCategory, setActiveCategory }) {
             <TouchableOpacity
               key={index}
               style={styles.category}
-              onPress={() => setActiveCategory(category.name)}
+              // onPress={() => setActiveCategory(category.name)}
             >
               <View style={styles.categoryView}>
                 <Image
@@ -59,8 +59,6 @@ export default function Categories({ activeCategory, setActiveCategory }) {
             </TouchableOpacity>
           );
         })}
-
-        
       </ScrollView>
     </Animated.View>
   );

@@ -6,12 +6,14 @@ import {
   Pressable,
   StyleSheet,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
+import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 
 const OTPAndPasswordScreen = () => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
@@ -19,7 +21,11 @@ const OTPAndPasswordScreen = () => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswrod, setShowPassword] = useState(true);
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPasswrod);
+  };
   const navigation = useNavigation();
 
   const otpRefs = Array.from({ length: 5 }, () => useRef(null));
@@ -40,7 +46,7 @@ const OTPAndPasswordScreen = () => {
 
   const validateOtp = () => {
     const enteredOtp = otp.join("");
-    if (enteredOtp === "52155") {
+    if (enteredOtp === "00000") {
       setIsOtpValid(true);
       setOtpVerified(true);
     } else {
@@ -49,88 +55,122 @@ const OTPAndPasswordScreen = () => {
   };
 
   const handlePasswordChange = () => {
-    if (newPassword === confirmPassword) {
+    if (newPassword === confirmPassword && newPassword.length >= 8) {
       Alert.alert("Success", "Password changed successfully!");
+      navigation.navigate("Login");
+    } else if (newPassword.length < 8) {
+      Alert.alert("Error", "Passwords must be more than 8!");
     } else {
-      Alert.alert("Error", "Passwords do not match!");
+      Alert.alert("Error", "Passwords isn't match!");
     }
   };
 
   return (
     <View style={styles.container}>
-      {!otpVerified ? (
-        <>
-          <Text style={styles.heading}>OTP confirmation</Text>
-          <Text style={styles.subheading}>Check Your mail for OTP</Text>
+      
+      <View style={styles.content}>
+        {!otpVerified ? (
+          <>
+            <Text style={styles.heading}>OTP confirmation</Text>
+            <Text style={styles.subheading}>Check Your mail for OTP</Text>
 
-          <View style={styles.otpContainer}>
-            {otp.map((digit, index) => (
-              <TextInput
-                key={index}
-                ref={otpRefs[index]}
-                style={styles.otpInput}
-                keyboardType="number-pad"
-                maxLength={1}
-                value={digit}
-                onChangeText={(value) => handleOtpChange(index, value)}
-              />
-            ))}
-          </View>
-
-          {isOtpValid === false && (
-            <View>
-              <Text style={styles.errorText}>
-                Wrong OTP, re-check mail inbox*
-              </Text>
+            <View style={styles.otpContainer}>
+              {otp.map((digit, index) => (
+                <TextInput
+                  key={index}
+                  ref={otpRefs[index]}
+                  style={styles.otpInput}
+                  keyboardType="number-pad"
+                  maxLength={1}
+                  value={digit}
+                  onChangeText={(value) => handleOtpChange(index, value)}
+                />
+              ))}
             </View>
-          )}
 
-          <Pressable onPress={validateOtp}>
-            <Text>Conform OTP</Text>
-          </Pressable>
-        </>
-      ) : (
-        <>
-          <Text style={styles.heading}>OTP confirmation</Text>
-          <Text style={styles.subheading}>Check Your mail for OTP</Text>
+            {isOtpValid === false && (
+              <View>
+                <Text style={styles.errorText}>
+                  Wrong OTP, re-check mail inbox*
+                </Text>
+              </View>
+            )}
 
-          <View style={styles.otpContainer}>
-            {otp.map((digit, index) => (
+            <Pressable onPress={validateOtp} style={styles.conformBtnContainer}>
+              <Text style={styles.conformBtnText}>Conform OTP</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <Text style={styles.heading}>OTP confirmation</Text>
+            <Text style={styles.subheading}>Check Your mail for OTP</Text>
+
+            <View style={styles.otpContainer}>
+              {otp.map((digit, index) => (
+                <TextInput
+                  key={index}
+                  style={styles.otpInput}
+                  value={digit}
+                  editable={false}
+                  minLength={8}
+                />
+              ))}
+            </View>
+
+            <Text style={styles.verifiedText}>OTP verified*</Text>
+
+            <View style={styles.inputContainer}>
               <TextInput
-                key={index}
-                style={styles.otpInput}
-                value={digit}
-                editable={false}
+                style={styles.input}
+                placeholder="Enter New Password"
+                secureTextEntry
+                value={newPassword}
+                onChangeText={setNewPassword}
+                minLength={8}
               />
-            ))}
-          </View>
+              <TouchableOpacity onPress={handleShowPassword}>
+                {showPasswrod ? (
+                  <EyeSlashIcon
+                    size={wp(5)}
+                    color={"grey"}
+                    style={styles.eyeIcon}
+                  />
+                ) : (
+                  <EyeIcon size={wp(5)} color={"grey"} style={styles.eyeIcon} />
+                )}
+              </TouchableOpacity>
+            </View>
 
-          <Text style={styles.verifiedText}>OTP verified*</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Re-Enter New Password"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity onPress={handleShowPassword}>
+                {showPasswrod ? (
+                  <EyeSlashIcon
+                    size={wp(5)}
+                    color={"grey"}
+                    style={styles.eyeIcon}
+                  />
+                ) : (
+                  <EyeIcon size={wp(5)} color={"grey"} style={styles.eyeIcon} />
+                )}
+              </TouchableOpacity>
+            </View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Enter New Password"
-            secureTextEntry
-            value={newPassword}
-            onChangeText={setNewPassword}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Re-Enter New Password"
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-
-          <Pressable
-            onPress={handlePasswordChange}
-            style={styles.conformBtnContainer}
-          >
-            <Text>Conform OTP</Text>
-          </Pressable>
-        </>
-      )}
+            <Pressable
+              onPress={handlePasswordChange}
+              style={styles.conformBtnContainer}
+            >
+              <Text style={styles.conformBtnText}>Change password</Text>
+            </Pressable>
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -140,22 +180,45 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#D53C46",
     paddingHorizontal: wp(5),
   },
+  content: {
+    width: wp(90),
+    elevation: 2,
+    paddingVertical: wp(10),
+    backgroundColor: "white",
+    alignItems: "center",
+    borderRadius: wp(5),
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+  },
+
   heading: {
     fontSize: wp(6),
     fontWeight: "bold",
     marginBottom: wp(2.5),
   },
+
   subheading: {
     fontSize: wp(4),
     marginBottom: wp(5),
   },
+
+  eyeIcon: {
+    position: "absolute",
+    top: wp(4),
+    right: wp(3),
+  },
+
   otpContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: wp(5),
   },
+
   otpInput: {
     width: wp(12.5),
     height: wp(12.5),
@@ -166,27 +229,42 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: wp(2.5),
   },
+
   errorText: {
     color: "red",
     marginBottom: wp(2.5),
   },
+
   verifiedText: {
     color: "green",
     marginBottom: wp(5),
   },
+
   input: {
-    width: "100%",
+    width: wp(80),
     height: wp(12.5),
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: wp(2.5),
     marginBottom: wp(5),
     paddingHorizontal: wp(2.5),
+    elevation: 1,
+    backgroundColor: "white",
   },
 
-  conformBtnContainer: {},
+  conformBtnContainer: {
+    width: wp(50),
+    backgroundColor: "white",
+    elevation: 2,
+    padding: wp(3),
+    alignItems: "center",
+    borderRadius: wp(99),
+  },
 
-  conformBtnText: {},
+  conformBtnText: {
+    color: "#D53C46",
+    fontWeight: "bold",
+  },
 });
 
 export default OTPAndPasswordScreen;

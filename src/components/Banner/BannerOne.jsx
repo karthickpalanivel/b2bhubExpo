@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import Carousel, { Pagination } from "react-native-x-carousel";
 import {
@@ -7,7 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 
-const BannerOne = () => {
+const BannerOne = ({ someProp = "default value", anotherProp = 0 }) => {
   const DATA = [
     {
       id: 1,
@@ -40,7 +40,7 @@ const BannerOne = () => {
   return (
     <View style={styles.container}>
       <Carousel
-        pagination={Pagination}
+        
         renderItem={renderItem}
         data={DATA}
         autoplay

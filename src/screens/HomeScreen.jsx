@@ -11,11 +11,7 @@ import {
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  BellIcon,
-  MagnifyingGlassIcon,
-  Bars3Icon,
-} from "react-native-heroicons/outline";
+import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import {
   MapPinIcon,
   LanguageIcon,
@@ -35,6 +31,8 @@ import BannerOne from "../components/Banner/BannerOne";
 
 import { Modal } from "react-native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import { CompanyData } from "../data/CompanyData";
+
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const navigation = useNavigation();
@@ -240,22 +238,20 @@ const HomeScreen = () => {
                 }}
               >
                 <View>
-                  <Text style={styles.userName}>Hello, {userName}</Text>
+                  <Text style={styles.userName}>{CompanyData.companyName}</Text>
                   <View style={styles.iconContainer}>
                     <MapPinIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ fontSize: wp(4), color: "#f59e0b" }}>
-                      Chennai
+                      {CompanyData.city}
                     </Text>
                   </View>
                 </View>
                 <View>
-                  <Pressable
-                    style={{ flexDirection: "row" }}
-                    // onPress={navigation.navigate("Apploader")}
-                  >
+                  <Pressable style={{ flexDirection: "row" }}>
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569" }}>Language</Text>
                   </Pressable>
+
                   <TouchableOpacity onPress={() => setModalVisible(show)}>
                     <Text style={{ color: "#f59e0b", textAlign: "right" }}>
                       {language}
@@ -271,14 +267,14 @@ const HomeScreen = () => {
               </Text>
 
               {/* <View>
-          <LottieView
-            style={styles.lottieIcon}
-            source={require("../assets/lottie/welcomeLottie.json")}
-            autoPlay
-            loop
-          />
-          <Text>Lottie icon</Text>
-        </View> */}
+            <LottieView
+              style={styles.lottieIcon}
+              source={require("../assets/lottie/welcomeLottie.json")}
+              autoPlay
+              loop
+            />
+            <Text>Lottie icon</Text>
+          </View> */}
             </View>
 
             {/* Search bar */}
@@ -286,7 +282,7 @@ const HomeScreen = () => {
               style={styles.searchBarContainer}
               onPress={() => navigation.navigate("Search Bar")}
             >
-              <Text style={styles.searchBarText}>Search </Text>
+              <Text style={styles.searchBarText}>Search</Text>
 
               <TouchableOpacity style={styles.searchIconContainer}>
                 <MagnifyingGlassIcon
