@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start ",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
   "dependencies": {
     "@expo-google-fonts/cookie": "^0.2.3",
-    "@react-native-async-storage/async-storage": "^2.0.0",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/blur": "^4.4.1",
     "@react-native-picker/picker": "^2.8.0",
     "@react-native-seoul/masonry-list": "^1.4.2",
@@ -20,6 +20,7 @@
     "axios": "^1.7.7",
     "expo": "~51.0.28",
     "expo-app-loading": "^2.1.1",
+    "expo-dev-client": "~4.0.26",
     "expo-font": "~12.0.9",
     "expo-print": "~13.0.1",
     "expo-sharing": "~12.0.1",
@@ -44,8 +45,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-toggle-element": "^2.0.1",
     "react-native-vector-icons": "^10.1.0",
-    "react-native-x-carousel": "^1.0.1",
-    "expo-dev-client": "~4.0.26"
+    "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

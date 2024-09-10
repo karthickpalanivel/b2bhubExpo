@@ -25,7 +25,7 @@ export default function WelcomeScreen() {
       300
     );
 
-    setTimeout(() => navigation.navigate("SellerHome"), 2500);
+    setTimeout(() => navigation.navigate("Home"), 2500);
   }, []);
   return (
     <View style={styles.container}>

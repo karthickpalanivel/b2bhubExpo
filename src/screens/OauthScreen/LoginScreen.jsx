@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,11 @@ import {
   SafeAreaView,
   Alert,
 } from "react-native";
+import * as Font from "expo-font";
+import axios from "axios";
 
 import Toggle from "react-native-toggle-element";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   widthPercentageToDP as wp,
@@ -41,6 +44,59 @@ const LoginScreen = () => {
   const navigateToSignUp = () => {
     navigation.navigate("SignUp");
   };
+
+
+  async function handleLogin() {
+    await axios
+      .post("https://erp-backend-new-ketl.onrender.com/b2b/login", {
+        email: buyerEmail,
+        pwd: password,
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          const customer = res.data.user;
+          console.log(customer);
+          try {
+            AsyncStorage.setItem('loginstate','true');
+            AsyncStorage.setItem('userEmail',buyerEmail);
+            AsyncStorage.setItem('customerId',customer.customerId);
+            AsyncStorage.setItem('companyname',customer.CompanyName);
+            AsyncStorage.setItem('phone',customer.phoneNo);
+            AsyncStorage.setItem('gst',customer.gstNo);
+            AsyncStorage.setItem('email',customer.Email);
+            AsyncStorage.setItem('token',res.data.token)
+            
+          } catch (e) {
+            // saving error
+            console.error(e)
+          }
+          
+          navigation.navigate("Home");
+        } else window.alert(res.message);
+      })
+      .catch((error) => {
+        window.alert(error);
+        return;
+      });
+  }
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
+
+
+
 
   const handleBuyerSubmit = () => {
     if (buyerEmail && password) {
@@ -164,7 +220,7 @@ const LoginScreen = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={handleBuyerSubmit}
+                  onPress={()=>handleLogin()}
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>

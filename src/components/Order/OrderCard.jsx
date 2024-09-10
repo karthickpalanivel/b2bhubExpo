@@ -39,9 +39,9 @@ const OrderCard = ({ props }) => {
       style={styles.orderContainer}
     >
       {props.payment_status ? (
-        <>
+        <><Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
-            <Text>Order id: {props.invoiceId}</Text>
+            <Text>Order id: {props.orderId}</Text>
             <Text>Date: {getCurrentDate()}</Text>
           </View>
           <View style={styles.container}>
@@ -65,7 +65,7 @@ const OrderCard = ({ props }) => {
           </View>
         </>
       ) : (
-        <>
+        <><Text>Ordered Item: {props.product_name}</Text>
           <View style={styles.container}>
             <Text>Order id: {props.invoiceId}</Text>
             <Text>Date: {getCurrentDate()}</Text>
