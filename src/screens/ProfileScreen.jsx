@@ -30,12 +30,13 @@ import {
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
 
-  const [companyName, setCompanyName] = useState(CompanyData.companyName);
-  const [phone, setPhone] = useState(CompanyData.phone);
+  const [companyName, setCompanyName] = useState("Your Company");
+  const [phone, setPhone] = useState("999999999999");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,6 +44,40 @@ const ProfileScreen = () => {
     navigation.navigate("Login");
     // console.log("Logout button clicked");
   };
+
+
+  AsyncStorage.getItem('companyname')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      setCompanyName(value)
+    } else {
+      // No value found
+      console.log('No value found');
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+
+
+  AsyncStorage.getItem('phone')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      setPhone(value)
+    } else {
+      // No value found
+      console.log('No value found');
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+
+
 
   const goback = () => {
     navigation.goBack();
@@ -82,7 +117,7 @@ const ProfileScreen = () => {
                   <Text style={styles.companyName}>{companyName}</Text>
                 </View>
                 <View>
-                  <Text style={styles.phoneNumber}>{phone}</Text>
+                  <Text style={styles.phoneNumber}>+91 {phone}</Text>
                 </View>
               </View>
               <View style={styles.profileImageContainer}>
