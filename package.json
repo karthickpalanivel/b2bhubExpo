@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start ",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -44,8 +44,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-toggle-element": "^2.0.1",
     "react-native-vector-icons": "^10.1.0",
-    "react-native-x-carousel": "^1.0.1",
-    "expo-dev-client": "~4.0.26"
+    "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

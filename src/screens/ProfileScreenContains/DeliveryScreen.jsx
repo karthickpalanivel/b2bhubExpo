@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import { orderData } from "../../data/OrderData";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,12 @@ import {
 import axios from "axios"
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Font from "expo-font";
+import axios from "axios"
+
+
+
 
 
 
@@ -91,13 +97,13 @@ const DeliveryScreen = () => {
         <View style={styles.container}>
           <ProfileHeaderLayout header={"Deliveries & Orders"} />
           <StatusBar style="light" backgroundColor="#4870F4" />
-          {orderData.length !== 0 ? (
+          {orderDetails.length !== 0 ? (
             <Text style={styles.orderHeader}>Orders</Text>
           ) : (
             <></>
           )}
-          {orderData.length !== 0 ? (
-            orderData?.map((item) => {
+          {orderDetails.length !== 0 ? (
+            orderDetails?.map((item) => {
               return (
                 <>
                   <OrderCard props={item} key={item._id} />

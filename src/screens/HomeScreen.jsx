@@ -12,6 +12,7 @@ import {
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import * as Font from "expo-font";
 import {
   MapPinIcon,
   LanguageIcon,
@@ -43,6 +44,20 @@ const HomeScreen = () => {
 
   const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -241,15 +256,22 @@ const HomeScreen = () => {
                   <Text style={styles.userName}>{CompanyData.companyName}</Text>
                   <View style={styles.iconContainer}>
                     <MapPinIcon size={hp(2)} color="#f59e0b" />
-                    <Text style={{ fontSize: wp(4), color: "#f59e0b" }}>
+                    <Text
+                      style={{
+                        fontSize: wp(4),
+                        color: "#f59e0b",
+                        fontFamily: "",
+                      }}
+                    >
                       {CompanyData.city}
                     </Text>
                   </View>
                 </View>
-                <View>
+                {/* <View>
                   <Pressable style={{ flexDirection: "row" }}>
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
-                    <Text style={{ color: "#475569" }}>Language</Text>
+                    <Text style={{ color: "#475569", fontFamily: "QuicksandBold",
+ }}>Language</Text>
                   </Pressable>
 
                   <TouchableOpacity onPress={() => setModalVisible(show)}>
@@ -257,7 +279,7 @@ const HomeScreen = () => {
                       {language}
                     </Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
               <View>
                 <Text style={styles.punchOne}>Start your business</Text>
@@ -361,6 +383,7 @@ const styles = StyleSheet.create({
 
   userName: {
     fontSize: hp(2),
+    fontFamily: "",
     color: "#475569",
   },
 
@@ -380,13 +403,14 @@ const styles = StyleSheet.create({
 
   punchOne: {
     fontSize: hp(3.8),
-    fontWeight: "500",
+    fontFamily: "",
+
     color: "#475569",
   },
 
   punchTwo: {
     fontSize: hp(3.8),
-    fontWeight: "500",
+    fontFamily: "",
     color: "#475569",
   },
 
