@@ -20,8 +20,6 @@ import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
 
-
-
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
   const [visible, setVisible] = useState(true);
