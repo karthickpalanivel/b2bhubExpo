@@ -3,8 +3,7 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import { orderData } from "../../data/OrderData";
@@ -19,11 +18,6 @@ import {
 import axios from "axios"
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Font from "expo-font";
-import axios from "axios"
-
-
 
 
 
@@ -53,6 +47,9 @@ const DeliveryScreen = () => {
       .then((res) => {
         setOrderDetails(res.data.reverse());
         setIsFetching(false)
+        console.log('====================================');
+        console.log(res.data);
+        console.log('====================================');
         
       })
       .catch((err) => console.log(err));
@@ -103,7 +100,7 @@ const DeliveryScreen = () => {
             <></>
           )}
           {orderDetails.length !== 0 ? (
-            orderDetails?.map((item) => {
+            orderDetails.map((item) => {
               return (
                 <>
                   <OrderCard props={item} key={item._id} />

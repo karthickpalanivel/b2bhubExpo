@@ -12,9 +12,7 @@ import PdfGeneration from "../InVoice/PdfGeneration";
 
 
 
-const OrderCard = ({ props }) => {
-
-const [isLoading, setIsLoading] = useState(true);
+const OrderCard = ({ props }) => {const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadFonts() {
@@ -29,32 +27,6 @@ const [isLoading, setIsLoading] = useState(true);
 
     loadFonts();
   }, []);
-
-
-const OrderCard = ({ props }) => {
-  function getCurrentDate() {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, "0");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const month = monthNames[today.getMonth()]; // Get the month name
-    const year = today.getFullYear();
-    return `${day}-${month}-${year}`;
-  }
-
-  const navigateToInvoice = () => {};
 
   return (
     <Animated.View
@@ -127,7 +99,7 @@ const OrderCard = ({ props }) => {
     </Animated.View>
   );
 };
-}
+
 export default OrderCard;
 
 const styles = StyleSheet.create({

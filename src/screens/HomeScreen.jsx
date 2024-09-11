@@ -23,7 +23,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Font from "expo-font";
 import Categories from "../components/Categories";
 import Product from "../components/product/Product";
 import { categoriesData } from "../data/Categories";

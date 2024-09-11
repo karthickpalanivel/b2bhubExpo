@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import * as Font from "expo-font";
 import axios from "axios";
@@ -24,18 +25,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
 const { width } = Dimensions.get("window");
-import axios from "axios";
 import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "react-native-heroicons/outline";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { EntryExitTransition } from "react-native-reanimated";
-import { StatusBar } from "expo-status-bar";
-import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
+
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
 
