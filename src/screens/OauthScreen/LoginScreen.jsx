@@ -45,7 +45,7 @@ const LoginScreen = () => {
     navigation.navigate("SignUp");
   };
 
-
+  
   async function handleLogin() {
     await axios
       .post("https://erp-backend-new-ketl.onrender.com/b2b/login", {
@@ -55,8 +55,10 @@ const LoginScreen = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
+
           const customer = res.data.user;
           console.log(customer);
+          navigation.navigate("Home");
           try {
             AsyncStorage.setItem('loginstate','true');
             AsyncStorage.setItem('userEmail',buyerEmail);
@@ -72,7 +74,7 @@ const LoginScreen = () => {
             console.error(e)
           }
           
-          navigation.navigate("Home");
+          
         } else window.alert(res.message);
       })
       .catch((error) => {
