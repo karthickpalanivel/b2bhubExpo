@@ -7,6 +7,10 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 
@@ -30,7 +34,7 @@ const TermsAndConditionsModal = ({
   const [productSummary, setProductSummary] = useState();
 
   const nav = useNavigation();
-  
+
   useEffect(() => {
     const productSummaryDetails = {
       productName: productName,
@@ -39,7 +43,21 @@ const TermsAndConditionsModal = ({
     };
 
     setProductSummary(productSummaryDetails);
-    console.log(productSummary)
+    console.log(productSummary);
+  }, []);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
   }, []);
 
   const proceedToPayment = () => {
@@ -176,27 +194,30 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: "90%",
+    width: wp(90),
+    height: hp(70),
     backgroundColor: "#f5f5f5",
-    padding: 20,
-    borderRadius: 10,
+    padding: wp(5),
+    borderRadius: wp(2.5),
   },
   closeButton: {
     alignSelf: "flex-end",
   },
   closeButtonText: {
-    fontSize: 20,
+    fontSize: wp(5),
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: "QuicksandSemiBold",
   },
   scrollView: {
-    maxHeight: 200,
+    maxHeight: hp(50),
   },
   termsText: {
     fontSize: 14,
+    fontFamily: "QuicksandSemiBold",
     marginBottom: 10,
   },
   boldText: {
@@ -208,8 +229,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   checkbox: {
-    width: 24,
-    height: 24,
+    width: wp(6),
+    height: wp(6),
     borderWidth: 2,
     borderColor: "#000",
     marginRight: 10,

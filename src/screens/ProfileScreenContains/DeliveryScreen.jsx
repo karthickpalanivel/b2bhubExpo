@@ -41,7 +41,7 @@ const DeliveryScreen = () => {
       .post(url,{},{headers: {
         Authorization: `Bearer ${value}`,
         "Content-Type": "application/json",
-      }})
+    }})
       .then((res) => {
         setOrderDetails(res.data.reverse());
         setIsFetching(false)
@@ -75,9 +75,6 @@ const DeliveryScreen = () => {
 
     loadFonts();
   }, []);
-
-
-
   
 
   const navigationToHome = () => {
@@ -92,13 +89,13 @@ const DeliveryScreen = () => {
         <View style={styles.container}>
           <ProfileHeaderLayout header={"Deliveries & Orders"} />
           <StatusBar style="light" backgroundColor="#4870F4" />
-          {orderDetails.length !== 0 ? (
+          {orderData.length !== 0 ? (
             <Text style={styles.orderHeader}>Orders</Text>
           ) : (
             <></>
           )}
-          {orderDetails.length !== 0 ? (
-            orderDetails.map((item) => {
+          {orderData.length !== 0 ? (
+            orderData.map((item) => {
               return (
                 <>
                   <OrderCard props={item} key={item._id} />

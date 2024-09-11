@@ -45,39 +45,35 @@ const ProfileScreen = () => {
     // console.log("Logout button clicked");
   };
 
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setCompanyName(value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
-  AsyncStorage.getItem('companyname')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      setCompanyName(value)
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
-
-  AsyncStorage.getItem('phone')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      setPhone(value)
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
-
+  AsyncStorage.getItem("phone")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPhone(value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   const goback = () => {
     navigation.goBack();
@@ -317,12 +313,14 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: hp(2.5),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
     marginLeft: "6%",
   },
 
   phoneNumber: {
     color: "white",
     fontSize: hp(2),
+    fontFamily: "QuicksandSemiBold",
   },
   businessContainer: {
     width: "50%",
@@ -339,9 +337,11 @@ const styles = StyleSheet.create({
   },
   business: {
     textAlign: "center",
-    fontWeight: "600",
+    // fontWeight: "600",
+    fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
     color: "white",
+
   },
   detailsContainer: {
     Width: "90%",
@@ -360,6 +360,7 @@ const styles = StyleSheet.create({
   contextName: {
     fontSize: hp(1.8),
     marginLeft: hp(1),
+    fontFamily: "QuicksandSemiBold",
     color: "#5D5D5D",
   },
 
@@ -373,6 +374,7 @@ const styles = StyleSheet.create({
   callText: {
     fontSize: wp(4.6),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
   },
   helpDeskContainer: {
     width: wp(25),
@@ -384,7 +386,8 @@ const styles = StyleSheet.create({
   },
   helpDeskText: {
     textAlign: "center",
-    fontWeight: "700",
+    // fontWeight: "700",
+    fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
     color: "white",
   },
@@ -401,7 +404,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: wp(4.5),
     color: "white",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   whatsapp: {
     width: hp(5),
