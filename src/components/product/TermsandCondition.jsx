@@ -159,7 +159,7 @@ const TermsAndConditionsModal = ({
         </View>
         <TouchableOpacity
           style={styles.completeButton}
-          onPress={proceedToPayment}
+          onPress={handleComplete}
         >
           <Text style={styles.completeButtonText}>Complete</Text>
         </TouchableOpacity>

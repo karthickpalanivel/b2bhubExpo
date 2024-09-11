@@ -67,6 +67,8 @@ const PaymentSummary = ({ route }) => {
     navigation.navigate("Sucessfull");
   };
   const { productSummary } = route.params;
+  console.log('payment screen print')
+  console.log(productSummary)
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -77,10 +79,10 @@ const PaymentSummary = ({ route }) => {
       });
       setIsLoading(false);
     }
-
+    
     loadFonts();
   }, []);
-  console.log(route);
+  
   const goBack = () => {
     navigation.goBack();
   };
@@ -103,9 +105,13 @@ const PaymentSummary = ({ route }) => {
               <Text style={styles.cardTitle}>Payment Summary</Text>
             </View>
             <View style={styles.table}>
+            <View style={styles.tableRow}>
+                <Text style={styles.tableCell}>Product Name</Text>
+                <Text style={styles.tableCell}>{productSummary.productName}</Text>
+              </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Total Price</Text>
-                <Text style={styles.tableCell}>₹ 1,04,45,23,411</Text>
+                <Text style={styles.tableCell}>₹ {productSummary.currentOrderPrice}</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>GST (Exempted)</Text>
@@ -113,7 +119,7 @@ const PaymentSummary = ({ route }) => {
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Total Amount</Text>
-                <Text style={styles.tableCell}>₹ 1,84,78,23,434</Text>
+                <Text style={styles.tableCell}>₹ {productSummary.totalAmount}</Text>
               </View>
             </View>
           </View>
