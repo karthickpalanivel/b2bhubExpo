@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import * as Font from "expo-font";
+import { XCircleIcon } from "react-native-heroicons/outline";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -17,12 +19,37 @@ const CustomCheckBox = ({ value, onValueChange }) => (
   </TouchableOpacity>
 );
 
-const TermsAndConditionsModal = ({ visible, onClose }) => {
+const TermsAndConditionsModal = ({
+  visible,
+  onClose,
+  currentOrderPrice,
+  totalAmount,
+  productName,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [productSummary, setProductSummary] = useState();
+
   const nav = useNavigation();
+  
+  useEffect(() => {
+    const productSummaryDetails = {
+      productName: productName,
+      totalAmount: totalAmount,
+      currentOrderPrice: currentOrderPrice,
+    };
+
+    setProductSummary(productSummaryDetails);
+    console.log(productSummary)
+  }, []);
+
+  const proceedToPayment = () => {
+    console.log(productSummary);
+  };
+
   const handleComplete = () => {
+    console.log(productSummary);
     if (isChecked) {
-      nav.navigate("Payment");
+      nav.navigate("Payment", { productSummary: productSummary });
     } else {
       alert("Please agree to the terms and conditions.");
     }
@@ -32,7 +59,7 @@ const TermsAndConditionsModal = ({ visible, onClose }) => {
     <View style={styles.modalBackground}>
       <View style={styles.modalContent}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.closeButtonText}>X</Text>
+          <XCircleIcon color="black" />
         </TouchableOpacity>
         <Text style={styles.modalTitle}>Terms and Conditions</Text>
         <ScrollView style={styles.scrollView}>
@@ -132,7 +159,7 @@ const TermsAndConditionsModal = ({ visible, onClose }) => {
         </View>
         <TouchableOpacity
           style={styles.completeButton}
-          onPress={handleComplete}
+          onPress={proceedToPayment}
         >
           <Text style={styles.completeButtonText}>Complete</Text>
         </TouchableOpacity>

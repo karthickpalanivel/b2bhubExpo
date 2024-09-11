@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
+import * as Font from "expo-font";
 
 import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
@@ -29,7 +31,7 @@ export const CustomCheckBox = ({ value, onValueChange }) => (
 );
 
 // PaymentSummary Component
-const PaymentSummary = () => {
+const PaymentSummary = ({ route }) => {
   const [companyName, setCompanyName] = useState("");
   const [orderId, setOrderId] = useState(1);
   const [phoneNo, setPhoneNo] = useState("");
@@ -64,7 +66,21 @@ const PaymentSummary = () => {
     console.log(orderItems);
     navigation.navigate("Sucessfull");
   };
+  const { productSummary } = route.params;
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
 
+    loadFonts();
+  }, []);
+  console.log(route);
   const goBack = () => {
     navigation.goBack();
   };

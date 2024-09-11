@@ -15,6 +15,7 @@ import { ProductData } from "../../data/ProductData";
 import {
   ChevronLeftIcon,
   ShoppingCartIcon,
+  CheckBadgeIcon,
 } from "react-native-heroicons/outline";
 
 import { HeartIcon } from "react-native-heroicons/solid";
@@ -38,7 +39,6 @@ const ProductDetails = ({ route }) => {
   const navigation = useNavigation();
   const { params } = route;
   const [productName, setProductName] = useState("");
-
   const [selectedGrade, setSelectedGrade] = useState("");
   const [data, setData] = useState(false);
 
@@ -52,33 +52,8 @@ const ProductDetails = ({ route }) => {
   const [termsVisible, setTermsVisible] = useState(false);
   const [modalTermVisible, setModalTermVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  //showSummary
-  const handleContinue = () => {
-    setShowSummary(true);
-  };
-  const handlePayment = () => {
-    // Handle payment logic here
-    setModalVisible(false);
-    setModalTermVisible(true);
-    setTermsVisible(true);
-  };
-  const calculateTotal = () => {
-    const totalPrice = 500 * modalQuantity;
-    const gst = totalPrice * 0;
-    const totalAmount = totalPrice + gst;
-
-    return { totalPrice, gst, totalAmount };
-  };
-
-  /*
-  setModalVisible(false);
-    setModalTermVisible(false)
-    setshowSummary(false);
-    setTermsVisible(false);
-  */
-
-  const { totalPrice, gst, totalAmount } = calculateTotal();
+  const [productPrice, setProductPrice] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
 
   useEffect(() => {
     async function loadFonts() {
@@ -100,6 +75,7 @@ const ProductDetails = ({ route }) => {
     });
     setProduct(getProduct);
     setProductName(getProduct?.name.replaceAll(" ", ""));
+    setProductPrice(getProduct?.price);
     {
       productName.includes(product?.pictureName) && setData(true);
     }
@@ -112,6 +88,35 @@ const ProductDetails = ({ route }) => {
       setTermsVisible(false);
     }, 5);
   }, [params?._id]);
+  //showSummary
+  const handleContinue = () => {
+    setShowSummary(true);
+  };
+
+  const handlePayment = () => {
+    // Handle payment logic here
+
+    setModalVisible(false);
+    setModalTermVisible(true);
+    setTermsVisible(true);
+  };
+
+  const calculateTotal = () => {
+    const totalPrice = productPrice * 1000 * modalQuantity;
+    const gst = totalPrice * 0;
+    const totalAmount = totalPrice + gst;
+
+    return { totalPrice, gst, totalAmount };
+  };
+
+  /*
+  setModalVisible(false);
+    setModalTermVisible(false)
+    setshowSummary(false);
+    setTermsVisible(false);
+  */
+
+  const { totalPrice, gst, totalAmount } = calculateTotal();
 
   const goback = () => {
     navigation.goBack();
@@ -142,13 +147,13 @@ const ProductDetails = ({ route }) => {
     navigation.navigate("Orders", { _id: id });
   };
 
-  const calculatePrice = (price, discount) => {
-    if (price < discount) {
-      return;
-    }
-    const discountPrice = Math.round(price - (price * discount) / 100);
-    return discountPrice;
-  };
+  // const calculatePrice = (price, discount) => {
+  //   if (price < discount) {
+  //     return;
+  //   }
+  //   const discountPrice = Math.round(price - (price * discount) / 100);
+  //   return discountPrice;
+  // };
 
   const onChangeText = (text) => {};
   return (
@@ -226,47 +231,69 @@ const ProductDetails = ({ route }) => {
               </Text>
               <View style={styles.descriptionTextContainer}>
                 <View>
-                  <Text style={styles.descriptionText}>
+                  <View style={styles.descriptionText}>
                     {product.description.Speciality && (
                       <>
-                        <Text>{product.description.Speciality}</Text>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.Speciality}
+                        </Text>
                       </>
                     )}
-                  </Text>
+                  </View>
 
-                  <Text style={styles.descriptionText}>
+                  <View style={styles.descriptionText}>
                     {product.description.Quality && (
                       <>
-                        <Text>{product.description.Quality}</Text>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.Quality}
+                        </Text>
                       </>
                     )}
-                  </Text>
-                  <Text style={styles.descriptionText}>
+                  </View>
+                  <View style={styles.descriptionText}>
                     {product.description.Mositure && (
                       <>
-                        <Text>{product.description.Mositure}</Text>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.Mositure}
+                        </Text>
                       </>
                     )}
-                  </Text>
+                  </View>
                 </View>
                 <View>
-                  <Text style={styles.descriptionText}>
+                  <View style={styles.descriptionText}>
                     {product.description.IsOrganic && (
-                      <Text>{product.description.IsOrganic}</Text>
+                      <>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.IsOrganic}
+                        </Text>
+                      </>
                     )}
-                  </Text>
-                  <Text style={styles.descriptionText}>
+                  </View>
+                  <View style={styles.descriptionText}>
                     {product.description.ShelfLife && (
-                      <Text>{product.description.ShelfLife}</Text>
+                      <>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.ShelfLife}
+                        </Text>
+                      </>
                     )}
-                  </Text>
-                  <Text style={[styles.descriptionText]}>
+                  </View>
+                  <View style={[styles.descriptionText]}>
                     {product.description.StorageInstruction && (
-                      <Text style={{ textAlign: "right" }}>
-                        {product.description.StorageInstruction}
-                      </Text>
+                      <>
+                        <CheckBadgeIcon color="white" />
+                        <Text style={styles.textDescription}>
+                          {product.description.StorageInstruction}
+                        </Text>
+                      </>
                     )}
-                  </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -308,9 +335,9 @@ const ProductDetails = ({ route }) => {
                   </TouchableOpacity>
                   {!showSummary ? (
                     <>
-
-
-                      <Text style={styles.modalTitle}>Select Quantity</Text>
+                      <Text style={styles.modalTitle}>
+                        Select Quantity in Tons
+                      </Text>
                       {/* <Picker
                         selectedValue={selectGrade}
                         onValueChange={(itemValue) => setSelectGrade(itemValue)}
@@ -321,10 +348,12 @@ const ProductDetails = ({ route }) => {
                           })
                         }
                       </Picker> */}
-                      <Text>{product.name}</Text>
+                      <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                        {product.name}
+                      </Text>
                       <TextInput
                         style={styles.input}
-                        placeholder="Quantity in Tones"
+                        placeholder="Quantity in Tons"
                         keyboardType="numeric"
                         value={modalQuantity.toString()}
                         onChangeText={(text) => setModalQuantity(Number(text))}
@@ -382,6 +411,9 @@ const ProductDetails = ({ route }) => {
               <TermsAndConditionsModal
                 visible={termsVisible}
                 onClose={() => setTermsVisible(false)}
+                currentOrderPrice={totalPrice}
+                totalAmount={totalAmount}
+                productName={productName}
               />
             </Modal>
           </View>
@@ -442,7 +474,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "QuicksandBold",
     marginHorizontal: wp(4),
-
   },
 
   descriptionTextContainer: {
@@ -452,10 +483,16 @@ const styles = StyleSheet.create({
   },
 
   descriptionText: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginVertical: wp(1),
+  },
+
+  textDescription: {
     fontSize: wp(4),
+    marginLeft: wp(1),
     color: "white",
     fontFamily: "QuicksandBold",
-    marginVertical: wp(1),
   },
 
   clockIconContainer: {
@@ -482,7 +519,6 @@ const styles = StyleSheet.create({
     fontSize: wp(7),
     color: "white",
     fontFamily: "QuicksandBold",
-    
   },
   inputTonContainer: {
     width: wp(50),
