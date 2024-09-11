@@ -38,7 +38,7 @@ const DeliveryScreen = () => {
       .post(url,{},{headers: {
         Authorization: `Bearer ${value}`,
         "Content-Type": "application/json",
-      }})
+      }})
       .then((res) => {
         setOrderDetails(res.data.reverse());
         setIsFetching(false)

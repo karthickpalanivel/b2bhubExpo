@@ -1,13 +1,31 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import * as Font from "expo-font";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const ProductCardTwo = ({ props }) => {
   const navigation = useNavigation();
   const [offerVisible, setOfferVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
 
+    loadFonts();
+  }, []);
   const hide = () => {
     setOfferVisible(false);
   };
@@ -60,23 +78,21 @@ const ProductCardTwo = ({ props }) => {
           )} */}
         </View>
         <View style={styles.details}>
-          <View style={styles.textDetails}>
-            <Text style={styles.productName}>{props.name.substring(0, 9)}</Text>
+          <Text style={styles.productName}>
+            {props.name.substring(0, 20)}
+          </Text>
 
+          <View style={styles.ratingImage}>
+            <View>
+              {props.quantity > 0 ? (
+                <Text style={styles.inStock}>In Stock</Text>
+              ) : (
+                <Text style={styles.outOfStock}>Out of Stock</Text>
+              )}
+            </View>
             <View>
               <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
             </View>
-          </View>
-          <View style={styles.ratingImage}>
-            {props.quantity > 0 ? (
-              <Text style={styles.inStock}>In Stock</Text>
-            ) : (
-              <Text style={styles.outOfStock}>Out of Stock</Text>
-            )}
-            {/* <Image
-            source={require("../../assets/ratingSample.png")}
-            style={styles.ratingStyles}
-          /> */}
           </View>
           <View>
             <View style={styles.cartBtns}>
@@ -104,12 +120,12 @@ const styles = StyleSheet.create({
   },
   ratingStyles: {
     width: "40%",
-    height: 25,
+    height: wp(6),
     resizeMode: "contain",
   },
   offerPrice: {
-    fontSize: 18,
-    // fontFamily: "Quicksand light",
+    fontSize: wp(4),
+    fontFamily: "QuicksandBold",
     color: "black",
   },
   textDetails: {
@@ -118,19 +134,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   cardImage: {
-    height: 160,
+    height: wp(40),
     width: "40%",
-    paddingRight: 3,
+    paddingRight: wp(1),
   },
   ratingImage: {
     flexDirection: "row",
-    justifyContent: "space-between",
+
     alignItems: "center",
     marginVertical: "3%",
   },
   inStock: {
     color: "green",
     backgroundColor: "#DCFF9C",
+    marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 3,

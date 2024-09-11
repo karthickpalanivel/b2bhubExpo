@@ -8,13 +8,14 @@ import {
   BackHandler,
   Image,
   SafeAreaView,
+  ScrollView,
   Alert,
 } from "react-native";
 import * as Font from "expo-font";
 import axios from "axios";
 
 import Toggle from "react-native-toggle-element";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   widthPercentageToDP as wp,
@@ -45,7 +46,6 @@ const LoginScreen = () => {
     navigation.navigate("SignUp");
   };
 
-
   async function handleLogin() {
     await axios
       .post("https://erp-backend-new-ketl.onrender.com/b2b/login", {
@@ -57,22 +57,20 @@ const LoginScreen = () => {
         if (res.status === 200) {
           const customer = res.data.user;
           console.log(customer);
+          navigation.navigate("Home");
           try {
-            AsyncStorage.setItem('loginstate','true');
-            AsyncStorage.setItem('userEmail',buyerEmail);
-            AsyncStorage.setItem('customerId',customer.customerId);
-            AsyncStorage.setItem('companyname',customer.CompanyName);
-            AsyncStorage.setItem('phone',customer.phoneNo);
-            AsyncStorage.setItem('gst',customer.gstNo);
-            AsyncStorage.setItem('email',customer.Email);
-            AsyncStorage.setItem('token',res.data.token)
-            
+            AsyncStorage.setItem("loginstate", "true");
+            AsyncStorage.setItem("userEmail", buyerEmail);
+            AsyncStorage.setItem("customerId", customer.customerId);
+            AsyncStorage.setItem("companyname", customer.CompanyName);
+            AsyncStorage.setItem("phone", customer.phoneNo);
+            AsyncStorage.setItem("gst", customer.gstNo);
+            AsyncStorage.setItem("email", customer.Email);
+            AsyncStorage.setItem("token", res.data.token);
           } catch (e) {
             // saving error
-            console.error(e)
+            console.error(e);
           }
-          
-          navigation.navigate("Home");
         } else window.alert(res.message);
       })
       .catch((error) => {
@@ -95,16 +93,12 @@ const LoginScreen = () => {
     loadFonts();
   }, []);
 
-
-
-
   const handleBuyerSubmit = () => {
     if (buyerEmail && password) {
       // Print email and password to the console
       console.log("Email:", buyerEmail);
       console.log("Password:", password);
       // Optionally, you can show an alert as well
-      navigation.navigate("Home");
     } else {
       Alert.alert("Error", "Please enter both email and password.");
     }
@@ -143,7 +137,7 @@ const LoginScreen = () => {
       {isLoading ? (
         <AppLoading />
       ) : (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
           {/* Add logo */}
           <View style={styles.logoContainer}>
             <Image
@@ -157,7 +151,9 @@ const LoginScreen = () => {
             <Toggle
               value={toggleValue}
               onPress={(newState) => setToggleValue(newState)}
-              leftComponent={<Text>Buyer</Text>}
+              leftComponent={
+                <Text style={{ fontFamily: "QuicksandSemiBold" }}>Buyer</Text>
+              }
               rightComponent={<Text>Seller</Text>}
               trackBarStyle={{
                 borderColor: "#f7e2e2",
@@ -204,9 +200,9 @@ const LoginScreen = () => {
                     onPress={() => setViewPassword(!viewPassword)}
                   >
                     {viewPassword ? (
-                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
-                    ) : (
                       <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                    ) : (
+                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
                     )}
                   </TouchableOpacity>
                 </View>
@@ -220,7 +216,7 @@ const LoginScreen = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={()=>handleLogin()}
+                  onPress={() => handleLogin()}
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
@@ -260,9 +256,9 @@ const LoginScreen = () => {
                     onPress={() => setViewPassword(!viewPassword)}
                   >
                     {viewPassword ? (
-                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
-                    ) : (
                       <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                    ) : (
+                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
                     )}
                   </TouchableOpacity>
                 </View>
@@ -283,7 +279,7 @@ const LoginScreen = () => {
               </Animated.View>
             </>
           )}
-        </SafeAreaView>
+        </ScrollView>
       )}
     </>
   );
@@ -311,9 +307,9 @@ const styles = StyleSheet.create({
   loginCard: {
     alignItems: "center",
     width: wp("88%"),
-    height: hp("48%"),
+    height: hp(50),
     margin: wp("5%"),
-    padding: wp(2),
+    paddingVertical: wp(2),
     backgroundColor: "#FFFFFF",
     borderRadius: wp(8),
   },
@@ -321,11 +317,13 @@ const styles = StyleSheet.create({
     fontSize: wp(8),
     margin: wp(5),
     color: "#d53c46",
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
+    // fontWeight: "bold",
   },
   inputName: {
     width: wp(70),
     fontSize: wp(4),
+    fontFamily: "QuicksandBold",
     marginBottom: wp(2),
   },
   input: {
@@ -333,7 +331,8 @@ const styles = StyleSheet.create({
     width: wp("75%"),
     borderWidth: 1,
     borderRadius: 10,
-    padding: 10,
+    fontFamily: "QuicksandSemiBold",
+    padding: wp(2.5),
     marginBottom: wp(2),
     backgroundColor: "white",
     elevation: 2,
@@ -351,10 +350,10 @@ const styles = StyleSheet.create({
   },
   passwordInput: {
     flex: 1,
-    padding: 10,
+    padding: wp(2.5),
   },
   eyeIcon: {
-    padding: 10,
+    padding: wp(2.5),
   },
   submitButton: {
     backgroundColor: "#d53c46",
@@ -366,6 +365,7 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "white",
     fontSize: wp(4),
+    fontFamily: "QuicksandBold",
   },
   forgetPassword: {
     marginLeft: wp(45),

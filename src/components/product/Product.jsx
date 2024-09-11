@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MasonryList from "@react-native-seoul/masonry-list";
 import {
   widthPercentageToDP as wp,
@@ -9,57 +9,82 @@ import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import ProductCard from "./ProductCard";
 import Loading from "../../loading/Loading";
 import { ProductData } from "../../data/ProductData";
+import * as Font from "expo-font";
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 
 export default function Product({
   category,
   productActiveData,
   setProductActiveData,
 }) {
+  
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
   const handlePress = () => {
     setProductActiveData("Exclusive Product");
   };
 
   return (
-    <View style={styles.container}>
-      {productActiveData !== "" ? (
-        <Pressable
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-          onPress={handlePress}
-        >
-          {productActiveData === "Exclusive Product" ? (
-            ""
-          ) : (
-            <View style={styles.iconContainer}>
-              <ChevronLeftIcon
-                size={hp(3.5)}
-                strokeWidth={wp(0.8)}
-                color={"#475569"}
-              />
-            </View>
-          )}
-          <Text style={styles.productHeader}>{productActiveData}</Text>
-        </Pressable>
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
       ) : (
-        <Text style={styles.productHeader}>Exclusive Products</Text>
+        <View style={styles.container}>
+          {productActiveData !== "" ? (
+            <Pressable
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+              onPress={handlePress}
+            >
+              {productActiveData === "Exclusive Product" ? (
+                ""
+              ) : (
+                <View style={styles.iconContainer}>
+                  <ChevronLeftIcon
+                    size={hp(3.5)}
+                    strokeWidth={wp(0.8)}
+                    color={"#475569"}
+                  />
+                </View>
+              )}
+              <Text style={styles.productHeader}>{productActiveData}</Text>
+            </Pressable>
+          ) : (
+            <Text style={styles.productHeader}>Exclusive Products</Text>
+          )}
+          <View>
+            {category.length === 0 ? (
+              <Loading size="large" style={styles.loadingState} />
+            ) : (
+              <MasonryList
+                data={ProductData}
+                keyExtractor={(item) => item._id}
+                numColumns={2}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item, i }) => (
+                  <ProductCard props={item} index={i} />
+                )}
+                onEndReachedThreshold={0.1}
+              />
+            )}
+          </View>
+        </View>
       )}
-      <View>
-        {category.length === 0 ? (
-          <Loading size="large" style={styles.loadingState} />
-        ) : (
-          <MasonryList
-            data={ProductData}
-            keyExtractor={(item) => item._id}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, i }) => <ProductCard props={item} index={i} />}
-            onEndReachedThreshold={0.1}
-          />
-        )}
-      </View>
-    </View>
+    </>
   );
 }
 
@@ -73,11 +98,11 @@ const styles = StyleSheet.create({
     fontSize: hp("3%"),
     marginVertical: "5%",
     color: "#475569",
-    fontWeight: "500",
+    fontFamily: "QuicksandSemiBold",
   },
 
   loadingState: {
-    fontWeight: "500",
+    fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
   iconContainer: {

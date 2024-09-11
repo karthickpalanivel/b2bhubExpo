@@ -28,7 +28,7 @@ import TermsAndConditionsModal from "./TermsandCondition";
 
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { Picker } from "@react-native-picker/picker";
-
+import * as Font from "expo-font";
 
 //component starts
 const ProductDetails = ({ route }) => {
@@ -39,11 +39,11 @@ const ProductDetails = ({ route }) => {
   const { params } = route;
   const [productName, setProductName] = useState("");
 
+  const [selectedGrade, setSelectedGrade] = useState("");
   const [data, setData] = useState(false);
 
   const [tonsInput, setTonsInput] = useState(100);
   //modal
-
 
   const [selectGrade, setSelectGrade] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,6 +79,20 @@ const ProductDetails = ({ route }) => {
   */
 
   const { totalPrice, gst, totalAmount } = calculateTotal();
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
 
   useEffect(() => {
     const getProduct = ProductData.find((item) => {
@@ -163,19 +177,15 @@ const ProductDetails = ({ route }) => {
                 <View
                   style={{
                     width: wp(40),
-
                     marginLeft: wp(5),
                   }}
                 >
-                  <View>
-                    <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
-                  </View>
+                  <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
 
                   <View
                     style={{
                       flexDirection: "row",
-
-                      marginVertical: "10%",
+                      marginVertical: wp(2),
                     }}
                   >
                     <View style={styles.ratingBack}>
@@ -187,6 +197,19 @@ const ProductDetails = ({ route }) => {
                     </View>
                   </View>
                 </View>
+                <View style={styles.iconContainerText}>
+                  <Pressable
+                    style={styles.clockIconContainer}
+                    onPress={() => setModalVisible(true)}
+                  >
+                    <ShoppingCartIcon
+                      size={hp(3.5)}
+                      strokeWidth={1.5}
+                      color={"black"}
+                    />
+                    <Text style={styles.offerText}>Order Now</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
             <View style={styles.descriptionContainer}>
@@ -194,50 +217,72 @@ const ProductDetails = ({ route }) => {
                 style={{
                   color: "white",
                   fontSize: wp(6),
-                  fontWeight: "bold",
+                  fontFamily: "QuicksandBold",
                   marginTop: hp(2),
                   textDecorationLine: "underline",
                 }}
               >
                 Description:
               </Text>
-              <Text
-                style={{
-                  fontSize: wp(4),
-                  color: "white",
-                  marginLeft: wp(5),
-                }}
-              >
-                {/* {product.description} */}
-              </Text>
-            </View>
+              <View style={styles.descriptionTextContainer}>
+                <View>
+                  <Text style={styles.descriptionText}>
+                    {product.description.Speciality && (
+                      <>
+                        <Text>{product.description.Speciality}</Text>
+                      </>
+                    )}
+                  </Text>
 
+                  <Text style={styles.descriptionText}>
+                    {product.description.Quality && (
+                      <>
+                        <Text>{product.description.Quality}</Text>
+                      </>
+                    )}
+                  </Text>
+                  <Text style={styles.descriptionText}>
+                    {product.description.Mositure && (
+                      <>
+                        <Text>{product.description.Mositure}</Text>
+                      </>
+                    )}
+                  </Text>
+                </View>
+                <View>
+                  <Text style={styles.descriptionText}>
+                    {product.description.IsOrganic && (
+                      <Text>{product.description.IsOrganic}</Text>
+                    )}
+                  </Text>
+                  <Text style={styles.descriptionText}>
+                    {product.description.ShelfLife && (
+                      <Text>{product.description.ShelfLife}</Text>
+                    )}
+                  </Text>
+                  <Text style={[styles.descriptionText]}>
+                    {product.description.StorageInstruction && (
+                      <Text style={{ textAlign: "right" }}>
+                        {product.description.StorageInstruction}
+                      </Text>
+                    )}
+                  </Text>
+                </View>
+              </View>
+            </View>
             {/* <TouchableOpacity style={styles.addressContainer}>
               <MapPinIcon size={hp(3)} color={"white"} />
               <Text
                 style={{
                   color: "white",
                   fontSize: wp(4),
-                  fontWeight: "bold",
+                  fontFamily: "QuicksandBold",
                   textAlign: "center",
                 }}
               >
                 Delivered to: 123, down st, Chennai - 600006
               </Text>
             </TouchableOpacity> */}
-            <View style={styles.iconContainerText}>
-              <Pressable
-                style={styles.clockIconContainer}
-                onPress={() => setModalVisible(true)}
-              >
-                <ShoppingCartIcon
-                  size={hp(5)}
-                  strokeWidth={1.5}
-                  color={"black"}
-                />
-                <Text style={styles.offerText}>Order Now</Text>
-              </Pressable>
-            </View>
           </View>
 
           <View
@@ -263,14 +308,18 @@ const ProductDetails = ({ route }) => {
                   </TouchableOpacity>
                   {!showSummary ? (
                     <>
-
-
                       <Text style={styles.modalTitle}>Select Quantity</Text>
-                      <Picker
-                    
+                      {/* <Picker
+                        selectedValue={selectGrade}
+                        onValueChange={(itemValue) => setSelectGrade(itemValue)}
                       >
-                        
-                      </Picker>
+                        {
+                          product.grades.map((grade, index)=>{
+                            return <Picker.Item label={grade} value={grade} key={index} />
+                          })
+                        }
+                      </Picker> */}
+                      <Text>{product.name}</Text>
                       <TextInput
                         style={styles.input}
                         placeholder="Quantity in Tones"
@@ -343,7 +392,7 @@ const ProductDetails = ({ route }) => {
               />
             </TouchableOpacity>
             <Text style={styles.pictureName}>{product?.pictureName}</Text>
-            <Pressable
+            {/* <Pressable
               style={styles.iconButton}
               onPress={() => setFavorite(!favorite)}
             >
@@ -352,7 +401,7 @@ const ProductDetails = ({ route }) => {
                 strokeWidth={2.5}
                 color={favorite ? "red" : "gray"}
               />
-            </Pressable>
+            </Pressable> */}
           </View>
 
           {/* product Card two */}
@@ -389,8 +438,22 @@ const styles = StyleSheet.create({
     fontSize: wp(6),
     width: wp(50),
     color: "white",
-    fontWeight: "bold",
-    margin: 16,
+    fontFamily: "QuicksandBold",
+    marginHorizontal: wp(4),
+
+  },
+
+  descriptionTextContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: wp(3),
+  },
+
+  descriptionText: {
+    fontSize: wp(4),
+    color: "white",
+    fontFamily: "QuicksandBold",
+    marginVertical: wp(1),
   },
 
   clockIconContainer: {
@@ -414,9 +477,10 @@ const styles = StyleSheet.create({
   },
 
   pictureName: {
-    fontSize: wp(9),
+    fontSize: wp(7),
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
+    
   },
   inputTonContainer: {
     width: wp(50),
@@ -433,7 +497,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 50,
-    justifyContent: "space-between",
   },
 
   inputTons: {
@@ -455,15 +518,12 @@ const styles = StyleSheet.create({
 
   iconContainerText: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "center",
-    marginLeft: "3%",
+    marginLeft: wp(3),
     backgroundColor: "white",
-    width: wp(85),
+    width: wp(40),
     elevation: 3,
-    padding: 5,
     borderRadius: 999,
-    marginTop: "6%",
   },
 
   ratingBack: {
@@ -474,17 +534,19 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: hp(2.2),
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
 
   offerText: {
     marginHorizontal: wp(3),
     fontSize: wp(5),
+    fontFamily: "QuicksandBold",
   },
   mrpPrice: {
     color: "#FF5858",
     textDecorationLine: "line-through",
     fontSize: wp(4),
+    fontFamily: "QuicksandBold",
   },
 
   detailsHeader: {
@@ -495,6 +557,7 @@ const styles = StyleSheet.create({
   icon: {
     color: "#fbbf24",
     fontSize: 25,
+    fontFamily: "QuicksandBold",
   },
   cartContainer: {
     flexDirection: "row",
@@ -525,7 +588,7 @@ const styles = StyleSheet.create({
   offerPrice: {
     color: "white",
     fontSize: wp(6),
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   modalBackground: {
     flex: 1,
@@ -554,12 +617,12 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
     color: "#333",
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
     marginBottom: 15,
   },
   picker: {
@@ -583,7 +646,7 @@ const styles = StyleSheet.create({
   continueButtonText: {
     fontSize: 16,
     color: "#fff",
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   paymentButton: {
     backgroundColor: "#4870F4",
@@ -594,7 +657,7 @@ const styles = StyleSheet.create({
   paymentButtonText: {
     fontSize: 16,
     color: "#fff",
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   table: {
     width: "100%",
@@ -614,5 +677,6 @@ const styles = StyleSheet.create({
   tableCell: {
     fontSize: 16,
     color: "#333",
+    fontFamily: "QuicksandBold",
   },
 });

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,51 +16,70 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 // Data import
 import { categoriesData } from "../data/Categories";
 import { categoryByProduct } from "../data/Categories";
-import { useNavigation } from "@react-navigation/native";
-
+import * as Font from "expo-font";
+import AppLoaderAnimation from "./loaders/AppLoaderAnimation";
 export default function Categories({ activeCategory, setActiveCategory }) {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+    loadFonts();
+  }, []);
   return (
-    <Animated.View>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollConatiner}
-      >
-        {categoriesData?.map((category, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.category}
-              // onPress={() => setActiveCategory(category.name)}
-            >
-              <View style={styles.categoryView}>
-                <Image
-                  source={{ uri: category.imageUrl }}
-                  style={styles.imageCard}
-                />
-                {/* <Images uri={category.name}
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation/>
+      ) : (
+        <Animated.View>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollConatiner}
+          >
+            {categoriesData?.map((category, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.category}
+                  // onPress={() => setActiveCategory(category.name)}
+                >
+                  <View style={styles.categoryView}>
+                    <Image
+                      source={{ uri: category.imageUrl }}
+                      style={styles.imageCard}
+                    />
+                    {/* <Images uri={category.name}
                   style={styles.imagesComp}
                 /> */}
-                <Text style={styles.categoryName}>{category.name}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-        {categoryByProduct?.map((product, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.category}
-              onPress={() => setActiveCategory(product.name)}
-            >
-              <View style={styles.categoryView}>
-                <Text style={styles.categoryName}>{product.name}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-    </Animated.View>
+                    <Text style={styles.categoryName}>{category.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+            {categoryByProduct?.map((product, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.category}
+                  onPress={() => setActiveCategory(product.name)}
+                >
+                  <View style={styles.categoryView}>
+                    <Text style={styles.categoryName}>{product.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </Animated.View>
+      )}
+    </>
   );
 }
 
@@ -92,6 +111,9 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 15,
+    color: "rgba(0,0,0,0.7)",
+    fontFamily: "QuicksandBold",
+
     textAlign: "center",
   },
 });
