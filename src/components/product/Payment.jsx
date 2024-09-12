@@ -44,6 +44,7 @@ const PaymentSummary = ({ route }) => {
   const [zipCode, setZipCode] = useState("");
   const [requestSample, setRequestSample] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOrderSuccess, setIsOrderSuccess] = useState(false);
 
   const navigation = useNavigation();
 
@@ -62,8 +63,11 @@ const PaymentSummary = ({ route }) => {
       zipCode: zipCode,
       requestSample: requestSample ? "Yes" : "No",
     };
-    console.log(orderItems);
-    navigation.navigate("Sucessfull");
+    setIsOrderSuccess(true);
+
+    setTimeout(() => {
+      navigation.navigate("Sucessfull");
+    }, 5000);
   };
   const { productSummary } = route.params;
   console.log("payment screen print");
@@ -266,7 +270,7 @@ const PaymentSummary = ({ route }) => {
                   fontFamily: "QuicksandSemiBold",
                 }}
               >
-                Order
+                {isOrderSuccess ? "Processing..." : "Pre-Book order"}
               </Text>
             </Pressable>
           </View>

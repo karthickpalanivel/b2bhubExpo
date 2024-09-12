@@ -20,13 +20,14 @@ import {
   CogIcon,
   GiftIcon,
   TruckIcon,
-  ChevronRightIcon,
+  
   ArrowLeftIcon,
-} from "react-native-heroicons/solid";
+} from "react-native-heroicons/outline";
 
 import {
   IdentificationIcon,
   EnvelopeIcon,
+  ChevronRightIcon,
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
@@ -96,7 +97,7 @@ const ProfileScreen = () => {
             <View style={styles.headerContainer}>
               <TouchableOpacity style={styles.iconButton} onPress={goback}>
                 <ArrowLeftIcon
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                   color={"#fff"}
                 />
@@ -142,7 +143,7 @@ const ProfileScreen = () => {
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                 />
               </Pressable>
@@ -158,11 +159,11 @@ const ProfileScreen = () => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TruckIcon color={"#4870F4"} size={hp(5)} />
-                  <Text style={styles.contextName}>Deliveries</Text>
+                  <Text style={styles.contextName}>Deliveries & Orders</Text>
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                 />
               </Pressable>
@@ -179,7 +180,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -198,7 +199,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -218,7 +219,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -372,7 +373,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
   },
   callText: {
-    fontSize: wp(4.6),
+    fontSize: wp(4),
     color: "white",
     fontFamily: "QuicksandSemiBold",
   },

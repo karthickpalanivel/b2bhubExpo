@@ -127,19 +127,19 @@ const AccountSettings = () => {
                   topic={"Company Name"}
                   value={companyName}
                   setValue={setCompanyName}
-                  edit={true}
+                  edit={false}
                 />
                 <DetailsBar
                   topic={"Phone"}
                   value={phone}
                   setValue={setPhone}
-                  edit={true}
+                  edit={false}
                 />
                 <DetailsBar
                   topic={"Email"}
                   value={email}
                   setValue={setEmail}
-                  edit={true}
+                  edit={false}
                 />
 
                 <DetailsBar
