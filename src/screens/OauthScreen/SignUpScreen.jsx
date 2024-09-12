@@ -1,30 +1,30 @@
-import {useNavigation} from "@react-navigation/native";
-import React, {useEffect, useState, useCallback} from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
 
+import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import * as Font from "expo-font";
+import { StatusBar } from "expo-status-bar";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
+  BackHandler,
   Dimensions,
   Image,
   Pressable,
   ScrollView,
-  BackHandler,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import {
-  widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import Animated, {FadeInDown} from "react-native-reanimated";
-import {ChevronLeftIcon} from "react-native-heroicons/outline";
-import axios from "axios";
-const {width} = Dimensions.get("window");
-import * as Font from "expo-font";
-import {StatusBar} from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-import { useFocusEffect } from "@react-navigation/native";
+const {width} = Dimensions.get("window");
 
 const SignUpScreen = () => {
   async function HandleSignup() {
@@ -124,7 +124,7 @@ const SignUpScreen = () => {
             .damping(12)}
           style={styles.full}
         >
-          <StatusBar style="auto" backgroundColor="white" />
+          <StatusBar style="light" backgroundColor="#d53c46" />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
               <Pressable onPress={navigateToLogin}>
@@ -232,7 +232,9 @@ const SignUpScreen = () => {
                   <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity
+              
+            </View>
+            <TouchableOpacity
                 style={styles.toggleButton}
                 onPress={navigateToLogin}
               >
@@ -240,7 +242,6 @@ const SignUpScreen = () => {
                   Already Have a account? Login here
                 </Text>
               </TouchableOpacity>
-            </View>
           </ScrollView>
         </Animated.View>
       )}
@@ -263,6 +264,7 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     width: wp(90),
+    height: hp(62),
     alignItems: "center",
     backgroundColor: "white",
     paddingBottom: wp(10),
@@ -337,9 +339,10 @@ const styles = StyleSheet.create({
   
   toggleText: {
     fontSize: wp(3.8),
-    color: "#D53C46",
-    fontWeight: "bold",
-    textAlign: "left",
+    color: "#fff",
+    fontFamily: "QuicksandBold",
+    marginVertical: wp(3),
+    textAlign: "center",
   },
 
 });
