@@ -64,14 +64,14 @@ const PaymentSummary = ({ route }) => {
       requestSample: requestSample ? "Yes" : "No",
     };
     setIsOrderSuccess(true);
-
+    console.log(orderItems)
     setTimeout(() => {
       navigation.navigate("Sucessfull");
     }, 5000);
   };
   const { productSummary } = route.params;
-  console.log("payment screen print");
-  console.log(productSummary);
+  // console.log("payment screen print");
+  // console.log(productSummary);
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
