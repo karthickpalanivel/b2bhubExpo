@@ -28,7 +28,6 @@ import Product from "../components/product/Product";
 import { categoriesData } from "../data/Categories";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BannerOne from "../components/Banner/BannerOne";
-
 import { Modal } from "react-native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";

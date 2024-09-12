@@ -10,8 +10,6 @@ import * as Font from "expo-font";
 import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PdfGeneration from "../InVoice/PdfGeneration";
 
-
-
 const OrderCard = ({ props }) => {const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

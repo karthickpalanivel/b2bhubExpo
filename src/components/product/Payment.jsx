@@ -19,6 +19,7 @@ import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import PdfGeneration from "../InVoice/PdfGeneration";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // CustomCheckBox Component
 export const CustomCheckBox = ({ value, onValueChange }) => (
@@ -45,7 +46,7 @@ const PaymentSummary = ({ route }) => {
   const [zipCode, setZipCode] = useState("");
   const [requestSample, setRequestSample] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [token, setToken] = useState("")
   const navigation = useNavigation();
 
   const orderPlaced = () => {
@@ -82,6 +83,131 @@ const PaymentSummary = ({ route }) => {
     
     loadFonts();
   }, []);
+
+  AsyncStorage.getItem('companyname')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      console.log('Value:', value);
+      setCompanyName(value);
+    } else {
+      // No value found
+      console.log('No value found');
+      setCompanyName("")
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+  AsyncStorage.getItem('gst')
+  .then((value) => {
+    if (value !== null) {
+      setGstNo(value)
+      // Value was found, do something with it
+      console.log('Value:', value);
+    } else {
+      // No value found
+      console.log('No value found');
+      setGstNo("")
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+  AsyncStorage.getItem('email')
+  .then((value) => {
+    if (value !== null) {
+      setEmail(value)
+      // Value was found, do something with it
+      console.log('Value:', value);
+    } else {
+      // No value found
+      console.log('No value found');
+      setEmail("")
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+  AsyncStorage.getItem('phone')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      console.log('Value:', value);
+      setPhoneNo(value)
+    } else {
+      // No value found
+      console.log('No value found');
+      setPhoneNo("")
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+  AsyncStorage.getItem('token')
+  .then((value) => {
+    if (value !== null) {
+      // Value was found, do something with it
+      console.log('Value:', value);
+      setToken(value)
+    } else {
+      // No value found
+      console.log('No value found');
+    }
+  })
+  .catch((error) => {
+    // Error retrieving value
+    console.error('Error:', error);
+  });
+
+  const handleConfirmOrder = async () => {
+    const orderUrl = `https://erp-backend-new-ketl.onrender.com/sales/addorder`;
+    setProceedPaymentText("Processing...");
+    let newErrors = validateForm();
+
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const invoiceIdRequest = await axios.post(
+          `https://erp-backend-new-ketl.onrender.com/sales/getInoivceId`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const invoiceUrl = await generateInvoice(
+          getInvoiceData(invoiceIdRequest.data[0].invoiceId)
+        );
+        const orderDetails = getOrderDetails(
+          invoiceUrl,
+          invoiceIdRequest.data[0].invoiceId
+        );
+        await axios.post(orderUrl, orderDetails, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setProceedPaymentText("Thanks For Business");
+        setIsOrderSuccessful(true);
+        setModelOpen(true);
+
+        console.log("Order Confirmed and email sent");
+      } catch (error) {
+        console.error("Error processing the order:", error);
+        setProceedPaymentText("Failed. Try Again");
+      }
+    } else {
+      toast.error("Error with making purchase", { position: "top-center" });
+      setProceedPaymentText("Failed. Try Again");
+      setErrors(newErrors);
+    }
+  };
   
   const goBack = () => {
     navigation.goBack();
