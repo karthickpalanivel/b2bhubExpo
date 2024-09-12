@@ -106,7 +106,8 @@ const AccountSettings = () => {
         <AppLoaderAnimation />
       ) : (
         <View>
-          <ProfileHeaderLayout header="Accounts" />
+          <ProfileHeaderLayout header="Accounts" 
+          />
           <ScrollView>
             <View
               style={{

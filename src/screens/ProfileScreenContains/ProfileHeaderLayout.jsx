@@ -16,7 +16,7 @@ import {
 const ProfileHeaderLayout = ({ header }) => {
   const navigation = useNavigation();
   const goBack = () => {
-    navigation.goBack();
+    navigation.navigate("Profile");
   };
 
   return (

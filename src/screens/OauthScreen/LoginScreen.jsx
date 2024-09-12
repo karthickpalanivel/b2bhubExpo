@@ -63,20 +63,19 @@ const LoginScreen = () => {
           const customer = res.data.user;
           console.log(customer);
           try {
-            AsyncStorage.setItem('loginstate','true');
-            AsyncStorage.setItem('userEmail',email);
-            AsyncStorage.setItem('customerId',customer.customerId);
-            AsyncStorage.setItem('companyname',customer.CompanyName);
-            AsyncStorage.setItem('phone',customer.phoneNo);
-            AsyncStorage.setItem('gst',customer.gstNo);
-            AsyncStorage.setItem('email',customer.Email);
-            AsyncStorage.setItem('token',res.data.token)
-            
+            AsyncStorage.setItem("loginstate", "true");
+            AsyncStorage.setItem("userEmail", email);
+            AsyncStorage.setItem("customerId", customer.customerId);
+            AsyncStorage.setItem("companyname", customer.CompanyName);
+            AsyncStorage.setItem("phone", customer.phoneNo);
+            AsyncStorage.setItem("gst", customer.gstNo);
+            AsyncStorage.setItem("email", customer.Email);
+            AsyncStorage.setItem("token", res.data.token);
           } catch (e) {
             // saving error
-            console.error(e)
+            console.error(e);
           }
-          
+
           navigation.navigate("Home");
         } else window.alert(res.message);
       })
@@ -177,6 +176,11 @@ const LoginScreen = () => {
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
   };
+
+  const navigateToRegister = () => {
+    navigation.navigate("SignUp");
+  };
+
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -278,6 +282,11 @@ const LoginScreen = () => {
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={styles.register}>
+                    Don't have account? Click here
+                  </Text>
+                </TouchableOpacity>
               </View>
             </>
           ) : (
@@ -333,6 +342,12 @@ const LoginScreen = () => {
                   onPress={handleSellerSubmit}
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={styles.register}>
+                    Don't have account? Click here
+                  </Text>
                 </TouchableOpacity>
               </Animated.View>
             </>
@@ -430,6 +445,11 @@ const styles = StyleSheet.create({
     marginVertical: wp(4),
   },
   forget: {
+    color: "#d53c46",
+  },
+  register: {
+    fontFamily: "QuicksandBold",
+    marginVertical: wp(4),
     color: "#d53c46",
   },
 });

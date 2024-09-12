@@ -118,12 +118,12 @@ const DeliveryScreen = () => {
                       start your first order
                     </Text>
                   </View>
-                  <Pressable
+                  {/* <Pressable
                     style={styles.homeBtnContainer}
                     onPress={navigationToHome}
                   >
                     <Text style={styles.homeBtnText}>Go Home</Text>
-                  </Pressable>
+                  </Pressable> */}
                 </View>
               </>
             )}

@@ -36,6 +36,7 @@ const OrderCard = ({ props }) => {
   const hide = () => setModalVisible(false);
   const changeValue = () => {
     hide();
+    setUploadDetails(false)
   };
 
   const showModal = () => {
@@ -140,7 +141,13 @@ const OrderCard = ({ props }) => {
               </View>
               <View>
                 <Text>Transaction Date</Text>
-                <TouchableOpacity></TouchableOpacity>
+                <TouchableOpacity>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={(text) => setTransactionId(text)}
+                  placeholderTextColor={"#4870F4"}
+                />
+                </TouchableOpacity>
               </View>
               <View>
                 <Text>Amount</Text>
@@ -384,7 +391,7 @@ const styles = StyleSheet.create({
   conformContainer: {
     marginTop: hp(2),
     marginLeft: wp(1),
-    width: wp(20),
+    width: wp(25),
     backgroundColor: "#4870F4",
     padding: wp(3),
     borderRadius: 10,
