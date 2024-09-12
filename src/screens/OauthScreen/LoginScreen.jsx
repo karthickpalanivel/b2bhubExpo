@@ -282,13 +282,12 @@ const LoginScreen = () => {
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
-                
               </View>
               <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                  <Text style={styles.register}>
-                    Don't have account? Click here
-                  </Text>
-                </TouchableOpacity>
+                <Text style={styles.register}>
+                  Don't have account? Click here
+                </Text>
+              </TouchableOpacity>
             </>
           ) : (
             <>
@@ -297,54 +296,54 @@ const LoginScreen = () => {
                   .duration(1500)
                   .springify()
                   .damping(12)}
-                style={styles.loginCard}
               >
-                <Text style={styles.title}>Seller Login</Text>
+                <View style={styles.loginCard}>
+                  <Text style={styles.title}>Seller Login</Text>
 
-                <Text style={styles.inputName}>Email</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  keyboardType="email-address"
-                  value={sellerEmail}
-                  onChangeText={(text) => setSellerEmail(text)} // Capture email input
-                />
-
-                <Text style={styles.inputName}>Password</Text>
-                <View style={styles.passwordContainer}>
+                  <Text style={styles.inputName}>Email</Text>
                   <TextInput
-                    style={styles.passwordInput}
-                    placeholder="Password"
-                    secureTextEntry={viewPassword} // Show/hide password
-                    value={sellerPassword}
-                    onChangeText={(text) => setSellerPassword(text)} // Capture password input
+                    style={styles.input}
+                    placeholder="Email"
+                    keyboardType="email-address"
+                    value={sellerEmail}
+                    onChangeText={(text) => setSellerEmail(text)} // Capture email input
                   />
+
+                  <Text style={styles.inputName}>Password</Text>
+                  <View style={styles.passwordContainer}>
+                    <TextInput
+                      style={styles.passwordInput}
+                      placeholder="Password"
+                      secureTextEntry={viewPassword} // Show/hide password
+                      value={sellerPassword}
+                      onChangeText={(text) => setSellerPassword(text)} // Capture password input
+                    />
+                    <TouchableOpacity
+                      style={styles.eyeIcon}
+                      onPress={() => setViewPassword(!viewPassword)}
+                    >
+                      {viewPassword ? (
+                        <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                      ) : (
+                        <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                      )}
+                    </TouchableOpacity>
+                  </View>
                   <TouchableOpacity
-                    style={styles.eyeIcon}
-                    onPress={() => setViewPassword(!viewPassword)}
+                    style={styles.forgetPassword}
+                    onPress={navigateToForgotPassword}
                   >
-                    {viewPassword ? (
-                      <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
-                    ) : (
-                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
-                    )}
+                    <Text style={styles.forget}>Forget Password ?</Text>
+                  </TouchableOpacity>
+
+                  {/* Submit Button */}
+                  <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={handleSellerSubmit}
+                  >
+                    <Text style={styles.submitButtonText}>Login</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  style={styles.forgetPassword}
-                  onPress={navigateToForgotPassword}
-                >
-                  <Text style={styles.forget}>Forget Password ?</Text>
-                </TouchableOpacity>
-
-                {/* Submit Button */}
-                <TouchableOpacity
-                  style={styles.submitButton}
-                  onPress={handleSellerSubmit}
-                >
-                  <Text style={styles.submitButtonText}>Login</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
                   <Text style={styles.register}>
                     Don't have account? Click here
@@ -362,7 +361,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#d53c46",
-    height: "100%",
+    height: hp(100),
     alignContent: "center",
   },
   logoContainer: {
@@ -382,7 +381,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp("88%"),
     height: hp(50),
-    margin: wp("5%"),
+    marginHorizontal: wp(5),
+    marginTop: wp(5),
     paddingVertical: wp(2),
     backgroundColor: "#FFFFFF",
     borderRadius: wp(8),
@@ -450,10 +450,11 @@ const styles = StyleSheet.create({
   },
   register: {
     fontFamily: "QuicksandBold",
-    marginVertical: wp(4),
+    marginVertical: hp(2),
     // color: "#d53c46",
-    color: 'white',
-    textAlign: 'center'
+    color: "white",
+    marginTop: hp(4),
+    textAlign: "center",
   },
 });
 export default LoginScreen;

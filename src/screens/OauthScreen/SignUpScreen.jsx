@@ -264,11 +264,11 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     width: wp(90),
-    height: hp(62),
+    height: hp(65),
     alignItems: "center",
     backgroundColor: "white",
     paddingBottom: wp(10),
-    marginTop: wp(10),
+    marginTop: wp(8),
     borderRadius: wp(5),
   },
 
