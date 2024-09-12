@@ -20,13 +20,14 @@ import {
   CogIcon,
   GiftIcon,
   TruckIcon,
-  ChevronRightIcon,
+  
   ArrowLeftIcon,
-} from "react-native-heroicons/solid";
+} from "react-native-heroicons/outline";
 
 import {
   IdentificationIcon,
   EnvelopeIcon,
+  ChevronRightIcon,
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
@@ -45,39 +46,35 @@ const ProfileScreen = () => {
     // console.log("Logout button clicked");
   };
 
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setCompanyName(value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
-  AsyncStorage.getItem('companyname')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      setCompanyName(value)
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
-
-  AsyncStorage.getItem('phone')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      setPhone(value)
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
-
+  AsyncStorage.getItem("phone")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPhone(value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   const goback = () => {
     navigation.goBack();
@@ -100,7 +97,7 @@ const ProfileScreen = () => {
             <View style={styles.headerContainer}>
               <TouchableOpacity style={styles.iconButton} onPress={goback}>
                 <ArrowLeftIcon
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                   color={"#fff"}
                 />
@@ -146,7 +143,7 @@ const ProfileScreen = () => {
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                 />
               </Pressable>
@@ -162,11 +159,11 @@ const ProfileScreen = () => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TruckIcon color={"#4870F4"} size={hp(5)} />
-                  <Text style={styles.contextName}>Deliveries</Text>
+                  <Text style={styles.contextName}>Deliveries & Orders</Text>
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
-                  size={hp(3.5)}
+                  size={hp(2.5)}
                   strokeWidth={4.5}
                 />
               </Pressable>
@@ -183,7 +180,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -202,7 +199,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -222,7 +219,7 @@ const ProfileScreen = () => {
           </View>
           <ChevronRightIcon
             color={"#4870F4"}
-            size={hp(3.5)}
+            size={hp(2.5)}
             strokeWidth={4.5}
           />
         </Pressable> */}
@@ -317,12 +314,14 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: hp(2.5),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
     marginLeft: "6%",
   },
 
   phoneNumber: {
     color: "white",
     fontSize: hp(2),
+    fontFamily: "QuicksandSemiBold",
   },
   businessContainer: {
     width: "50%",
@@ -339,9 +338,11 @@ const styles = StyleSheet.create({
   },
   business: {
     textAlign: "center",
-    fontWeight: "600",
+    // fontWeight: "600",
+    fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
     color: "white",
+
   },
   detailsContainer: {
     Width: "90%",
@@ -360,6 +361,7 @@ const styles = StyleSheet.create({
   contextName: {
     fontSize: hp(1.8),
     marginLeft: hp(1),
+    fontFamily: "QuicksandSemiBold",
     color: "#5D5D5D",
   },
 
@@ -371,8 +373,9 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
   },
   callText: {
-    fontSize: wp(4.6),
+    fontSize: wp(4),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
   },
   helpDeskContainer: {
     width: wp(25),
@@ -384,7 +387,8 @@ const styles = StyleSheet.create({
   },
   helpDeskText: {
     textAlign: "center",
-    fontWeight: "700",
+    // fontWeight: "700",
+    fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
     color: "white",
   },
@@ -401,7 +405,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: wp(4.5),
     color: "white",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   whatsapp: {
     width: hp(5),

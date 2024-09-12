@@ -1,24 +1,19 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import ProfileHeaderLayout from "./ProfileHeaderLayout";
 import { orderData } from "../../data/OrderData";
 import { useNavigation } from "@react-navigation/native";
 import OrderCard from "../../components/Order/OrderCard";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import axios from "axios"
+import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-
 
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
@@ -26,41 +21,46 @@ const DeliveryScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const [orderDetails, setOrderDetails] = useState([]);
-  const [isFetching ,setIsFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
   const [token, setToken] = useState("");
   const [loading, setloading] = useState(true);
 
-  AsyncStorage.getItem('token')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      setToken(value)
-      setIsFetching(true)
-    const url = 'https://erp-backend-new-ketl.onrender.com/sales/viewOrders'
-    axios
-      .post(url,{},{headers: {
-        Authorization: `Bearer ${value}`,
-        "Content-Type": "application/json",
-      }})
-      .then((res) => {
-        setOrderDetails(res.data.reverse());
-        setIsFetching(false)
-        console.log('====================================');
-        console.log(res.data);
-        console.log('====================================');
-        
-      })
-      .catch((err) => console.log(err));
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
+  AsyncStorage.getItem("token")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setToken(value);
+        setIsFetching(true);
+        const url =
+          "https://erp-backend-new-ketl.onrender.com/sales/viewOrders";
+        axios
+          .post(
+            url,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${value}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            setOrderDetails(res.data.reverse());
+            setIsFetching(false);
+            console.log("====================================");
+            console.log(res.data);
+            console.log("====================================");
+          })
+          .catch((err) => console.log(err));
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   useEffect(() => {
     async function loadFonts() {
@@ -76,10 +76,6 @@ const DeliveryScreen = () => {
     loadFonts();
   }, []);
 
-
-
-  
-
   const navigationToHome = () => {
     navigation.navigate("Home");
   };
@@ -92,42 +88,46 @@ const DeliveryScreen = () => {
         <View style={styles.container}>
           <ProfileHeaderLayout header={"Deliveries & Orders"} />
           <StatusBar style="light" backgroundColor="#4870F4" />
-          {orderDetails.length !== 0 ? (
-            <Text style={styles.orderHeader}>Orders</Text>
-          ) : (
-            <></>
-          )}
-          {orderDetails.length !== 0 ? (
-            orderDetails.map((item) => {
-              return (
-                <>
-                  <OrderCard props={item} key={item._id} />
-                </>
-              );
-            })
-          ) : (
-            <>
-              <View style={styles.container}>
-                <Image
-                  source={require("../../assets/emptyBox.png")}
-                  style={styles.emptyBox}
-                />
+          <ScrollView>
+            {orderData.length !== 0 ? (
+              <Text style={styles.orderHeader}>Orders</Text>
+            ) : (
+              <></>
+            )}
+            {orderData.length !== 0 ? (
+              orderData.map((item) => {
+                return (
+                  <>
+                    <OrderCard props={item} key={item._id} />
+                  </>
+                );
+              })
+            ) : (
+              <>
+                <View style={styles.container}>
+                  <Image
+                    source={require("../../assets/emptyBox.png")}
+                    style={styles.emptyBox}
+                  />
 
-                <View styles={styles.imageCard}>
-                  <Text style={styles.noOrderOne}>
-                    Looks like you need to make orders?
-                  </Text>
-                  <Text style={styles.noOrderTwo}>start your first order</Text>
+                  <View styles={styles.imageCard}>
+                    <Text style={styles.noOrderOne}>
+                      Looks like you need to make orders?
+                    </Text>
+                    <Text style={styles.noOrderTwo}>
+                      start your first order
+                    </Text>
+                  </View>
+                  <Pressable
+                    style={styles.homeBtnContainer}
+                    onPress={navigationToHome}
+                  >
+                    <Text style={styles.homeBtnText}>Go Home</Text>
+                  </Pressable>
                 </View>
-                <Pressable
-                  style={styles.homeBtnContainer}
-                  onPress={navigationToHome}
-                >
-                  <Text style={styles.homeBtnText}>Go Home</Text>
-                </Pressable>
-              </View>
-            </>
-          )}
+              </>
+            )}
+          </ScrollView>
         </View>
       )}
     </>

@@ -22,7 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Categories from "../components/Categories";
 import Product from "../components/product/Product";
 import { categoriesData } from "../data/Categories";
@@ -31,6 +31,7 @@ import BannerOne from "../components/Banner/BannerOne";
 import { Modal } from "react-native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";
+import Footer from "../components/Footer";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -83,36 +84,35 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
+  AsyncStorage.getItem("customerId")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
-  AsyncStorage.getItem('customerId')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      console.log('Value:', value);
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-
-  AsyncStorage.getItem('userEmail')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      console.log('Value:', value);
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
+  AsyncStorage.getItem("userEmail")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   const profileScreen = () => {
     navigation.navigate("Profile");
@@ -321,9 +321,10 @@ const HomeScreen = () => {
             <Product
               category={categoriesData}
               productActiveData={activeCategory}
-              setProductActiveData={setActiveCategory}
+              setProductActivSeData={setActiveCategory}
             />
           </ScrollView>
+          {/* <Footer /> */}
         </View>
       )}
     </>

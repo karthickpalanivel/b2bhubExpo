@@ -40,7 +40,7 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
     <View style={styles.detailBarContainer}>
       <StatusBar style="light" backgroundColor="#4870F4" />
       <View>
-        <Text style={{ color: "white" }}>{topic}</Text>
+        <Text style={{ color: "white", fontFamily: "QuicksandSemiBold", }}>{topic}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
       {edit && (
@@ -127,19 +127,19 @@ const AccountSettings = () => {
                   topic={"Company Name"}
                   value={companyName}
                   setValue={setCompanyName}
-                  edit={true}
+                  edit={false}
                 />
                 <DetailsBar
                   topic={"Phone"}
                   value={phone}
                   setValue={setPhone}
-                  edit={true}
+                  edit={false}
                 />
                 <DetailsBar
                   topic={"Email"}
                   value={email}
                   setValue={setEmail}
-                  edit={true}
+                  edit={false}
                 />
 
                 <DetailsBar
@@ -205,10 +205,12 @@ const styles = StyleSheet.create({
   editText: {
     fontSize: hp(2.5),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
   },
   value: {
     fontSize: hp(2.2),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
   },
   fill: {
     position: "absolute",

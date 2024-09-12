@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
     fontSize: wp(5),
     marginLeft: wp(3),
     color: "white",
+    fontFamily: "QuicksandSemiBold",
   },
 });

@@ -47,6 +47,8 @@ const PaymentSummary = ({ route }) => {
   const [requestSample, setRequestSample] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("")
+  const [isOrderSuccess, setIsOrderSuccess] = useState(false);
+
   const navigation = useNavigation();
 
   const orderPlaced = () => {
@@ -64,12 +66,15 @@ const PaymentSummary = ({ route }) => {
       zipCode: zipCode,
       requestSample: requestSample ? "Yes" : "No",
     };
-    console.log(orderItems);
-    navigation.navigate("Sucessfull");
+    setIsOrderSuccess(true);
+
+    setTimeout(() => {
+      navigation.navigate("Sucessfull");
+    }, 5000);
   };
   const { productSummary } = route.params;
-  console.log('payment screen print')
-  console.log(productSummary)
+  console.log("payment screen print");
+  console.log(productSummary);
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -80,7 +85,7 @@ const PaymentSummary = ({ route }) => {
       });
       setIsLoading(false);
     }
-    
+
     loadFonts();
   }, []);
 
@@ -231,13 +236,17 @@ const PaymentSummary = ({ route }) => {
               <Text style={styles.cardTitle}>Payment Summary</Text>
             </View>
             <View style={styles.table}>
-            <View style={styles.tableRow}>
+              <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Product Name</Text>
-                <Text style={styles.tableCell}>{productSummary.productName}</Text>
+                <Text style={styles.tableCell}>
+                  {productSummary.productName}
+                </Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Total Price</Text>
-                <Text style={styles.tableCell}>₹ {productSummary.currentOrderPrice}</Text>
+                <Text style={styles.tableCell}>
+                  ₹ {productSummary.currentOrderPrice}
+                </Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>GST (Exempted)</Text>
@@ -245,21 +254,24 @@ const PaymentSummary = ({ route }) => {
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>Total Amount</Text>
-                <Text style={styles.tableCell}>₹ {productSummary.totalAmount}</Text>
+                <Text style={styles.tableCell}>
+                  ₹ {productSummary.totalAmount}
+                </Text>
               </View>
             </View>
           </View>
 
           {/* QR Code Payment Card */}
           <View style={styles.card}>
-            <Text style={[styles.cardTitle, { fontSize: 15 }]}>
+            {/* QR Code Placeholder */}
+            {/* <Text style={[styles.cardTitle, { fontSize: 15 }]}>
               Scan the QR to Proceed with the Payment
             </Text>
-            {/* QR Code Placeholder */}
+            
             <View style={styles.qrPlaceholder}>
               <Text>QR Code Placeholder</Text>
             </View>
-            <Text style={styles.cardContent}>Or</Text>
+            <Text style={styles.cardContent}>Or</Text> */}
             <Text style={styles.cardTitle}>Bank Details</Text>
             <Text style={styles.cardContent}>
               Account Number: 3940002100057010
@@ -350,7 +362,7 @@ const PaymentSummary = ({ route }) => {
           </View>
 
           <View style={styles.card}>
-            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 13, fontFamily: "QuicksandSemiBold" }}>
               Send the Payment Transaction Details to this Mail
             </Text>
             <Text style={styles.supportEmail}>Support @b2bhubindia.com</Text>
@@ -361,7 +373,9 @@ const PaymentSummary = ({ route }) => {
             <Text style={styles.cardContent}>
               Delivery takes 3 to 7 business days from the date of payment.
             </Text>
-            <Text style={{ color: "#4870F4" }}>**Conditions apply.</Text>
+            <Text style={{ color: "#4870F4", fontFamily: "QuicksandSemiBold" }}>
+              **Conditions apply.
+            </Text>
             <Text style={styles.cardContent}>
               The samples can be sent to the provided address on request.
             </Text>
@@ -370,15 +384,21 @@ const PaymentSummary = ({ route }) => {
               onPress={orderPlaced}
               style={{
                 backgroundColor: "#4870F4",
-                padding: 8,
+                padding: wp(2),
                 justifyContent: "center",
-                borderRadius: 15,
-                margin: 5,
-                width: "100%",
+                borderRadius: wp(4),
+                margin: wp(1),
+                width: wp(80),
               }}
             >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                Pre Book Order
+              <Text
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  fontFamily: "QuicksandSemiBold",
+                }}
+              >
+                {isOrderSuccess ? "Processing..." : "Pre-Book order"}
               </Text>
             </Pressable>
           </View>
@@ -392,48 +412,51 @@ const PaymentSummary = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: wp(5),
     backgroundColor: "#f0f0f0",
-    marginTop: 20,
+    marginTop: wp(5),
   },
   card: {
     backgroundColor: "white",
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    padding: wp(4),
+    marginBottom: wp(4),
+    borderRadius: wp(2.5),
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 8,
     elevation: 5,
     alignItems: "center",
   },
   cardTitle: {
     marginVertical: wp(5),
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: wp(4),
+    // fontWeight: "bold",
+    fontFamily: "QuicksandSemiBold",
     color: "#4870F4",
   },
   cardContent: {
     fontSize: 14,
     color: "#333",
+    fontFamily: "QuicksandSemiBold",
   },
   qrPlaceholder: {
-    height: 100,
+    height: wp(26),
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e0e0e0",
-    borderRadius: 10,
-    marginTop: 10,
-    marginBottom: 10,
+    borderRadius: wp(2.5),
+    marginTop: wp(2.5),
+    marginBottom: wp(2.5),
   },
   input: {
-    height: 40,
+    height: wp(10),
     borderColor: "#ddd",
     borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderRadius: wp(2.25),
+    marginBottom: wp(2.5),
+    paddingHorizontal: wp(2.5),
+    fontFamily: "QuicksandSemiBold",
     width: "100%",
   },
   table: {
@@ -442,50 +465,52 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: wp(2.5),
     width: "100%",
   },
   tableCell: {
-    fontSize: 14,
+    fontSize: wp(3.5),
     color: "#333",
+    fontFamily: "QuicksandSemiBold",
   },
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: wp(3.5),
     width: "100%",
   },
   checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    borderWidth: 2,
+    width: wp(5),
+    height: wp(5),
+    borderRadius: wp(1),
+    borderWidth: wp(0.5),
     borderColor: "#007bff",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: wp(2.5),
   },
   checkboxChecked: {
     backgroundColor: "#007bff",
   },
   checkmark: {
-    fontSize: 14,
+    fontSize: wp(3.5),
     color: "white",
   },
   checkboxLabel: {
     fontSize: 14,
     color: "#333",
+    fontFamily: "QuicksandSemiBold",
   },
   supportEmail: {
-    padding: 10,
+    padding: wp(2.5),
 
     color: "#4870F4",
   },
   deliveryDetails: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 15,
-    marginBottom: 15,
+    padding: wp(3.75),
+    marginBottom: wp(3.75),
   },
 
   headerContainer: {
@@ -493,7 +518,7 @@ const styles = StyleSheet.create({
     marginBottom: wp(5),
     padding: wp(3),
     backgroundColor: "white",
-    borderRadius: 999,
+    borderRadius: 9999,
     alignItems: "center",
     flexDirection: "row",
   },
@@ -501,7 +526,8 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     marginLeft: wp(5),
     color: "#4870F4",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "QuicksandSemiBold",
   },
   header: {
     fontSize: wp(5),
