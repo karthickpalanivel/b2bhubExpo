@@ -282,12 +282,13 @@ const LoginScreen = () => {
                 >
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                
+              </View>
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
                   <Text style={styles.register}>
                     Don't have account? Click here
                   </Text>
                 </TouchableOpacity>
-              </View>
             </>
           ) : (
             <>
@@ -450,7 +451,9 @@ const styles = StyleSheet.create({
   register: {
     fontFamily: "QuicksandBold",
     marginVertical: wp(4),
-    color: "#d53c46",
+    // color: "#d53c46",
+    color: 'white',
+    textAlign: 'center'
   },
 });
 export default LoginScreen;
