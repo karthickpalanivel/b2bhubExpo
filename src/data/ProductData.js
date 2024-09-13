@@ -75,7 +75,7 @@ export const ProductData = [
       "Unpolished Toor Dal",
     ],
     imageUrl:
-      "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
+      "https://economictimes.indiatimes.com/thumb/msid-108016469,width-1600,height-900,resizemode-4,imgsize-65098/best-moong-dal-in-india-a-nutrient-rich-delight-and-culinary-excellence.jpg?from=mdr",
   },
   {
     _id: 4,

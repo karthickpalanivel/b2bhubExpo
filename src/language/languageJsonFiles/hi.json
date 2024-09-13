@@ -1,0 +1,88 @@
+{
+  "start_your_business": "अपना व्यवसाय शुरू करें",
+  "from_your_city": "अपने शहर से",
+
+  "toor_dal": "तूर दाल",
+  "moong_dal": "मूंग दाल",
+  "urad_dal": "उड़द दाल",
+  "gram_dal": "चने की दाल",
+
+  "exclusive_products": "विशेष उत्पाद",
+
+  "fatka_toor_dal": "फटका तूर दाल",
+  "imported_toor_dal": "आयातित तूर दाल",
+  "desi_toor_dal": "देशी तूर दाल",
+  "polished_toor_dal": "पॉलिश तूर दाल",
+  "unpolished_toor_dal": "अनपॉलिश तूर दाल",
+  "desi_moong_dal": "देशी मूंग दाल",
+  "mysore_moong_dal": "मैसूर मूंग दाल",
+  "imported_moong_dal": "आयातित मूंग दाल",
+  "black_urad_dal": "काली उड़द दाल",
+  "imported_urad_dal": "आयातित उड़द दाल",
+  "desi_urad_dal": "देशी उड़द दाल",
+  "premium_gram_dal": "प्रीमियम चने की दाल",
+  "gold_gram_dal": "गोल्ड चने की दाल",
+
+  "manage_your_business": "अपना व्यवसाय प्रबंधित करें",
+
+  "accounts": "खाते",
+  "company_name": "कंपनी का नाम",
+  "phone": "फ़ोन",
+  "email": "ईमेल",
+  "gst_number": "जीएसटी नंबर",
+  "pan_number": "पैन नंबर",
+
+  "deliveries_and_orders": "डिलीवरी और ऑर्डर",
+  "order_id": "ऑर्डर आईडी",
+  "price": "मूल्य",
+  "date": "तारीख",
+  "quantity": "मात्रा",
+  "invoice": "चालान",
+  "receipt": "रसीद",
+
+  "need_help": "मदद चाहिए",
+  "logout": "लॉग आउट",
+  "whatsapp": "व्हाट्सएप",
+
+  "buyer_login": "खरीदार लॉगिन",
+  "seller_login": "विक्रेता लॉगिन",
+  "password": "पासवर्ड",
+
+  "login": "लॉगिन",
+  "forgot_password": "पासवर्ड भूल गए?",
+  "for_new_registration_click_here": "नए पंजीकरण के लिए यहाँ क्लिक करें",
+
+  "dry_moisture": "सूखी नमी",
+  "a_grade_quality": "ए ग्रेड गुणवत्ता",
+  "high_in_protein": "प्रोटीन में उच्च",
+  "organic_product": "जैविक उत्पाद",
+  "six_months_shelf_life": "6 महीने की शेल्फ लाइफ",
+  "order_now": "अभी ऑर्डर करें",
+  "show_product": "उत्पाद दिखाएं",
+  "in_stock": "स्टॉक में",
+  "limited_offer": "सीमित ऑफर",
+
+  "select_quantity_in_tons": "मात्रा टन में चुनें",
+  "continue": "जारी रखें",
+  "order_summary": "ऑर्डर सारांश",
+  "proceed_to_payment": "भुगतान के लिए आगे बढ़ें",
+
+  "terms_and_condition": "नियम और शर्तें",
+
+  "go_back_for_changes": "परिवर्तनों के लिए वापस जाएं",
+  "payment_summary": "भुगतान सारांश",
+  "make_your_payment_to_this_banking_details": "इन बैंकिंग विवरणों में भुगतान करें",
+  "fill_your_information": "अपनी जानकारी भरें",
+  "delivery_address": "डिलीवरी का पता",
+  "request_for_sample": "नमूने का अनुरोध करें",
+  "phone_number": "फ़ोन नंबर",
+
+  "address_line_1": "पता पंक्ति 1",
+  "address_line_2": "पता पंक्ति 2",
+  "city": "शहर",
+  "state": "राज्य",
+  "landmark": "स्थल",
+  "pin_code": "पिन कोड",
+
+  "send_this_payment_transaction_details_to_this_mail": "इस भुगतान लेनदेन के विवरण को इस मेल पर भेजें"
+}

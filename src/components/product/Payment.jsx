@@ -46,7 +46,7 @@ const PaymentSummary = ({ route }) => {
   const [zipCode, setZipCode] = useState("");
   const [requestSample, setRequestSample] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
   const [isOrderSuccess, setIsOrderSuccess] = useState(false);
 
   const navigation = useNavigation();
@@ -67,7 +67,7 @@ const PaymentSummary = ({ route }) => {
       requestSample: requestSample ? "Yes" : "No",
     };
     setIsOrderSuccess(true);
-    console.log(orderItems)
+    console.log(orderItems);
     setTimeout(() => {
       navigation.navigate("Sucessfull");
     }, 5000);
@@ -89,85 +89,85 @@ const PaymentSummary = ({ route }) => {
     loadFonts();
   }, []);
 
-  AsyncStorage.getItem('companyname')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      console.log('Value:', value);
-      setCompanyName(value);
-    } else {
-      // No value found
-      console.log('No value found');
-      setCompanyName("")
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-  AsyncStorage.getItem('gst')
-  .then((value) => {
-    if (value !== null) {
-      setGstNo(value)
-      // Value was found, do something with it
-      console.log('Value:', value);
-    } else {
-      // No value found
-      console.log('No value found');
-      setGstNo("")
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-  AsyncStorage.getItem('email')
-  .then((value) => {
-    if (value !== null) {
-      setEmail(value)
-      // Value was found, do something with it
-      console.log('Value:', value);
-    } else {
-      // No value found
-      console.log('No value found');
-      setEmail("")
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-  AsyncStorage.getItem('phone')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      console.log('Value:', value);
-      setPhoneNo(value)
-    } else {
-      // No value found
-      console.log('No value found');
-      setPhoneNo("")
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
-  AsyncStorage.getItem('token')
-  .then((value) => {
-    if (value !== null) {
-      // Value was found, do something with it
-      console.log('Value:', value);
-      setToken(value)
-    } else {
-      // No value found
-      console.log('No value found');
-    }
-  })
-  .catch((error) => {
-    // Error retrieving value
-    console.error('Error:', error);
-  });
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+        setCompanyName(value);
+      } else {
+        // No value found
+        console.log("No value found");
+        setCompanyName("");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+  AsyncStorage.getItem("gst")
+    .then((value) => {
+      if (value !== null) {
+        setGstNo(value);
+        // Value was found, do something with it
+        console.log("Value:", value);
+      } else {
+        // No value found
+        console.log("No value found");
+        setGstNo("");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+  AsyncStorage.getItem("email")
+    .then((value) => {
+      if (value !== null) {
+        setEmail(value);
+        // Value was found, do something with it
+        console.log("Value:", value);
+      } else {
+        // No value found
+        console.log("No value found");
+        setEmail("");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+  AsyncStorage.getItem("phone")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+        setPhoneNo(value);
+      } else {
+        // No value found
+        console.log("No value found");
+        setPhoneNo("");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+  AsyncStorage.getItem("token")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+        setToken(value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   const handleConfirmOrder = async () => {
     const orderUrl = `https://erp-backend-new-ketl.onrender.com/sales/addorder`;
@@ -213,7 +213,7 @@ const PaymentSummary = ({ route }) => {
       setErrors(newErrors);
     }
   };
-  
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -380,24 +380,8 @@ const PaymentSummary = ({ route }) => {
               The samples can be sent to the provided address on request.
             </Text>
 
-            <Pressable
-              onPress={orderPlaced}
-              style={{
-                backgroundColor: "#4870F4",
-                padding: wp(2),
-                justifyContent: "center",
-                borderRadius: wp(4),
-                margin: wp(1),
-                width: wp(80),
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  textAlign: "center",
-                  fontFamily: "QuicksandSemiBold",
-                }}
-              >
+            <Pressable onPress={orderPlaced} style={styles.preBookContainer}>
+              <Text style={styles.preBookText}>
                 {isOrderSuccess ? "Processing..." : "Pre-Book order"}
               </Text>
             </Pressable>
@@ -429,7 +413,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardTitle: {
-    marginVertical: wp(5),
+    marginBottom: wp(3),
     fontSize: wp(4),
     // fontWeight: "bold",
     fontFamily: "QuicksandSemiBold",
@@ -509,7 +493,8 @@ const styles = StyleSheet.create({
   deliveryDetails: {
     justifyContent: "center",
     alignItems: "center",
-    padding: wp(3.75),
+    paddingBottom: wp(3.75),
+    paddingHorizontal: wp(3.75),
     marginBottom: wp(3.75),
   },
 
@@ -533,6 +518,21 @@ const styles = StyleSheet.create({
     fontSize: wp(5),
     marginLeft: wp(3),
     color: "white",
+  },
+
+  preBookContainer: {
+    backgroundColor: "#4870F4",
+    padding: wp(2),
+    justifyContent: "center",
+    borderRadius: wp(4),
+    marginVertical: wp(4),
+    marginHorizontal: wp(1),
+    width: wp(80),
+  },
+  preBookText: {
+    color: "white",
+    textAlign: "center",
+    fontFamily: "QuicksandSemiBold",
   },
 });
 

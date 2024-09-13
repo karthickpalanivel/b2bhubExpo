@@ -283,11 +283,6 @@ const LoginScreen = () => {
                   <Text style={styles.submitButtonText}>Login</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                <Text style={styles.register}>
-                  Don't have account? Click here
-                </Text>
-              </TouchableOpacity>
             </>
           ) : (
             <>
@@ -344,14 +339,12 @@ const LoginScreen = () => {
                     <Text style={styles.submitButtonText}>Login</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                  <Text style={styles.register}>
-                    Don't have account? Click here
-                  </Text>
-                </TouchableOpacity>
               </Animated.View>
             </>
           )}
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.register}>Click here for New Registration</Text>
+          </TouchableOpacity>
         </ScrollView>
       )}
     </>
@@ -373,10 +366,12 @@ const styles = StyleSheet.create({
     width: wp(30),
     height: wp(30),
   },
+
   logo: {
     width: wp(30),
     height: wp(30),
   },
+
   loginCard: {
     alignItems: "center",
     width: wp("88%"),

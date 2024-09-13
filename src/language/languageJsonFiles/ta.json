@@ -1,0 +1,89 @@
+{
+  "start_your_business": "உங்கள் வியாபாரம் தொடங்குங்கள்",
+  "from_your_city": "உங்கள் நகரத்திலிருந்து",
+
+  "toor_dal": "துவரம் பருப்பு",
+  "moong_dal": "பயிறு பருப்பு",
+  "urad_dal": "உளுந்து பருப்பு",
+  "gram_dal": "கடலை பருப்பு",
+
+  "exclusive_products": "சிறப்பு பொருட்கள்",
+
+  "fatka_toor_dal": "ஃபட்கா துவரம் பருப்பு",
+  "imported_toor_dal": "இறக்குமதி துவரம் பருப்பு",
+  "desi_toor_dal": "தேசி துவரம் பருப்பு",
+  "polished_toor_dal": "பொலிஷ் செய்யப்பட்ட துவரம் பருப்பு",
+  "unpolished_toor_dal": "பொலிஷ் செய்யப்படாத துவரம் பருப்பு",
+  "desi_moong_dal": "தேசி பயிறு பருப்பு",
+  "mysore_moong_dal": "மைசூர் பயிறு பருப்பு",
+  "imported_moong_dal": "இறக்குமதி பயிறு பருப்பு",
+  "black_urad_dal": "கருப்பு உளுந்து பருப்பு",
+  "imported_urad_dal": "இறக்குமதி உளுந்து பருப்பு",
+  "desi_urad_dal": "தேசி உளுந்து பருப்பு",
+  "premium_gram_dal": "பிரீமியம் கடலை பருப்பு",
+  "gold_gram_dal": "கோல்ட் கடலை பருப்பு",
+
+  "manage_your_business": "உங்கள் வியாபாரத்தை மேலாண்மை செய்யுங்கள்",
+
+  "accounts": "கணக்குகள்",
+  "phone": "தொலைபேசி",
+  "pan_number": "பான் எண்",
+
+  "deliveries_and_orders": "விநியோகங்கள் மற்றும் ஆர்டர்கள்",
+  "order_id": "ஆர்டர் ஐடி",
+  "price": "விலை",
+  "date": "தேதி",
+  "quantity": "அளவு",
+  "invoice": "விலைப்பட்டியல்",
+  "receipt": "ரசீது",
+
+  "need_help": "உதவி தேவை",
+  "logout": "வெளியேறு",
+  "whatsapp": "வாட்ஸ்அப்",
+
+  "buyer_login": "வாங்குபவர் உள்நுழைவு",
+  "seller_login": "விற்பனையாளர் உள்நுழைவு",
+  "password": "கடவுச்சொல்",
+  "email": "மின்னஞ்சல்",
+  "login": "உள்நுழைய",
+  "forgot_password": "கடவுச்சொல்லை மறந்துவிட்டீர்களா",
+  "for_new_registration_click_here": "புதிய பதிவு செய்ய, இங்கு கிளிக் செய்யவும்",
+
+  "dry_moisture": "உலர் ஈரப்பதம்",
+  "a_grade_quality": "A கிரேடு தரம்",
+  "high_in_protein": "நிறைவான புரதம்",
+  "organic_product": "ஜிவாம்சம் பொருள்",
+  "six_months_shelf_life": "6 மாத கைப்பிடிப்பு காலம்",
+  "order_now": "இப்போது ஆர்டர் செய்யுங்கள்",
+  "show_product": "பொருளைக் காண்பிக்கவும்",
+  "in_stock": "பொருத்தமான கையிருப்பு",
+  "limited_offer": "வரையறுக்கப்பட்ட சலுகை",
+
+  "select_quantity_in_tons": "அளவை டன்-களில் தேர்வுசெய்க",
+  "continue": "தொடருங்கள்",
+  "order_summary": "ஆர்டர் சுருக்கம்",
+  "proceed_to_payment": "கொடுப்பனவுக்கு தொடருங்கள்",
+
+  "terms_and_condition": "விதிமுறைகள் மற்றும் நிபந்தனைகள்",
+
+  "go_back_for_changes": "மாற்றங்களுக்கு திரும்பவும்",
+  "payment_summary": "கொடுப்பனவின் சுருக்கம்",
+  "make_your_payment_to_this_banking_details": "இந்த வங்கி விவரங்களுக்கு உங்கள் பணம் செலுத்துங்கள்",
+  "fill_your_information": "உங்கள் தகவலை நிரப்புங்கள்",
+  "delivery_address": "விநியோக முகவரி",
+  "request_for_sample": "மாதிரிக்காக கோருங்கள்",
+
+  "phone_number": "தொலைபேசி எண்",
+
+  "gst_number": "ஜி.எஸ்.டி. எண்",
+
+  "address_line_1": "முகவரி வரி 1",
+  "address_line_2": "முகவரி வரி 2",
+  "city": "நகரம்",
+  "district":"மாநகரம்",
+  "state": "மாநிலம்",
+  "landmark": "குறியிடம்",
+  "pin_code": "பின் குறியீடு",
+
+  "send_this_payment_transaction_details_to_this_mail": "இந்த மின்னஞ்சலுக்கு இந்த பண பரிவர்த்தனை விவரங்களை அனுப்புங்கள்"
+}

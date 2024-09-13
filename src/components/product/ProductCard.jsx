@@ -65,7 +65,7 @@ const ProductCard = ({ props, index }) => {
         />
         <Text style={styles.productName}>
           {props.name.length > 15
-            ? props.name.slice(0, 15) + "..."
+            ? props.name.slice(0, 14) + "..."
             : props.name}
         </Text>
         <View>

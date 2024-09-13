@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
-
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import * as Font from "expo-font";
@@ -24,7 +23,7 @@ import {
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-const {width} = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const SignUpScreen = () => {
   async function HandleSignup() {
@@ -78,7 +77,6 @@ const SignUpScreen = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
 
@@ -89,6 +87,8 @@ const SignUpScreen = () => {
   const [companyName, setCompanyName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [panNumber, setPanNumber] = useState("");
+  const [validationPan, setValidationPan] = useState("");
+  const [validationGst, setValidationGst] = useState("");
 
   const navigation = useNavigation();
 
@@ -96,8 +96,36 @@ const SignUpScreen = () => {
     navigation.navigate("Login");
   };
 
-  const navigateToHome = () => {
-    navigation.navigate("Home");
+  const validatePan = (pan) => {
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    return panRegex.test(pan);
+  };
+
+  const validateGST = (gst) => {
+    const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}Z[0-9]{1}$/;
+    return gstRegex.test(gst);
+  };
+
+  const handleInputChangeGst = (input, text) => {
+    setGstNumber(input);
+    if (input === "") {
+      setValidationGst("");
+    } else if (validateGST(input)) {
+      setValidationGst("");
+    } else {
+      setValidationGst("Invalid format, eg: 22ABCDE0123F1Z5");
+    }
+  };
+
+  const handleInputChangePan = (input) => {
+    setPanNumber(input);
+    if (input === "") {
+      setValidationPan("");
+    } else if (validatePan(input)) {
+      setValidationPan("");
+    } else {
+      setValidationPan("Invalid format, eg: ABCDE0123F");
+    }
   };
 
   useFocusEffect(
@@ -148,41 +176,47 @@ const SignUpScreen = () => {
                   marginVertical: wp(2),
                 }}
               >
-                <Text style={styles.title}>Register</Text>
+                <Text style={styles.title}>New Registration</Text>
               </View>
 
               {/* <Text style={styles.label}>Email</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                placeholderTextColor="#999"
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholderTextColor="#999"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
 
               {/* <Text style={styles.label}>Password</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                placeholderTextColor="#999"
-                secureTextEntry
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholderTextColor="#999"
+                  secureTextEntry
+                />
+              </View>
 
               {/* <Text style={styles.label}>Phone Number</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={phone}
-                onChangeText={setPhone}
-                placeholderTextColor="#999"
-                keyboardType="phone-pad"
-                maxLenght={10}
-                inputMode="tel"
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChangeText={setPhone}
+                  placeholderTextColor="#999"
+                  keyboardType="phone-pad"
+                  maxLenght={10}
+                  inputMode="tel"
+                />
+              </View>
 
               {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <TouchableOpacity style={styles.button} onPress={navigateToShopDetails}>
@@ -194,54 +228,81 @@ const SignUpScreen = () => {
                 </View> */}
 
               {/* <Text style={styles.label}>Company Name</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Company Name"
-                placeholderTextColor="#999"
-                value={companyName}
-                onChangeText={setCompanyName}
-                keyboardType="email-address"
-                className="shopName"
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Company Name"
+                  placeholderTextColor="#999"
+                  value={companyName}
+                  onChangeText={setCompanyName}
+                  keyboardType="email-address"
+                  className="shopName"
+                />
+              </View>
 
               {/* <Text style={styles.label}>GST Number</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="GST Number"
-                placeholderTextColor="#999"
-                value={gstNumber}
-                onChangeText={setGstNumber}
-                className="gstNumber"
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="GST Number"
+                  value={gstNumber}
+                  onChangeText={handleInputChangeGst}
+                  autoCapitalize="characters"
+                  maxLength={15}
+                />
+                {validationGst ? (
+                  <Text
+                    style={[
+                      styles.result,
+                      validationGst === "" ? styles.valid : styles.invalid,
+                    ]}
+                  >
+                    {validationGst}
+                  </Text>
+                ) : null}
+              </View>
 
               {/* <Text style={styles.label}>PAN number</Text> */}
-              <TextInput
-                style={styles.input}
-                placeholder="PAN Number"
-                value={panNumber}
-                onChangeText={setPanNumber}
-                placeholderTextColor="#999"
-                className="panNumber"
-              />
+              <View style={{ marginVertical: wp(3) }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Pan Number"
+                  value={panNumber}
+                  onChangeText={handleInputChangePan}
+                  autoCapitalize="characters"
+                  maxLength={10}
+                />
+                {validationPan ? (
+                  <View>
+                    <Text
+                      style={[
+                        styles.result,
+                        validationPan === "" ? styles.valid : styles.invalid,
+                      ]}
+                    >
+                      {validationPan}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
 
               <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={()=>HandleSignup()}
+                  onPress={() => HandleSignup()}
                 >
                   <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
-              
             </View>
             <TouchableOpacity
-                style={styles.toggleButton}
-                onPress={navigateToLogin}
-              >
-                <Text style={styles.toggleText}>
-                  Already Have a account? Login here
-                </Text>
-              </TouchableOpacity>
+              style={styles.toggleButton}
+              onPress={navigateToLogin}
+            >
+              <Text style={styles.toggleText}>
+                Already Registered? Click here to Login here
+              </Text>
+            </TouchableOpacity>
           </ScrollView>
         </Animated.View>
       )}
@@ -256,7 +317,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
+
   container: {
     marginTop: hp(8),
     flexDirection: "row",
@@ -264,7 +325,7 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     width: wp(90),
-    height: hp(65),
+
     alignItems: "center",
     backgroundColor: "white",
     paddingBottom: wp(10),
@@ -300,7 +361,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginVertical: 10,
+
     borderColor: "#999",
     borderWidth: 1,
     elevation: 1,
@@ -315,7 +376,6 @@ const styles = StyleSheet.create({
   //   justifyContent: "flex-end",
   // },
 
-
   button: {
     backgroundColor: "#fff",
     padding: wp(3),
@@ -323,7 +383,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: wp(70),
     borderRadius: 9999,
-    marginVertical: wp(2.5),
+    marginTop: wp(2.5),
   },
 
   buttonText: {
@@ -336,7 +396,7 @@ const styles = StyleSheet.create({
   toggleButton: {
     marginTop: 5,
   },
-  
+
   toggleText: {
     fontSize: wp(3.8),
     color: "#fff",
@@ -344,7 +404,14 @@ const styles = StyleSheet.create({
     marginVertical: wp(3),
     textAlign: "center",
   },
+  valid: {
+    color: "green",
+  },
+  invalid: {
+    color: "red",
+    fontFamily: "QuicksandSemiBold",
 
+  },
 });
 
 export default SignUpScreen;
