@@ -6,8 +6,9 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Linking,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
@@ -20,7 +21,6 @@ import {
   CogIcon,
   GiftIcon,
   TruckIcon,
-  
   ArrowLeftIcon,
 } from "react-native-heroicons/outline";
 
@@ -32,6 +32,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
+import * as Font from "expo-font";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -40,6 +42,20 @@ const ProfileScreen = () => {
   const [phone, setPhone] = useState("999999999999");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+
+    loadFonts();
+  }, []);
 
   const handleLogout = () => {
     navigation.navigate("Login");
@@ -77,11 +93,38 @@ const ProfileScreen = () => {
     });
 
   const goback = () => {
-    navigation.goBack();
+    navigation.navigate("Home");
   };
 
-  const connectionToWhatsapp = () => {
+  const whatsappSupportTeam = "https://wa.me/message/7M52ZDZLXARPL1p";
+
+  const connectionToWhatsapp = async () => {
     // console.log("whatsapp");
+    try {
+      const canOpen = await Linking.canOpenURL(whatsappSupportTeam);
+      if (!canOpen) {
+        throw new Error("Whatsapp is not installed on your device");
+      }
+      await Linking.openURL(whatsappSupportTeam);
+    } catch (err) {
+      console.log("Error occured with whatsapp", err);
+    }
+  };
+
+  const supportTeamMail = "mailto:karthickpalanivelit@gmail.com";
+
+  const connectionToMail = async () => {
+    // console.log("mail");
+    try {
+      const canOpen = await Linking.canOpenURL(supportTeamMail);
+      if (!canOpen) {
+        throw new Error("Error occured");
+      }
+
+      await Linking.openURL(supportTeamMail);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // logic from backend need to be applied
@@ -267,7 +310,7 @@ const ProfileScreen = () => {
               </View>
               <TouchableOpacity
                 style={styles.callContainer}
-                onPress={connectionToWhatsapp}
+                onPress={connectionToMail}
               >
                 <Text style={styles.callText}>Mail</Text>
               </TouchableOpacity>
@@ -280,6 +323,9 @@ const ProfileScreen = () => {
               <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
           </ScrollView>
+          <View style={styles.floatNavigationContainer}>
+            <FloatingNavigationButton />
+          </View>
         </View>
       )}
     </>
@@ -293,14 +339,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F1F1F1",
   },
-
+  floatNavigationContainer: {
+    position: "absolute",
+    bottom: hp(5),
+    right: wp(5),
+  },
   headerContainer: {
     paddingHorizontal: "5%",
     flexDirection: "row",
     backgroundColor: "#4870F4",
     justifyContent: "space-between",
     alignItems: "center",
-    height: hp(20),
+    height: hp(22),
     borderBottomLeftRadius: wp(4),
     borderBottomRightRadius: wp(4),
   },
@@ -342,7 +392,6 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
     color: "white",
-
   },
   detailsContainer: {
     Width: "90%",

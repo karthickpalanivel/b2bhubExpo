@@ -17,16 +17,28 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-import { XCircleIcon } from "react-native-heroicons/outline";
+import {
+  XCircleIcon,
+  UserCircleIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  DocumentIcon,
+  CreditCardIcon,
+  
+} from "react-native-heroicons/outline";
+
+import {} from "react-native-heroicons/solid";
 
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
+import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
 
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
   const hide = () => setVisible(false);
+
   const changeValue = () => {
     hide();
   };
@@ -40,7 +52,9 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
     <View style={styles.detailBarContainer}>
       <StatusBar style="light" backgroundColor="#4870F4" />
       <View>
-        <Text style={{ color: "white", fontFamily: "QuicksandSemiBold", }}>{topic}</Text>
+        <Text style={{ color: "white", fontFamily: "QuicksandSemiBold" }}>
+          {topic}
+        </Text>
         <Text style={styles.value}>{value}</Text>
       </View>
       {edit && (
@@ -105,67 +119,136 @@ const AccountSettings = () => {
       {isLoading ? (
         <AppLoaderAnimation />
       ) : (
-        <View>
-          <ProfileHeaderLayout header="Accounts" 
-          />
-          <ScrollView>
-            <View
-              style={{
-                alignItems: "center",
-                marginTop: hp(5),
-              }}
-            >
-              <View style={styles.profileImageContainer}>
-                <Image
-                  source={require("../../assets/profileImage.png")}
-                  style={styles.avatarImage}
-                />
+        <>
+          <View>
+            <ProfileHeaderLayout header="Accounts" />
+            <ScrollView>
+              <View
+                style={{
+                  alignItems: "center",
+                  marginTop: hp(5),
+                }}
+              >
+                <View style={styles.profileImageContainer}>
+                  <Image
+                    source={require("../../assets/profileImage.png")}
+                    style={styles.avatarImage}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <View style={styles.detailsBar}>
-                <DetailsBar
-                  topic={"Company Name"}
-                  value={companyName}
-                  setValue={setCompanyName}
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Phone"}
-                  value={phone}
-                  setValue={setPhone}
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Email"}
-                  value={email}
-                  setValue={setEmail}
-                  edit={false}
-                />
+              <View style={{ alignItems: "center" }}>
+                <View style={styles.detailsBar}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <DetailsBar
+                      topic={"Company Name"}
+                      value={companyName}
+                      setValue={setCompanyName}
+                      edit={false}
+                    />
+                    <UserCircleIcon
+                      style={styles.AccountsIcons}
+                      size={wp(10)}
+                      strokeWidth={1}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <DetailsBar
+                      topic={"Phone"}
+                      value={phone}
+                      setValue={setPhone}
+                      edit={false}
+                    />
+                    <PhoneIcon
+                      style={styles.AccountsIcons}
+                      size={wp(10)}
+                      strokeWidth={1}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <DetailsBar
+                      topic={"Email"}
+                      value={email}
+                      setValue={setEmail}
+                      edit={false}
+                    />
+                    <EnvelopeIcon
+                      style={styles.AccountsIcons}
+                      size={wp(10)}
+                      strokeWidth={1}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <DetailsBar
+                      topic={"GST Number"}
+                      value={gstNumber}
+                      setValue={setGstNumber}
+                      edit={false}
+                    />
+                    <DocumentIcon
+                      style={styles.AccountsIcons}
+                      size={wp(10)}
+                      strokeWidth={1}
+                    />
+                  </View>
 
-                <DetailsBar
-                  topic={"GST Number"}
-                  value={gstNumber}
-                  setValue={setGstNumber}
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Pan Number"}
-                  value={panNumber}
-                  setValue={setPanNumber}
-                  edit={false}
-                />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <DetailsBar
+                      topic={"Pan Number"}
+                      value={panNumber}
+                      setValue={setPanNumber}
+                      edit={false}
+                    />
+                    <CreditCardIcon
+                      style={styles.AccountsIcons}
+                      size={wp(10)}
+                      strokeWidth={1}
+                    />
+                  </View>
 
-                {/* <DetailsBar
+                  {/* <DetailsBar
                   topic={"Address"}
                   value={userAddress}
                   setValue={setUserAddress}
                   edit={false}
                 /> */}
+                </View>
               </View>
-            </View>
-          </ScrollView>
-        </View>
+            </ScrollView>
+          </View>
+          <View style={styles.floatNavigationContainer}>
+            <FloatingNavigationButton />
+          </View>
+        </>
       )}
     </>
   );
@@ -181,6 +264,11 @@ const styles = StyleSheet.create({
   profileImageContainer: {
     backgroundColor: "F9F9F9",
     elevation: 20,
+  },
+  floatNavigationContainer: {
+    position: "absolute",
+    bottom: hp(5),
+    right: wp(5),
   },
   avatarImage: {
     height: hp(20),
@@ -264,5 +352,9 @@ const styles = StyleSheet.create({
   icon: {
     position: "absolute",
     right: 0,
+  },
+  AccountsIcons: {
+    color: "white",
+    marginRight: wp(4),
   },
 });

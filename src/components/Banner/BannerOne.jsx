@@ -24,6 +24,12 @@ const BannerOne = ({ someProp = "default value", anotherProp = 0 }) => {
       text: "#3",
       image: require("../../assets/banner/bannerThree.png"),
     },
+    {
+      id: 4,
+      text: "#4",
+      image: require('../../assets/banner/bannerFour.png'),
+    
+    }
   ];
 
   const navigation = useNavigation();

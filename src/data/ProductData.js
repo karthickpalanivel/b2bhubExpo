@@ -202,7 +202,7 @@ export const ProductData = [
     quantity: "10",
     description: {
       Speciality: "High in Protein",
-      IsOrganic: "Organic Product",
+      IsOrganic: "Organic Produttct",
       Quality: "A Grade Quality",
       ShelfLife: "6 Months Shelf Life",
     },
@@ -210,7 +210,6 @@ export const ProductData = [
     imageUrl:
       "https://res.cloudinary.com/dve3s278t/image/upload/v1725967896/black-urad-pulses-500x500_qautf0.webp",
   },
-
   {
     _id: 10,
     name: "Desi Urad Dal",

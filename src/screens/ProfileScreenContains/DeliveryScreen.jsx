@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
 
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
@@ -32,7 +33,7 @@ const DeliveryScreen = () => {
         setToken(value);
         setIsFetching(true);
         const url =
-          "https://erp-backend-new-ketl.onrender.com/sales/viewOrders";
+          "https://erp-backend-new-1.onrender.com/sales/viewOrders";
         axios
           .post(
             url,
@@ -47,9 +48,7 @@ const DeliveryScreen = () => {
           .then((res) => {
             setOrderDetails(res.data.reverse());
             setIsFetching(false);
-            console.log("====================================");
             console.log(res.data);
-            console.log("====================================");
           })
           .catch((err) => console.log(err));
       } else {
@@ -128,6 +127,9 @@ const DeliveryScreen = () => {
               </>
             )}
           </ScrollView>
+          <View style={styles.floatNavigationContainer}>
+            <FloatingNavigationButton />
+          </View>
         </View>
       )}
     </>
@@ -141,6 +143,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fefefe",
     alignItems: "center",
+  },
+  floatNavigationContainer: {
+    position: "absolute",
+    bottom: hp(5),
+    right: wp(5),
   },
   imageCard: {
     width: wp(100),

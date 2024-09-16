@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import Navigation from "./src/navigation/Navigation";
-import ProfileScreen from "./src/screens/ProfileScreen";
-import HomeScreen from "./src/screens/HomeScreen";
+import i18n from "./src/language/i18next";
 
 
 export default function App() {
@@ -10,11 +9,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const styles = StyleSheet.create({});

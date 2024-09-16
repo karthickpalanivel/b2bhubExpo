@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -8,7 +8,7 @@ import HomeScreen from "../screens/HomeScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ProductDetails from "../components/product/ProductDetails";
 import ProfileScreen from "../screens/ProfileScreen";
-import ProductScreen from "../screens/ProductScreen";
+
 import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
 import AccountSettings from "../screens/ProfileScreenContains/AccountSettings";
@@ -30,15 +30,21 @@ import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
 import PdfGeneration from "../components/InVoice/PdfGeneration";
 import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
+import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
 
 //variables
 const Stack = createNativeStackNavigator();
 
 //functions
 export default function Navigation() {
+  const [onBoardingCompleted, setOnBoardingCompleted] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* Onboarding Screens */}
+        {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
+
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
         {/* App loader */}
@@ -48,7 +54,7 @@ export default function Navigation() {
         {/* Bottom Navbar Screens */}
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Orders" component={OrderScreen} />
-        <Stack.Screen name="Products" component={ProductScreen} />
+
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Sucessfull" component={OrderSuccessful} />
 

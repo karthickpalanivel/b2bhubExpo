@@ -32,6 +32,8 @@ import { Modal } from "react-native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";
 import Footer from "../components/Footer";
+import TradingSteps from "../components/steps/TradingSteps";
+import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -298,7 +300,7 @@ const HomeScreen = () => {
             </View>
 
             {/* Search bar */}
-            <Pressable
+            {/* <Pressable
               style={styles.searchBarContainer}
               onPress={() => navigation.navigate("Search Bar")}
             >
@@ -311,19 +313,23 @@ const HomeScreen = () => {
                   color="grey"
                 />
               </TouchableOpacity>
-            </Pressable>
+            </Pressable> */}
 
+            <BannerOne />
             <Categories
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
             />
-            <BannerOne />
+            {/* <TradingSteps /> */}
             <Product
               category={categoriesData}
               productActiveData={activeCategory}
               setProductActivSeData={setActiveCategory}
             />
           </ScrollView>
+          <View style={styles.floatNavigationContainer}>
+            <FloatingNavigationButton />
+          </View>
           {/* <Footer /> */}
         </View>
       )}
@@ -348,7 +354,11 @@ const styles = StyleSheet.create({
     paddingTop: 56,
     marginBottom: 24,
   },
-
+  floatNavigationContainer: {
+    position: "absolute",
+    bottom: hp(5),
+    right: wp(5),
+  },
   logoContainer: {
     backgroundColor: "white",
     borderRadius: 999,

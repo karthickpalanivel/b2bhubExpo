@@ -36,10 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  lottieIcon: {
-    width: wp(100),
-    height: hp(100),
-  },
+  
   orderSuccess: {
     flex: 1,
     position: "absolute",
