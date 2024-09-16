@@ -42,9 +42,9 @@ const HomeScreen = () => {
   const [language, setLanguage] = useState("English");
   const [languageHeader, setLanguageHeader] = useState("Select Language");
   const [isLoading, setIsLoading] = useState(false);
-  const [companyName, setcompanyName] = useState("")
+  const [companyName, setcompanyName] = useState("");
+  const [buyersLoginContent, setBuyersLoginContent] = useState(true);
 
-  const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
 
   useEffect(() => {
@@ -84,6 +84,10 @@ const HomeScreen = () => {
       setIsLoading(false);
     }
 
+    setTimeout(() => {
+      setBuyersLoginContent(false);
+    }, 10000);
+
     loadFonts();
   }, []);
 
@@ -105,7 +109,7 @@ const HomeScreen = () => {
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
-        setcompanyName(value)
+        setcompanyName(value);
         // Value was found, do something with it
         console.log("Value:", value);
       } else {
@@ -156,7 +160,7 @@ const HomeScreen = () => {
     hide();
   };
 
-  const LanguageModal = ({ visible, setVisible }) => {
+  const LanguageModal = ({ visible }) => {
     return (
       <Modal
         visible={visible}
@@ -286,9 +290,16 @@ const HomeScreen = () => {
               <View>
                 <Text style={styles.punchOne}>Start your business</Text>
               </View>
-              <Text style={styles.punchTwo}>
-                From your <Text style={styles.city}>City</Text>
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.punchTwo}>
+                  From your <Text style={styles.city}>City</Text>
+                </Text>
+              </View>
 
               {/* <View>
             <LottieView
@@ -322,6 +333,9 @@ const HomeScreen = () => {
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
             />
+            <View style={styles.buyersLoginContainer}>
+              <Text style={styles.buyersLogin}>Buyer's Login</Text>
+            </View>
             {/* <TradingSteps /> */}
             <Product
               category={categoriesData}
@@ -485,5 +499,22 @@ const styles = StyleSheet.create({
     right: wp(10),
     bottom: wp(10),
     backgroundColor: "rgba(255,255,255,0)",
+  },
+  buyersLogin: {
+    fontSize: wp(3.5),
+    fontFamily: "QuicksandSemiBold",
+    color: "white",
+  },
+  buyersLoginContainer: {
+    width: wp(30),
+    marginLeft: wp(35),
+    borderRadius: 999,
+    backgroundColor: "white",
+    borderWidth: 0.1,
+    elevation: 4,
+    backgroundColor: "#f59e0b",
+    height: hp(5),
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

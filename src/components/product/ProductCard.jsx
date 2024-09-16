@@ -7,6 +7,7 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import * as Font from "expo-font";
+import Entypo from "react-native-vector-icons/Entypo";
 
 const ProductCard = ({ props, index }) => {
   const navigation = useNavigation();
@@ -30,13 +31,19 @@ const ProductCard = ({ props, index }) => {
     navigation.navigate("ProductDetails", { _id: id });
   };
 
-  const calculatePrice = (price, discount) => {
-    if (price < discount) {
-      return;
-    }
-    const discountPrice = Math.round(price - (price * discount) / 100);
-    return discountPrice;
+  const memberShipBackgroundColor = () => {
+    if (props.memberShip == "Platnium") return "#DD7522";
+    else if (props.memberShip == "Gold") return "#A10E38"; //#DD7522
+    else return "#fff";
   };
+
+  const premiumColor = () => {
+    if (props.memberShip == "Platnium") return "#e5e4e2"; //#FFD700
+    else if (props.memberShip == "Gold") return "#FFD700"; //Platnium
+    else return "#000000";
+  };
+  const color = premiumColor();
+  const backgroundColor = memberShipBackgroundColor();
   return (
     <Animated.View
       entering={FadeInDown.delay(index + 200)
@@ -71,6 +78,20 @@ const ProductCard = ({ props, index }) => {
         <View>
           <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
         </View>
+        {props.memberShip && (
+          <View
+            style={[
+              styles.membershipContainer,
+              { backgroundColor: backgroundColor },
+            ]}
+          >
+            <Entypo name="price-ribbon" size={24} color={color} />
+            <View>
+              <Text style={styles.memberShipText}>{props.memberShip}</Text>
+              <Text style={styles.memberShipText}>Product</Text>
+            </View>
+          </View>
+        )}
       </Pressable>
     </Animated.View>
   );
@@ -86,17 +107,37 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     fontFamily: "QuicksandSemiBold",
   },
+
   offerPrice: {
     marginLeft: "5%",
     fontSize: 15,
     color: "black",
     fontFamily: "QuicksandSemiBold",
   },
+
   mrpPrice: {
     color: "grey",
     opacity: 0.5,
     marginLeft: "6%",
     fontWeight: "bold",
     textDecorationLine: "line-through",
+  },
+
+  membershipContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    padding: wp(1),
+    width: "60%",
+    borderRadius: wp(10),
+    position: "absolute",
+    // bottom : '20%',
+
+  },
+
+  memberShipText: {
+    fontSize: hp(1.75),
+    fontFamily: "QuicksandSemiBold",
+    color: "white",
   },
 });

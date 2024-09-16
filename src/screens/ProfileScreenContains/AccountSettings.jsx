@@ -24,7 +24,6 @@ import {
   EnvelopeIcon,
   DocumentIcon,
   CreditCardIcon,
-  
 } from "react-native-heroicons/outline";
 
 import {} from "react-native-heroicons/solid";
@@ -49,10 +48,6 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
     show();
   };
 
-
-  
-
-
   return (
     <View style={styles.detailBarContainer}>
       <StatusBar style="light" backgroundColor="#4870F4" />
@@ -60,7 +55,9 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
         <Text style={{ color: "white", fontFamily: "QuicksandSemiBold" }}>
           {topic}
         </Text>
-        <Text style={styles.value}>{value}</Text>
+        <Text style={styles.value}>
+          {value.length > 20 ? value.slice(0, 22) + "..." : value}
+        </Text>
       </View>
       {edit && (
         <TouchableOpacity onPress={showModal}>
@@ -122,76 +119,61 @@ const AccountSettings = () => {
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setCompanyName(value);
       } else {
-        // No value found
         console.log("No company name found");
       }
     })
 
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
-    
-    AsyncStorage.getItem("phone")
+
+  AsyncStorage.getItem("phone")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setPhone(value);
       } else {
-        // No value found
         console.log("No phone found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
-    AsyncStorage.getItem("email")
+  AsyncStorage.getItem("email")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setEmail(value);
       } else {
-        // No value found
         console.log("No email found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
-    AsyncStorage.getItem("gst")
+  AsyncStorage.getItem("gst")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setGstNumber(value);
       } else {
-        // No value found
         console.log("No gst found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
-    AsyncStorage.getItem("pan")
+  AsyncStorage.getItem("pan")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setPanNumber(value);
       } else {
-        // No value found
         console.log("No pan found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
@@ -200,52 +182,6 @@ const AccountSettings = () => {
       {isLoading ? (
         <AppLoaderAnimation />
       ) : (
-        <View>
-          <ProfileHeaderLayout header="Accounts" 
-          />
-          <ScrollView>
-            <View
-              style={{
-                alignItems: "center",
-                marginTop: hp(5),
-              }}
-            >
-              <View style={styles.profileImageContainer}>
-                <Image
-                  source={require("../../assets/profileImage.png")}
-                  style={styles.avatarImage}
-                />
-              </View>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <View style={styles.detailsBar}>
-                <DetailsBar
-                  topic={"Company Name"}
-                  value={companyName}
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Phone"}
-                  value={phone}
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Email"}
-                  value={email}
-                  edit={false}
-                />
-
-                <DetailsBar
-                  topic={"GST Number"}
-                  value={gstNumber}
-
-                  edit={false}
-                />
-                <DetailsBar
-                  topic={"Pan Number"}
-                  value={panNumber}
-                  edit={false}
-                />
         <>
           <View>
             <ProfileHeaderLayout header="Accounts" />
@@ -363,11 +299,11 @@ const AccountSettings = () => {
                   </View>
 
                   {/* <DetailsBar
-                  topic={"Address"}
-                  value={userAddress}
-                  setValue={setUserAddress}
-                  edit={false}
-                /> */}
+                    topic={"Address"}
+                    value={userAddress}
+                    setValue={setUserAddress}
+                    edit={false}
+                  /> */}
                 </View>
               </View>
             </ScrollView>

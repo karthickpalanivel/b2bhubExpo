@@ -8,6 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import * as Font from "expo-font";
 import DropDownPicker from "react-native-dropdown-picker";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 
 const OnBoardingScreenOne = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +103,12 @@ const OnBoardingScreenOne = () => {
             backgroundColor: "#fff",
             title: "",
             image: (
-              <View>
+              <Animated.View
+                entering={FadeInLeft.delay(200)
+                  .duration(1500)
+                  .springify()
+                  .damping(12)}
+              >
                 <View
                   style={{
                     borderRadius: 999,
@@ -136,7 +142,7 @@ const OnBoardingScreenOne = () => {
                     Number and PAN Number
                   </Text>
                 </View>
-              </View>
+              </Animated.View>
             ),
 
             subtitle: "",

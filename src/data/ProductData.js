@@ -22,6 +22,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
+    memberShip: "Platnium",
     imageUrl:
       "https://organicmandya.com/cdn/shop/files/TurDal_2_455a319e-0c1a-4702-8f51-37233dad5b37.jpg?v=1719136478&width=1024",
   },
@@ -48,6 +49,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
+    memberShip: "Platnium",
     imageUrl:
       "https://thumbs.dreamstime.com/b/yellow-split-peas-pigeon-arhar-dal-organic-toor-black-bowl-selective-focus-blur-background-211382868.jpg",
   },
@@ -74,6 +76,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
+    memberShip: "Platnium",
     imageUrl:
       "https://economictimes.indiatimes.com/thumb/msid-108016469,width-1600,height-900,resizemode-4,imgsize-65098/best-moong-dal-in-india-a-nutrient-rich-delight-and-culinary-excellence.jpg?from=mdr",
   },
@@ -100,6 +103,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
+    memberShip: "Platnium",
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -126,6 +130,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
+    memberShip: "Gold",
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -147,6 +152,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Polished Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://rukminim2.flixcart.com/image/850/1000/kuyf8nk0/pulses/0/u/u/500-unpolished-desi-yellow-moong-dal-split-500g-1-moong-dal-90-s-original-imag7zf7mmzthtaz.jpeg?q=20&crop=false",
   },
@@ -167,6 +173,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Mysore Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://www.indianasapplepie.com/cdn/shop/articles/IMG-8317_1600x.jpg?v=1673739164",
   },
@@ -187,6 +194,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Mysore Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://st5.depositphotos.com/5653638/61983/i/450/depositphotos_619836364-stock-photo-moong-dal-namkeen-traditional-indian.jpg",
   },
@@ -207,6 +215,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://res.cloudinary.com/dve3s278t/image/upload/v1725967896/black-urad-pulses-500x500_qautf0.webp",
   },
@@ -226,6 +235,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://c8.alamy.com/comp/BNC7K0/urad-dal-these-are-black-lentils-or-urad-dal-that-have-been-split-BNC7K0.jpg",
   },
@@ -246,6 +256,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
   },
@@ -269,6 +280,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Premium Gram Dal", "Imported Gram Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://cdn.shopaccino.com/edible-smart/products/parched-gram-dal-putana-961801_l.jpg?v=516",
   },
@@ -290,6 +302,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Premium Gram Dal", "Imported Gram Dal"],
+    memberShip: "Platnium",
     imageUrl:
       "https://c1.wallpaperflare.com/preview/115/189/240/daal-chana-lentils-indian.jpg",
   },

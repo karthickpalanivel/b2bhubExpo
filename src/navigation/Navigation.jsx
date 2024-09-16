@@ -41,7 +41,10 @@ export default function Navigation() {
   const [loggedIn, setLoggedIn] = useState(false);
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        // initialroute={"onBoardScreenOne"}
+      >
         {/* Onboarding Screens */}
         {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
 

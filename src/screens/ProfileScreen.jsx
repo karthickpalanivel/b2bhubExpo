@@ -7,6 +7,8 @@ import {
   View,
   TouchableOpacity,
   Linking,
+  Modal,
+  SafeAreaView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -19,6 +21,7 @@ import { CompanyData } from "../data/CompanyData";
 import {
   BuildingOffice2Icon,
   CogIcon,
+  XCircleIcon,
   GiftIcon,
   TruckIcon,
   ArrowLeftIcon,
@@ -28,6 +31,7 @@ import {
   IdentificationIcon,
   EnvelopeIcon,
   ChevronRightIcon,
+  LanguageIcon,
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
@@ -39,8 +43,10 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const [companyName, setCompanyName] = useState("Your Company");
-  const [phone, setPhone] = useState("999999999999");
-
+  const [phone, setPhone] = useState("9856743210");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [language, setLanguage] = useState("English");
+  const [languageHeader, setLanguageHeader] = useState("Select Language");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -111,16 +117,14 @@ const ProfileScreen = () => {
     }
   };
 
-  const supportTeamMail = "mailto:karthickpalanivelit@gmail.com";
+  const supportTeamMail = "mailto:support@b2bhubindia.com";
 
   const connectionToMail = async () => {
-    // console.log("mail");
     try {
       const canOpen = await Linking.canOpenURL(supportTeamMail);
       if (!canOpen) {
         throw new Error("Error occured");
       }
-
       await Linking.openURL(supportTeamMail);
     } catch (err) {
       console.log(err);
@@ -128,6 +132,98 @@ const ProfileScreen = () => {
   };
 
   // logic from backend need to be applied
+
+  //language logic written here
+  const show = () => setModalVisible(true);
+  const hide = () => setModalVisible(false);
+
+  const tamilLanguage = () => {
+    setLanguage("தமிழ்");
+    setLanguageHeader("மொழியை தேர்ந்தெடுங்கள்");
+    hide();
+  };
+
+  const englishLanguage = () => {
+    setLanguage("English");
+    setLanguageHeader("Select Language");
+    hide();
+  };
+
+  const hindiLanguage = () => {
+    setLanguage("हिन्दी");
+    setLanguageHeader("अपनी भाषा चुनें");
+    hide();
+  };
+
+  const teluguLanguage = () => {
+    setLanguage("తెలుగు");
+    setLanguageHeader("మీ భాషను ఎంచుకోండి");
+    hide();
+  };
+
+  const LanguageModal = ({ visible }) => {
+    return (
+      <Modal
+        visible={visible}
+        animationType="slide"
+        onRequestClose={hide}
+        transparent
+      >
+        <SafeAreaView style={styles.safeAreaContent}>
+          <View style={styles.languageModalContainer}>
+            <View>
+              <TouchableOpacity>
+                <XCircleIcon
+                  size={wp(8)}
+                  color="white"
+                  style={styles.iconX}
+                  onPress={hide}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                fontSize: hp(3),
+                textAlign: "center",
+                marginTop: wp(5),
+                color: "white",
+                fontFamily: "QuicksandSemiBold",
+              }}
+            >
+              {languageHeader}
+            </Text>
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={tamilLanguage}
+            >
+              <Text style={styles.languageText}>தமிழ்</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={teluguLanguage}
+            >
+              <Text style={styles.languageText}>తెలుగు</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={hindiLanguage}
+            >
+              <Text style={styles.languageText}>हिन्दी</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.languageContainer}
+              onPress={englishLanguage}
+            >
+              <Text style={styles.languageText}>English</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    );
+  };
 
   return (
     <>
@@ -316,6 +412,30 @@ const ProfileScreen = () => {
               </TouchableOpacity>
             </View>
 
+            <View
+              style={[
+                styles.profileScreenDetailsContainer,
+                { borderRadius: 9, marginVertical: wp(3) },
+              ]}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <LanguageIcon size={hp(5)} color={"#4870F4"} />
+                  <View>
+                    <Text style={styles.languageSelect}>Language</Text>
+                    <Text style={styles.language}>{language}</Text>
+                  </View>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={styles.callContainer}
+                onPress={() => setModalVisible(show)}
+              >
+                <Text style={styles.callText}>Change</Text>
+              </TouchableOpacity>
+            </View>
+            <LanguageModal visible={modalVisible} />
+
             <TouchableOpacity
               style={styles.logoutContainer}
               onPress={handleLogout}
@@ -339,10 +459,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F1F1F1",
   },
+  safeAreaContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: wp(100),
+    height: hp(100),
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
+  },
   floatNavigationContainer: {
     position: "absolute",
     bottom: hp(5),
     right: wp(5),
+  },
+  languageModalContainer: {
+    width: wp(80),
+    backgroundColor: "#4870F4",
+    elevation: 4,
+    borderRadius: wp(3),
+  },
+  languageText: {
+    fontSize: hp(2.5),
+    color: "white",
+    borderBottomWidth: 0.2,
+    borderColor: "white",
+    fontFamily: "QuicksandSemiBold",
+  },
+  languageContainer: {
+    alignItems: "center",
+    padding: hp(2),
+    borderRadius: 4,
+  },
+  iconX: {
+    position: "absolute",
+    right: -10,
+    top: -10,
   },
   headerContainer: {
     paddingHorizontal: "5%",
@@ -409,6 +562,18 @@ const styles = StyleSheet.create({
   },
   contextName: {
     fontSize: hp(1.8),
+    marginLeft: hp(1),
+    fontFamily: "QuicksandSemiBold",
+    color: "#5D5D5D",
+  },
+  languageSelect: {
+    fontSize: hp(1.8),
+    marginLeft: hp(1),
+    fontFamily: "QuicksandSemiBold",
+    color: "#adadad",
+  },
+  language: {
+    fontSize: hp(2.5),
     marginLeft: hp(1),
     fontFamily: "QuicksandSemiBold",
     color: "#5D5D5D",
