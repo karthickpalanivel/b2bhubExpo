@@ -32,6 +32,7 @@ import {} from "react-native-heroicons/solid";
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
 
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
@@ -47,6 +48,10 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
     hide();
     show();
   };
+
+
+  
+
 
   return (
     <View style={styles.detailBarContainer}>
@@ -114,11 +119,133 @@ const AccountSettings = () => {
   const address = `${CompanyData.address1}, \n${CompanyData.address2}, \n${CompanyData.city} - ${CompanyData.pincode}, \n${CompanyData.state}`;
   const [userAddress, setUserAddress] = useState(address);
 
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setCompanyName(value);
+      } else {
+        // No value found
+        console.log("No company name found");
+      }
+    })
+
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+    
+    AsyncStorage.getItem("phone")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPhone(value);
+      } else {
+        // No value found
+        console.log("No phone found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("email")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setEmail(value);
+      } else {
+        // No value found
+        console.log("No email found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("gst")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setGstNumber(value);
+      } else {
+        // No value found
+        console.log("No gst found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("pan")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPanNumber(value);
+      } else {
+        // No value found
+        console.log("No pan found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
   return (
     <>
       {isLoading ? (
         <AppLoaderAnimation />
       ) : (
+        <View>
+          <ProfileHeaderLayout header="Accounts" 
+          />
+          <ScrollView>
+            <View
+              style={{
+                alignItems: "center",
+                marginTop: hp(5),
+              }}
+            >
+              <View style={styles.profileImageContainer}>
+                <Image
+                  source={require("../../assets/profileImage.png")}
+                  style={styles.avatarImage}
+                />
+              </View>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <View style={styles.detailsBar}>
+                <DetailsBar
+                  topic={"Company Name"}
+                  value={companyName}
+                  edit={false}
+                />
+                <DetailsBar
+                  topic={"Phone"}
+                  value={phone}
+                  edit={false}
+                />
+                <DetailsBar
+                  topic={"Email"}
+                  value={email}
+                  edit={false}
+                />
+
+                <DetailsBar
+                  topic={"GST Number"}
+                  value={gstNumber}
+
+                  edit={false}
+                />
+                <DetailsBar
+                  topic={"Pan Number"}
+                  value={panNumber}
+                  edit={false}
+                />
         <>
           <View>
             <ProfileHeaderLayout header="Accounts" />
