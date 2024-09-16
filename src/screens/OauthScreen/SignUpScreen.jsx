@@ -29,7 +29,7 @@ const SignUpScreen = () => {
   async function HandleSignup() {
     await axios
       .post(
-        "https://erp-backend-new-ketl.onrender.com/b2b/customer-registration",
+        "https://erp-backend-new-plqp.onrender.com/b2b/customer-registration",
         {
           Email: email,
           PAN: panNumber,

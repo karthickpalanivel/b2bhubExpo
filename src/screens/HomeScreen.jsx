@@ -40,6 +40,7 @@ const HomeScreen = () => {
   const [language, setLanguage] = useState("English");
   const [languageHeader, setLanguageHeader] = useState("Select Language");
   const [isLoading, setIsLoading] = useState(false);
+  const [companyName, setcompanyName] = useState("")
 
   const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
@@ -99,9 +100,10 @@ const HomeScreen = () => {
       console.error("Error:", error);
     });
 
-  AsyncStorage.getItem("userEmail")
+  AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
+        setcompanyName(value)
         // Value was found, do something with it
         console.log("Value:", value);
       } else {
@@ -251,7 +253,7 @@ const HomeScreen = () => {
                 }}
               >
                 <View>
-                  <Text style={styles.userName}>{CompanyData.companyName}</Text>
+                  <Text style={styles.userName}>{companyName}</Text>
                   <View style={styles.iconContainer}>
                     <MapPinIcon size={hp(2)} color="#f59e0b" />
                     <Text

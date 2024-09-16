@@ -22,6 +22,7 @@ import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
@@ -35,6 +36,10 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
     hide();
     show();
   };
+
+
+  
+
 
   return (
     <View style={styles.detailBarContainer}>
@@ -100,6 +105,82 @@ const AccountSettings = () => {
   const address = `${CompanyData.address1}, \n${CompanyData.address2}, \n${CompanyData.city} - ${CompanyData.pincode}, \n${CompanyData.state}`;
   const [userAddress, setUserAddress] = useState(address);
 
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setCompanyName(value);
+      } else {
+        // No value found
+        console.log("No company name found");
+      }
+    })
+
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+    
+    AsyncStorage.getItem("phone")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPhone(value);
+      } else {
+        // No value found
+        console.log("No phone found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("email")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setEmail(value);
+      } else {
+        // No value found
+        console.log("No email found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("gst")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setGstNumber(value);
+      } else {
+        // No value found
+        console.log("No gst found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
+    AsyncStorage.getItem("pan")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        setPanNumber(value);
+      } else {
+        // No value found
+        console.log("No pan found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+
   return (
     <>
       {isLoading ? (
@@ -127,32 +208,28 @@ const AccountSettings = () => {
                 <DetailsBar
                   topic={"Company Name"}
                   value={companyName}
-                  setValue={setCompanyName}
                   edit={false}
                 />
                 <DetailsBar
                   topic={"Phone"}
                   value={phone}
-                  setValue={setPhone}
                   edit={false}
                 />
                 <DetailsBar
                   topic={"Email"}
                   value={email}
-                  setValue={setEmail}
                   edit={false}
                 />
 
                 <DetailsBar
                   topic={"GST Number"}
                   value={gstNumber}
-                  setValue={setGstNumber}
+
                   edit={false}
                 />
                 <DetailsBar
                   topic={"Pan Number"}
                   value={panNumber}
-                  setValue={setPanNumber}
                   edit={false}
                 />
 
