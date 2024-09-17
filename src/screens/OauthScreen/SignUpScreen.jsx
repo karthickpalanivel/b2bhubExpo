@@ -26,6 +26,8 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 const { width } = Dimensions.get("window");
 
 const SignUpScreen = () => {
+  const [termsModal, setTermsModal] = useState(false);
+
   async function HandleSignup() {
     await axios
       .post(
@@ -124,7 +126,7 @@ const SignUpScreen = () => {
     } else if (validatePan(input)) {
       setValidationPan("");
     } else {
-      setValidationPan("Invalid format, eg: ABCDE0123F");
+      setValidationPan("Invalid format, eg: EDCBA0123G");
     }
   };
 
@@ -173,7 +175,7 @@ const SignUpScreen = () => {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  marginVertical: wp(2),
+                  marginTop: wp(1),
                 }}
               >
                 <Text style={styles.title}>New Registration</Text>
@@ -286,6 +288,15 @@ const SignUpScreen = () => {
                 ) : null}
               </View>
 
+              <Text style={styles.registering}>
+                By Registering you are accepting our
+              </Text>
+              <TouchableOpacity style={styles.tcContainer}>
+                <Text style={[styles.registering, { color: "#D53C46" }]}>
+                  Terms & Condition (click here)
+                </Text>
+              </TouchableOpacity>
+
               <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <TouchableOpacity
                   style={styles.button}
@@ -348,8 +359,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: wp(7),
-
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
     marginVertical: wp(2.5),
     color: "#D53C46",
     textAlign: "center",
@@ -410,7 +420,15 @@ const styles = StyleSheet.create({
   invalid: {
     color: "red",
     fontFamily: "QuicksandSemiBold",
-
+  },
+  tcContainer: {
+    width: "90%",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  registering: {
+    fontSize: wp(3.5),
+    fontFamily: "QuicksandSemiBold",
   },
 });
 

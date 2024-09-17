@@ -377,11 +377,11 @@ const styles = StyleSheet.create({
 
   loginCard: {
     alignItems: "center",
-    width: wp("88%"),
-    height: hp(50),
+    width: wp("90%"),
     marginHorizontal: wp(5),
     marginTop: wp(5),
-    paddingVertical: wp(2),
+    paddingTop: wp(2),
+    paddingBottom: wp(5),
     backgroundColor: "#FFFFFF",
     borderRadius: wp(8),
   },

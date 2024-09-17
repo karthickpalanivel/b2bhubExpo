@@ -38,7 +38,9 @@ const Stack = createNativeStackNavigator();
 //functions
 export default function Navigation() {
   const [onBoardingCompleted, setOnBoardingCompleted] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [buyerLogin, setBuyerLogin] = useState(false);
+  const [sellerLogin, setSellerLogin] = useState(false);
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
