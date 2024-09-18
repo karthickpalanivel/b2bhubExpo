@@ -30,6 +30,7 @@ import FloatingNavigationButton from "../button/FloatingNavigationButton";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { Picker } from "@react-native-picker/picker";
 import * as Font from "expo-font";
+import axios from "axios";
 
 //component starts
 const ProductDetails = ({ route }) => {
@@ -54,8 +55,23 @@ const ProductDetails = ({ route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [productPrice, setProductPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
+
+    const url = "https://erp-backend-new-plqp.onrender.com/admin/getProducts"
+    axios
+      .post(url, {})
+      .then((response) => {
+        // console.log(response.data);
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        // console.log(err);
+      });
+
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -449,9 +465,9 @@ const ProductDetails = ({ route }) => {
             </View>
 
             {/* product Card two */}
-            {ProductData?.map((item) => {
+            {products?.map((item) => {
               if (
-                product.pictureName == item.pictureName &&
+                products.CommonImage == item.pictureName &&
                 product._id !== item._id
               ) {
                 return <ProductCardTwo props={item} />;

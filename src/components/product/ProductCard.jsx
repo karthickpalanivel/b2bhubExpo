@@ -31,7 +31,7 @@ const ProductCard = ({ props, index }) => {
   }, []);
 
   const onMoreDetails = (id) => {
-    navigation.navigate("ProductDetails", { _id: id });
+    navigation.navigate("ProductDetails", { _id: 1 });
   };
 
   const translatedName = (name) => {
@@ -40,18 +40,19 @@ const ProductCard = ({ props, index }) => {
   };
   const productName = translatedName(props.name);
   const memberShipBackgroundColor = () => {
-    if (props.category == "Platnium") return "#DD7522";
-    else if (props.category == "Gold") return "#A10E38"; //#DD7522
+    if (props.category == "PLATINUM") return "#DD7522";
+    else if (props.category == "GOLD") return "#A10E38"; //#DD7522
     else return "#fff";
   };
 
   const premiumColor = () => {
-    if (props.category == "Platnium") return "#e5e4e2"; //#FFD700
-    else if (props.category == "Gold") return "#FFD700"; //Platnium
+    if (props.category == "PLATINUM") return "#e5e4e2"; //#FFD700
+    else if (props.category == "GOLD") return "#FFD700"; //Platnium
     else return "#000000";
   };
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
+  const gradeAUnit = props.costPerUnit[0];
   return (
     <>
       {isLoading ? (
@@ -72,10 +73,10 @@ const ProductCard = ({ props, index }) => {
               borderWidth: 0.1,
               borderColor: "#111",
             }}
-            onPress={() => onMoreDetails(props._id)}
+            onPress={() => onMoreDetails(props.productId)}
           >
             <Image
-              source={{ uri: props.imageUrl }}
+              source={{ uri: props.CommonImage }}
               style={{
                 width: "100%",
                 height: hp(20),
@@ -88,7 +89,9 @@ const ProductCard = ({ props, index }) => {
                 : props.name}
             </Text>
             <View>
-              <Text style={styles.offerPrice}>₹{props.price}/ {t('kg')}</Text>
+              <Text style={styles.offerPrice}>
+                ₹{gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
+              </Text>
             </View>
             {props.category && (
               <View
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
   },
 
   memberShipText: {
-    fontSize: hp(1.75),
+    fontSize: hp(1.7),
     fontFamily: "QuicksandSemiBold",
     color: "white",
   },

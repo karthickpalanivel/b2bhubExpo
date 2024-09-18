@@ -164,10 +164,10 @@ const SignUpScreen = () => {
                   style={styles.icon}
                 />
               </Pressable>
-              <Image
+              {/* <Image
                 source={require("../../assets/logo.png")}
                 style={styles.logo}
-              />
+              /> */}
             </View>
 
             <View style={styles.inputContainer}>

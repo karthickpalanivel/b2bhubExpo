@@ -46,6 +46,8 @@ const ProductCardTwo = ({ props }) => {
     navigation.navigate("ProductDetails", { _id: id });
   };
 
+  const gradeAUnit = props.costPerUnit[0];
+  // "Orders", { _id: id }
 
   const calculatePrice = (price, discount) => {
     if (price < discount) {
@@ -74,7 +76,7 @@ const ProductCardTwo = ({ props }) => {
             <View style={styles.cardImage}>
               <View style={styles.imageContainer}>
                 <Image
-                  source={{ uri: props.imageUrl }}
+                  source={{ uri: props.CommonImage }}
                   style={styles.styleImage}
                 />
               </View>
@@ -101,7 +103,7 @@ const ProductCardTwo = ({ props }) => {
               )}
             </View> */}
                 <View>
-                  <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
+                  <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text>
                 </View>
               </View>
               <View>

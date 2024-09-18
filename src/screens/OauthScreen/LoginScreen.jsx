@@ -34,6 +34,7 @@ import {
 
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 const LoginScreen = () => {
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -48,6 +49,8 @@ const LoginScreen = () => {
   const [viewPassword, setViewPassword] = useState(true); // State to toggle password visibility
   //const [email, setEmail] = useState(''); // State to store email buyyer
   const [sellerEmail, setSellerEmail] = useState(""); //state to store email of seller
+
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
 

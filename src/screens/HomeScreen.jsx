@@ -236,12 +236,17 @@ const HomeScreen = () => {
             contentContainerStyle={styles.scrollViewContainer}
           >
             <View style={styles.avatarContainer}>
-              <Pressable style={styles.logoContainer}>
-                <Image
-                  source={require("../assets/logo.png")}
-                  style={styles.logoImage}
-                />
-              </Pressable>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Pressable style={styles.logoContainer}>
+                  <Image
+                    source={require("../assets/logo.png")}
+                    style={styles.logoImage}
+                  />
+                </Pressable>
+                <View style={styles.buyersLoginContainer}>
+                  <Text style={styles.buyersLogin}>{t('buyer_login')}</Text>
+                </View>
+              </View>
               <Pressable onPress={profileScreen}>
                 <Image
                   source={require("../assets/profileImage.png")}
@@ -298,8 +303,8 @@ const HomeScreen = () => {
                 }}
               >
                 <Text style={styles.punchTwo}>
-                  {t("from_your")}{" "}
-                  <Text style={styles.city}>{t("capitalize_city")}</Text>
+                  {t("from_your_city")}{" "}
+                  {/* <Text style={styles.city}>{t("capitalize_city")}</Text> */}
                 </Text>
               </View>
 
@@ -335,9 +340,7 @@ const HomeScreen = () => {
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
             />
-            <View style={styles.buyersLoginContainer}>
-              <Text style={styles.buyersLogin}>Buyer Login</Text>
-            </View>
+
             {/* <TradingSteps /> */}
             <Product
               category={categoriesData}
@@ -436,9 +439,9 @@ const styles = StyleSheet.create({
 
   punchTwo: {
     width: wp(100),
-    fontSize: hp(3.8),
+    fontSize: hp(3),
     fontFamily: "QuicksandSemiBold",
-    color: "#475569",
+    color: "#f59e0b",
   },
 
   searchBarText: {
@@ -505,17 +508,17 @@ const styles = StyleSheet.create({
   buyersLogin: {
     fontSize: wp(3.5),
     fontFamily: "QuicksandSemiBold",
-    color: "white",
+    color: "black",
   },
   buyersLoginContainer: {
-    width: wp(35),
-    marginLeft: wp(35),
-    borderRadius: 999,
-    backgroundColor: "white",
-    elevation: 3,
-    backgroundColor: "#f59e0b",
-    height: hp(5),
-    justifyContent: "center",
-    alignItems: "center",
+  //   width: wp(35),
+    marginLeft: wp(3),
+  //   borderRadius: 999,
+  //   backgroundColor: "white",
+  //   elevation: 3,
+
+  //   height: hp(5),
+  //   justifyContent: "center",
+  //   alignItems: "center",
   },
 });
