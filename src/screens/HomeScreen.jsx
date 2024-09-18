@@ -58,7 +58,6 @@ const HomeScreen = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
 
@@ -85,9 +84,9 @@ const HomeScreen = () => {
       setIsLoading(false);
     }
 
-    setTimeout(() => {
-      setBuyersLoginContent(false);
-    }, 10000);
+    // setTimeout(() => {
+    //   setBuyersLoginContent(false);
+    // }, 10000);
 
     loadFonts();
   }, []);
@@ -262,8 +261,8 @@ const HomeScreen = () => {
                 <View>
                   <Text style={styles.userName}>{companyName}</Text>
                   <View style={styles.iconContainer}>
-                    <MapPinIcon size={hp(2)} color="#f59e0b" />
-                    <Text
+                    {/*<MapPinIcon size={hp(2)} color="#f59e0b" />
+                     <Text
                       style={{
                         fontSize: wp(4),
                         color: "#f59e0b",
@@ -271,7 +270,7 @@ const HomeScreen = () => {
                       }}
                     >
                       {CompanyData.city}
-                    </Text>
+                    </Text> */}
                   </View>
                 </View>
                 {/* <View>
@@ -337,7 +336,7 @@ const HomeScreen = () => {
               setActiveCategory={setActiveCategory}
             />
             <View style={styles.buyersLoginContainer}>
-              <Text style={styles.buyersLogin}>Buyer's Login</Text>
+              <Text style={styles.buyersLogin}>Buyer Login</Text>
             </View>
             {/* <TradingSteps /> */}
             <Product
@@ -436,6 +435,7 @@ const styles = StyleSheet.create({
   },
 
   punchTwo: {
+    width: wp(100),
     fontSize: hp(3.8),
     fontFamily: "QuicksandSemiBold",
     color: "#475569",

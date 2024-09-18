@@ -48,17 +48,17 @@ const FloatingNavigationButton = () => {
   const popIn = () => {
     setPop(true);
     Animated.timing(icon_1, {
-      toValue: wp(15),
+      toValue: hp(10),
       duration: 300,
       useNativeDriver: false,
     }).start();
     Animated.timing(icon_2, {
-      toValue: wp(10),
+      toValue: hp(6.6),
       duration: 300,
       useNativeDriver: false,
     }).start();
     Animated.timing(icon_3, {
-      toValue: wp(5),
+      toValue: hp(3.3),
       duration: 300,
       useNativeDriver: false,
     }).start();
@@ -67,7 +67,7 @@ const FloatingNavigationButton = () => {
   const popOut = () => {
     setPop(false);
     Animated.timing(icon_1, {
-      toValue: -wp(45),
+      toValue: -hp(45),
       duration: 300,
       useNativeDriver: false,
     }).start();

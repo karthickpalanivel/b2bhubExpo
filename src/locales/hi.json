@@ -83,6 +83,26 @@
   "state": "राज्य",
   "landmark": "स्थल",
   "pin_code": "पिन कोड",
-
-  "send_this_payment_transaction_details_to_this_mail": "इस भुगतान लेनदेन के विवरण को इस मेल पर भेजें"
+  "send_this_payment_transaction_details_to_this_mail": "इस भुगतान लेनदेन के विवरण को इस मेल पर भेजें",
+  "language": "भाषा",
+  "reach_us": "हमसे संपर्क करें",
+  "orders": "आदेश",
+  "from_your": "आपसे",
+  "capitalize_city": "शहर",
+  "buyers_login": "खरीदार लॉगिन",
+  "note_seller_registration": "नोट: विक्रेता के रूप में लॉगिन करने से पहले आपको विक्रेता के रूप में पंजीकरण करना होगा, यदि नहीं",
+  "click_here_to_register_seller": "विक्रेता के रूप में पंजीकरण करने के लिए यहां क्लिक करें",
+  "business_information": "व्यवसाय की जानकारी",
+  "change": "परिवर्तन",
+  "mail_us": "हमें मेल करें",
+  "looks_like_you_need_to_make_orders": "ऐसा लगता है कि आपको आदेश देने की आवश्यकता है।",
+  "start_your_first_order": "अपना पहला आदेश शुरू करें",
+  "upload_payment_details": "भुगतान विवरण अपलोड करें",
+  "tonnes": "टन",
+  "payment_pending": "भुगतान लंबित",
+  "completed": "पूर्ण",
+  "under_process": "प्रक्रिया में",
+  "rejected": "अस्वीकृत",
+  "our_team_will_update_your_status": "हमारी टीम आपके स्टेटस को अपडेट करेगी",
+  "kg": "किग्रा"
 }

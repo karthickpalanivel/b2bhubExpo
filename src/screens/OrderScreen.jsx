@@ -20,13 +20,15 @@ import { useNavigation } from "@react-navigation/native";
 import Radio from "../components/button/Radio";
 import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import { useTranslation } from "react-i18next";
 
 const OrderScreen = ({ route }) => {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { params } = route;
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
+  
   useEffect(() => {
     const getProduct = ProductData.find((item) => {
       return item?._id === params?._id;

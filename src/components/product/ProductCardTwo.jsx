@@ -8,6 +8,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 
 const ProductCardTwo = ({ props }) => {
   const navigation = useNavigation();
@@ -23,7 +24,6 @@ const ProductCardTwo = ({ props }) => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
   const hide = () => {
@@ -45,7 +45,7 @@ const ProductCardTwo = ({ props }) => {
   const onMoreDetails = (id) => {
     navigation.navigate("ProductDetails", { _id: id });
   };
-  // "Orders", { _id: id }
+
 
   const calculatePrice = (price, discount) => {
     if (price < discount) {
@@ -57,52 +57,68 @@ const ProductCardTwo = ({ props }) => {
 
   // component return
   return (
-    <Animated.View
-      entering={FadeInDown.delay(200).duration(1500).springify().damping(12)}
-    >
-      <Pressable
-        style={[styles.container, styles.boxShadow, styles.androidShadow]}
-        onPress={() => onMoreDetails(props._id)}
-      >
-        <View style={styles.cardImage}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: props.imageUrl }} style={styles.styleImage} />
-          </View>
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
+      ) : (
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .duration(1500)
+            .springify()
+            .damping(12)}
+        >
+          <Pressable
+            style={[styles.container, styles.boxShadow, styles.androidShadow]}
+            onPress={() => onMoreDetails(props._id)}
+          >
+            <View style={styles.cardImage}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: props.imageUrl }}
+                  style={styles.styleImage}
+                />
+              </View>
 
-          {/* {props.offer ? (
+              {/* {props.offer ? (
             <View style={styles.offerContainer}>
               <Text style={styles.offer}>20%</Text>
             </View>
           ) : (
             ""
           )} */}
-        </View>
-        <View style={styles.details}>
-          <Text style={styles.productName}>
-            {props.name.substring(0, 20)}
-          </Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.productName}>
+                {props.name.substring(0, 20)}
+              </Text>
 
-          <View style={styles.ratingImage}>
-            <View>
+              <View style={styles.ratingImage}>
+                {/* <View>
               {props.quantity > 0 ? (
                 <Text style={styles.inStock}>In Stock</Text>
               ) : (
                 <Text style={styles.outOfStock}>Out of Stock</Text>
               )}
+            </View> */}
+                <View>
+                  <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
+                </View>
+              </View>
+              <View>
+                <View style={styles.cartBtns}>
+                  <Feather
+                    name="shopping-cart"
+                    style={styles.icon}
+                    fill="green"
+                  />
+                  <Text style={styles.order}>Show Product</Text>
+                </View>
+              </View>
             </View>
-            <View>
-              <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
-            </View>
-          </View>
-          <View>
-            <View style={styles.cartBtns}>
-              <Feather name="shopping-cart" style={styles.icon} fill="green" />
-              <Text style={styles.order}>Show Product</Text>
-            </View>
-          </View>
-        </View>
-      </Pressable>
-    </Animated.View>
+          </Pressable>
+        </Animated.View>
+      )}
+    </>
   );
 };
 // Name, price, offer, button
@@ -125,8 +141,9 @@ const styles = StyleSheet.create({
   },
   offerPrice: {
     fontSize: wp(4),
-    fontFamily: "QuicksandBold",
+    fontFamily: "QuicksandSemiBold",
     color: "black",
+    textAlign: "right",
   },
   textDetails: {
     flexDirection: "row",
@@ -161,7 +178,7 @@ const styles = StyleSheet.create({
   },
   mrpPrice: {
     textAlign: "right",
-    // fontFamily: "Quicksand Light",
+    fontFamily: "QuicksandSemiBold",
     color: "#FF5858",
     textDecorationLine: "line-through",
   },
@@ -185,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   productName: {
-    // fontFamily: "Galak Pro Demo",
+    fontFamily: "QuicksandSemiBold",
     fontSize: 18,
     color: "black",
   },
@@ -201,7 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#8B71FF",
     color: "white",
     marginTop: "5%",
-    // fontFamily: "Quicksand Bold",
+    fontFamily: "Quicksand Bold",
   },
   cartBtns: {
     width: "100%",

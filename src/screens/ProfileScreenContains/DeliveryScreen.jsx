@@ -15,6 +15,9 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
+import { useTranslation } from "react-i18next";
+
+
 
 const DeliveryScreen = () => {
   const [status, setStatus] = useState("All");
@@ -25,6 +28,9 @@ const DeliveryScreen = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [token, setToken] = useState("");
   const [loading, setloading] = useState(true);
+
+  const {t} = useTranslation()
+
 
   AsyncStorage.getItem("token")
     .then((value) => {
@@ -85,11 +91,11 @@ const DeliveryScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <ProfileHeaderLayout header={"Deliveries & Orders"} />
+          <ProfileHeaderLayout header={t('orders')} />
           <StatusBar style="light" backgroundColor="#4870F4" />
           <ScrollView>
             {orderData.length !== 0 ? (
-              <Text style={styles.orderHeader}>Orders</Text>
+              <Text style={styles.orderHeader}>{t('orders')}</Text>
             ) : (
               <></>
             )}
@@ -111,10 +117,10 @@ const DeliveryScreen = () => {
 
                   <View styles={styles.imageCard}>
                     <Text style={styles.noOrderOne}>
-                      Looks like you need to make orders?
+                      {t('looks_like_you_need_to_make_orders')}
                     </Text>
                     <Text style={styles.noOrderTwo}>
-                      start your first order
+                      {t('start_your_first_order')}
                     </Text>
                   </View>
                   {/* <Pressable
@@ -186,7 +192,8 @@ const styles = StyleSheet.create({
 
   orderHeader: {
     fontSize: hp(3),
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "QuicksandSemiBold",
     textAlign: "center",
     marginVertical: hp(2),
   },

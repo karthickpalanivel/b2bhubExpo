@@ -26,7 +26,8 @@ import * as Font from "expo-font";
 
 import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PdfGeneration from "../InVoice/PdfGeneration";
-
+import { useTranslation } from "react-i18next";
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 const OrderCard = ({ props }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [uploadDetails, setUploadDetails] = useState(true);
@@ -36,13 +37,15 @@ const OrderCard = ({ props }) => {
   const hide = () => setModalVisible(false);
   const changeValue = () => {
     hide();
-    setUploadDetails(false)
+    setUploadDetails(false);
   };
 
   const showModal = () => {
     hide();
     show();
   };
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function loadFonts() {
@@ -142,11 +145,11 @@ const OrderCard = ({ props }) => {
               <View>
                 <Text>Transaction Date</Text>
                 <TouchableOpacity>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={(text) => setTransactionId(text)}
-                  placeholderTextColor={"#4870F4"}
-                />
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => setTransactionId(text)}
+                    placeholderTextColor={"#4870F4"}
+                  />
                 </TouchableOpacity>
               </View>
               <View>
@@ -172,126 +175,143 @@ const OrderCard = ({ props }) => {
   };
 
   return (
-    <Animated.View
-      entering={FadeInRight.delay(200).duration(2000).springify().damping(12)}
-    >
-      <LinearGradient
-        colors={["#ffFDe0", "#ffFDeF"]}
-        style={styles.orderContainer}
-      >
-        <>
-          <View style={styles.container}>
-            <Text style={styles.productText}>{props.product_name}</Text>
-            <Text style={styles.productText}>Date: {props.date_of_order}</Text>
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.productText}>Order id: {props.orderId}</Text>
-            <Text style={styles.productText}>
-              Quantity: {props.product_quantity} tons
-            </Text>
-          </View>
-          <Text style={styles.productText}>Price: ₹{props.total_amount}</Text>
-
-          {props.payment_status === 1 && props.payment_verified === 1 ? (
-            <View style={styles.container}>
-              <View>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <EyeIcon size={wp(5)} color={"#4870F4"} />
-                  <Text style={styles.documentText}>InVoice</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <EyeIcon size={wp(5)} color={"#4870F4"} />
-                  <Text style={styles.documentText}>Receipt</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text style={styles.completed}>✅Completed</Text>
-              </View>
-            </View>
-          ) : (
-            <></>
-          )}
-          {props.payment_status === 2 && props.payment_verified === 0 ? (
-            <View style={styles.container}>
-              <TouchableOpacity style={styles.iconContainer}>
-                <EyeIcon size={wp(5)} color={"#4870F4"} />
-                <Text style={styles.documentText}>InVoice</Text>
-              </TouchableOpacity>
-              <View>
-                <Text style={styles.process}>⏱️under process</Text>
-              </View>
-            </View>
-          ) : (
-            <></>
-          )}
-          {props.payment_status === 3 && props.payment_verified === 0 ? (
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
+      ) : (
+        <Animated.View
+          entering={FadeInRight.delay(200)
+            .duration(2000)
+            .springify()
+            .damping(12)}
+        >
+          <LinearGradient
+            colors={["#ffFDe0", "#ffFDeF"]}
+            style={styles.orderContainer}
+          >
             <>
               <View style={styles.container}>
-                <View>
+                <Text style={styles.productText}>{props.product_name}</Text>
+                <Text style={styles.productText}>
+                  {t("date")}: {props.date_of_order}
+                </Text>
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.productText}>
+                  {t("order_id")}: {props.orderId}
+                </Text>
+                <Text style={styles.productText}>
+                  {t("quantity")}: {props.product_quantity} {t("tonnes")}
+                </Text>
+              </View>
+              <Text style={styles.productText}>
+                {t("price")}: ₹{props.total_amount}
+              </Text>
+
+              {props.payment_status === 1 && props.payment_verified === 1 ? (
+                <View style={styles.container}>
+                  <View>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>{t("invoice")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>Receipt</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <Text style={styles.completed}>✅{t("completed")}</Text>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+              {props.payment_status === 2 && props.payment_verified === 0 ? (
+                <View style={styles.container}>
                   <TouchableOpacity style={styles.iconContainer}>
                     <EyeIcon size={wp(5)} color={"#4870F4"} />
-                    <Text style={styles.documentText}>InVoice</Text>
+                    <Text style={styles.documentText}>{t("invoice")}</Text>
                   </TouchableOpacity>
+                  <View>
+                    <Text style={styles.process}>⏱️{t("under_process")}</Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={styles.pending}>⌛Payment Pending</Text>
-                </View>
-              </View>
-              {uploadDetails ? (
-                <TouchableOpacity
-                  style={styles.iconContainer}
-                  onPress={() => showModal()}
-                >
-                  <DocumentIcon size={wp(5)} color={"#E64242"} />
-                  <Text style={styles.document}>
-                    Click here to Upload Payment Details
-                  </Text>
-                </TouchableOpacity>
               ) : (
-                <>
-                  <Text style={styles.document}>
-                    Our Team will update your status
-                  </Text>
-                </>
+                <></>
               )}
-            </>
-          ) : (
-            <></>
-          )}
-          {props.payment_status === 4 && props.payment_verified === 0 ? (
-            <View style={styles.container}>
-              <View>
-                {/* <TouchableOpacity style={styles.iconContainer}>
+              {props.payment_status === 3 && props.payment_verified === 0 ? (
+                <>
+                  <View style={styles.container}>
+                    <View>
+                      <TouchableOpacity style={styles.iconContainer}>
+                        <EyeIcon size={wp(5)} color={"#4870F4"} />
+                        <Text style={styles.documentText}>{t("invoice")}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View>
+                      <Text style={styles.pending}>
+                        ⌛{t("payment_pending")}
+                      </Text>
+                    </View>
+                  </View>
+                  {uploadDetails ? (
+                    <TouchableOpacity
+                      style={styles.iconContainer}
+                      onPress={() => showModal()}
+                    >
+                      <DocumentIcon size={wp(5)} color={"#E64242"} />
+                      <Text style={styles.document}>
+                        {t("upload_payment_details")}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <Text style={styles.document}>
+                        {t("our_team_will_update_your_status")}{" "}
+                      </Text>
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+              {props.payment_status === 4 && props.payment_verified === 0 ? (
+                <View style={styles.container}>
+                  <View>
+                    {/* <TouchableOpacity style={styles.iconContainer}>
                 <EyeIcon size={wp(5)} color={"#4870F4"} />
-                <Text style={styles.documentText}>InVoice</Text>
+                <Text style={styles.documentText}>{t('invoice')}</Text>
               </TouchableOpacity> */}
-                {uploadDetails ? (
-                  <></>
-                ) : (
-                  <>
-                    <Text style={styles.document}>
-                      Our Team will update your Order status
-                    </Text>
-                  </>
-                )}
-              </View>
-              <View>
-                <Text style={styles.pending}>☹️Rejected</Text>
-              </View>
-            </View>
-          ) : (
-            <></>
-          )}
+                    {uploadDetails ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Text style={styles.document}>
+                          Our Team will update your Order status
+                        </Text>
+                      </>
+                    )}
+                  </View>
+                  <View>
+                    <Text style={styles.pending}>☹️{t('rejected')}</Text>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
 
-          <PaymentDetailsModal
-            visible={modalVisible}
-            productName={props.product_name}
-            productPrice={props.total_amount}
-            productQuantity={props.product_quantity}
-          />
-        </>
-      </LinearGradient>
-    </Animated.View>
+              <PaymentDetailsModal
+                visible={modalVisible}
+                productName={props.product_name}
+                productPrice={props.total_amount}
+                productQuantity={props.product_quantity}
+              />
+            </>
+          </LinearGradient>
+        </Animated.View>
+      )}
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -12,6 +13,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 // Data import
 import { categoriesData } from "../data/Categories";
@@ -32,10 +34,12 @@ export default function Categories({ activeCategory, setActiveCategory }) {
     }
     loadFonts();
   }, []);
+  const { t } = useTranslation();
+
   return (
     <>
       {isLoading ? (
-        <AppLoaderAnimation/>
+        <AppLoaderAnimation />
       ) : (
         <Animated.View>
           <ScrollView
@@ -45,7 +49,7 @@ export default function Categories({ activeCategory, setActiveCategory }) {
           >
             {categoriesData?.map((category, index) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   key={index}
                   style={styles.category}
                   // onPress={() => setActiveCategory(category.name)}
@@ -58,9 +62,11 @@ export default function Categories({ activeCategory, setActiveCategory }) {
                     {/* <Images uri={category.name}
                   style={styles.imagesComp}
                 /> */}
-                    <Text style={styles.categoryName}>{category.name}</Text>
+                    <Text style={styles.categoryName}>{`${t(
+                      category.name
+                    )}`}</Text>
                   </View>
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
             {categoryByProduct?.map((product, index) => {

@@ -148,7 +148,7 @@ const ProfileScreen = () => {
     // i18next
     //   .changeLanguage(lng)
     //   .then(() => {
-    //     setYourLanguage(LanguageList[lng].nativeName);
+    setYourLanguage(LanguageList[lng].nativeName);
     //     hide();
     //   })
     //   .catch((err) => console.log("Error changing language:", err));
@@ -275,7 +275,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.businessContainer}>
-              <Text style={styles.business}>{t("manage_your_business")}</Text>
+              <Text style={styles.business}>{t("business_information")}</Text>
             </View>
             <View style={styles.detailsContainer}>
               {/* accounts button */}
@@ -309,7 +309,7 @@ const ProfileScreen = () => {
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TruckIcon color={"#4870F4"} size={hp(5)} />
                   <Text style={styles.contextName}>
-                    {t("deliveries_and_orders")}
+                    {t("orders")}
                   </Text>
                 </View>
                 <ChevronRightIcon
@@ -379,7 +379,7 @@ const ProfileScreen = () => {
             {/* help desk container starts */}
 
             <View style={styles.helpDeskContainer}>
-              <Text style={styles.helpDeskText}>Need Help</Text>
+              <Text style={styles.helpDeskText}>{t('need_help')}</Text>
             </View>
 
             <View
@@ -397,13 +397,13 @@ const ProfileScreen = () => {
                   source={require("../assets/whatsapp.png")}
                   style={styles.whatsapp}
                 />
-                <Text style={styles.contextName}>Reach Us</Text>
+                <Text style={styles.contextName}>{t('reach_us')}</Text>
               </View>
               <TouchableOpacity
                 style={styles.callContainer}
                 onPress={connectionToWhatsapp}
               >
-                <Text style={styles.callText}>Chat</Text>
+                <Text style={styles.callText}>{t('whatsapp')}</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -414,13 +414,13 @@ const ProfileScreen = () => {
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
-                <Text style={styles.contextName}>support@b2bhubindia.com</Text>
+                <Text style={styles.contextName}>{t('mail_us')}</Text>
               </View>
               <TouchableOpacity
                 style={styles.callContainer}
                 onPress={connectionToMail}
               >
-                <Text style={styles.callText}>Mail</Text>
+                <Text style={styles.callText}>{t('email')}</Text>
               </TouchableOpacity>
             </View>
 
@@ -434,7 +434,7 @@ const ProfileScreen = () => {
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <LanguageIcon size={hp(5)} color={"#4870F4"} />
                   <View>
-                    <Text style={styles.languageSelect}>Language</Text>
+                    <Text style={styles.languageSelect}>{t('language')}</Text>
                     <Text style={styles.language}>{yourLanguage}</Text>
                   </View>
                 </View>
@@ -443,7 +443,7 @@ const ProfileScreen = () => {
                 style={styles.callContainer}
                 onPress={() => setModalVisible(show)}
               >
-                <Text style={styles.callText}>Change</Text>
+                <Text style={styles.callText}>{t('change')}</Text>
               </TouchableOpacity>
             </View>
             <LanguageModal visible={modalVisible} />
@@ -542,6 +542,8 @@ const styles = StyleSheet.create({
     marginLeft: "3%",
     marginTop: "5%",
     // backgroundColor: "#4870F4",
+    // width: wp(50),
+    paddingVertical: wp(2),
     borderRadius: 999,
   },
 
@@ -603,19 +605,19 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
   },
   helpDeskContainer: {
-    width: wp(25),
+    width: wp(100),
     padding: "2%",
     marginLeft: "3%",
     marginTop: "5%",
-    backgroundColor: "#4870F4",
+    // backgroundColor: "#4870F4",
     borderRadius: 999,
   },
   helpDeskText: {
-    textAlign: "center",
+    // textAlign: "center",
     // fontWeight: "700",
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
-    color: "white",
+    color: "#4870F4",
   },
 
   logoutContainer: {

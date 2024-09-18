@@ -79,6 +79,26 @@
   "state": "రాష్ట్రం",
   "landmark": "ప్రసిద్ధ స్థలం",
   "pin_code": "పిన్ కోడ్",
-
-  "send_this_payment_transaction_details_to_this_mail": "ఈ చెల్లింపు లావాదేవీ వివరాలను ఈ మెయిల్‌కు పంపండి"
+  "send_this_payment_transaction_details_to_this_mail": "ఈ చెల్లింపు లావాదేవీ వివరాలను ఈ మెయిల్‌కు పంపండి",
+  "language": "భాష",
+  "reach_us": "మమ్మల్ని సంప్రదించండి",
+  "orders": "ఆర్డర్లు",
+  "from_your": "మీ నుండి",
+  "capitalize_city": "నగరం",
+  "buyers_login": "కోనుగోలు లాగిన్",
+  "note_seller_registration": "గమనిక: విక్రేతగా లాగిన్ అవ్వడానికి ముందు మీరు విక్రేతగా నమోదు చేసుకోవాలి, లేకపోతే",
+  "click_here_to_register_seller": "విక్రేతగా నమోదు చేసుకోవడానికి ఇక్కడ క్లిక్ చేయండి",
+  "business_information": "వ్యాపార సమాచారం",
+  "change": "మార్చు",
+  "mail_us": "మాకు మెయిల్ చేయండి",
+  "looks_like_you_need_to_make_orders": "మీకు ఆర్డర్లు చేయాల్సిన అవసరం ఉంది అనే అనిపిస్తోంది.",
+  "start_your_first_order": "మీ మొదటి ఆర్డర్ ప్రారంభించండి",
+  "upload_payment_details": "చెల్లింపు వివరాలను అప్లోడ్ చేయండి",
+  "tonnes": "టన్నులు",
+  "payment_pending": "చెల్లింపు పెండింగ్",
+  "completed": "పూర్తి",
+  "under_process": "ప్రక్రియలో",
+  "rejected": "మన్నించబడలేదు",
+  "our_team_will_update_your_status": "మా టీమ్ మీ స్థితిని అప్డేట్ చేస్తుంది",
+  "kg": "కిలోగ్రాం"
 }

@@ -6,7 +6,7 @@ export const ProductData = [
     grade: "A",
     price: 155,
     rating: "4.8",
-    category: "dal",
+    location: "Chennai",
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -22,7 +22,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://organicmandya.com/cdn/shop/files/TurDal_2_455a319e-0c1a-4702-8f51-37233dad5b37.jpg?v=1719136478&width=1024",
   },
@@ -33,7 +33,6 @@ export const ProductData = [
     grade: "A",
     price: 145,
     rating: "4.8",
-    category: "dal",
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -49,7 +48,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://thumbs.dreamstime.com/b/yellow-split-peas-pigeon-arhar-dal-organic-toor-black-bowl-selective-focus-blur-background-211382868.jpg",
   },
@@ -60,7 +59,8 @@ export const ProductData = [
     grade: "A",
     price: 165,
     rating: "4.8",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -76,7 +76,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://economictimes.indiatimes.com/thumb/msid-108016469,width-1600,height-900,resizemode-4,imgsize-65098/best-moong-dal-in-india-a-nutrient-rich-delight-and-culinary-excellence.jpg?from=mdr",
   },
@@ -87,7 +87,8 @@ export const ProductData = [
     grade: "A",
     price: 145,
     rating: "4.8",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -103,7 +104,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -114,7 +115,8 @@ export const ProductData = [
     grade: "A",
     price: 96,
     rating: "4.8",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -130,7 +132,7 @@ export const ProductData = [
       "Polished Toor Dal",
       "Unpolished Toor Dal",
     ],
-    memberShip: "Gold",
+    category: "Gold",
     imageUrl:
       "https://thumbs.dreamstime.com/b/closeup-organic-unpolished-toor-dal-famous-indian-legume-also-called-yellow-pigeon-peas-selective-focus-50698229.jpg",
   },
@@ -140,7 +142,8 @@ export const ProductData = [
     name: "Mysore Moong Dal",
     pictureName: "MoongDal",
     price: 96,
-    category: "dal",
+    location: "Chennai",
+
     grade: "A",
     rating: "4.5",
     quantity: "10",
@@ -152,7 +155,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Polished Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://rukminim2.flixcart.com/image/850/1000/kuyf8nk0/pulses/0/u/u/500-unpolished-desi-yellow-moong-dal-split-500g-1-moong-dal-90-s-original-imag7zf7mmzthtaz.jpeg?q=20&crop=false",
   },
@@ -161,7 +164,8 @@ export const ProductData = [
     name: "Imported Moong Dal",
     pictureName: "MoongDal",
     price: 111,
-    category: "dal",
+    location: "Chennai",
+
     grade: "A",
     rating: "4.5",
     quantity: "10",
@@ -173,7 +177,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Mysore Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://www.indianasapplepie.com/cdn/shop/articles/IMG-8317_1600x.jpg?v=1673739164",
   },
@@ -182,7 +186,8 @@ export const ProductData = [
     name: "Desi Moong Dal",
     pictureName: "MoongDal",
     price: 90,
-    category: "dal",
+    location: "Chennai",
+
     grade: "A",
     rating: "4.5",
     quantity: "10",
@@ -194,7 +199,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf life",
     },
     grades: ["Mysore Moong Dal", "Imported Moong Dal", "Desi Moong Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://st5.depositphotos.com/5653638/61983/i/450/depositphotos_619836364-stock-photo-moong-dal-namkeen-traditional-indian.jpg",
   },
@@ -206,7 +211,8 @@ export const ProductData = [
     pictureName: "UradDal",
     grade: "A",
     rating: "4.7",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -215,7 +221,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://res.cloudinary.com/dve3s278t/image/upload/v1725967896/black-urad-pulses-500x500_qautf0.webp",
   },
@@ -226,7 +232,8 @@ export const ProductData = [
     pictureName: "UradDal",
     grade: "A",
     rating: "4.7",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -235,7 +242,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://c8.alamy.com/comp/BNC7K0/urad-dal-these-are-black-lentils-or-urad-dal-that-have-been-split-BNC7K0.jpg",
   },
@@ -247,7 +254,8 @@ export const ProductData = [
     pictureName: "UradDal",
     grade: "A",
     rating: "4.7",
-    category: "dal",
+    location: "Chennai",
+
     quantity: "10",
     description: {
       Speciality: "High in Protein",
@@ -256,7 +264,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Black Urad Dal ", "Imported Urad Dal", "Desi Urad Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://c8.alamy.com/comp/2GGFCKX/macro-close-up-of-organic-split-polished-white-urad-dal-vigna-mungo-on-a-ceramic-black-bowl-top-view-2GGFCKX.jpg",
   },
@@ -271,7 +279,7 @@ export const ProductData = [
     offer: 20,
     grade: "A",
     rating: "4.6",
-    category: "dal",
+    location: "Chennai",
     quantity: "5",
     description: {
       Speciality: "High in Protein",
@@ -280,7 +288,7 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Premium Gram Dal", "Imported Gram Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://cdn.shopaccino.com/edible-smart/products/parched-gram-dal-putana-961801_l.jpg?v=516",
   },
@@ -288,12 +296,11 @@ export const ProductData = [
     _id: 13,
     name: "Gold Gram Dal",
     pictureName: "GramDal",
-
     price: 105,
     offer: 20,
+    location: "Chennai",
     grade: "A",
     rating: "4.6",
-    category: "dal",
     quantity: "5",
     description: {
       Speciality: "High in Protein",
@@ -302,8 +309,141 @@ export const ProductData = [
       ShelfLife: "6 Months Shelf Life",
     },
     grades: ["Premium Gram Dal", "Imported Gram Dal"],
-    memberShip: "Platnium",
+    category: "Platnium",
     imageUrl:
       "https://c1.wallpaperflare.com/preview/115/189/240/daal-chana-lentils-indian.jpg",
   },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726326641/1000058716_suhb3s.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Andhra Pradesh",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0001",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726327115/1000058713_fbcrjq.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Andhra Pradesh",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0002",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726327654/1000058727_luru9z.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Andhra Pradesh",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0003",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726327820/1000058729_mrgdc6.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Andhra Pradesh",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0004",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726327941/1000058731_ghgdih.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Maharashtra",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0005",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726328051/1000058721_vfdgzc.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Odisha",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0006",
+  // },
+  // {
+  //   CommonImage:
+  //     "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726328139/1000058724_chwpw7.jpg",
+  //   category: "PLATINUM",
+  //   costPerUnit: [[Object]],
+  //   description: {
+  //     IsOrganic: 1,
+  //     Moisture: "",
+  //     QualityAvailable: "A Grade",
+  //     ShelfLife: "6 Months",
+  //     Speciality: "High in Protein",
+  //   },
+  //   location: "Odisha",
+  //   name: "ToorDal",
+  //   offerDuration: "180.0000",
+  //   offerStartDate: "2024-09-14",
+  //   offerStartTime: "08:25:00",
+  //   productId: "B2BPD0007",
+  // },
 ];

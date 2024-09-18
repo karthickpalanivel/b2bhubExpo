@@ -1,8 +1,8 @@
 {
   "start_your_business": "Start your business",
   "from_your_city": "From your city",
-  "from_your":"From your",
-  "capitalize_city":"City",
+  "from_your": "From your",
+  "capitalize_city": "City",
   "toor_dal": "Toor dal",
   "moong_dal": "Moong dal",
   "urad_dal": "Urad dal",
@@ -27,6 +27,7 @@
   "phone": "Phone",
   "gst_number": "GST number",
   "pan_number": "Pan number",
+
   "deliveries_and_orders": "Deliveries and orders",
   "order_id": "Order ID",
   "price": "Price",
@@ -34,9 +35,11 @@
   "quantity": "Quantity",
   "invoice": "Invoice",
   "receipt": "Receipt",
+
   "need_help": "Need help",
   "logout": "Logout",
   "whatsapp": "WhatsApp",
+
   "buyer_login": "Buyer login",
   "seller_login": "Seller login",
   "password": "Password",
@@ -71,5 +74,25 @@
   "state": "State",
   "landmark": "Landmark",
   "pin_code": "Pin code",
-  "send_this_payment_transaction_details_to_this_mail": "Send this payment transaction details to this mail"
+  "send_this_payment_transaction_details_to_this_mail": "Send this payment transaction details to this mail",
+  "language": "Language",
+  "reach_us": "Reach Us",
+  "orders": "Orders",
+  "buyers_login": "Buyer Login",
+  "note_seller_registration": "Note: You must register as a seller before logging in as a Seller, if not",
+  "click_here_to_register_seller": "Click here to register as seller",
+  "business_information": "Business Information",
+  "change": "Change",
+  "mail_us": "Mail Us",
+  "looks_like_you_need_to_make_orders": "Looks like you need to make orders.",
+  "start_your_first_order": "Start your first order",
+  "upload_payment_details": "Upload payment details",
+  "tonnes": "Tonnes",
+  "payment_pending": "Payment pending",
+  "completed": "Completed",
+  "under_process": "Under process",
+  "rejected": "Rejected",
+  "our_team_will_update_your_status": "Our Team will update your status",
+
+  "kg": "Kg"
 }

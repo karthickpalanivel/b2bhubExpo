@@ -26,7 +26,7 @@ import {
   CreditCardIcon,
 } from "react-native-heroicons/outline";
 
-import {} from "react-native-heroicons/solid";
+import { useTranslation } from "react-i18next";
 
 import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
@@ -115,7 +115,7 @@ const AccountSettings = () => {
 
   const address = `${CompanyData.address1}, \n${CompanyData.address2}, \n${CompanyData.city} - ${CompanyData.pincode}, \n${CompanyData.state}`;
   const [userAddress, setUserAddress] = useState(address);
-
+  const { t } = useTranslation();
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
@@ -209,7 +209,7 @@ const AccountSettings = () => {
                     }}
                   >
                     <DetailsBar
-                      topic={"Company Name"}
+                      topic={t("company_name")}
                       value={companyName}
                       setValue={setCompanyName}
                       edit={false}
@@ -228,7 +228,7 @@ const AccountSettings = () => {
                     }}
                   >
                     <DetailsBar
-                      topic={"Phone"}
+                      topic={t("phone")}
                       value={phone}
                       setValue={setPhone}
                       edit={false}
@@ -247,7 +247,7 @@ const AccountSettings = () => {
                     }}
                   >
                     <DetailsBar
-                      topic={"Email"}
+                      topic={t("email")}
                       value={email}
                       setValue={setEmail}
                       edit={false}
@@ -266,7 +266,7 @@ const AccountSettings = () => {
                     }}
                   >
                     <DetailsBar
-                      topic={"GST Number"}
+                      topic={t("gst_number")}
                       value={gstNumber}
                       setValue={setGstNumber}
                       edit={false}
@@ -286,7 +286,7 @@ const AccountSettings = () => {
                     }}
                   >
                     <DetailsBar
-                      topic={"Pan Number"}
+                      topic={t("pan_number")}
                       value={panNumber}
                       setValue={setPanNumber}
                       edit={false}

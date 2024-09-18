@@ -11,13 +11,15 @@ import Loading from "../../loading/Loading";
 import { ProductData } from "../../data/ProductData";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { useTranslation } from "react-i18next";
 
 export default function Product({
   category,
   productActiveData,
   setProductActiveData,
 }) {
-  
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function loadFonts() {
@@ -33,7 +35,7 @@ export default function Product({
     loadFonts();
   }, []);
   const handlePress = () => {
-    setProductActiveData("Exclusive Product");
+    setProductActiveData(t("exclusive_products"));
   };
 
   return (
@@ -64,7 +66,7 @@ export default function Product({
               <Text style={styles.productHeader}>{productActiveData}</Text>
             </Pressable>
           ) : (
-            <Text style={styles.productHeader}>Exclusive Products</Text>
+            <Text style={styles.productHeader}>{t("exclusive_products")}</Text>
           )}
           <View>
             {category.length === 0 ? (

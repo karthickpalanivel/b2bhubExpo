@@ -72,18 +72,36 @@
   "fill_your_information": "உங்கள் தகவலை நிரப்புங்கள்",
   "delivery_address": "விநியோக முகவரி",
   "request_for_sample": "மாதிரிக்காக கோருங்கள்",
-
   "phone_number": "தொலைபேசி எண்",
-
   "gst_number": "ஜி.எஸ்.டி. எண்",
-
   "address_line_1": "முகவரி வரி 1",
   "address_line_2": "முகவரி வரி 2",
   "city": "நகரம்",
-  "district":"மாநகரம்",
+  "district": "மாநகரம்",
   "state": "மாநிலம்",
   "landmark": "குறியிடம்",
   "pin_code": "பின் குறியீடு",
-
-  "send_this_payment_transaction_details_to_this_mail": "இந்த மின்னஞ்சலுக்கு இந்த பண பரிவர்த்தனை விவரங்களை அனுப்புங்கள்"
+  "send_this_payment_transaction_details_to_this_mail": "இந்த மின்னஞ்சலுக்கு இந்த பண பரிவர்த்தனை விவரங்களை அனுப்புங்கள்",
+  "language": "மொழி",
+  "reach_us": "எங்கள் தொடர்புக்கு",
+  "orders": "ஆர்டர்கள்",
+  "from_your": "உங்களின்",
+  "capitalize_city": "நகரம்",
+  "buyers_login": "வாங்குபவர் உள்நுழைவு",
+  "note_seller_registration": "குறிப்பு: விற்பனையாளராக உள்நுழைவதற்கு முன் நீங்கள் விற்பனையாளராக பதிவு செய்ய வேண்டும், இல்லையெனில்",
+  "click_here_to_register_seller": "விற்பனையாளராக பதிவு செய்ய இங்கே கிளிக் செய்யவும்",
+  "company_name": "நிறுவனத்தின் பெயர்",
+  "business_information": "வணிக தகவல்",
+  "change": "மாற்று",
+  "mail_us": "மெயில் அனுப்பவும்",
+  "looks_like_you_need_to_make_orders": "உங்களுக்கு ஆர்டர்களை செய்யவேண்டும் போல உள்ளது.",
+  "start_your_first_order": "உங்கள் முதல் ஆர்டரை தொடங்குங்கள்",
+  "upload_payment_details": "பணப் பரிவர்த்தனை விவரங்களை பதிவேற்றவும்",
+  "tonnes": "டன்",
+  "payment_pending": "பணம் நிலுவையில் உள்ளது",
+  "completed": "முடிந்தது",
+  "under_process": "செயல்முறையில்",
+  "rejected": "ரத்து செய்யபட்டது",
+  "our_team_will_update_your_status": "எங்கள் குழு உங்கள் நிலையை புதுப்பிக்கும்",
+  "kg": "கிலோ"
 }
