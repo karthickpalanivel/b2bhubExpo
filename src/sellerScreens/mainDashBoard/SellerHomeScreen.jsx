@@ -16,6 +16,7 @@ import {
 import ProductDisplay from "../sellerComponents/ProductDisplay";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import { ArrowRightStartOnRectangleIcon } from "react-native-heroicons/outline";
 
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
@@ -46,6 +47,10 @@ const SellerHomeScreen = () => {
     navigation.navigate("ModifyProduct");
   };
 
+  const handleLogout = () => {
+    navigation.navigate("Login");
+  };
+
   const kgToTonnes = (num) => {
     return num * 0.001;
   };
@@ -68,19 +73,32 @@ const SellerHomeScreen = () => {
                   <Text style={styles.welcomeText}>Welcome Back Seller,</Text>
                   <Text style={styles.nameText}>{sellerName}</Text>
                 </View>
-                <Image
+                {/* <Image
                   source={{
                     uri: "https://res.cloudinary.com/dve3s278t/image/upload/v1726223190/bc9fd4bd-de9b-4555-976c-8360576c6708_l9xbwx.jpg",
                   }}
                   style={styles.profilePic}
-                />
+                /> */}
+                <View>
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={handleLogout}
+                  >
+                    <ArrowRightStartOnRectangleIcon
+                      color={"#333"}
+                      size={wp(8)}
+                      strokeWidth={wp(0.3)}
+                      style={styles.profilePic}
+                    />
+                  </TouchableOpacity>
+                  <Text>Logout</Text>
+                </View>
               </View>
 
               <View style={styles.cardsContainer}>
                 <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
                   <Text style={styles.cardTitle}>Active Product</Text>
                   <Text style={styles.cardNumber}>
-                   
                     {activeProduct > 0
                       ? activeProduct
                       : "Currently no products added"}

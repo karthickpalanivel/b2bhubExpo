@@ -100,16 +100,12 @@ const LoginScreen = () => {
     loadFonts();
   }, []);
 
-  const navigateToSignUp = () => {
-    navigation.navigate("SignUp");
-  };
-
   async function handleLogin() {
     await axios
       .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
         email: buyerEmail,
         pwd: password,
-        isSeller:false
+        isSeller: false,
       })
       .then((res) => {
         console.log(res.status);
@@ -126,7 +122,7 @@ const LoginScreen = () => {
             AsyncStorage.setItem("gst", customer.gstNo);
             AsyncStorage.setItem("email", customer.Email);
             AsyncStorage.setItem("token", res.data.token);
-            AsyncStorage.setItem("pan",customer.PAN)
+            AsyncStorage.setItem("pan", customer.PAN);
           } catch (e) {
             // saving error
             console.error(e);
@@ -182,6 +178,10 @@ const LoginScreen = () => {
 
   const navigateToRegister = () => {
     navigation.navigate("SignUp");
+  };
+
+  const navigateToSellerRegister = () => {
+    navigation.navigate("sellerRegistration");
   };
 
   useFocusEffect(
@@ -341,11 +341,23 @@ const LoginScreen = () => {
                   >
                     <Text style={styles.submitButtonText}>Login</Text>
                   </TouchableOpacity>
+
+                  <View style={styles.noteContainer}>
+                    <Text style={styles.noteText}>
+                      Note: Your must registered as seller before logging in as
+                      Seller if not
+                      <TouchableOpacity onPress={navigateToSellerRegister}>
+                        <Text style={styles.registerSeller}>
+                          Click here to register as seller
+                        </Text>
+                      </TouchableOpacity>
+                    </Text>
+                  </View>
                 </View>
               </Animated.View>
             </>
           )}
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <TouchableOpacity onPress={navigateToRegister}>
             <Text style={styles.register}>Click here for New Registration</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -432,7 +444,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 40,
     borderRadius: 10,
-    marginTop: 10,
+    marginVertical: 10,
   },
   submitButtonText: {
     color: "white",
@@ -445,6 +457,7 @@ const styles = StyleSheet.create({
   },
   forget: {
     color: "#d53c46",
+    fontFamily: "QuicksandBold",
   },
   register: {
     fontFamily: "QuicksandBold",
@@ -453,6 +466,25 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: hp(4),
     textAlign: "center",
+  },
+  noteContainer: {
+    width: "80%",
+    marginBottom: wp(3),
+    padding: wp(2),
+    borderRadius: wp(3),
+    backgroundColor: "white",
+    elevation: 2,
+  },
+  noteText: {
+    fontSize: wp(3.5),
+    textAlign: "justify",
+    fontFamily: "QuicksandSemiBold",
+    color: "#000",
+  },
+  registerSeller: {
+    fontFamily: "QuicksandBold",
+    fontSize: wp(4),
+    color: "#d53c46",
   },
 });
 export default LoginScreen;

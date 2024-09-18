@@ -9,6 +9,7 @@ import {
   Linking,
   Modal,
   SafeAreaView,
+  FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -26,7 +27,7 @@ import {
   TruckIcon,
   ArrowLeftIcon,
 } from "react-native-heroicons/outline";
-
+import MasonryList from "@react-native-seoul/masonry-list";
 import {
   IdentificationIcon,
   EnvelopeIcon,
@@ -38,6 +39,11 @@ import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import * as Font from "expo-font";
+import { useTranslation } from "react-i18next";
+import i18n from "../language/i18next";
+import LanguageList from "../language/LanguageList.json";
+import i18next from "i18next";
+import { useLanguage } from "../hooks/LanguageContext";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -45,9 +51,10 @@ const ProfileScreen = () => {
   const [companyName, setCompanyName] = useState("Your Company");
   const [phone, setPhone] = useState("9856743210");
   const [modalVisible, setModalVisible] = useState(false);
-  const [language, setLanguage] = useState("English");
-  const [languageHeader, setLanguageHeader] = useState("Select Language");
+  const [yourLanguage, setYourLanguage] = useState("English");
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
+  const { language, changeLanguage } = useLanguage();
 
   useEffect(() => {
     async function loadFonts() {
@@ -137,27 +144,15 @@ const ProfileScreen = () => {
   const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
 
-  const tamilLanguage = () => {
-    setLanguage("தமிழ்");
-    setLanguageHeader("மொழியை தேர்ந்தெடுங்கள்");
-    hide();
-  };
-
-  const englishLanguage = () => {
-    setLanguage("English");
-    setLanguageHeader("Select Language");
-    hide();
-  };
-
-  const hindiLanguage = () => {
-    setLanguage("हिन्दी");
-    setLanguageHeader("अपनी भाषा चुनें");
-    hide();
-  };
-
-  const teluguLanguage = () => {
-    setLanguage("తెలుగు");
-    setLanguageHeader("మీ భాషను ఎంచుకోండి");
+  const changeLng = (lng) => {
+    // i18next
+    //   .changeLanguage(lng)
+    //   .then(() => {
+    //     setYourLanguage(LanguageList[lng].nativeName);
+    //     hide();
+    //   })
+    //   .catch((err) => console.log("Error changing language:", err));
+    changeLanguage(LanguageList[lng].shortName);
     hide();
   };
 
@@ -180,8 +175,25 @@ const ProfileScreen = () => {
                   onPress={hide}
                 />
               </TouchableOpacity>
+
+              <FlatList
+                data={Object.keys(LanguageList)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.languageContainer}
+                    onPress={() => changeLng(item)}
+                  >
+                    <Text style={styles.languageText}>
+                      {LanguageList[item].nativeName}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
             </View>
-            <Text
+          </View>
+        </SafeAreaView>
+
+        {/* <Text
               style={{
                 fontSize: hp(3),
                 textAlign: "center",
@@ -218,9 +230,7 @@ const ProfileScreen = () => {
               onPress={englishLanguage}
             >
               <Text style={styles.languageText}>English</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+            </TouchableOpacity> */}
       </Modal>
     );
   };
@@ -265,7 +275,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.businessContainer}>
-              <Text style={styles.business}>Manage your Business</Text>
+              <Text style={styles.business}>{t("manage_your_business")}</Text>
             </View>
             <View style={styles.detailsContainer}>
               {/* accounts button */}
@@ -278,7 +288,7 @@ const ProfileScreen = () => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <IdentificationIcon color={"#4870F4"} size={hp(5)} />
-                  <Text style={styles.contextName}>Accounts </Text>
+                  <Text style={styles.contextName}>{t("accounts")}</Text>
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
@@ -298,7 +308,9 @@ const ProfileScreen = () => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TruckIcon color={"#4870F4"} size={hp(5)} />
-                  <Text style={styles.contextName}>Deliveries & Orders</Text>
+                  <Text style={styles.contextName}>
+                    {t("deliveries_and_orders")}
+                  </Text>
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
@@ -423,7 +435,7 @@ const ProfileScreen = () => {
                   <LanguageIcon size={hp(5)} color={"#4870F4"} />
                   <View>
                     <Text style={styles.languageSelect}>Language</Text>
-                    <Text style={styles.language}>{language}</Text>
+                    <Text style={styles.language}>{yourLanguage}</Text>
                   </View>
                 </View>
               </View>
@@ -440,7 +452,7 @@ const ProfileScreen = () => {
               style={styles.logoutContainer}
               onPress={handleLogout}
             >
-              <Text style={styles.logoutText}>Logout</Text>
+              <Text style={styles.logoutText}>{t("logout")}</Text>
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.floatNavigationContainer}>
@@ -457,7 +469,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F1F1F1",
+    backgroundColor: "#fffff0",
   },
   safeAreaContent: {
     flex: 1,
@@ -527,11 +539,9 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
   },
   businessContainer: {
-    width: "50%",
-    padding: "2%",
     marginLeft: "3%",
     marginTop: "5%",
-    backgroundColor: "#4870F4",
+    // backgroundColor: "#4870F4",
     borderRadius: 999,
   },
 
@@ -540,11 +550,12 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
   business: {
-    textAlign: "center",
+    // textAlign: "center",
+    paddingHorizontal: wp(3),
     // fontWeight: "600",
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
-    color: "white",
+    color: "#4870F4",
   },
   detailsContainer: {
     Width: "90%",

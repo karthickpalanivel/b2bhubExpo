@@ -1,16 +1,14 @@
-import React, { createContext, useState } from "react";
-import i18n from "i18next";
-import { I18nManager } from "react-native";
+import React, { createContext, useState, useContext } from "react";
+import i18next from "i18next";
 
-export const LanguageContext = createContext();
+const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(i18n.language);
+  const [language, setLanguage] = useState("en");
 
-  const changeLanguage = (newLangauge) => {
-    i18n.changeLanguage(newLangauge);
-    setLanguage(newLangauge);
-    I18nManager.forceRTL(newLangauge === "en" ? true : false);
+  const changeLanguage = (lng) => {
+    setLanguage(lng);
+    i18next.changeLanguage(lng);
   };
 
   return (
@@ -19,3 +17,4 @@ export const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   );
 };
+export const useLanguage = () => useContext(LanguageContext);

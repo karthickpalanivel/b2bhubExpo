@@ -34,6 +34,11 @@ const ProductCard = ({ props, index }) => {
     navigation.navigate("ProductDetails", { _id: 1 });
   };
 
+  const translatedName = (name) => {
+    let changeProductName = name.replaceAll(" ", "_").toLowerCase();
+    return `'${changeProductName}'`;
+  };
+  const productName = translatedName(props.name);
   const memberShipBackgroundColor = () => {
     if (props.category == "PLATINUM") return "#DD7522";
     else if (props.category == "GOLD") return "#A10E38"; //#DD7522
@@ -75,7 +80,7 @@ const ProductCard = ({ props, index }) => {
           }}
         />
         <Text style={styles.productName}>
-          {props.name.length > 15
+          {productName.length > 15
             ? props.name.slice(0, 14) + "..."
             : props.name}
         </Text>
@@ -136,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: wp(10),
     position: "absolute",
     // bottom : '20%',
-
   },
 
   memberShipText: {

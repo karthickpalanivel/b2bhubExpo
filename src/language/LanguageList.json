@@ -1,0 +1,22 @@
+{
+  "en": {
+    "name": "English",
+    "nativeName": "English",
+    "shortName": "en"
+  },
+  "ta": {
+    "name": "Tamil",
+    "nativeName": "தமிழ்",
+    "shortName": "ta"
+  },
+  "tl": {
+    "name": "Telugu",
+    "nativeName": "తెలుగు",
+    "shortName":"tl"
+  },
+  "hi": {
+    "name": "Hindi",
+    "nativeName": "हिन्दी",
+    "shortName":"hi"
+  }
+}

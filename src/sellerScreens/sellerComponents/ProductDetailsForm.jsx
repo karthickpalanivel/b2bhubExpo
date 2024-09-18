@@ -108,7 +108,6 @@ const ProductDetailsForm = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
 
@@ -196,10 +195,10 @@ const ProductDetailsForm = () => {
               <Text style={styles.header}>
                 Your one-stop shop for premium quality pulses.
               </Text>
-              {/* <Text style={styles.subHeader}>
-              Discover a wide variety of wholesome, nutritious pulses for all your
-              cooking needs.
-            </Text> */}
+              <Text style={styles.subHeader}>
+                Discover a wide variety of wholesome, nutritious pulses for all
+                your cooking needs.
+              </Text>
 
               {/* Image upload section */}
               <View style={styles.imageUploadSection}>
@@ -511,13 +510,12 @@ const styles = StyleSheet.create({
     paddingVertical: hp("2%"),
   },
   header: {
-    fontSize: wp("7%"),
+    fontSize: wp("5%"),
     // fontWeight: "bold",
     marginVertical: wp(3),
     fontFamily: "QuicksandSemiBold",
     color: "#2196F3",
     textAlign: "center",
-    marginBottom: hp("1%"),
   },
   subHeader: {
     fontSize: wp("4.5%"),
