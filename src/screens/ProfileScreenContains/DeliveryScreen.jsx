@@ -38,8 +38,7 @@ const DeliveryScreen = () => {
         // Value was found, do something with it
         setToken(value);
         setIsFetching(true);
-        const url =
-          "https://erp-backend-new-1.onrender.com/sales/viewOrders";
+        const url = `${process.env.REACT_APP_BACKEND_URL}`+"/sales/viewOrders";
         axios
           .post(
             url,
@@ -94,13 +93,13 @@ const DeliveryScreen = () => {
           <ProfileHeaderLayout header={t('orders')} />
           <StatusBar style="light" backgroundColor="#4870F4" />
           <ScrollView>
-            {orderData.length !== 0 ? (
-              <Text style={styles.orderHeader}>{t('orders')}</Text>
+            {orderDetails.length !== 0 ? (
+              <Text style={styles.orderHeader}>Orders</Text>
             ) : (
               <></>
             )}
-            {orderData.length !== 0 ? (
-              orderData.map((item) => {
+            {orderDetails.length !== 0 ? (
+              orderDetails.map((item) => {
                 return (
                   <>
                     <OrderCard props={item} key={item._id} />

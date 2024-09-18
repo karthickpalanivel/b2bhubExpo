@@ -17,7 +17,7 @@ import axios from "axios";
 
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {REACT_APP_BACKEND_URL} from '@env'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -104,8 +104,13 @@ const LoginScreen = () => {
   }, []);
 
   async function handleLogin() {
+
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/login";
+    console.log('====================================');
+    console.log(url);
+    console.log('====================================');
     await axios
-      .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
+      .post(url, {
         email: buyerEmail,
         pwd: password,
         isSeller: false,
@@ -163,16 +168,40 @@ const LoginScreen = () => {
     }
   };
 
-  const handleSellerSubmit = () => {
-    if (sellerEmail && sellerPassword) {
-      // Print email and password to the console
-      console.log("Email:", sellerEmail);
-      console.log("Password:", sellerPassword);
-      // Optionally, you can show an alert as well
-      navigation.navigate("SellerHome");
-    } else {
-      Alert.alert("Error", "Please enter both email and password.");
-    }
+  async function handleSellerSubmit(){
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/login";
+    await axios
+      .post(url, {
+        email: sellerEmail,
+        pwd: sellerPassword,
+        isSeller: true,
+      })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          const customer = res.data.user;
+          console.log(customer);
+          navigation.navigate("SellerHome");
+          try {
+            AsyncStorage.setItem("loginstate", "true");
+            AsyncStorage.setItem("userEmail", sellerEmail);
+            AsyncStorage.setItem("customerId", customer.customerId);
+            AsyncStorage.setItem("companyname", customer.CompanyName);
+            AsyncStorage.setItem("phone", customer.phoneNo);
+            AsyncStorage.setItem("gst", customer.gstNo);
+            AsyncStorage.setItem("email", customer.Email);
+            AsyncStorage.setItem("token", res.data.token);
+            AsyncStorage.setItem("pan", customer.PAN);
+          } catch (e) {
+            // saving error
+            console.error(e);
+          }
+        } else window.alert(res.message);
+      })
+      .catch((error) => {
+        window.alert(error);
+        return;
+      });
   };
 
   const navigateToForgotPassword = () => {
@@ -340,7 +369,7 @@ const LoginScreen = () => {
                   {/* Submit Button */}
                   <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleSellerSubmit}
+                    onPress={()=>handleSellerSubmit()}
                   >
                     <Text style={styles.submitButtonText}>Login</Text>
                   </TouchableOpacity>

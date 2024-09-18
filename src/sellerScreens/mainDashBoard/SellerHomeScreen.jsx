@@ -23,7 +23,7 @@ const SellerHomeScreen = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [sellerName, setSellerName] = useState("ABC Trader");
+  const [sellerName, setSellerName] = useState("");
   const [activeProduct, setActiveProduct] = useState(25);
   const [newOrders, setNewOrders] = useState(4);
   const [productPublished, setProductPublished] = useState(10);
@@ -58,6 +58,22 @@ const SellerHomeScreen = () => {
   const tonnesToKg = (num) => {
     return num * 1000;
   };
+
+
+  AsyncStorage.getItem("customerId")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        console.log("Value:", value);
+      } else {
+        // No value found
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
 
   return (
     <>
