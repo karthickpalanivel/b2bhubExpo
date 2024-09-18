@@ -31,9 +31,8 @@ import BannerOne from "../components/Banner/BannerOne";
 import { Modal } from "react-native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";
-import Footer from "../components/Footer";
-import TradingSteps from "../components/steps/TradingSteps";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
+import { useTranslation } from "react-i18next";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -44,6 +43,8 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [companyName, setcompanyName] = useState("");
   const [buyersLoginContent, setBuyersLoginContent] = useState(true);
+
+  const { t } = useTranslation();
 
   const hide = () => setModalVisible(false);
 
@@ -277,7 +278,7 @@ const HomeScreen = () => {
                   <Pressable style={{ flexDirection: "row" }}>
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569", fontFamily: "QuicksandBold",
- }}>Language</Text>
+                    }}>Language</Text>
                   </Pressable>
 
                   <TouchableOpacity onPress={() => setModalVisible(show)}>
@@ -288,16 +289,18 @@ const HomeScreen = () => {
                 </View> */}
               </View>
               <View>
-                <Text style={styles.punchOne}>Start your business</Text>
+                <Text style={styles.punchOne}>{t("start_your_business")}</Text>
               </View>
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
+                  height: wp(20),
                 }}
               >
                 <Text style={styles.punchTwo}>
-                  From your <Text style={styles.city}>City</Text>
+                  {t("from_your")}{" "}
+                  <Text style={styles.city}>{t("capitalize_city")}</Text>
                 </Text>
               </View>
 
@@ -423,19 +426,18 @@ const styles = StyleSheet.create({
   },
   city: {
     color: "#f59e0b",
-    // fontFamily: "QuicksandBold",
+    fontFamily: "QuicksandBold",
   },
 
   punchOne: {
-    fontSize: hp(3.8),
-    fontFamily: "",
-
+    fontSize: hp(3),
+    fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
 
   punchTwo: {
     fontSize: hp(3.8),
-    fontFamily: "",
+    fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
 
@@ -506,12 +508,11 @@ const styles = StyleSheet.create({
     color: "white",
   },
   buyersLoginContainer: {
-    width: wp(30),
+    width: wp(35),
     marginLeft: wp(35),
     borderRadius: 999,
     backgroundColor: "white",
-    borderWidth: 0.1,
-    elevation: 4,
+    elevation: 3,
     backgroundColor: "#f59e0b",
     height: hp(5),
     justifyContent: "center",

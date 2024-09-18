@@ -31,6 +31,7 @@ import PdfGeneration from "../components/InVoice/PdfGeneration";
 import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
 import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
+import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
 
 //variables
 const Stack = createNativeStackNavigator();
@@ -40,7 +41,7 @@ export default function Navigation() {
   const [onBoardingCompleted, setOnBoardingCompleted] = useState(false);
   const [buyerLogin, setBuyerLogin] = useState(false);
   const [sellerLogin, setSellerLogin] = useState(false);
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -75,7 +76,10 @@ export default function Navigation() {
           name="OtpConformScreen"
           component={OTPAndPasswordScreen}
         />
-
+        <Stack.Screen
+          name="sellerRegistration"
+          component={SellerRegistration}
+        />
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
         {/* <Stack.Screen name="Notifications" component={NotificationScreen} /> */}
