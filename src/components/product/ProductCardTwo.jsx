@@ -45,6 +45,8 @@ const ProductCardTwo = ({ props }) => {
   const onMoreDetails = (id) => {
     navigation.navigate("ProductDetails", { _id: id });
   };
+
+  const gradeAUnit = props.costPerUnit[0];
   // "Orders", { _id: id }
 
   const calculatePrice = (price, discount) => {
@@ -66,7 +68,7 @@ const ProductCardTwo = ({ props }) => {
       >
         <View style={styles.cardImage}>
           <View style={styles.imageContainer}>
-            <Image source={{ uri: props.imageUrl }} style={styles.styleImage} />
+            <Image source={{ uri: props.CommonImage }} style={styles.styleImage} />
           </View>
 
           {/* {props.offer ? (
@@ -84,14 +86,14 @@ const ProductCardTwo = ({ props }) => {
 
           <View style={styles.ratingImage}>
             <View>
-              {props.quantity > 0 ? (
+              {/* {props.quantity > 0 ? (
                 <Text style={styles.inStock}>In Stock</Text>
               ) : (
                 <Text style={styles.outOfStock}>Out of Stock</Text>
-              )}
+              )} */}
             </View>
             <View>
-              <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
+              <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text>
             </View>
           </View>
           <View>

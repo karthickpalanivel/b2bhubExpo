@@ -11,15 +11,39 @@ import Loading from "../../loading/Loading";
 import { ProductData } from "../../data/ProductData";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import axios from "axios";
 
 export default function Product({
   category,
   productActiveData,
   setProductActiveData,
 }) {
-  
+
+
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log('====================================');
+  console.log(products);
+  console.log('====================================');
+
   useEffect(() => {
+
+    const url = "https://erp-backend-new-plqp.onrender.com/admin/getProducts"
+    axios
+      .post(url, {})
+      .then((response) => {
+        // console.log(response.data);
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        // console.log(err);
+      });
+
+
+
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -71,7 +95,7 @@ export default function Product({
               <Loading size="large" style={styles.loadingState} />
             ) : (
               <MasonryList
-                data={ProductData}
+                data={products}
                 keyExtractor={(item) => item._id}
                 numColumns={2}
                 showsVerticalScrollIndicator={false}

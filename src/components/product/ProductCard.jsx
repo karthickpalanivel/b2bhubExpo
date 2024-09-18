@@ -14,6 +14,9 @@ const ProductCard = ({ props, index }) => {
   let isEven = index % 2 === 0;
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+
+
+    
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -28,22 +31,23 @@ const ProductCard = ({ props, index }) => {
   }, []);
 
   const onMoreDetails = (id) => {
-    navigation.navigate("ProductDetails", { _id: id });
+    navigation.navigate("ProductDetails", { _id: 1 });
   };
 
   const memberShipBackgroundColor = () => {
-    if (props.memberShip == "Platnium") return "#DD7522";
-    else if (props.memberShip == "Gold") return "#A10E38"; //#DD7522
+    if (props.category == "PLATINUM") return "#DD7522";
+    else if (props.category == "GOLD") return "#A10E38"; //#DD7522
     else return "#fff";
   };
 
   const premiumColor = () => {
-    if (props.memberShip == "Platnium") return "#e5e4e2"; //#FFD700
-    else if (props.memberShip == "Gold") return "#FFD700"; //Platnium
+    if (props.category == "PLATINUM") return "#e5e4e2"; //#FFD700
+    else if (props.category == "GOLD") return "#FFD700"; //Platnium
     else return "#000000";
   };
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
+  const gradeAUnit = props.costPerUnit[0];
   return (
     <Animated.View
       entering={FadeInDown.delay(index + 200)
@@ -60,10 +64,10 @@ const ProductCard = ({ props, index }) => {
           borderWidth: 0.1,
           borderColor: "#111",
         }}
-        onPress={() => onMoreDetails(props._id)}
+        onPress={() => onMoreDetails(props.productId)}
       >
         <Image
-          source={{ uri: props.imageUrl }}
+          source={{ uri: props.CommonImage }}
           style={{
             width: "100%",
             height: hp(20),
@@ -76,9 +80,9 @@ const ProductCard = ({ props, index }) => {
             : props.name}
         </Text>
         <View>
-          <Text style={styles.offerPrice}>₹{props.price}/ Kg</Text>
+          <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text>
         </View>
-        {props.memberShip && (
+        {props.category && (
           <View
             style={[
               styles.membershipContainer,
@@ -87,7 +91,7 @@ const ProductCard = ({ props, index }) => {
           >
             <Entypo name="price-ribbon" size={24} color={color} />
             <View>
-              <Text style={styles.memberShipText}>{props.memberShip}</Text>
+              <Text style={styles.memberShipText}>{props.category}</Text>
               <Text style={styles.memberShipText}>Product</Text>
             </View>
           </View>
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
   },
 
   memberShipText: {
-    fontSize: hp(1.75),
+    fontSize: hp(1.70),
     fontFamily: "QuicksandSemiBold",
     color: "white",
   },
