@@ -33,6 +33,7 @@ import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import { useTranslation } from "react-i18next";
+import { Banner } from "react-native-paper";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -244,7 +245,7 @@ const HomeScreen = () => {
                   />
                 </Pressable>
                 <View style={styles.buyersLoginContainer}>
-                  <Text style={styles.buyersLogin}>{t('buyer_login')}</Text>
+                  <Text style={styles.buyersLogin}>{t("buyer_login")}</Text>
                 </View>
               </View>
               <Pressable onPress={profileScreen}>
@@ -293,7 +294,7 @@ const HomeScreen = () => {
                 </View> */}
               </View>
               <View>
-                <Text style={styles.punchOne}>Start your business</Text>
+                <Text style={styles.punchOne}>{t('start_your_business')}</Text>
               </View>
               <View
                 style={{
@@ -320,7 +321,7 @@ const HomeScreen = () => {
             </View>
 
             {/* Search bar */}
-            <Pressable
+            {/* <Pressable
               style={styles.searchBarContainer}
               onPress={() => navigation.navigate("Search Bar")}
             >
@@ -333,7 +334,8 @@ const HomeScreen = () => {
                   color="grey"
                 />
               </TouchableOpacity>
-            </Pressable>
+            </Pressable> */}
+            <BannerOne />
 
             <Categories
               activeCategory={activeCategory}
@@ -504,14 +506,14 @@ const styles = StyleSheet.create({
     color: "black",
   },
   buyersLoginContainer: {
-  //   width: wp(35),
+    //   width: wp(35),
     marginLeft: wp(3),
-  //   borderRadius: 999,
-  //   backgroundColor: "white",
-  //   elevation: 3,
+    //   borderRadius: 999,
+    //   backgroundColor: "white",
+    //   elevation: 3,
 
-  //   height: hp(5),
-  //   justifyContent: "center",
-  //   alignItems: "center",
+    //   height: hp(5),
+    //   justifyContent: "center",
+    //   alignItems: "center",
   },
 });

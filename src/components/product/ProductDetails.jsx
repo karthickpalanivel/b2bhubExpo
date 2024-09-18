@@ -65,10 +65,10 @@ const ProductDetails = ({ route }) => {
       .then((response) => {
         // console.log(response.data);
         setProducts(response.data);
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
+        setIsLoading(false);
         // console.log(err);
       });
 
@@ -86,15 +86,13 @@ const ProductDetails = ({ route }) => {
   }, []);
 
   useEffect(() => {
-    const getProduct = ProductData.find((item) => {
-      return item?._id === params?._id;
+    const getProduct = products.find((item) => {
+      return item?.productId === params?.productId;
     });
     setProduct(getProduct);
     setProductName(getProduct?.name.replaceAll(" ", ""));
     setProductPrice(getProduct?.price);
-    {
-      productName.includes(product?.pictureName) && setData(true);
-    }
+    
     // console.log(getProduct);
 
     setTimeout(() => {
@@ -103,7 +101,7 @@ const ProductDetails = ({ route }) => {
       setShowSummary(false);
       setTermsVisible(false);
     }, 5);
-  }, [params?._id]);
+  }, [params?.productId]);
   //showSummary
   const handleContinue = () => {
     setShowSummary(true);
@@ -159,8 +157,12 @@ const ProductDetails = ({ route }) => {
     setQuantity((prev) => prev - 1);
   };
 
+  setTimeout(() => {
+    
+  }, timeout);
+
   const orderPage = (id) => {
-    navigation.navigate("Orders", { _id: id });
+    navigation.navigate("Orders", { productId: id });
   };
 
   // const calculatePrice = (price, discount) => {
@@ -468,7 +470,7 @@ const ProductDetails = ({ route }) => {
             {products?.map((item) => {
               if (
                 products.CommonImage == item.pictureName &&
-                product._id !== item._id
+                product.productId !== item.productId
               ) {
                 return <ProductCardTwo props={item} />;
               }

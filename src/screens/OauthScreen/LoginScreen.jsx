@@ -17,7 +17,7 @@ import axios from "axios";
 
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {REACT_APP_BACKEND_URL} from '@env'
+import { REACT_APP_BACKEND_URL } from "@env";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -104,11 +104,10 @@ const LoginScreen = () => {
   }, []);
 
   async function handleLogin() {
-
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/login";
-    console.log('====================================');
-    console.log(url);
-    console.log('====================================');
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
+    // console.log('====================================');
+    // console.log(url);
+    // console.log('====================================');
     await axios
       .post(url, {
         email: buyerEmail,
@@ -168,8 +167,8 @@ const LoginScreen = () => {
     }
   };
 
-  async function handleSellerSubmit(){
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/login";
+  async function handleSellerSubmit() {
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
     await axios
       .post(url, {
         email: sellerEmail,
@@ -202,7 +201,7 @@ const LoginScreen = () => {
         window.alert(error);
         return;
       });
-  };
+  }
 
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
@@ -249,9 +248,11 @@ const LoginScreen = () => {
               value={toggleValue}
               onPress={(newState) => setToggleValue(newState)}
               leftComponent={
-                <Text style={{ fontFamily: "QuicksandSemiBold" }}>Buyer</Text>
+                <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                  {t("buyer")}
+                </Text>
               }
-              rightComponent={<Text>Seller</Text>}
+              rightComponent={<Text>{t("seller")}</Text>}
               trackBarStyle={{
                 borderColor: "#f7e2e2",
                 backgroundColor: "#f7e2e2",
@@ -272,22 +273,22 @@ const LoginScreen = () => {
           {!toggleValue ? (
             <>
               <View style={styles.loginCard}>
-                <Text style={styles.title}>Buyer Login</Text>
+                <Text style={styles.title}>{t("buyer_login")}</Text>
 
-                <Text style={styles.inputName}>Email</Text>
+                <Text style={styles.inputName}>{t("email")}</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Email"
+                  placeholder={t("email")}
                   keyboardType="email-address"
                   value={buyerEmail}
                   onChangeText={(text) => setBuyerEmail(text)} // Capture email input
                 />
 
-                <Text style={styles.inputName}>Password</Text>
+                <Text style={styles.inputName}>{t("password")}</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
                     style={styles.passwordInput}
-                    placeholder="Password"
+                    placeholder={t("password")}
                     secureTextEntry={viewPassword} // Show/hide password
                     value={password}
                     onChangeText={(text) => setPassword(text)} // Capture password input
@@ -307,7 +308,7 @@ const LoginScreen = () => {
                   style={styles.forgetPassword}
                   onPress={navigateToForgotPassword}
                 >
-                  <Text style={styles.forget}>Forget Password ?</Text>
+                  <Text style={styles.forget}>{t("forgot_password")} ?</Text>
                 </TouchableOpacity>
 
                 {/* Submit Button */}
@@ -315,7 +316,7 @@ const LoginScreen = () => {
                   style={styles.submitButton}
                   onPress={() => handleLogin()}
                 >
-                  <Text style={styles.submitButtonText}>Login</Text>
+                  <Text style={styles.submitButtonText}>{t("login")}</Text>
                 </TouchableOpacity>
               </View>
             </>
@@ -328,22 +329,22 @@ const LoginScreen = () => {
                   .damping(12)}
               >
                 <View style={styles.loginCard}>
-                  <Text style={styles.title}>Seller Login</Text>
+                  <Text style={styles.title}>{t("seller_login")}</Text>
 
-                  <Text style={styles.inputName}>Email</Text>
+                  <Text style={styles.inputName}>{t("email")}</Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Email"
+                    placeholder={t("email")}
                     keyboardType="email-address"
                     value={sellerEmail}
                     onChangeText={(text) => setSellerEmail(text)} // Capture email input
                   />
 
-                  <Text style={styles.inputName}>Password</Text>
+                  <Text style={styles.inputName}>{t("password")}</Text>
                   <View style={styles.passwordContainer}>
                     <TextInput
                       style={styles.passwordInput}
-                      placeholder="Password"
+                      placeholder={t("password")}
                       secureTextEntry={viewPassword} // Show/hide password
                       value={sellerPassword}
                       onChangeText={(text) => setSellerPassword(text)} // Capture password input
@@ -363,24 +364,23 @@ const LoginScreen = () => {
                     style={styles.forgetPassword}
                     onPress={navigateToForgotPassword}
                   >
-                    <Text style={styles.forget}>Forget Password ?</Text>
+                    <Text style={styles.forget}>{t("forgot_password")} ?</Text>
                   </TouchableOpacity>
 
                   {/* Submit Button */}
                   <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={()=>handleSellerSubmit()}
+                    onPress={() => handleSellerSubmit()}
                   >
-                    <Text style={styles.submitButtonText}>Login</Text>
+                    <Text style={styles.submitButtonText}>{t("login")}</Text>
                   </TouchableOpacity>
 
                   <View style={styles.noteContainer}>
                     <Text style={styles.noteText}>
-                      Note: Your must registered as seller before logging in as
-                      Seller if not
+                      {t("note_register_seller")}
                       <TouchableOpacity onPress={navigateToSellerRegister}>
                         <Text style={styles.registerSeller}>
-                          Click here to register as seller
+                          {t("click_register_seller")}
                         </Text>
                       </TouchableOpacity>
                     </Text>

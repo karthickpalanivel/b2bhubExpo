@@ -1,14 +1,11 @@
 {
   "start_your_business": "మీ వ్యాపారం ప్రారంభించండి",
   "from_your_city": "మీ నగరం నుండి",
-
   "toor_dal": "కందిపప్పు",
   "moong_dal": "పెసరపప్పు",
   "urad_dal": "మినపప్పు",
   "gram_dal": "సెనగ పప్పు",
-
   "exclusive_products": "ప్రత్యేక ఉత్పత్తులు",
-
   "fatka_toor_dal": "ఫట్కా కందిపప్పు",
   "imported_toor_dal": "దిగుమతి చేసిన కందిపప్పు",
   "desi_toor_dal": "దేశీ కందిపప్పు",
@@ -22,15 +19,12 @@
   "desi_urad_dal": "దేశీ మినపప్పు",
   "premium_gram_dal": "ప్రీమియం సెనగ పప్పు",
   "gold_gram_dal": "గోల్డ్ సెనగ పప్పు",
-
   "manage_your_business": "మీ వ్యాపారాన్ని నిర్వహించండి",
-
   "accounts": "ఖాతాలు",
   "company_name": "కంపెనీ పేరు",
   "phone": "ఫోన్",
   "gst_number": "జిఎస్‌టి నంబర్",
   "pan_number": "పాన్ నంబర్",
-
   "deliveries_and_orders": "డెలివరీలు మరియు ఆర్డర్లు",
   "order_id": "ఆర్డర్ ID",
   "price": "ధర",
@@ -38,11 +32,9 @@
   "quantity": "పరిమాణం",
   "invoice": "ఇన్వాయిస్",
   "receipt": "రసీదు",
-
   "need_help": "సహాయం కావాలి",
   "logout": "లాగ్ అవుట్",
   "whatsapp": "వాట్సాప్",
-
   "buyer_login": "కొనుగోలుదారు లాగిన్",
   "seller_login": "అమ్మకందారుడు లాగిన్",
   "password": "పాస్వర్డ్",
@@ -50,7 +42,6 @@
   "login": "లాగిన్ చేయండి",
   "forgot_password": "పాస్వర్డ్ మర్చిపోయారా",
   "for_new_registration_click_here": "కొత్తగా నమోదు చేయడానికి ఇక్కడ క్లిక్ చేయండి",
-
   "dry_moisture": "ఉపరి తేమ",
   "a_grade_quality": "ఏ గ్రేడ్ నాణ్యత",
   "high_in_protein": "ప్రోటీన్ ఎక్కువగా",
@@ -60,7 +51,6 @@
   "show_product": "ఉత్పత్తిని చూపించండి",
   "in_stock": "స్టాక్‌లో ఉంది",
   "limited_offer": "పరిమిత ఆఫర్",
-
   "select_quantity_in_tons": "పరిమాణాన్ని టన్నులలో ఎంచుకోండి",
   "continue": "కొనసాగించు",
   "order_summary": "ఆర్డర్ సారాంశం",
@@ -100,5 +90,34 @@
   "under_process": "ప్రక్రియలో",
   "rejected": "మన్నించబడలేదు",
   "our_team_will_update_your_status": "మా టీమ్ మీ స్థితిని అప్డేట్ చేస్తుంది",
-  "kg": "కిలోగ్రాం"
+  "kg": "కిలోగ్రాం",
+  "already_registered": "ఇప్పటికే నమోదు చేసారా? లాగిన్ కోసం ఇక్కడ క్లిక్ చేయండి",
+  "accept_terms": "నమోదు చేసుకున్నా, మీరు మా",
+  "new_registration": "కొత్త నమోదు",
+  "terms_condition": "పేర్పాట్లు మరియు నిబంధనలు (ఇక్కడ క్లిక్ చేయండి)",
+  "sign_up": "సైన్ అప్",
+  "buyer": "కొనుగోలు దారుడు",
+  "seller": "అమ్మకందారు",
+  "note_register_seller": "గమనిక: మీరు అమ్మకందారుగా లాగిన్ చేయడానికి ముందు, అమ్మకందారుగా నమోదు కావాలి, లేకపోతే",
+  "click_register_seller": "అమ్మకందారుగా నమోదు కోసం ఇక్కడ క్లిక్ చేయండి",
+  "product_name": "ఉత్పత్తి పేరు",
+  "total_price": "మొత్తం ధర",
+  "gst": "జీఎస్టీ",
+  "exempted": "మినహాయింపు",
+  "total_amount": "మొత్తం మొత్తం",
+  "bank_details": "బ్యాంక్ వివరాలు",
+  "buyers_information": "కొనుగోలుదారుడి సమాచారం",
+  "bank_name": "బ్యాంక్ పేరు: పంజాబ్ నేషనల్ బ్యాంక్",
+  "make_your_business_trading": "మీ వ్యాపారాన్ని సులభతరం చేయండి",
+  "easier_with_us": "మా ద్వారా సులభంగా!",
+  "ifsc_code": "ఐఎఫ్‌ఎస్‌సి కోడ్",
+  "account_number": "ఖాతా సంఖ్య",
+  "send_payment_transaction_details": "చెల్లింపు లావాదేవీ వివరాలను ఈ మెయిల్‌కు పంపండి",
+  "delivery_details": "డెలివరీ వివరాలు",
+  "conditions_apply": "నియమాలు వర్తిస్తాయి.",
+  "samples_can_be_sent": "నమూనాలను అభ్యర్థనపై అందించిన చిరునామాకు పంపవచ్చు.",
+  "delivery_time": "చెల్లింపు తేదీ నుండి 3 నుండి 7 వ్యాపార రోజులు పడుతుంది.",
+  "processing": "ప్రాసెసింగ్...",
+  "pre_book_order": "పూర్వ బుక్ ఆర్డర్",
+  "order_placed_successfully": "ఆర్డర్ విజయవంతంగా పెట్టబడింది"
 }

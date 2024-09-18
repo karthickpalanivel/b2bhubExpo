@@ -46,7 +46,7 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        // initialroute={"onBoardScreenOne"}
+        initialroute={"Payment"}
       >
         {/* Onboarding Screens */}
         {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
@@ -92,7 +92,6 @@ export default function Navigation() {
           name="PaymentShippingDetails"
           component={PaymentShippingScreen}
         />
-        <Stack.Screen name="Payment" component={PaymentSummary} />
 
         <Stack.Screen name="SignUpShopDetails" component={ShopDetails} />
         <Stack.Screen name="EditScreen" component={EditScreen} />

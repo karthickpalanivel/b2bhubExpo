@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import * as Font from "expo-font";
 
 export default function WelcomeScreen() {
   const ringOnePadding = useSharedValue(0);
@@ -26,6 +27,19 @@ export default function WelcomeScreen() {
     );
 
     setTimeout(() => navigation.navigate("Home"), 2500);
+  }, []);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+    }
+
+    loadFonts();
   }, []);
   return (
     <View style={styles.container}>
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    paddingVertical: "5%",
+
   },
   outerRing: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -73,10 +87,11 @@ const styles = StyleSheet.create({
   },
   business: {
     color: "#fff",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "QuicksandSemiBold",
   },
 });
-
 
 /*
 {

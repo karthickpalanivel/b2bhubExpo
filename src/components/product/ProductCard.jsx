@@ -10,6 +10,7 @@ import * as Font from "expo-font";
 import Entypo from "react-native-vector-icons/Entypo";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { MapPinIcon } from "react-native-heroicons/solid";
 
 const ProductCard = ({ props, index }) => {
   const { t } = useTranslation();
@@ -31,7 +32,10 @@ const ProductCard = ({ props, index }) => {
   }, []);
 
   const onMoreDetails = (id) => {
-    navigation.navigate("ProductDetails", { _id: 1 });
+    console.log("=============================");
+    console.log(id);
+    navigation.navigate("ProductDetails", { productId: id });
+    console.log("=============================");
   };
 
   const translatedName = (name) => {
@@ -83,15 +87,36 @@ const ProductCard = ({ props, index }) => {
                 borderRadius: 30,
               }}
             />
-            <Text style={styles.productName}>
-              {props.name.length > 15
-                ? props.name.slice(0, 14) + "..."
-                : props.name}
-            </Text>
-            <View>
-              <Text style={styles.offerPrice}>
-                ₹{gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.productName}>
+                {props.name.length > 15
+                  ? props.name.slice(0, 14) + "..."
+                  : props.name}
               </Text>
+              <View>
+                <Text style={styles.offerPrice}>
+                  ₹{gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <MapPinIcon
+                size={wp(5)}
+                color={"black"}
+                style={{ marginLeft: "4%" }}
+              />
+              <Text style={styles.locationText}>{props.location}</Text>
             </View>
             {props.category && (
               <View
@@ -102,7 +127,10 @@ const ProductCard = ({ props, index }) => {
               >
                 <Entypo name="price-ribbon" size={24} color={color} />
                 <View>
-                  <Text style={styles.memberShipText}>{props.category}</Text>
+                  <Text style={styles.memberShipText}>
+                    {props.category.charAt(0).toUpperCase() +
+                      props.category.slice(1).toLowerCase()}
+                  </Text>
                   <Text style={styles.memberShipText}>Product</Text>
                 </View>
               </View>
@@ -119,7 +147,7 @@ export default ProductCard;
 const styles = StyleSheet.create({
   productName: {
     fontSize: hp(2.1),
-    fontWeight: "500",
+    // fontWeight: "500",
     marginLeft: "4%",
     marginTop: "2%",
     fontFamily: "QuicksandSemiBold",
@@ -149,6 +177,12 @@ const styles = StyleSheet.create({
     borderRadius: wp(10),
     position: "absolute",
     // bottom : '20%',
+  },
+
+  locationText: {
+    marginLeft: wp(2),
+    fontSize: hp(1.8),
+    fontFamily: "QuicksandSemiBold",
   },
 
   memberShipText: {

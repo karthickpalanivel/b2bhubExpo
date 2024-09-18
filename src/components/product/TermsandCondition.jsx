@@ -67,7 +67,7 @@ const TermsAndConditionsModal = ({
   const handleComplete = () => {
     console.log(productSummary);
     if (isChecked) {
-      nav.navigate("Payment", { productSummary: productSummary });
+      nav.navigate("paymentSummary", { productSummary: productSummary });
     } else {
       alert("Please agree to the terms and conditions.");
     }
