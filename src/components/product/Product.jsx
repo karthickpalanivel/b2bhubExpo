@@ -29,7 +29,7 @@ export default function Product({
 
   useEffect(() => {
 
-    const url = "https://erp-backend-new-plqp.onrender.com/admin/getProducts"
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {

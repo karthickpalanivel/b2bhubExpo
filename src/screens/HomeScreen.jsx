@@ -161,7 +161,7 @@ const HomeScreen = () => {
     hide();
   };
 
-  const LanguageModal = ({ visible }) => {
+  const LanguageModal = ({ visible, setVisible }) => {
     return (
       <Modal
         visible={visible}
@@ -278,7 +278,7 @@ const HomeScreen = () => {
                   <Pressable style={{ flexDirection: "row" }}>
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569", fontFamily: "QuicksandBold",
-                    }}>Language</Text>
+ }}>Language</Text>
                   </Pressable>
 
                   <TouchableOpacity onPress={() => setModalVisible(show)}>
@@ -289,20 +289,11 @@ const HomeScreen = () => {
                 </View> */}
               </View>
               <View>
-                <Text style={styles.punchOne}>{t("start_your_business")}</Text>
+                <Text style={styles.punchOne}>Start your business</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  height: wp(20),
-                }}
-              >
-                <Text style={styles.punchTwo}>
-                  {t("from_your")}{" "}
-                  <Text style={styles.city}>{t("capitalize_city")}</Text>
-                </Text>
-              </View>
+              <Text style={styles.punchTwo}>
+                From your <Text style={styles.city}>City</Text>
+              </Text>
 
               {/* <View>
             <LottieView
@@ -316,7 +307,7 @@ const HomeScreen = () => {
             </View>
 
             {/* Search bar */}
-            {/* <Pressable
+            <Pressable
               style={styles.searchBarContainer}
               onPress={() => navigation.navigate("Search Bar")}
             >
@@ -329,26 +320,19 @@ const HomeScreen = () => {
                   color="grey"
                 />
               </TouchableOpacity>
-            </Pressable> */}
+            </Pressable>
 
-            <BannerOne />
             <Categories
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
             />
-            <View style={styles.buyersLoginContainer}>
-              <Text style={styles.buyersLogin}>Buyer's Login</Text>
-            </View>
-            {/* <TradingSteps /> */}
+            <BannerOne />
             <Product
               category={categoriesData}
               productActiveData={activeCategory}
               setProductActivSeData={setActiveCategory}
             />
           </ScrollView>
-          <View style={styles.floatNavigationContainer}>
-            <FloatingNavigationButton />
-          </View>
           {/* <Footer /> */}
         </View>
       )}
@@ -373,11 +357,7 @@ const styles = StyleSheet.create({
     paddingTop: 56,
     marginBottom: 24,
   },
-  floatNavigationContainer: {
-    position: "absolute",
-    bottom: hp(5),
-    right: wp(5),
-  },
+
   logoContainer: {
     backgroundColor: "white",
     borderRadius: 999,
@@ -426,18 +406,19 @@ const styles = StyleSheet.create({
   },
   city: {
     color: "#f59e0b",
-    fontFamily: "QuicksandBold",
+    // fontFamily: "QuicksandBold",
   },
 
   punchOne: {
-    fontSize: hp(3),
-    fontFamily: "QuicksandSemiBold",
+    fontSize: hp(3.8),
+    fontFamily: "",
+
     color: "#475569",
   },
 
   punchTwo: {
     fontSize: hp(3.8),
-    fontFamily: "QuicksandSemiBold",
+    fontFamily: "",
     color: "#475569",
   },
 
@@ -501,21 +482,5 @@ const styles = StyleSheet.create({
     right: wp(10),
     bottom: wp(10),
     backgroundColor: "rgba(255,255,255,0)",
-  },
-  buyersLogin: {
-    fontSize: wp(3.5),
-    fontFamily: "QuicksandSemiBold",
-    color: "white",
-  },
-  buyersLoginContainer: {
-    width: wp(35),
-    marginLeft: wp(35),
-    borderRadius: 999,
-    backgroundColor: "white",
-    elevation: 3,
-    backgroundColor: "#f59e0b",
-    height: hp(5),
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
