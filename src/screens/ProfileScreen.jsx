@@ -72,6 +72,7 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     navigation.navigate("Login");
+    AsyncStorage.setItem("loginstate","false")
     // console.log("Logout button clicked");
   };
 

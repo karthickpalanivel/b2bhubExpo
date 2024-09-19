@@ -59,7 +59,7 @@ const ProductDetails = ({ route }) => {
 
   useEffect(() => {
 
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {

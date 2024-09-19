@@ -48,6 +48,13 @@ const ProductDetailsForm = () => {
   const [image, setImage] = useState(null);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("")
+
+  console.log("imageurl"+imageUrl);
+  
+
   const onSubmit = () => {
     if (
       productName &&
@@ -143,6 +150,40 @@ const ProductDetailsForm = () => {
     setIsUploadVisible(true);
   };
 
+  const uploadImage = async (imageUri) => {
+    const formData = new FormData();
+    const fileName = imageUri.split('/').pop();
+    const fileType = fileName.split('.').pop();
+
+    formData.append('file', {
+      uri: imageUri,
+      name: fileName,
+      type: `image/${fileType}`,
+    });
+    formData.append('upload_preset', 'ml_default'); // Add your upload preset
+    formData.append('cloud_name', 'dalzs7bc2'); // Add your cloud name if necessary
+
+    try {
+      const response = await axios.post('https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.secure_url) {
+        setImageUrl(response.data.secure_url);  // Store the image URL
+        console.log("upload succesfull"+response.data.secure_url);
+        
+        Alert.alert('Upload successful', 'Image has been uploaded!');
+      }
+    } catch (error) {
+      console.error('Upload error', error);
+      Alert.alert('Upload failed', 'Something went wrong during the upload.');
+    } finally {
+      // setUploading(false);
+    }
+  };
+
   const handleImageSelection = async (mode) => {
     try {
       let result;
@@ -154,6 +195,7 @@ const ProductDetailsForm = () => {
           aspect: [1, 1],
           quality: 1,
         });
+        uploadImage(result.uri);
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
@@ -162,10 +204,12 @@ const ProductDetailsForm = () => {
           aspect: [1, 1],
           quality: 1,
         });
+        uploadImage(result.uri);
       }
-      if (!result.canceled) {
+      if (!result.cancelled) {
         setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
+        uploadImage(result.uri);
       }
     } catch (error) {
       console.error(error);
