@@ -17,6 +17,7 @@ const ProductCard = ({ props, index }) => {
   const navigation = useNavigation();
   let isEven = index % 2 === 0;
   const [isLoading, setIsLoading] = useState(true);
+  const [productDetailsModal, setProductDetailsModal] = useState(false);
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -53,6 +54,11 @@ const ProductCard = ({ props, index }) => {
     if (props.category == "PLATINUM") return "#e5e4e2"; //#FFD700
     else if (props.category == "GOLD") return "#FFD700"; //Platnium
     else return "#000000";
+  };
+
+  const productCategoryName = () => {
+    if (props.category == "PLATINUM") return t("platinum");
+    else if (props.category == "GOLD") return t("gold");
   };
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
@@ -128,10 +134,13 @@ const ProductCard = ({ props, index }) => {
                 <Entypo name="price-ribbon" size={24} color={color} />
                 <View>
                   <Text style={styles.memberShipText}>
-                    {props.category.charAt(0).toUpperCase() +
-                      props.category.slice(1).toLowerCase()}
+                    {
+                      /* {props.category.charAt(0).toUpperCase() +
+                      props.category.slice(1).toLowerCase()} */
+                      productCategoryName()
+                    }
                   </Text>
-                  <Text style={styles.memberShipText}>Product</Text>
+                  {/* <Text style={styles.memberShipText}>Product</Text> */}
                 </View>
               </View>
             )}

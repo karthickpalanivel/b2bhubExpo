@@ -13,7 +13,7 @@ import {
 } from "react-native-responsive-screen";
 import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
-
+import { useTranslation } from "react-i18next";
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
     style={[styles.checkbox, value && styles.checkboxChecked]}
@@ -73,113 +73,82 @@ const TermsAndConditionsModal = ({
     }
   };
 
+  const { t } = useTranslation();
+
   return visible ? (
     <View style={styles.modalBackground}>
       <View style={styles.modalContent}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <XCircleIcon color="black" />
         </TouchableOpacity>
-        <Text style={styles.modalTitle}>Terms and Conditions</Text>
+        <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
         <ScrollView style={styles.scrollView}>
           <Text style={styles.termsText}>
-            1. <Text style={styles.boldText}>Introduction:</Text> These Terms
-            and Conditions govern the use of our B2B trading platform,
-            specifically for the purchase of Moong Dal, Toor Dal, Urad Dal, and
-            Gram Dal. By creating an account and purchasing products through our
-            platform, you agree to these terms.
+            1. <Text style={styles.boldText}>{t("introduction")}: </Text>{" "}
+            {t("terms_intro")}
           </Text>
           <Text style={styles.termsText}>
-            2. <Text style={styles.boldText}>Eligibility:</Text> This platform
-            is intended for use by businesses only. By registering, you confirm
-            that you are authorized to enter into a binding agreement on behalf
-            of your business and that your business is legally permitted to buy
-            and trade agricultural commodities.
+            2. <Text style={styles.boldText}>{t("eligibility")}: </Text>{" "}
+            {t("business_use")}
           </Text>
           <Text style={styles.termsText}>
-            3. <Text style={styles.boldText}>Account Creation:</Text> To access
-            our platform, you must create a business account. You are
-            responsible for maintaining the confidentiality of your account
-            information and for all activities that occur under your account.
-            You agree to provide accurate and up-to-date information during the
-            registration process.
+            3. <Text style={styles.boldText}>{t("account_creation")}: </Text>{" "}
+            {t("account_access")}
           </Text>
           <Text style={styles.termsText}>
-            4.{" "}
+            4.
             <Text style={styles.boldText}>
-              Purchase and Order Requirements:
-            </Text>{" "}
-            All purchases made through our platform must be for a minimum of 100
-            tons of any of the available dal varieties (Moong Dal, Toor Dal,
-            Urad Dal, Gram Dal). Orders below this quantity will not be
-            processed. Upon placing an order, you agree to pay the total amount
-            as specified at checkout.
+              {t("purchase_and_order_requirements")}:
+            </Text>
+            {t("purchase_minimum")}
           </Text>
           <Text style={styles.termsText}>
-            5. <Text style={styles.boldText}>Pricing and Payment:</Text> Pricing
-            for all dal varieties is provided at the time of purchase and is
-            subject to change without prior notice. All payments must be made in
-            full before the order is processed. We accept various payment
-            methods as indicated during checkout. All transactions are secure
-            and encrypted.
+            5. <Text style={styles.boldText}>{t("pricing_and_payment")}: </Text>
+            {t("pricing_payment")}
           </Text>
           <Text style={styles.termsText}>
-            6. <Text style={styles.boldText}>Shipping and Delivery:</Text> We
-            will arrange for the shipping of your order to the address specified
-            during checkout. Shipping times may vary based on location and
-            availability of the products. We are not responsible for any delays
-            caused by third-party shipping services.
+            6.{" "}
+            <Text style={styles.boldText}>{t("shipping_and_delivery")}:</Text>{" "}
+            {t("shipping")}
           </Text>
           <Text style={styles.termsText}>
-            7. <Text style={styles.boldText}>Returns and Refunds:</Text> Due to
-            the nature of bulk agricultural products, all sales are final. We do
-            not accept returns or provide refunds once the order has been
-            processed. Please review your order carefully before finalizing your
-            purchase.
+            7. <Text style={styles.boldText}>{t("returns_and_refunds")}: </Text>
+            {t("sales_final")}
           </Text>
           <Text style={styles.termsText}>
-            8. <Text style={styles.boldText}>Intellectual Property:</Text> All
-            content on our platform, including product descriptions, images, and
-            trademarks, is the intellectual property of our company or our
-            licensors. Unauthorized use, reproduction, or distribution of this
-            content is prohibited and may result in legal action.
+            8.{" "}
+            <Text style={styles.boldText}>{t("intellectual_property")}:</Text>{" "}
+            {t("intellectual_property_tc")}
           </Text>
           <Text style={styles.termsText}>
-            9. <Text style={styles.boldText}>Limitation of Liability:</Text> We
-            are not liable for any indirect, incidental, or consequential
-            damages arising out of or in connection with your use of the
-            platform or the purchase of products. Our maximum liability to you
-            shall not exceed the amount you paid for the products.
+            9.{" "}
+            <Text style={styles.boldText}>{t("limitation_of_liability")}:</Text>{" "}
+            {t("liability")}
           </Text>
           <Text style={styles.termsText}>
-            10. <Text style={styles.boldText}>Changes to Terms:</Text> We
-            reserve the right to modify these Terms and Conditions at any time.
-            Any changes will be effective immediately upon posting on this page.
-            Continued use of the platform after changes are posted constitutes
-            your acceptance of the new terms.
+            10. <Text style={styles.boldText}>{t("changes_to_terms")}</Text>{" "}
+            {t("terms_change")}
           </Text>
           <Text style={styles.termsText}>
-            11. <Text style={styles.boldText}>Governing Law:</Text> These Terms
-            and Conditions are governed by and construed in accordance with the
-            laws of Chennai. Any disputes arising under these terms shall be
-            subject to the exclusive jurisdiction of the courts in Chennai.
+            11. <Text style={styles.boldText}>{t("governing_law")}:</Text>{" "}
+            {t("governing_law_tc")}
           </Text>
           <Text style={styles.termsText}>
-            12. <Text style={styles.boldText}>Contact Information:</Text> If you
-            have any questions or concerns about these Terms and Conditions,
-            please contact us at support@b2bhubindia.com.
+            12. <Text style={styles.boldText}>{t("contact_information")}:</Text>{" "}
+            {t("contact_information_tc")}
           </Text>
         </ScrollView>
         <View style={styles.checkboxContainer}>
           <CustomCheckBox value={isChecked} onValueChange={setIsChecked} />
           <Text style={styles.agreeText}>
-            I agree to the terms and conditions
+            {t("i_agree_to_terms_and_conditions")}
           </Text>
         </View>
         <TouchableOpacity
           style={styles.completeButton}
           onPress={handleComplete}
         >
-          <Text style={styles.completeButtonText}>Complete</Text>
+          <Text style={styles.completeButtonText}>{t("complete")}</Text>
         </TouchableOpacity>
       </View>
     </View>

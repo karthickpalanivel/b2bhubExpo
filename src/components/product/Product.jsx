@@ -36,10 +36,10 @@ export default function Product({
       .then((response) => {
         // console.log(response.data);
         setProducts(response.data);
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
+        setIsLoading(false);
         // console.log(err);
       });
 
@@ -116,11 +116,11 @@ export default function Product({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: "5%",
-    paddingVertical: 12,
+    paddingVertical: wp(3),
   },
 
   productHeader: {
-    fontSize: hp("3%"),
+    fontSize: hp(3),
     marginVertical: "5%",
     color: "#475569",
     fontFamily: "QuicksandSemiBold",
