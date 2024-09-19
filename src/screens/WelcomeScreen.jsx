@@ -8,6 +8,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import * as Font from "expo-font";
 
 export default function WelcomeScreen() {
   const ringOnePadding = useSharedValue(0);
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    paddingVertical: "5%",
+
   },
   outerRing: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -100,10 +101,11 @@ const styles = StyleSheet.create({
   },
   business: {
     color: "#fff",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "QuicksandSemiBold",
   },
 });
-
 
 /*
 {

@@ -20,6 +20,7 @@ import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import PdfGeneration from "../InVoice/PdfGeneration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
 
 // CustomCheckBox Component
 export const CustomCheckBox = ({ value, onValueChange }) => (
@@ -51,6 +52,8 @@ const PaymentSummary = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const { t } = useTranslation();
+
   const orderPlaced = () => {
     const orderItems = {
       companyName: companyName,
@@ -72,7 +75,7 @@ const PaymentSummary = ({ route }) => {
       navigation.navigate("Sucessfull");
     }, 5000);
   };
-  const { productSummary } = route.params;
+  // const { productSummary } = route.params;
   // console.log("payment screen print");
   // console.log(productSummary);
   useEffect(() => {
@@ -229,33 +232,35 @@ const PaymentSummary = ({ route }) => {
             <TouchableOpacity onPress={goBack} style={styles.icon}>
               <ArrowLeftIcon color="#4870F4" size={hp(3)} strokeWidth={2} />
             </TouchableOpacity>
-            <Text style={styles.goback}>Go back for Changes</Text>
+            <Text style={styles.goback}>{t("go_back_for_changes")}</Text>
           </View>
           <View style={styles.card}>
             <View>
-              <Text style={styles.cardTitle}>Payment Summary</Text>
+              <Text style={styles.cardTitle}>{t("order_summary")}</Text>
             </View>
             <View style={styles.table}>
               <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>Product Name</Text>
+                <Text style={styles.tableCell}>{t("product_name")}</Text>
                 <Text style={styles.tableCell}>
-                  {productSummary.productName}
+                  {/* {productSummary.productName} */}
                 </Text>
               </View>
               <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>Total Price</Text>
+                <Text style={styles.tableCell}>{t("total_price")}</Text>
                 <Text style={styles.tableCell}>
-                  ₹ {productSummary.currentOrderPrice}
+                  {/* ₹ {productSummary.currentOrderPrice} */}
                 </Text>
               </View>
               <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>GST (Exempted)</Text>
+                <Text style={styles.tableCell}>
+                  {t("gst")} ({t("exempted")})
+                </Text>
                 <Text style={styles.tableCell}>₹ 0</Text>
               </View>
               <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>Total Amount</Text>
+                <Text style={styles.tableCell}>{t("total_amount")}</Text>
                 <Text style={styles.tableCell}>
-                  ₹ {productSummary.totalAmount}
+                  {/* ₹ {productSummary.totalAmount} */}
                 </Text>
               </View>
             </View>
@@ -272,80 +277,80 @@ const PaymentSummary = ({ route }) => {
               <Text>QR Code Placeholder</Text>
             </View>
             <Text style={styles.cardContent}>Or</Text> */}
-            <Text style={styles.cardTitle}>Bank Details</Text>
+            <Text style={styles.cardTitle}>{t("bank_details")}</Text>
             <Text style={styles.cardContent}>
-              Account Number: 3940002100057010
+              {t("account_number")}: 3940002100057010
             </Text>
-            <Text style={styles.cardContent}>IFSC Code: PUNB03940000</Text>
             <Text style={styles.cardContent}>
-              Bank Name: Punjab National Bank
+              {t("ifsc_code")}: PUNB03940000
             </Text>
+            <Text style={styles.cardContent}>{t("bank_name")}</Text>
           </View>
 
           {/* Buyer's Information Card */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Buyer’s Information</Text>
+            <Text style={styles.cardTitle}>{t("buyers_information")}</Text>
             <TextInput
               style={styles.input}
-              placeholder="Company Name"
+              placeholder={t("company_name")}
               value={companyName}
               onChangeText={setCompanyName}
             />
             <TextInput
               style={styles.input}
-              placeholder="Phone No"
+              placeholder={t("phone")}
               value={phoneNo}
               onChangeText={setPhoneNo}
             />
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder={t("email")}
               value={email}
               onChangeText={setEmail}
             />
             <TextInput
               style={styles.input}
-              placeholder="GST No"
+              placeholder={t("gst_number")}
               value={gstNo}
               onChangeText={setGstNo}
             />
-            <Text style={styles.cardTitle}>Delivery Address</Text>
+            <Text style={styles.cardTitle}>{t("delivery_address")}</Text>
 
             <TextInput
               style={styles.input}
-              placeholder="Address Line 1"
+              placeholder={t("address_line_1")}
               value={addressOne}
               onChangeText={setAddressOne}
             />
 
             <TextInput
               style={styles.input}
-              placeholder="Address Line 2"
+              placeholder={t("address_line_2")}
               value={addressTwo}
               onChangeText={setAddressTwo}
             />
 
             <TextInput
               style={styles.input}
-              placeholder="City"
+              placeholder={t("city")}
               value={city}
               onChangeText={setCity}
             />
             <TextInput
               style={styles.input}
-              placeholder="State"
+              placeholder={t("state")}
               value={state}
               onChangeText={setState}
             />
             <TextInput
               style={styles.input}
-              placeholder="Landmark"
+              placeholder={t("landmark")}
               value={landmark}
               onChangeText={setLandmark}
             />
             <TextInput
               style={styles.input}
-              placeholder="Zip code"
+              placeholder={t("pin_code")}
               value={zipCode}
               onChangeText={setZipCode}
             />
@@ -356,33 +361,29 @@ const PaymentSummary = ({ route }) => {
                 onValueChange={setRequestSample}
               />
               <Text style={styles.checkboxLabel}>
-                Request for Sample (optional)
+                {t("request_for_sample")}
               </Text>
             </View>
           </View>
 
           <View style={styles.card}>
             <Text style={{ fontSize: 13, fontFamily: "QuicksandSemiBold" }}>
-              Send the Payment Transaction Details to this Mail
+              {t("send_payment_transaction_details")}
             </Text>
-            <Text style={styles.supportEmail}>Support @b2bhubindia.com</Text>
+            <Text style={styles.supportEmail}>Support@b2bhubindia.com</Text>
           </View>
 
           <View style={styles.deliveryDetails}>
-            <Text style={styles.cardTitle}>Delivery Details</Text>
-            <Text style={styles.cardContent}>
-              Delivery takes 3 to 7 business days from the date of payment.
-            </Text>
+            <Text style={styles.cardTitle}>{t("delivery_details")}</Text>
+            <Text style={styles.cardContent}>{t("delivery_time")}</Text>
             <Text style={{ color: "#4870F4", fontFamily: "QuicksandSemiBold" }}>
-              **Conditions apply.
+              **{t("conditions_apply")}
             </Text>
-            <Text style={styles.cardContent}>
-              The samples can be sent to the provided address on request.
-            </Text>
+            <Text style={styles.cardContent}>{t("samples_can_be_sent")} </Text>
 
             <Pressable onPress={orderPlaced} style={styles.preBookContainer}>
               <Text style={styles.preBookText}>
-                {isOrderSuccess ? "Processing..." : "Pre-Book order"}
+                {isOrderSuccess ? t("processing") : t("pre_book_order")}
               </Text>
             </Pressable>
           </View>

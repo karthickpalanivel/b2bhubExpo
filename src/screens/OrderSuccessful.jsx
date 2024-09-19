@@ -6,12 +6,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
-
-
+import { useTranslation } from "react-i18next";
 
 const OrderSuccessful = () => {
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
   useEffect(() => {
     setTimeout(() => navigation.navigate("DeliveryDetails"), 1600);
   }, []);
@@ -24,7 +23,7 @@ const OrderSuccessful = () => {
         autoPlay
         loop
       />
-      <Text style={styles.orderSuccess}>Order Placed Sucessfully</Text>
+      <Text style={styles.orderSuccess}>{t("order_placed_successfully")}</Text>
     </View>
   );
 };
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  
+
   orderSuccess: {
     flex: 1,
     position: "absolute",

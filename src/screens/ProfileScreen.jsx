@@ -110,7 +110,7 @@ const ProfileScreen = () => {
     navigation.navigate("Home");
   };
 
-  const whatsappSupportTeam = "https://wa.me/message/7M52ZDZLXARPL1p";
+  const whatsappSupportTeam = "http://wa.me/+14155238886?text=Hi%20";
 
   const connectionToWhatsapp = async () => {
     // console.log("whatsapp");
@@ -309,9 +309,7 @@ const ProfileScreen = () => {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TruckIcon color={"#4870F4"} size={hp(5)} />
-                  <Text style={styles.contextName}>
-                    {t("orders")}
-                  </Text>
+                  <Text style={styles.contextName}>{t("orders")}</Text>
                 </View>
                 <ChevronRightIcon
                   color={"#4870F4"}
@@ -374,13 +372,13 @@ const ProfileScreen = () => {
             size={hp(2.5)}
             strokeWidth={4.5}
           />
-        </Pressable> */}
+          </Pressable> */}
             </View>
 
             {/* help desk container starts */}
 
             <View style={styles.helpDeskContainer}>
-              <Text style={styles.helpDeskText}>{t('need_help')}</Text>
+              <Text style={styles.helpDeskText}>{t("need_help")}</Text>
             </View>
 
             <View
@@ -398,13 +396,13 @@ const ProfileScreen = () => {
                   source={require("../assets/whatsapp.png")}
                   style={styles.whatsapp}
                 />
-                <Text style={styles.contextName}>{t('reach_us')}</Text>
+                <Text style={styles.contextName}>{t("reach_us")}</Text>
               </View>
               <TouchableOpacity
                 style={styles.callContainer}
                 onPress={connectionToWhatsapp}
               >
-                <Text style={styles.callText}>{t('whatsapp')}</Text>
+                <Text style={styles.callText}>{t("whatsapp")}</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -413,15 +411,21 @@ const ProfileScreen = () => {
                 { borderBottomLeftRadius: 9, borderBottomRightRadius: 9 },
               ]}
             >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
-                <Text style={styles.contextName}>{t('mail_us')}</Text>
+                <Text style={styles.contextName}>{t("mail_us")}</Text>
               </View>
               <TouchableOpacity
                 style={styles.callContainer}
                 onPress={connectionToMail}
               >
-                <Text style={styles.callText}>{t('email')}</Text>
+                <Text style={styles.callText}>{t("email")}</Text>
               </TouchableOpacity>
             </View>
 
@@ -435,7 +439,7 @@ const ProfileScreen = () => {
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <LanguageIcon size={hp(5)} color={"#4870F4"} />
                   <View>
-                    <Text style={styles.languageSelect}>{t('language')}</Text>
+                    <Text style={styles.languageSelect}>{t("language")}</Text>
                     <Text style={styles.language}>{yourLanguage}</Text>
                   </View>
                 </View>
@@ -444,7 +448,7 @@ const ProfileScreen = () => {
                 style={styles.callContainer}
                 onPress={() => setModalVisible(show)}
               >
-                <Text style={styles.callText}>{t('change')}</Text>
+                <Text style={styles.callText}>{t("change")}</Text>
               </TouchableOpacity>
             </View>
             <LanguageModal visible={modalVisible} />
@@ -594,14 +598,14 @@ const styles = StyleSheet.create({
   },
 
   callContainer: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(2),
     paddingVertical: wp(1),
     marginRight: wp(2),
     backgroundColor: "#4870F4",
     borderRadius: wp(1),
   },
   callText: {
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     color: "white",
     fontFamily: "QuicksandSemiBold",
   },

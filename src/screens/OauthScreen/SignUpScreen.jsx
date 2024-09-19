@@ -24,10 +24,11 @@ import {
 } from "react-native-responsive-screen";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 const { width } = Dimensions.get("window");
+import { useTranslation } from "react-i18next";
 
 const SignUpScreen = () => {
   const [termsModal, setTermsModal] = useState(false);
-
+  const { t } = useTranslation();
   async function HandleSignup() {
     await axios
       .post(
@@ -178,14 +179,14 @@ const SignUpScreen = () => {
                   marginTop: wp(1),
                 }}
               >
-                <Text style={styles.title}>New Registration</Text>
+                <Text style={styles.title}>{t("new_registration")}</Text>
               </View>
 
               {/* <Text style={styles.label}>Email</Text> */}
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Email"
+                  placeholder={t("email")}
                   value={email}
                   onChangeText={setEmail}
                   placeholderTextColor="#999"
@@ -198,7 +199,7 @@ const SignUpScreen = () => {
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Password"
+                  placeholder={t("password")}
                   value={password}
                   onChangeText={setPassword}
                   placeholderTextColor="#999"
@@ -210,7 +211,7 @@ const SignUpScreen = () => {
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Phone Number"
+                  placeholder={t("phone_number")}
                   value={phone}
                   onChangeText={setPhone}
                   placeholderTextColor="#999"
@@ -233,7 +234,7 @@ const SignUpScreen = () => {
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Company Name"
+                  placeholder={t("company_name")}
                   placeholderTextColor="#999"
                   value={companyName}
                   onChangeText={setCompanyName}
@@ -246,7 +247,7 @@ const SignUpScreen = () => {
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="GST Number"
+                  placeholder={t("gst_number")}
                   value={gstNumber}
                   onChangeText={handleInputChangeGst}
                   autoCapitalize="characters"
@@ -268,7 +269,7 @@ const SignUpScreen = () => {
               <View style={{ marginVertical: wp(3) }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Pan Number"
+                  placeholder={t("pan_number")}
                   value={panNumber}
                   onChangeText={handleInputChangePan}
                   autoCapitalize="characters"
@@ -288,12 +289,10 @@ const SignUpScreen = () => {
                 ) : null}
               </View>
 
-              <Text style={styles.registering}>
-                By Registering you are accepting our
-              </Text>
+              <Text style={styles.registering}>{t("accept_terms")}</Text>
               <TouchableOpacity style={styles.tcContainer}>
                 <Text style={[styles.registering, { color: "#D53C46" }]}>
-                  Terms & Condition (click here)
+                  {t("terms_condition")}
                 </Text>
               </TouchableOpacity>
 
@@ -302,7 +301,7 @@ const SignUpScreen = () => {
                   style={styles.button}
                   onPress={() => HandleSignup()}
                 >
-                  <Text style={styles.buttonText}>Sign Up</Text>
+                  <Text style={styles.buttonText}>{t("sign_up")}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -310,9 +309,7 @@ const SignUpScreen = () => {
               style={styles.toggleButton}
               onPress={navigateToLogin}
             >
-              <Text style={styles.toggleText}>
-                Already Registered? Click here to Login here
-              </Text>
+              <Text style={styles.toggleText}>{t("already_registered")}</Text>
             </TouchableOpacity>
           </ScrollView>
         </Animated.View>
