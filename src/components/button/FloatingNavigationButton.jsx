@@ -17,7 +17,7 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 
-const FloatingNavigationButton = () => {
+const FloatingNavigationButton = ({buttonColor}) => {
   const [icon_1] = useState(new Animated.Value(40));
   const [icon_2] = useState(new Animated.Value(40));
   const [icon_3] = useState(new Animated.Value(40));

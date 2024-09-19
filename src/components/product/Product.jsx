@@ -19,18 +19,15 @@ export default function Product({
   productActiveData,
   setProductActiveData,
 }) {
-
-
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log('====================================');
+  console.log("====================================");
   console.log(products);
-  console.log('====================================');
-  const {t} = useTranslation();
+  console.log("====================================");
+  const { t } = useTranslation();
   useEffect(() => {
-
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {
@@ -43,8 +40,6 @@ export default function Product({
         // console.log(err);
       });
 
-
-
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -56,7 +51,7 @@ export default function Product({
     }
 
     loadFonts();
-  }, []);
+  }, [products]);
   const handlePress = () => {
     setProductActiveData(t("exclusive_products"));
   };

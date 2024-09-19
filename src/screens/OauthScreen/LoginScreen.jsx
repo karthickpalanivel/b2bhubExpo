@@ -11,13 +11,16 @@ import {
   ScrollView,
   Alert,
   Dimensions,
+  Modal,
 } from "react-native";
 import * as Font from "expo-font";
 import axios from "axios";
 
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { REACT_APP_BACKEND_URL } from "@env";
+
+import { XCircleIcon } from "react-native-heroicons/outline";
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -34,7 +37,15 @@ import {
 
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
-import { useTranslation } from "react-i18next";
+
+const CustomCheckBox = ({ value, onValueChange }) => (
+  <TouchableOpacity
+    style={[styles.checkbox, value && styles.checkboxChecked]}
+    onPress={() => onValueChange(!value)}
+  >
+    {value && <Text style={styles.checkmark}>✓</Text>}
+  </TouchableOpacity>
+);
 
 const LoginScreen = () => {
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -42,6 +53,7 @@ const LoginScreen = () => {
   const [showPassword, setShowpassword] = useState(true);
   const [showForgot, setShowForgot] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
   // const [showPassword, setShowpassword] = useState(true);
   const [toggleValue, setToggleValue] = useState(false); //false->buyer,true->seller
   const [sellerPassword, setSellerPassword] = useState(""); // State to store password
@@ -50,9 +62,17 @@ const LoginScreen = () => {
   //const [email, setEmail] = useState(''); // State to store email buyyer
   const [sellerEmail, setSellerEmail] = useState(""); //state to store email of seller
 
-  const { t } = useTranslation();
-
   const navigation = useNavigation();
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleComplete = () => {
+    if (isChecked) {
+      navigation.navigate("sellerRegistration");
+    } else {
+      alert("Please agree to the terms and conditions.");
+    }
+  };
 
   // async function handleLogin() {
   //   await axios
@@ -104,12 +124,8 @@ const LoginScreen = () => {
   }, []);
 
   async function handleLogin() {
-    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
-    // console.log('====================================');
-    // console.log(url);
-    // console.log('====================================');
     await axios
-      .post(url, {
+      .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
         email: buyerEmail,
         pwd: password,
         isSeller: false,
@@ -143,6 +159,8 @@ const LoginScreen = () => {
   }
 
   useEffect(() => {
+    setVisible(false);
+    setIsChecked(false);
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -167,41 +185,17 @@ const LoginScreen = () => {
     }
   };
 
-  async function handleSellerSubmit() {
-    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
-    await axios
-      .post(url, {
-        email: sellerEmail,
-        pwd: sellerPassword,
-        isSeller: true,
-      })
-      .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
-          const customer = res.data.user;
-          console.log(customer);
-          navigation.navigate("SellerHome");
-          try {
-            AsyncStorage.setItem("loginstate", "true");
-            AsyncStorage.setItem("userEmail", sellerEmail);
-            AsyncStorage.setItem("customerId", customer.customerId);
-            AsyncStorage.setItem("companyname", customer.CompanyName);
-            AsyncStorage.setItem("phone", customer.phoneNo);
-            AsyncStorage.setItem("gst", customer.gstNo);
-            AsyncStorage.setItem("email", customer.Email);
-            AsyncStorage.setItem("token", res.data.token);
-            AsyncStorage.setItem("pan", customer.PAN);
-          } catch (e) {
-            // saving error
-            console.error(e);
-          }
-        } else window.alert(res.message);
-      })
-      .catch((error) => {
-        window.alert(error);
-        return;
-      });
-  }
+  const handleSellerSubmit = () => {
+    if (sellerEmail && sellerPassword) {
+      // Print email and password to the console
+      console.log("Email:", sellerEmail);
+      console.log("Password:", sellerPassword);
+      // Optionally, you can show an alert as well
+      navigation.navigate("SellerHome");
+    } else {
+      Alert.alert("Error", "Please enter both email and password.");
+    }
+  };
 
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
@@ -211,8 +205,12 @@ const LoginScreen = () => {
     navigation.navigate("SignUp");
   };
 
-  const navigateToSellerRegister = () => {
-    navigation.navigate("sellerRegistration");
+  const termsAndcondition = () => {
+    setVisible(true);
+  };
+
+  const backToSign = () => {
+    navigation.navigate("Login");
   };
 
   useFocusEffect(
@@ -390,8 +388,151 @@ const LoginScreen = () => {
             </>
           )}
           <TouchableOpacity onPress={navigateToRegister}>
-            <Text style={styles.register}>{t('for_new_registration_click_here')}</Text>
+            <Text style={styles.register}>
+              {t("for_new_registration_click_here")}
+            </Text>
           </TouchableOpacity>
+          {visible ? (
+            <Modal>
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContent}>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={backToSign}
+                  >
+                    <Text style={styles.closeButtonText}>X</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.modalTitle}>
+                    {t("terms_and_condition")}
+                  </Text>
+                  <ScrollView style={styles.scrollView}>
+                    <Text style={styles.termsText}>
+                      1.{" "}
+                      <Text style={styles.boldText}>{t("introduction")}:</Text>
+                      {t("seller_tc_1")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      2. <Text style={styles.boldText}>{t("definition")}:</Text>
+                      {t("seller_tc_2")}{" "}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      3.{" "}
+                      <Text style={styles.boldText}>
+                        {" "}
+                        {t("registration_and_account_creation")}:
+                      </Text>
+                      {t("seller_tc_3")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      4.{" "}
+                      <Text style={styles.boldText}>
+                        {t("product_listings_and_compliance")}:
+                      </Text>
+                      {t("seller_tc_4")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      5.{" "}
+                      <Text style={styles.boldText}>
+                        {t("pricing_and_payment")}:
+                      </Text>{" "}
+                      {t("seller_tc_5")}{" "}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      6.{" "}
+                      <Text style={styles.boldText}>
+                        {t("shipping_and_fulfillment")}:
+                      </Text>{" "}
+                      {t("seller_tc_6")}{" "}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      7.{" "}
+                      <Text style={styles.boldText}>
+                        {t("returns_and_refunds")}:
+                      </Text>
+                      {t("seller_tc_7")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      8.{" "}
+                      <Text style={styles.boldText}>
+                        {t("intellectual_property")}:
+                      </Text>{" "}
+                      {t("seller_tc_8")}{" "}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      9.{" "}
+                      <Text style={styles.boldText}>
+                        {" "}
+                        {t("seller_conduct")}:{" "}
+                      </Text>{" "}
+                      {t("seller_tc_9")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      10.{" "}
+                      <Text style={styles.boldText}>
+                        {" "}
+                        {t("limitation_of_liability")}:{" "}
+                      </Text>{" "}
+                      {t("seller_tc_10")}{" "}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      11.{" "}
+                      <Text style={styles.boldText}>
+                        {t("termination_and_account_suspension")}:
+                      </Text>{" "}
+                      {t("seller_tc_11")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      12.{" "}
+                      <Text style={styles.boldText}>
+                        {t("governing_law")}:{" "}
+                      </Text>{" "}
+                      {t("seller_tc_12")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      13.{" "}
+                      <Text style={styles.boldText}> {t("amendments")}: </Text>{" "}
+                      {t("seller_tc_13")}
+                    </Text>
+                    <Text style={styles.termsText}>
+                      14.{" "}
+                      <Text style={styles.boldText}>
+                        {t("contact_information")}:{" "}
+                      </Text>
+                      {t("seller_tc_14")}
+                    </Text>
+                  </ScrollView>
+                  <View style={styles.checkboxContainer}>
+                    <CustomCheckBox
+                      value={isChecked}
+                      onValueChange={setIsChecked}
+                    />
+                    <Text style={styles.checkboxLabel}>
+                      {t("seller_tc_15")}
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    style={[
+                      styles.button,
+                      isChecked ? styles.buttonActive : styles.buttonDisabled,
+                    ]}
+                    onPress={handleComplete}
+                    disabled={!isChecked}
+                  >
+                    <Text style={styles.buttonText}>{t("complete")}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setVisible(false)} // Close modal
+                    style={{ marginTop: wp(5), alignSelf: "center" }}
+                  >
+                    <Text style={{ color: "red", fontSize: wp(4) }}>
+                      {t("close")}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          ) : null}
         </ScrollView>
       )}
     </>
@@ -405,7 +546,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   logoContainer: {
-    marginTop: hp(5),
+    marginTop: hp(10),
     marginLeft: wp(35),
     marginBottom: hp(3),
     borderRadius: 999,
@@ -517,6 +658,85 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandBold",
     fontSize: wp(4),
     color: "#d53c46",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: wp(90),
+    backgroundColor: "white",
+    padding: wp(5),
+    borderRadius: wp(2.5),
+    maxHeight: "80%",
+  },
+  scrollView: {
+    marginBottom: wp(5),
+  },
+  closeButton: {
+    position: "absolute",
+    top: wp(2.5),
+    right: wp(2.5),
+    zIndex: 1,
+    padding: wp(1.25),
+  },
+  closeButtonText: {
+    fontSize: wp(5),
+    fontWeight: "bold",
+    color: "#333",
+  },
+  modalTitle: {
+    fontSize: wp(4.5),
+    fontWeight: "bold",
+    marginBottom: wp(3.75),
+  },
+  termsText: {
+    fontSize: wp(3.5),
+    marginBottom: wp(5),
+  },
+  boldText: {
+    fontWeight: "bold",
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: wp(5),
+  },
+  checkboxLabel: {
+    marginLeft: wp(2.5),
+    fontSize: wp(3.5),
+  },
+  button: {
+    paddingVertical: wp(2.5),
+    borderRadius: wp(1.25),
+    alignItems: "center",
+  },
+  buttonActive: {
+    backgroundColor: "#4870F4",
+  },
+  buttonDisabled: {
+    backgroundColor: "#ccc",
+  },
+  buttonText: {
+    fontSize: wp(x),
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  checkbox: {
+    width: wp(5),
+    height: wp(5),
+    borderWidth: 1,
+    borderColor: "#333",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkboxChecked: {
+    backgroundColor: "#4870F4",
+  },
+  checkmark: {
+    color: "#fff",
   },
 });
 export default LoginScreen;

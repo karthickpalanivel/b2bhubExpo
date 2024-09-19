@@ -44,10 +44,10 @@ const ProductCard = ({
           <Image source={{ uri: image }} style={styles.image} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.editButton}>
-              <Text style={styles.buttonText}>Edit</Text>
+              <Text style={styles.buttonText}>{t("edit")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.deleteButton}>
-              <Text style={styles.buttonText}>Delete</Text>
+              <Text style={styles.buttonText}>{t("delete")}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -56,27 +56,28 @@ const ProductCard = ({
         <View style={styles.detailsContainer}>
           <Text style={styles.productName}>{name}</Text>
           <View style={styles.rowValue}>
-            <Text style={styles.label}>Price: </Text>
+            <Text style={styles.label}>{t("price")}: </Text>
             <Text style={styles.value}>{price}/</Text>
             <Text style={styles.value}>{unit}</Text>
           </View>
           <Text style={styles.label}>
-            Moisture: <Text style={styles.value}>{moisture}</Text>
+            {t("moisture")}: <Text style={styles.value}>{moisture}</Text>
           </Text>
           <Text style={styles.label}>
-            Organic: <Text style={styles.value}>{Organic ? "Yes" : "No"}</Text>
+            {t("organic")}:{" "}
+            <Text style={styles.value}>{Organic ? "Yes" : "No"}</Text>
           </Text>
           <Text style={styles.label}>
-            Shelf Life: <Text style={styles.value}>{shelfLife}</Text>
+            {t("shelf_life")}: <Text style={styles.value}>{shelfLife}</Text>
           </Text>
           <Text style={styles.label}>
-            Validity: <Text style={styles.value}>{validity}</Text>
+            {t("validity")}: <Text style={styles.value}>{validity}</Text>
           </Text>
           <Text style={styles.label}>
-           <Text style={styles.value}>{desc}</Text>
+            <Text style={styles.value}>{desc}</Text>
           </Text>
           <Text style={styles.label}>
-            Quantity: <Text style={styles.value}>{quality}</Text>
+            {t("quantity")}: <Text style={styles.value}>{quality}</Text>
           </Text>
 
           {/* Edit and Delete Buttons */}

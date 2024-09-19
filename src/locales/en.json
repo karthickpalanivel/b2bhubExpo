@@ -151,7 +151,7 @@
   "governing_law_tc": "These Terms and Conditions are governed by and construed in accordance with the laws of Chennai. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts in Chennai.",
   "contact_information_tc": "Contact Information: If you have any questions or concerns about these Terms and Conditions, please contact us at support@b2bhubindia.com.",
   "complete": "Complete",
-  
+
   "seller_tc_1": "These Terms and Conditions govern the use of the B2B Hub platform by sellers. By registering and selling products through B2B Hub, you agree to these terms and conditions as outlined below.",
   "seller_tc_2": "In this document, 'Seller' refers to the individual or business entity offering products for sale on the B2B Hub platform, and 'B2B Hub' refers to the platform operator. The term 'Products' refers to any goods listed for sale by the Seller on the platform.",
   "seller_tc_3": "Sellers must create an account to list products on B2B Hub. By registering, you confirm that you are authorized to sell products and conduct business on behalf of your entity. You agree to provide accurate and up-to-date information, and are responsible for maintaining the confidentiality of your account credentials.",
@@ -167,8 +167,7 @@
   "seller_tc_13": "B2B Hub reserves the right to modify these Terms and Conditions at any time. Any changes will be communicated to Sellers, and continued use of the platform constitutes acceptance of the revised terms.",
   "seller_tc_14": "For any questions or concerns regarding these Terms and Conditions, please contact B2B Hub at +91 7305096473.",
   "seller_tc_15": "By continuing to use the B2B Hub platform, you acknowledge that you have read, understood, and agree to these Terms and Conditions.",
-  
-  
+
   "enter_your_email": "Enter your email",
   "send_otp": "Send OTP",
   "otp_confirmation": "OTP Confirmation",
@@ -183,5 +182,40 @@
   "otp_sent": "OTP Sent",
   "otp_has_been_sent_to": "An OTP has been sent to",
   "invalid_email": "Invalid Email",
-  "enter_valid_email": "Please enter a valid email address"
+  "enter_valid_email": "Please enter a valid email address",
+  "close": "Close",
+  "amendments": "Amendments",
+  "termination_and_account_suspension": "Termination and Account Suspension",
+  "seller_conduct": "Seller Conduct",
+
+  "shipping_and_fulfillment": "Shipping and Fulfillment",
+  "product_listings_and_compliance": "Product Listings and Compliance",
+  "registration_and_account_creation": "Registration and Account Creation",
+  "definition": "Definition",
+
+  "register_using_your_mobile_number": "Register using your Mobile Number, Business Name, Email, GST Number and PAN Number",
+  "become_a_seller_or_buyer": "Become a Seller or Buyer",
+  "enter_your_business_email": "Enter your Business Email, Location and Start trading your products",
+  "start_ordering_selling": "Start Ordering & Selling",
+  "browse_and_order_products": "Browse and order products from top sellers & brands.",
+  "welcome_to_b2b_hub_india": "Welcome to B2B Hub India",
+  "select_language": "Select Language",
+  "register_a_new_account": "Register a new Account",
+  
+  "welcome": "Welcome",
+  "active_product": "Active Product",
+  "total_order": "Total Order",
+  "pending_publish": "Pending Publish",
+  "waiting": "Waiting",
+  "new_order": "New Order",
+  "no_new_orders": "No new Orders",
+  "add_new_product": "Add new Product",
+  "edit": "Edit",
+  "delete": "Delete",
+
+  "moisture": "Moisture",
+  "organic": "Organic",
+  "shelf_life": "Shelf Life",
+  "validity": "Validity"
+
 }

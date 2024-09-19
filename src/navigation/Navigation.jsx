@@ -46,7 +46,6 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialroute={"Payment"}
       >
         {/* Onboarding Screens */}
         {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
