@@ -1,17 +1,42 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 
 export default function WelcomeScreen() {
   const ringOnePadding = useSharedValue(0);
   const ringTwoPadding = useSharedValue(0);
   const navigation = useNavigation();
+
+  const [loggedin, setloggedin] = useState("false");
+  console.log(loggedin);
+  
+
+    function navigationScreen(){
+      
+      AsyncStorage.getItem("loginstate")
+    .then((value) => {
+      if (value !== null && value == "true") {
+        // Value was found, do something with it
+        //console.log("Value:", value);
+        navigation.navigate("Home")
+      } else {
+        navigation.navigate("Login")
+        // No value found
+        //console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      // Error retrieving value
+      console.error("Error:", error);
+    });
+    }
 
   useEffect(() => {
     ringOnePadding.value = 0;
@@ -25,7 +50,9 @@ export default function WelcomeScreen() {
       300
     );
 
-    setTimeout(() => navigation.navigate("Home"), 2500);
+    
+
+    setTimeout(() => navigationScreen(), 2500);
   }, []);
   return (
     <View style={styles.container}>

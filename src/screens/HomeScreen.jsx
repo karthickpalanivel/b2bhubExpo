@@ -95,10 +95,10 @@ const HomeScreen = () => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
-        console.log("No value found");
+        //console.log("No value found");
       }
     })
     .catch((error) => {

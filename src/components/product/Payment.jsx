@@ -93,7 +93,7 @@ const PaymentSummary = ({ route }) => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
         setCompanyName(value);
       } else {
         // No value found
@@ -110,7 +110,7 @@ const PaymentSummary = ({ route }) => {
       if (value !== null) {
         setGstNo(value);
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
         console.log("No value found");
@@ -126,7 +126,7 @@ const PaymentSummary = ({ route }) => {
       if (value !== null) {
         setEmail(value);
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
         console.log("No value found");
@@ -141,7 +141,7 @@ const PaymentSummary = ({ route }) => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
         setPhoneNo(value);
       } else {
         // No value found
@@ -157,7 +157,7 @@ const PaymentSummary = ({ route }) => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
         setToken(value);
       } else {
         // No value found

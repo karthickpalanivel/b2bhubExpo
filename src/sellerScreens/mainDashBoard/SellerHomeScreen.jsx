@@ -17,6 +17,7 @@ import ProductDisplay from "../sellerComponents/ProductDisplay";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { ArrowRightStartOnRectangleIcon } from "react-native-heroicons/outline";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
@@ -64,15 +65,15 @@ const SellerHomeScreen = () => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
-        console.log("No value found");
+        //console.log("No value found");
       }
     })
     .catch((error) => {
       // Error retrieving value
-      console.error("Error:", error);
+      //console.error("Error:", error);
     });
 
   return (

@@ -76,7 +76,7 @@ const ProductCard = ({
            <Text style={styles.value}>{desc}</Text>
           </Text>
           <Text style={styles.label}>
-            Quality: <Text style={styles.value}>{quality}</Text>
+            Quantity: <Text style={styles.value}>{quality}</Text>
           </Text>
 
           {/* Edit and Delete Buttons */}
