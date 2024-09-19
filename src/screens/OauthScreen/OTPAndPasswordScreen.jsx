@@ -14,9 +14,11 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
+import { useTranslation } from "react-i18next";
+
 
 const OTPAndPasswordScreen = () => {
-  const [otp, setOtp] = useState(["", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isOtpValid, setIsOtpValid] = useState(null);
   const [otpVerified, setOtpVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -46,7 +48,7 @@ const OTPAndPasswordScreen = () => {
 
   const validateOtp = () => {
     const enteredOtp = otp.join("");
-    if (enteredOtp === "00000") {
+    if (enteredOtp === "000000") {
       setIsOtpValid(true);
       setOtpVerified(true);
     } else {
@@ -65,14 +67,16 @@ const OTPAndPasswordScreen = () => {
     }
   };
 
+  const {t} = useTranslation();
+
   return (
     <View style={styles.container}>
       
       <View style={styles.content}>
         {!otpVerified ? (
           <>
-            <Text style={styles.heading}>OTP confirmation</Text>
-            <Text style={styles.subheading}>Check Your mail for OTP</Text>
+            <Text style={styles.heading}>{t('otp_confirmation')}</Text>
+            <Text style={styles.subheading}>{t('check_mail_for_otp')}</Text>
 
             <View style={styles.otpContainer}>
               {otp.map((digit, index) => (
@@ -91,19 +95,19 @@ const OTPAndPasswordScreen = () => {
             {isOtpValid === false && (
               <View>
                 <Text style={styles.errorText}>
-                  Wrong OTP, re-check mail inbox*
+                  {t('wrong_otp_recheck_mail')}
                 </Text>
               </View>
             )}
 
             <Pressable onPress={validateOtp} style={styles.conformBtnContainer}>
-              <Text style={styles.conformBtnText}>Conform OTP</Text>
+              <Text style={styles.conformBtnText}>{t('confirm_otp')}</Text>
             </Pressable>
           </>
         ) : (
           <>
-            <Text style={styles.heading}>OTP confirmation</Text>
-            <Text style={styles.subheading}>Check Your mail for OTP</Text>
+            <Text style={styles.heading}>{t('otp_confirmation')}</Text>
+            <Text style={styles.subheading}>{t('check_mail_for_otp')}</Text>
 
             <View style={styles.otpContainer}>
               {otp.map((digit, index) => (
@@ -117,12 +121,12 @@ const OTPAndPasswordScreen = () => {
               ))}
             </View>
 
-            <Text style={styles.verifiedText}>OTP verified*</Text>
+            <Text style={styles.verifiedText}>{t('otp_verified')}*</Text>
 
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Enter New Password"
+                placeholder={t('enter_new_password')}
                 secureTextEntry
                 value={newPassword}
                 onChangeText={setNewPassword}
@@ -144,7 +148,7 @@ const OTPAndPasswordScreen = () => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Re-Enter New Password"
+                placeholder={t('reenter_new_password')}
                 secureTextEntry
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -166,7 +170,7 @@ const OTPAndPasswordScreen = () => {
               onPress={handlePasswordChange}
               style={styles.conformBtnContainer}
             >
-              <Text style={styles.conformBtnText}>Change password</Text>
+              <Text style={styles.conformBtnText}>{t('change_password')}</Text>
             </Pressable>
           </>
         )}

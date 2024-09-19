@@ -166,5 +166,22 @@
   "seller_tc_12": "These Terms and Conditions are governed by and construed in accordance with the laws of Chennai. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts in Chennai.",
   "seller_tc_13": "B2B Hub reserves the right to modify these Terms and Conditions at any time. Any changes will be communicated to Sellers, and continued use of the platform constitutes acceptance of the revised terms.",
   "seller_tc_14": "For any questions or concerns regarding these Terms and Conditions, please contact B2B Hub at +91 7305096473.",
-  "seller_tc_15": "By continuing to use the B2B Hub platform, you acknowledge that you have read, understood, and agree to these Terms and Conditions."
+  "seller_tc_15": "By continuing to use the B2B Hub platform, you acknowledge that you have read, understood, and agree to these Terms and Conditions.",
+  
+  
+  "enter_your_email": "Enter your email",
+  "send_otp": "Send OTP",
+  "otp_confirmation": "OTP Confirmation",
+  "check_mail_for_otp": "Check your mail for OTP",
+  "confirm_otp": "Confirm OTP",
+  "otp_verified": "OTP Verified",
+  "wrong_otp_recheck_mail": "Wrong OTP, re-check mail inbox",
+  "enter_new_password": "Enter new password",
+  "reenter_new_password": "Re-enter new password",
+  "change_password": "Change Password",
+
+  "otp_sent": "OTP Sent",
+  "otp_has_been_sent_to": "An OTP has been sent to",
+  "invalid_email": "Invalid Email",
+  "enter_valid_email": "Please enter a valid email address"
 }

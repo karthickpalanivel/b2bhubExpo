@@ -390,7 +390,7 @@ const LoginScreen = () => {
             </>
           )}
           <TouchableOpacity onPress={navigateToRegister}>
-            <Text style={styles.register}>Click here for New Registration</Text>
+            <Text style={styles.register}>{t('for_new_registration_click_here')}</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   logoContainer: {
-    marginTop: hp(10),
+    marginTop: hp(5),
     marginLeft: wp(35),
     marginBottom: hp(3),
     borderRadius: 999,
