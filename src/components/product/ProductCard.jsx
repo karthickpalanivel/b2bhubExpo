@@ -83,20 +83,82 @@ const ProductCard = ({ props, index }) => {
 
   const ProductModal = ({ visible }) => {
     <Modal
-      visible={visible}
-      animationType="slide"
-      onRequestClose={hide}
-      transparent
-    >
-      <SafeAreaView style={styles.safeAreaContent}>
-        <View style={styles.languageModalContainer}>
-          <View>
-            <XCircleIcon size={wp(3)} color={"#fff"} strokeWidth={wp(0.2)} />
+        transparent={true}
+        visible={visible}
+        onRequestClose={() => setModalVisible(false)}
+        animationType="slide"
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.bottomModal}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            {!showSummary ? (
+              <>
+                <Text style={styles.modalTitle}>{name} - Rs {offerPrice.toFixed(0)}</Text>
+                <Text style={styles.offerEndText}>Offer ends in: {timeRemaining}</Text>
+                <View style={styles.priceContainer}>
+                  <Text style={styles.originalPrice}>Original: Rs {originalPrice.toFixed(0)}</Text>
+                  <Text style={styles.modalOfferPrice}>Offer: Rs {offerPrice.toFixed(0)}</Text>
+                </View>
+
+                {/* <Picker
+                  selectedValue={selectedGrade}
+                  style={styles.picker}
+                  onValueChange={(itemValue) => setSelectedGrade(itemValue)}
+                >
+                  <Picker.Item label="Select Grade" value="" />
+                  {grades.map((grade, index) => (
+                    <Picker.Item key={index} label={grade} value={grade} />
+                  ))}
+                </Picker> */}
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Quantity in Tons"
+                  keyboardType="numeric"
+                  value={quantity.toString()}
+                  onChangeText={(text) => setQuantity(Number(text))}
+                />
+
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  onPress={handleContinue}
+                >
+                  <Text style={styles.continueButtonText}>Continue</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <Text style={styles.modalTitle}>Order Summary</Text>
+                <View style={styles.table}>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>Total Price</Text>
+                    <Text style={styles.tableCell}>Rs {totalPrice.toFixed(0)}</Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>GST (18%)</Text>
+                    <Text style={styles.tableCell}>Rs {gst.toFixed(0)}</Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>Total Amount</Text>
+                    <Text style={styles.tableCell}>Rs {totalAmount.toFixed(0)}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  style={styles.paymentButton}
+                  onPress={handlePayment}
+                >
+                  <Text style={styles.paymentButtonText}>Proceed to Payment</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
-          <Text>testing modal</Text>
         </View>
-      </SafeAreaView>
-    </Modal>;
+      </Modal>
   };
 
   return (
@@ -189,7 +251,7 @@ const ProductCard = ({ props, index }) => {
         </Animated.View>
       )}
 
-      {/* <ProductModal visible={productDetailsModal} /> */}
+      <ProductModal visible={productDetailsModal} />
     </>
   );
 };
@@ -245,21 +307,89 @@ const styles = StyleSheet.create({
 
   // Modal styles
 
-  safeAreaContent: {
+  modalBackground: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    width: wp(100),
-    height: hp(100),
-    borderTopRightRadius: wp(3),
-    borderTopLeftRadius: wp(3),
+    justifyContent: 'flex-end', // Align modal at the bottom
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
   },
-  languageModalContainer: {
-    width: wp(100),
-    backgroundColor: "#fff",
-    elevation: 4,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
+  bottomModal: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: wp('5%'),
+    borderTopRightRadius: wp('5%'),
+    padding: wp('5%'),
+    width: '100%',
+  },
+  closeButton: {
+    alignSelf: 'flex-end',
+  },
+  closeButtonText: {
+    fontSize: wp('5%'),
+    fontWeight: 'bold',
+  },
+  modalTitle: {
+    fontSize: wp('5%'),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: hp('2%'),
+  },
+  offerEndText: {
+    fontSize: wp('4%'),
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: hp('2%'),
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: hp('1%'),
+  },
+  originalPrice: {
+    textDecorationLine: 'line-through',
+    color: '#999',
+  },
+  modalOfferPrice: {
+    color: '#D83A56',
+    fontWeight: 'bold',
+  },
+  picker: {
+    height: hp('7%'),
+    width: '100%',
+    marginBottom: hp('2%'),
+  },
+  input: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: wp('2%'),
+    padding: wp('3%'),
+    marginBottom: hp('2%'),
+  },
+  continueButton: {
+    backgroundColor: '#4CAF50',
+    padding: wp('3%'),
+    borderRadius: wp('2%'),
+  },
+  continueButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  table: {
+    marginVertical: hp('2%'),
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: hp('1%'),
+  },
+  tableCell: {
+    fontSize: wp('4%'),
+  },
+  paymentButton: {
+    backgroundColor: '#FF5733',
+    padding: wp('3%'),
+    borderRadius: wp('2%'),
+  },
+  paymentButtonText: {
+    color: '#fff',
+    textAlign: 'center',
   },
 });
