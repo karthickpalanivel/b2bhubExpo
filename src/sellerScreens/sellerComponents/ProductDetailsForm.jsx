@@ -152,14 +152,10 @@ const ProductDetailsForm = () => {
 
   const uploadImage = async (imageUri) => {
     const formData = new FormData();
-    const fileName = imageUri.split('/').pop();
-    const fileType = fileName.split('.').pop();
+    const fileName = imageUri.assets[0].fileName;
+    const fileType = imageUri.assets[0].type;
 
-    formData.append('file', {
-      uri: imageUri,
-      name: fileName,
-      type: `image/${fileType}`,
-    });
+    formData.append('file', imageUri)
     formData.append('upload_preset', 'ml_default'); // Add your upload preset
     formData.append('cloud_name', 'dalzs7bc2'); // Add your cloud name if necessary
 
@@ -194,8 +190,7 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        });
-        uploadImage(result.uri);
+        }).then(uploadImage(result));;
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
@@ -203,13 +198,13 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        });
-        uploadImage(result.uri);
+        }).then(uploadImage(result));
+        ;
       }
       if (!result.cancelled) {
         setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
-        uploadImage(result.uri);
+        uploadImage(result);
       }
     } catch (error) {
       console.error(error);

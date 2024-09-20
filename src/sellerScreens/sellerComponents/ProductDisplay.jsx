@@ -51,7 +51,7 @@ const ProductDisplay = () => {
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
         setcustomerId(value)
         handleFetch()
       } else {
@@ -69,7 +69,7 @@ const ProductDisplay = () => {
       if (value !== null) {
         // Value was found, do something with it
         settoken(value)
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
         console.log("No value found");
@@ -113,7 +113,7 @@ const ProductDisplay = () => {
       console.error("Error fetching products by seller ID:", error);
       setNoData(true); // If there's an error, also set noData to true
     } finally {
-      setLoading(false); // End loading after fetching
+      //setLoading(false); // End loading after fetching
     }
   };
 

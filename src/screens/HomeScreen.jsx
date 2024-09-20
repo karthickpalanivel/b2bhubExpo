@@ -112,7 +112,7 @@ const HomeScreen = () => {
       if (value !== null) {
         setcompanyName(value);
         // Value was found, do something with it
-        console.log("Value:", value);
+        //console.log("Value:", value);
       } else {
         // No value found
         console.log("No value found");
