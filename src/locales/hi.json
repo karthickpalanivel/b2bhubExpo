@@ -208,5 +208,28 @@
   "moisture": "नमी",
   "organic": "जैविक",
   "shelf_life": "शेल्फ जीवन",
-  "validity": "वैधता"
+  "validity": "वैधता",
+
+  "start_your_business_in_3_simple_steps": "3 आसान चरणों में अपना व्यवसाय शुरू करें",
+  "start_your_business_in": "अपना व्यवसाय शुरू करें",
+  "simple_steps": "आसान चरण",
+
+
+  "shop_slogan": "आपकी एकमात्र दुकान प्रीमियम गुणवत्ता वाली दालों के लिए",
+  "discover_variety": "अपने सभी पकाने के लिए संपूर्ण, पौष्टिक दालों की एक विस्तृत श्रृंखला खोजें।",
+  "product_image": "उत्पाद चित्र",
+  "camera": "कैमरा",
+  "gallery": "गैलरी",
+  "remove": "हटाएं",
+  "product_details_form": "उत्पाद विवरण फॉर्म",
+  "units": "यूनिट्स",
+  "is_organic": "क्या यह ऑर्गेनिक है",
+  "select": "चुनें",
+  "month": "महीना",
+  "year": "साल",
+  "description": "विवरण",
+  "package_details": "पैकेज विवरण",
+  "unpacked": "अनपैक्ड",
+  "add_package_details": "पैकेज विवरण जोड़ें",
+  "submit": "प्रस्तुत करें"
 }

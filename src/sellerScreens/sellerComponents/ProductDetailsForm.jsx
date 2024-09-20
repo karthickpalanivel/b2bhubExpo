@@ -31,6 +31,8 @@ import * as Font from "expo-font";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import { useTranslation } from "react-i18next";
+import pickerProductList from "../pickerProductList.json";
 
 const ProductDetailsForm = () => {
   const [isOrganic, setIsOrganic] = useState(false);
@@ -50,10 +52,11 @@ const ProductDetailsForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("")
+  const [imageUrl, setImageUrl] = useState("");
+  const [totalValue, setTotalValue] = useState(0);
+  const { t } = useTranslation();
 
-  console.log("imageurl"+imageUrl);
-  
+  console.log("imageurl" + imageUrl);
 
   const onSubmit = () => {
     if (
@@ -155,26 +158,30 @@ const ProductDetailsForm = () => {
     const fileName = imageUri.assets[0].fileName;
     const fileType = imageUri.assets[0].type;
 
-    formData.append('file', imageUri)
-    formData.append('upload_preset', 'ml_default'); // Add your upload preset
-    formData.append('cloud_name', 'dalzs7bc2'); // Add your cloud name if necessary
+    formData.append("file", imageUri);
+    formData.append("upload_preset", "ml_default"); // Add your upload preset
+    formData.append("cloud_name", "dalzs7bc2"); // Add your cloud name if necessary
 
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.data.secure_url) {
-        setImageUrl(response.data.secure_url);  // Store the image URL
-        console.log("upload succesfull"+response.data.secure_url);
-        
-        Alert.alert('Upload successful', 'Image has been uploaded!');
+        setImageUrl(response.data.secure_url); // Store the image URL
+        console.log("upload succesfull" + response.data.secure_url);
+
+        Alert.alert("Upload successful", "Image has been uploaded!");
       }
     } catch (error) {
-      console.error('Upload error', error);
-      Alert.alert('Upload failed', 'Something went wrong during the upload.');
+      console.error("Upload error", error);
+      Alert.alert("Upload failed", "Something went wrong during the upload.");
     } finally {
       // setUploading(false);
     }
@@ -190,7 +197,7 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        }).then(uploadImage(result));;
+        }).then(uploadImage(result));
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
@@ -199,9 +206,8 @@ const ProductDetailsForm = () => {
           aspect: [1, 1],
           quality: 1,
         }).then(uploadImage(result));
-        ;
       }
-      if (!result.cancelled) {
+      if (!result.canceled) {
         setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
         uploadImage(result);
@@ -209,6 +215,34 @@ const ProductDetailsForm = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const calculateTotalValue = () => {
+    const total = packageDetails.reduce((sum, detail) => {
+      if (detail.quantity && pricing) {
+        const quantityInKg =
+          units === "ton"
+            ? parseFloat(detail.quantity) * 1000
+            : parseFloat(detail.quantity);
+        return sum + quantityInKg * parseFloat(pricing);
+      }
+      return sum;
+    }, 0);
+    setTotalValue(total);
+  };
+
+  const calculateTotalQuantity = () => {
+    const totalQuantity = packageDetails.reduce((sum, detail) => {
+      if (detail.quantity) {
+        const quantityInKg =
+          units === "ton"
+            ? parseFloat(detail.quantity) * 1000
+            : parseFloat(detail.quantity);
+        return sum + quantityInKg;
+      }
+      return sum;
+    }, 0);
+    return totalQuantity;
   };
 
   return (
@@ -231,13 +265,8 @@ const ProductDetailsForm = () => {
                 />
               </TouchableOpacity>
               {/* Header */}
-              <Text style={styles.header}>
-                Your one-stop shop for premium quality pulses.
-              </Text>
-              <Text style={styles.subHeader}>
-                Discover a wide variety of wholesome, nutritious pulses for all
-                your cooking needs.
-              </Text>
+              <Text style={styles.header}>{t("shop_slogan")}</Text>
+              <Text style={styles.subHeader}>{t("discover_variety")}</Text>
 
               {/* Image upload section */}
               <View style={styles.imageUploadSection}>
@@ -261,7 +290,7 @@ const ProductDetailsForm = () => {
                             fontFamily: "QuicksandSemiBold",
                           }}
                         >
-                          Product Image
+                          {t("product_image")}
                         </Text>
                       </View>
                       <View style={styles.icons}>
@@ -275,7 +304,7 @@ const ProductDetailsForm = () => {
                             color="#2196F3"
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
-                            Camera
+                            {t("camera")}
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -288,7 +317,7 @@ const ProductDetailsForm = () => {
                             color="#2196F3"
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
-                            Gallery
+                            {t("gallery")}
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -304,7 +333,7 @@ const ProductDetailsForm = () => {
                             color="#2196F3"
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
-                            Remove
+                            {t("remove")}
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -333,15 +362,22 @@ const ProductDetailsForm = () => {
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
-                <Text style={styles.formTitle}>Product Details Form</Text>
+                <Text style={styles.formTitle}>
+                  {t("product_details_form")}
+                </Text>
 
                 {/* Product Name */}
-                <FloatingLabelInput
-                  label="Product Name"
-                  value={productName}
-                  onChangeText={setProductName}
-                  width={wp(32)}
-                />
+                <Picker
+                  selectedValue={productName}
+                  style={styles.picker}
+                  onValueChange={(itemValue) => setProductName(itemValue)}
+                >
+                  <Picker.Item label="Select Product" value="" />
+                  <Picker.Item label={t("toor_dal")} value="turdal" />
+                  <Picker.Item label={t("moong_dal")} value="moongdal" />
+                  <Picker.Item label={t("urad_dal")} value="uraddal" />
+                  <Picker.Item label={t("gram_dal")} value="gramdal" />
+                </Picker>
 
                 {/* Pricing */}
                 <FloatingLabelInput
@@ -353,7 +389,7 @@ const ProductDetailsForm = () => {
                 />
 
                 {/* Units */}
-                <Text style={styles.pickerLabel}>Units:</Text>
+                <Text style={styles.pickerLabel}>{t("units")}:</Text>
                 <View style={styles.pickerContainer}>
                   <Picker
                     selectedValue={units}
@@ -361,13 +397,13 @@ const ProductDetailsForm = () => {
                     onValueChange={(itemValue) => setUnits(itemValue)}
                   >
                     <Picker.Item label="Select Unit" value="" />
-                    <Picker.Item label="1KG" value="1KG" />
-                    <Picker.Item label="2Tone" value="2Tone" />
+                    <Picker.Item label={`1${t("kg")}`} value="1KG" />
+                    <Picker.Item label="1 ton" value="2ton" />
                   </Picker>
                 </View>
 
                 {/* Moisture */}
-                <Text style={styles.pickerLabel}>Moisture:</Text>
+                <Text style={styles.pickerLabel}>{t("moisture")}:</Text>
                 <View style={styles.pickerContainer}>
                   <Picker
                     selectedValue={moisture}
@@ -375,7 +411,7 @@ const ProductDetailsForm = () => {
                     onValueChange={(itemValue) => setMoisture(itemValue)}
                   >
                     <Picker.Item
-                      label="Select Moisture"
+                      label={`${t("select")} ${t("moisture")}`}
                       value="Select Moisture"
                     />
                     <Picker.Item label="10%" value="10%" />
@@ -399,11 +435,11 @@ const ProductDetailsForm = () => {
                       />
                     ) : null}
                   </TouchableOpacity>
-                  <Text style={styles.checkboxLabel}>Is Organic?</Text>
+                  <Text style={styles.checkboxLabel}>{t("is_organic")}?</Text>
                 </View>
 
                 {/* Shelf Life */}
-                <Text style={styles.pickerLabel}>Shelf Life:</Text>
+                <Text style={styles.pickerLabel}>{t("shelf_life")}:</Text>
                 <View style={styles.pickerContainer}>
                   <Picker
                     selectedValue={shelfLife}
@@ -411,18 +447,18 @@ const ProductDetailsForm = () => {
                     onValueChange={(itemValue) => setShelfLife(itemValue)}
                   >
                     <Picker.Item
-                      label="Select Shelf Life"
+                      label={`${t("select")} ${t("shelf_life")}`}
                       value="Select Shelf Life"
                       style={{ fontFamily: "QuicksandSemiBold" }}
                     />
                     <Picker.Item
-                      label="1 month"
+                      label={`1 ${t("month")}`}
                       value="1 month"
                       style={{ fontFamily: "QuicksandSemiBold" }}
                     />
-                    <Picker.Item label="3 months" value="3 months" />
-                    <Picker.Item label="6 months" value="6 months" />
-                    <Picker.Item label="1 year" value="1 year" />
+                    <Picker.Item label={`3 ${t("month")}`} value="3 months" />
+                    <Picker.Item label={`6 ${t("month")}`} value="6 months" />
+                    <Picker.Item label={`1 ${t("year")}`} value="1 year" />
                   </Picker>
                 </View>
 
@@ -452,14 +488,16 @@ const ProductDetailsForm = () => {
 
                 {/* Description */}
                 <FloatingLabelInput
-                  label="Description"
+                  label={t("description")}
                   value={description}
                   onChangeText={setDescription}
                   width={wp(30)}
                 />
 
                 {/* Package Details */}
-                <Text style={styles.packageDetailsTitle}>Package Details:</Text>
+                <Text style={styles.packageDetailsTitle}>
+                  {t("package_details")}:
+                </Text>
                 {packageDetails.map((detail, index) => (
                   <View key={index} style={styles.packageDetailContainer}>
                     <View style={styles.pickerTypeContainer}>
@@ -476,18 +514,18 @@ const ProductDetailsForm = () => {
                         }}
                       >
                         <Picker.Item
-                          label="Select Package Type"
+                          label={t("select")}
                           value="Select Package Type"
                         />
-                        <Picker.Item label="Unpacked" value="Unpacked" />
-                        <Picker.Item label="1KG" value="1KG" />
-                        <Picker.Item label="5KG" value="5KG" />
-                        <Picker.Item label="25KG" value="25KG" />
-                        <Picker.Item label="50KG" value="50KG" />
+                        <Picker.Item label={t("unpacked")} value="Unpacked" />
+                        <Picker.Item label={`1 ${t("kg")}`} value="1KG" />
+                        <Picker.Item label={`5 ${t("kg")}`} value="5KG" />
+                        <Picker.Item label={`25 ${t("kg")}`} value="25KG" />
+                        <Picker.Item label={`50 ${t("kg")}`} value="50KG" />
                       </Picker>
                     </View>
                     <TextInput
-                      placeholder="Quantity In Tones"
+                      placeholder={t("tonnes") + t("quantity")}
                       value={detail.quantity}
                       onChangeText={(value) => {
                         const updatedDetails = [...packageDetails];
@@ -519,15 +557,31 @@ const ProductDetailsForm = () => {
                   style={styles.addButton}
                   onPress={addPackageDetail}
                 >
-                  <Text style={styles.addButtonText}>+ Add Package Detail</Text>
+                  <Text style={styles.addButtonText}>
+                    + {t("add_package_details")}
+                  </Text>
                 </TouchableOpacity>
+
+                <View style={styles.totalValueContainer}>
+                  <Text style={styles.totalValueText}>
+                    {t("total_price")}: ₹ {totalValue}
+                  </Text>
+                </View>
+                <View style={styles.totalValueContainer}>
+                  <Text style={styles.totalValueText}>
+                    Total Quantity:{" "}
+                    {units === "ton"
+                      ? (calculateTotalQuantity() / 1000) + " tons"
+                      : calculateTotalQuantity() + " KG"}
+                  </Text>
+                </View>
 
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
                   onPress={onSubmit}
                 >
-                  <Text style={styles.submitButtonText}>Submit</Text>
+                  <Text style={styles.submitButtonText}>{t("submit")}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -541,7 +595,7 @@ const ProductDetailsForm = () => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#FFFFF1",
   },
   container: {
     marginTop: wp(5),
@@ -720,7 +774,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     alignItems: "center",
-    marginHorizontal: wp("2%"),
+    marginHorizontal: wp(6),
   },
   xContainer: {
     position: "absolute",
@@ -732,6 +786,7 @@ const styles = StyleSheet.create({
   },
   icons: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   iconContainer: {
     width: wp("12%"),
@@ -742,6 +797,15 @@ const styles = StyleSheet.create({
     elevation: 2,
     justifyContent: "center",
     alignItems: "center",
+  },
+  totalValueContainer: {
+    marginTop: hp(2),
+    alignItems: "center",
+  },
+  totalValueText: {
+    fontSize: wp(5),
+    // fontWeight: 'bold',
+    color: "black",
   },
 });
 

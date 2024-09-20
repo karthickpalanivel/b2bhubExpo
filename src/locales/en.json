@@ -216,6 +216,28 @@
   "moisture": "Moisture",
   "organic": "Organic",
   "shelf_life": "Shelf Life",
-  "validity": "Validity"
+  "validity": "Validity",
+
+  "start_your_business_in_3_simple_steps": "Start your business in 3 simple steps",
+  "start_your_business_in": "Start your business in",
+  "simple_steps": "Simple steps",
+
+  "shop_slogan": "Your one-stop shop for premium quality pulses",
+  "discover_variety": "Discover a wide variety of wholesome, nutritious pulses for all your cooking needs.",
+  "product_image": "Product Image",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "remove": "Remove",
+  "product_details_form": "Product Details Form",
+  "units": "Units",
+  "is_organic": "Is Organic",
+  "select": "Select",
+  "month": "Month",
+  "year": "Year",
+  "description": "Description",
+  "package_details": "Package Details",
+  "unpacked": "Unpacked",
+  "add_package_details": "Add Package Details",
+  "submit": "Submit"
 
 }

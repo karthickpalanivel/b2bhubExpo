@@ -36,7 +36,7 @@ const BannerOne = ({ someProp = "default value", anotherProp = 0 }) => {
   const navigation = useNavigation();
 
   const productPage = () => {
-    navigation.navigate("paymentSummary");
+    navigation.navigate("onBoardScreenOne");
   };
 
   const renderItem = (data) => (

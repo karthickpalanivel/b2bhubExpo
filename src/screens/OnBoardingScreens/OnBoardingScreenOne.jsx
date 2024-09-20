@@ -9,6 +9,9 @@ import {
 import * as Font from "expo-font";
 import DropDownPicker from "react-native-dropdown-picker";
 import Animated, { FadeInLeft } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../hooks/LanguageContext";
+import { StatusBar } from "expo-status-bar";
 
 const OnBoardingScreenOne = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +24,9 @@ const OnBoardingScreenOne = () => {
     { label: "हिन्दी", value: "hi" },
   ]);
 
+  const { language, changeLanguage } = useLanguage();
+  const { t } = useTranslation();
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -31,12 +37,16 @@ const OnBoardingScreenOne = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
 
+  useEffect(() => {
+    changeLanguage(selectLanguage);
+  }, [selectLanguage]);
+
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" backgroundColor="white" />
       <Onboarding
         containerStyles={{ paddingHorizontal: wp(5) }}
         pages={[
@@ -82,7 +92,7 @@ const OnBoardingScreenOne = () => {
                 </View>
                 <View style={{ marginTop: hp(7) }}>
                   <Text style={[styles.welcomeText, { fontSize: wp(5) }]}>
-                    Start your business
+                    {t("start_your_business_in")}
                   </Text>
                   <Text
                     style={[
@@ -93,7 +103,7 @@ const OnBoardingScreenOne = () => {
                     3
                   </Text>
                   <Text style={[styles.welcomeText, { fontSize: wp(5) }]}>
-                    Simple steps
+                    {t("simple_steps")}
                   </Text>
                 </View>
               </View>

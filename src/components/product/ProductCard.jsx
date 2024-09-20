@@ -6,6 +6,8 @@ import {
   Image,
   Modal,
   SafeAreaView,
+  TouchableOpacity,
+  TextInput
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -28,7 +30,27 @@ const ProductCard = ({ props, index }) => {
   let isEven = index % 2 === 0;
   const [isLoading, setIsLoading] = useState(true);
   const [productDetailsModal, setProductDetailsModal] = useState(false);
+  // const [timeRemaining, setTimeRemaining] = useState(
+  //   formatTimeRemaining()
+  // );
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedGrade, setSelectedGrade] = useState("");
+  const [quantity, setQuantity] = useState(100);
+  const [showSummary, setShowSummary] = useState(false);
 
+  // useEffect(() => {
+  //   const updateTimer = () => {
+  //     setTimeRemaining(formatTimeRemaining());
+  //   };
+
+  //   const interval = setInterval(updateTimer, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+const handleContinue = () => {
+    onGradeSelect(id, selectedGrade);
+    setShowSummary(true);
+  };
   const show = () => {
     setProductDetailsModal(true);
   };
@@ -36,6 +58,21 @@ const ProductCard = ({ props, index }) => {
     setProductDetailsModal(false);
   };
 
+  const formatTimeRemaining = (endTime) => {
+    const now = new Date();
+    const end = new Date(endTime);
+
+    if (isNaN(end.getTime())) return "Invalid date";
+
+    const diff = end.getTime() - now.getTime();
+    if (diff <= 0) return "Expired";
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    return `${hours}h ${minutes}m ${seconds}s`;
+  };
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -84,29 +121,37 @@ const ProductCard = ({ props, index }) => {
 
   const ProductModal = ({ visible }) => {
     <Modal
-        transparent={true}
-        visible={visible}
-        onRequestClose={() => setModalVisible(false)}
-        animationType="slide"
-      >
-        <View style={styles.modalBackground}>
-          <View style={styles.bottomModal}>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>X</Text>
-            </TouchableOpacity>
-            {!showSummary ? (
-              <>
-                <Text style={styles.modalTitle}>{name} - Rs {offerPrice.toFixed(0)}</Text>
-                <Text style={styles.offerEndText}>Offer ends in: {timeRemaining}</Text>
-                <View style={styles.priceContainer}>
-                  <Text style={styles.originalPrice}>Original: Rs {originalPrice.toFixed(0)}</Text>
-                  <Text style={styles.modalOfferPrice}>Offer: Rs {offerPrice.toFixed(0)}</Text>
-                </View>
+      transparent={true}
+      visible={visible}
+      onRequestClose={() => setModalVisible(false)}
+      animationType="slide"
+    >
+      <View style={styles.modalBackground}>
+        <View style={styles.bottomModal}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setModalVisible(false)}
+          >
+            <Text style={styles.closeButtonText}>X</Text>
+          </TouchableOpacity>
+          {!showSummary ? (
+            <>
+              <Text style={styles.modalTitle}>
+                {props.name} - ₹ {props.costPerUnit}
+              </Text>
+              {/* <Text style={styles.offerEndText}>
+                Offer ends in: {timeRemaining}
+              </Text> */}
+              <View style={styles.priceContainer}>
+                <Text style={styles.originalPrice}>
+                  Original: ₹ {props.price}
+                </Text>
+                <Text style={styles.modalOfferPrice}>
+                  Offer: ₹ {props.costPerUnit}
+                </Text>
+              </View>
 
-                {/* <Picker
+              {/* <Picker
                   selectedValue={selectedGrade}
                   style={styles.picker}
                   onValueChange={(itemValue) => setSelectedGrade(itemValue)}
@@ -117,49 +162,53 @@ const ProductCard = ({ props, index }) => {
                   ))}
                 </Picker> */}
 
-                <TextInput
-                  style={styles.input}
-                  placeholder="Quantity in Tons"
-                  keyboardType="numeric"
-                  value={quantity.toString()}
-                  onChangeText={(text) => setQuantity(Number(text))}
-                />
+              <TextInput
+                style={styles.input}
+                placeholder="Quantity in Tons"
+                keyboardType="numeric"
+                value={quantity.toString()}
+                onChangeText={(text) => setQuantity(Number(text))}
+              />
 
-                <TouchableOpacity
-                  style={styles.continueButton}
-                  onPress={handleContinue}
-                >
-                  <Text style={styles.continueButtonText}>Continue</Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <>
-                <Text style={styles.modalTitle}>Order Summary</Text>
-                <View style={styles.table}>
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>Total Price</Text>
-                    <Text style={styles.tableCell}>Rs {totalPrice.toFixed(0)}</Text>
-                  </View>
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>GST (18%)</Text>
-                    <Text style={styles.tableCell}>Rs {gst.toFixed(0)}</Text>
-                  </View>
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>Total Amount</Text>
-                    <Text style={styles.tableCell}>Rs {totalAmount.toFixed(0)}</Text>
-                  </View>
+              <TouchableOpacity
+                style={styles.continueButton}
+                onPress={handleContinue}
+              >
+                <Text style={styles.continueButtonText}>Continue</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <Text style={styles.modalTitle}>Order Summary</Text>
+              <View style={styles.table}>
+                <View style={styles.tableRow}>
+                  <Text style={styles.tableCell}>Total Price</Text>
+                  <Text style={styles.tableCell}>
+                    ₹ {totalPrice}
+                  </Text>
                 </View>
-                <TouchableOpacity
-                  style={styles.paymentButton}
-                  onPress={handlePayment}
-                >
-                  <Text style={styles.paymentButtonText}>Proceed to Payment</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
+                <View style={styles.tableRow}>
+                  <Text style={styles.tableCell}>GST (18%)</Text>
+                  <Text style={styles.tableCell}>Rs {gst}</Text>
+                </View>
+                <View style={styles.tableRow}>
+                  <Text style={styles.tableCell}>Total Amount</Text>
+                  <Text style={styles.tableCell}>
+                    ₹ {totalAmount}
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={styles.paymentButton}
+                onPress={handlePayment}
+              >
+                <Text style={styles.paymentButtonText}>Proceed to Payment</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
-      </Modal>
+      </View>
+    </Modal>;
   };
 
   return (
@@ -211,7 +260,7 @@ const ProductCard = ({ props, index }) => {
               </Text>
               <View>
                 <Text style={styles.offerPrice}>
-                  ₹{gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
+                  ₹ {gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
                 </Text>
               </View>
             </View>
@@ -310,87 +359,87 @@ const styles = StyleSheet.create({
 
   modalBackground: {
     flex: 1,
-    justifyContent: 'flex-end', // Align modal at the bottom
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    justifyContent: "flex-end", // Align modal at the bottom
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
   },
   bottomModal: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: wp('5%'),
-    borderTopRightRadius: wp('5%'),
-    padding: wp('5%'),
-    width: '100%',
+    backgroundColor: "#fff",
+    borderTopLeftRadius: wp("5%"),
+    borderTopRightRadius: wp("5%"),
+    padding: wp("5%"),
+    width: "100%",
   },
   closeButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
   },
   closeButtonText: {
-    fontSize: wp('5%'),
-    fontWeight: 'bold',
+    fontSize: wp("5%"),
+    fontWeight: "bold",
   },
   modalTitle: {
-    fontSize: wp('5%'),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: hp('2%'),
+    fontSize: wp("5%"),
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: hp("2%"),
   },
   offerEndText: {
-    fontSize: wp('4%'),
-    color: 'red',
-    textAlign: 'center',
-    marginBottom: hp('2%'),
+    fontSize: wp("4%"),
+    color: "red",
+    textAlign: "center",
+    marginBottom: hp("2%"),
   },
   priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: hp('1%'),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: hp("1%"),
   },
   originalPrice: {
-    textDecorationLine: 'line-through',
-    color: '#999',
+    textDecorationLine: "line-through",
+    color: "#999",
   },
   modalOfferPrice: {
-    color: '#D83A56',
-    fontWeight: 'bold',
+    color: "#D83A56",
+    fontWeight: "bold",
   },
   picker: {
-    height: hp('7%'),
-    width: '100%',
-    marginBottom: hp('2%'),
+    height: hp("7%"),
+    width: "100%",
+    marginBottom: hp("2%"),
   },
   input: {
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderRadius: wp('2%'),
-    padding: wp('3%'),
-    marginBottom: hp('2%'),
+    borderRadius: wp("2%"),
+    padding: wp("3%"),
+    marginBottom: hp("2%"),
   },
   continueButton: {
-    backgroundColor: '#4CAF50',
-    padding: wp('3%'),
-    borderRadius: wp('2%'),
+    backgroundColor: "#4CAF50",
+    padding: wp("3%"),
+    borderRadius: wp("2%"),
   },
   continueButtonText: {
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
   },
   table: {
-    marginVertical: hp('2%'),
+    marginVertical: hp("2%"),
   },
   tableRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: hp('1%'),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: hp("1%"),
   },
   tableCell: {
-    fontSize: wp('4%'),
+    fontSize: wp("4%"),
   },
   paymentButton: {
-    backgroundColor: '#FF5733',
-    padding: wp('3%'),
-    borderRadius: wp('2%'),
+    backgroundColor: "#FF5733",
+    padding: wp("3%"),
+    borderRadius: wp("2%"),
   },
   paymentButtonText: {
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
   },
 });

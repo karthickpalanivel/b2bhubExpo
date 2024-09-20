@@ -8,79 +8,45 @@ import {
   Pressable,
   TextInput,
   Modal,
+  RefreshControl,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { ProductData } from "../../data/ProductData";
-import {
-  ChevronLeftIcon,
-  ShoppingCartIcon,
-  CheckBadgeIcon,
-} from "react-native-heroicons/outline";
-
-import { HeartIcon } from "react-native-heroicons/solid";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useNavigation } from "@react-navigation/native";
-import ProductCardTwo from "./ProductCardTwo";
-import TermsAndConditionsModal from "./TermsandCondition";
-import FloatingNavigationButton from "../button/FloatingNavigationButton";
-import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
-import { Picker } from "@react-native-picker/picker";
-import * as Font from "expo-font";
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import FloatingNavigationButton from "../button/FloatingNavigationButton";
+import * as Font from "expo-font";
 
-//component starts
 const ProductDetails = ({ route }) => {
   const { params } = route;
-  console.log(params)
+  const navigation = useNavigation();
 
   const [product, setProduct] = useState(null);
-  const [favorite, setFavorite] = useState(false);
-  //const [quantity, setQuantity] = useState(1);
-  const navigation = useNavigation();
-  
-  const [productName, setProductName] = useState("");
-  const [selectedGrade, setSelectedGrade] = useState("");
-  const [data, setData] = useState(false);
-
-  const [tonsInput, setTonsInput] = useState(100);
-  //modal
-
-  const [selectGrade, setSelectGrade] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalQuantity, setModalQuantity] = useState(100);
-  const [showSummary, setShowSummary] = useState(false);
-  const [termsVisible, setTermsVisible] = useState(false);
-  const [modalTermVisible, setModalTermVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [productPrice, setProductPrice] = useState(0);
-  const [finalPrice, setFinalPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}/admin/getProducts`;
     axios
       .post(url, {})
       .then((response) => {
-        // console.log(response.data);
         setProducts(response.data);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
-        // console.log(err);
+        console.error(err);
       });
 
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
-        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
-        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+        // Load other fonts as needed
       });
       setIsLoading(false);
     }
@@ -89,410 +55,56 @@ const ProductDetails = ({ route }) => {
   }, []);
 
   useEffect(() => {
-    const getProduct = products.find((item) => {
-      return item?.productId === params?.productId;
-    });
+    const getProduct = products.find(
+      (item) => item.productId === params?.productId
+    );
     setProduct(getProduct);
-    setProductName(getProduct?.name.replaceAll(" ", ""));
-    setProductPrice(getProduct?.price);
-    
-    // console.log(getProduct);
+  }, [products, params]);
 
-    setTimeout(() => {
-      setModalVisible(false);
-      setModalTermVisible(false);
-      setShowSummary(false);
-      setTermsVisible(false);
-    }, 5);
-  }, []);
-  //showSummary
-  const handleContinue = () => {
-    setShowSummary(true);
-  };
-
-  const handlePayment = () => {
-    // Handle payment logic here
-
-    setModalVisible(false);
-    setModalTermVisible(true);
-    setTermsVisible(true);
-  };
-
-  const calculateTotal = () => {
-    const totalPrice = productPrice * 1000 * modalQuantity;
-    const gst = totalPrice * 0;
-    const totalAmount = totalPrice + gst;
-
-    return { totalPrice, gst, totalAmount };
-  };
-
-  /*
-  setModalVisible(false);
-    setModalTermVisible(false)
-    setshowSummary(false);
-    setTermsVisible(false);
-  */
-
-  const { totalPrice, gst, totalAmount } = calculateTotal();
-
-  const goback = () => {
-    navigation.goBack();
-  };
+  if (isLoading) {
+    return <AppLoaderAnimation />;
+  }
 
   if (!product) {
     return (
       <View>
-        <Text></Text>
+        <Text>Invalid product data</Text>
       </View>
     );
   }
 
-  // utilities
-
-  const addQty = () => {
-    return setQuantity((prev) => prev + 1);
-  };
-
-  const subQty = () => {
-    if (quantity <= 1) {
-      return;
-    }
-    setQuantity((prev) => prev - 1);
-  };
-
-  setTimeout(() => {
-    
-  }, timeout);
-
-  const orderPage = (id) => {
-    navigation.navigate("Orders", { productId: id });
-  };
-
-  // const calculatePrice = (price, discount) => {
-  //   if (price < discount) {
-  //     return;
-  //   }
-  //   const discountPrice = Math.round(price - (price * discount) / 100);
-  //   return discountPrice;
-  // };
-
-  const onChangeText = (text) => {};
   return (
     <>
-      {isLoading ? (
-        <>
-          <AppLoaderAnimation />
-        </>
-      ) : (
-        <>
-          <ScrollView style={styles.productDetailContainer}>
-            <StatusBar style={"auto"} backgroundColor="#fbbf24" />
-            <View style={styles.topBar}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={{ uri: product?.imageUrl }}
-                    style={styles.imagePage}
-                  />
-                </View>
-                <View style={styles.detailsHeader}>
-                  <View>
-                    <Text style={styles.productName}>{product?.name}</Text>
-                  </View>
-                  <View
-                    style={{
-                      width: wp(40),
-                      marginLeft: wp(5),
-                    }}
-                  >
-                    <Text style={styles.offerPrice}>₹{product.price}/ Kg</Text>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginVertical: wp(2),
-                      }}
-                    >
-                      <View style={styles.ratingBack}>
-                        <Image
-                          source={require("../../assets/rating/roundStar.png")}
-                          style={styles.ratingImage}
-                        />
-                        <Text style={styles.ratingText}>
-                          {product.rating} /5
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.iconContainerText}>
-                    <Pressable
-                      style={styles.clockIconContainer}
-                      onPress={() => setModalVisible(true)}
-                    >
-                      <ShoppingCartIcon
-                        size={hp(3.5)}
-                        strokeWidth={1.5}
-                        color={"black"}
-                      />
-                      <Text style={styles.offerText}>Order Now</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.descriptionContainer}>
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: wp(6),
-                    fontFamily: "QuicksandBold",
-                    marginTop: hp(2),
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Description:
-                </Text>
-                <View style={styles.descriptionTextContainer}>
-                  <View>
-                    <View style={styles.descriptionText}>
-                      {product.description.Speciality && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.Speciality}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-
-                    <View style={styles.descriptionText}>
-                      {product.description.Quality && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.Quality}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                    <View style={styles.descriptionText}>
-                      {product.description.Mositure && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.Mositure}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                  </View>
-                  <View>
-                    <View style={styles.descriptionText}>
-                      {product.description.IsOrganic && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.IsOrganic}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                    <View style={styles.descriptionText}>
-                      {product.description.ShelfLife && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.ShelfLife}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                    <View style={[styles.descriptionText]}>
-                      {product.description.StorageInstruction && (
-                        <>
-                          <CheckBadgeIcon color="white" />
-                          <Text style={styles.textDescription}>
-                            {product.description.StorageInstruction}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                  </View>
-                </View>
-              </View>
-              {/* <TouchableOpacity style={styles.addressContainer}>
-              <MapPinIcon size={hp(3)} color={"white"} />
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: wp(4),
-                  fontFamily: "QuicksandBold",
-                  textAlign: "center",
-                }}
-              >
-                Delivered to: 123, down st, Chennai - 600006
-              </Text>
-            </TouchableOpacity> */}
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              {/*Modal view */}
-              <Modal
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-                animationType="slide"
-              >
-                <View style={styles.modalBackground}>
-                  <View style={styles.modalContent}>
-                    <TouchableOpacity
-                      style={styles.closeButton}
-                      onPress={() => setModalVisible(false)}
-                    >
-                      <Text style={styles.closeButtonText}>X</Text>
-                    </TouchableOpacity>
-                    {!showSummary ? (
-                      <>
-                        <Text style={styles.modalTitle}>
-                          Select Quantity in Tons
-                        </Text>
-                        {/* <Picker
-                        selectedValue={selectGrade}
-                        onValueChange={(itemValue) => setSelectGrade(itemValue)}
-                      >
-                        {
-                          product.grades.map((grade, index)=>{
-                            return <Picker.Item label={grade} value={grade} key={index} />
-                          })
-                        }
-                      </Picker> */}
-                        <Text style={{ fontFamily: "QuicksandSemiBold" }}>
-                          {product.name}
-                        </Text>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Quantity in Tons"
-                          keyboardType="numeric"
-                          value={modalQuantity.toString()}
-                          onChangeText={(text) =>
-                            setModalQuantity(Number(text))
-                          }
-                        />
-
-                        <TouchableOpacity
-                          style={styles.continueButton}
-                          onPress={handleContinue}
-                        >
-                          <Text style={styles.continueButtonText}>
-                            Continue
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    ) : (
-                      <>
-                        <Text style={styles.modalTitle}>Order Summary</Text>
-                        <View style={styles.table}>
-                          <View style={styles.tableRow}>
-                            <Text style={styles.tableCell}>Total Price</Text>
-                            <Text style={styles.tableCell}>
-                              Rs {totalPrice.toFixed(0)}
-                            </Text>
-                          </View>
-                          <View style={styles.tableRow}>
-                            <Text style={styles.tableCell}>GST (0%)</Text>
-                            <Text style={styles.tableCell}>
-                              Rs {gst.toFixed(0)}
-                            </Text>
-                          </View>
-                          <View style={styles.tableRow}>
-                            <Text style={styles.tableCell}>Total Amount</Text>
-                            <Text style={styles.tableCell}>
-                              Rs {totalAmount.toFixed(0)}
-                            </Text>
-                          </View>
-                        </View>
-                        <TouchableOpacity
-                          style={styles.paymentButton}
-                          onPress={handlePayment}
-                        >
-                          <Text style={styles.paymentButtonText}>
-                            Proceed to Payment
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    )}
-                  </View>
-                </View>
-              </Modal>
-              <Modal
-                transparent={true}
-                visible={modalTermVisible}
-                onRequestClose={() => setModalTermVisible(false)}
-                animationType="slide"
-              >
-                <TermsAndConditionsModal
-                  visible={termsVisible}
-                  onClose={() => setTermsVisible(false)}
-                  currentOrderPrice={totalPrice}
-                  totalAmount={totalAmount}
-                  productName={productName}
-                />
-              </Modal>
-            </View>
-            <View style={styles.iconContainer}>
-              <TouchableOpacity style={styles.iconButton} onPress={goback}>
-                <ChevronLeftIcon
-                  size={hp(3.5)}
-                  strokeWidth={4.5}
-                  color={"#fbbf24"}
-                />
-              </TouchableOpacity>
-              <Text style={styles.pictureName}>{product?.pictureName}</Text>
-              {/* <Pressable
-              style={styles.iconButton}
-              onPress={() => setFavorite(!favorite)}
-            >
-              <HeartIcon
-                size={hp(4)}
-                strokeWidth={2.5}
-                color={favorite ? "red" : "gray"}
-              />
-            </Pressable> */}
-            </View>
-
-            {/* product Card two */}
-            {products?.map((item) => {
-              if (
-                products.CommonImage == item.pictureName &&
-                product.productId !== item.productId
-              ) {
-                return <ProductCardTwo props={item} />;
-              }
-            })}
-          </ScrollView>
-          <View style={styles.floatNavigationContainer}>
-            <FloatingNavigationButton />
-          </View>
-        </>
-      )}
+      <ScrollView
+        style={styles.productDetailContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <StatusBar style={"auto"} backgroundColor="#fbbf24" />
+        <Text>Product ID: {product.productId}</Text>
+        <Text>Product Name: {product.name}</Text>
+        <Image
+          source={{ uri: product.CommonImage }}
+          style={styles.productImage}
+        />
+        <Text>Description: {product.description}</Text>
+        <Text>Price: {product.costPerUnit}</Text>
+        <Text>Category: {product.category}</Text>
+        <Text>Location: {product.location}</Text>
+      </ScrollView>
+      <View style={styles.floatNavigationContainer}>
+        <FloatingNavigationButton />
+      </View>
     </>
   );
 };
-
 export default ProductDetails;
 
 const styles = StyleSheet.create({
   productDetailContainer: {
     backgroundColor: "white",
+    marginTop: wp(6.5),
     flex: 1,
   },
   floatNavigationContainer: {
