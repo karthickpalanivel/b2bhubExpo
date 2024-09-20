@@ -23,6 +23,7 @@ const OTPAndPasswordScreen = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPasswrod, setShowPassword] = useState(true);
+  const [originalOtp, setOriginalOtp] = useState("")
 
   const handleShowPassword = () => {
     setShowPassword(!showPasswrod);
@@ -44,6 +45,23 @@ const OTPAndPasswordScreen = () => {
       otpRefs[index - 1].current.focus();
     }
   };
+
+
+  const handleEmailSubmit = async () => {
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
+      const res = await axios.post(url, {email});
+      setOriginalOtp(res.data.otp.toString()); 
+      console.log('====================================');
+      console.log(originalOtp);
+      console.log('====================================');
+      Alert.alert('OTP sent to your email!');
+    } catch (error) {
+      Alert.alert('Failed to send OTP');
+    }
+  };
+
+  
 
   const validateOtp = () => {
     const enteredOtp = otp.join("");
@@ -67,6 +85,10 @@ const OTPAndPasswordScreen = () => {
   };
 
   const { t } = useTranslation();
+
+
+
+
 
   return (
     <View style={styles.container}>

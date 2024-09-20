@@ -22,9 +22,9 @@ export default function Product({
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("====================================");
-  console.log(products);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log(products);
+  // console.log("====================================");
   const { t } = useTranslation();
   useEffect(() => {
     const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";

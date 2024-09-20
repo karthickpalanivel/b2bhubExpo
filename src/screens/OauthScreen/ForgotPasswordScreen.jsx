@@ -15,12 +15,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
+import axios from 'axios'
 
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
-
+  const [originalOtp, setOriginalOtp] = useState("")
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -37,16 +38,51 @@ const ForgotPasswordScreen = () => {
     return emailRegex.test(text);
   };
 
-  const handleSendOTP = () => {
+
+  const handleEmailSubmit = async () => {
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
+      const res = await axios.post(url, {email});
+      setOriginalOtp(res.data.otp); 
+      console.log('====================================');
+      console.log(originalOtp);
+      console.log('====================================');
+      Alert.alert('OTP sent to your email!');
+    } catch (error) {
+      Alert.alert('Failed to send OTP'+error);
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  };
+
+
+
+  const handleSendOTP = async()  => {
     if (!validateEmail(email)) {
       setIsValidEmail(false);
       Alert.alert(`${t("invalid_email")} \n${t("enter_valid_email")}`);
+      try {
+        const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
+        const res = await axios.post(url, {email});
+        setOriginalOtp(res.data.otp.toString());
+        console.log(originalOtp);
+        Alert.alert(`${t("otp_sent")} \n${t("otp has been sent to ")}${email}`);
+      } catch (error) {
+        console.log(error)
+      } finally {
+        navigation.navigate("OtpConformScreen", {
+          email: email,
+          originalOtp: originalOtp,
+        });
+      }
       return;
     }
     setIsValidEmail(true);
     // console.log("OTP Sent to:", email);
-    Alert.alert(`${t("otp_sent")} \n${t("otp_has_been_sent_to")}${email}`);
-    navigation.navigate("OtpConformScreen");
+    
+    Alert.alert(`${t("otp_sent")} \n${t("otp_has_been_sent_to ")}${email}`);
+    navigation.navigate("OtpConformScreen",{email: email});
   };
 
   return (
@@ -79,7 +115,7 @@ const ForgotPasswordScreen = () => {
           )}
         </View>
 
-        <TouchableOpacity onPress={handleSendOTP} style={styles.sendOtpButton}>
+        <TouchableOpacity onPress={handleEmailSubmit} style={styles.sendOtpButton}>
           <Text style={styles.sendOtpText}>{t('send_otp')}</Text>
         </TouchableOpacity>
       </View>

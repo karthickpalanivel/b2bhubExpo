@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
+import { useTranslation } from "react-i18next";
 
 const ProductCard = ({
   image,
@@ -18,7 +19,7 @@ const ProductCard = ({
   shelfLife,
   validity,
   desc,
-  quality,
+  quantity,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -34,6 +35,8 @@ const ProductCard = ({
 
     loadFonts();
   }, []);
+
+  const {t} = useTranslation();
   return (
     <View style={styles.mainContainer}>
       <StatusBar style="dark" backgroundColor="#fff" />
@@ -77,7 +80,7 @@ const ProductCard = ({
             <Text style={styles.value}>{desc}</Text>
           </Text>
           <Text style={styles.label}>
-            {t("quantity")}: <Text style={styles.value}>{quality}</Text>
+            {t("quantity")}: <Text style={styles.value}>{quantity}</Text>
           </Text>
 
           {/* Edit and Delete Buttons */}
