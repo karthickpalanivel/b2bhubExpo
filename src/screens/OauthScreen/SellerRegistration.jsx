@@ -88,7 +88,7 @@ const SellerRegistration = () => {
 
   }
 
-  // Check if both fields are valid
+  
   const isFormValid = city !== "" && emailError === "" && email !== "";
   const isOtpValid = Otp !== ""; // Check if OTP is entered
 
@@ -181,7 +181,7 @@ const SellerRegistration = () => {
             onPress={() => setSelectedCategory("platinum")}
           >
             <View style={{ flexDirection: "row", }}>
-              <Image source={require("../../assets/platinum.png")} style={styles.img} />
+              <Image source={require("../../assets/sellerCategory/platinum.png")} style={styles.img} />
               <View>
                 <Text style={styles.categoryTitle}>PLATINUM SELLER</Text>
                 <Text style={styles.eligibilityText}>
@@ -196,7 +196,7 @@ const SellerRegistration = () => {
             onPress={() => setSelectedCategory("gold")}
           >
             <View style={{ flexDirection: "row", }}>
-            <Image source={require("../../assets/gold.png")} style={styles.img} />
+            <Image source={require("../../assets/sellerCategory/gold.png")} style={styles.img} />
              <View>
              <Text style={styles.categoryTitle}>GOLD SELLER</Text>
             <Text style={styles.eligibilityText}>
