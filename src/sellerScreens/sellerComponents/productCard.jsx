@@ -19,7 +19,7 @@ const ProductCard = ({
   shelfLife,
   validity,
   desc,
-  quality,
+  quantity,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -80,7 +80,7 @@ const ProductCard = ({
             <Text style={styles.value}>{desc}</Text>
           </Text>
           <Text style={styles.label}>
-            {t("quantity")}: <Text style={styles.value}>{quality}</Text>
+            {t("quantity")}: <Text style={styles.value}>{quantity}</Text>
           </Text>
 
           {/* Edit and Delete Buttons */}

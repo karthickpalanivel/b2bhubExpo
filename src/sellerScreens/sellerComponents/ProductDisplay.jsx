@@ -1,20 +1,18 @@
 // Home.js
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {ScrollView, StyleSheet, View,Image,Text} from "react-native";
+import {StatusBar} from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { TouchableOpacity } from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
-
+import {useTranslation} from "react-i18next";
 
 const products = [
-
-
   {
     id: 1,
     image:
@@ -50,14 +48,14 @@ const ProductDisplay = () => {
   const [noData, setNoData] = useState(false);
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
-const {t} = useTranslation();
+  const {t} = useTranslation();
   AsyncStorage.getItem("customerId")
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
         //console.log("Value:", value);
-        setcustomerId(value)
-        handleFetch()
+        setcustomerId(value);
+        handleFetch();
       } else {
         console.log("No value found");
       }
@@ -70,7 +68,7 @@ const {t} = useTranslation();
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        settoken(value)
+        settoken(value);
         //console.log("Value:", value);
       } else {
         console.log("No value found");
@@ -91,7 +89,7 @@ const {t} = useTranslation();
         "/seller/getProductsBySellerId";
       const res = await axios.post(
         url,
-        { customerId: customerId },
+        {customerId: customerId},
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -115,25 +113,68 @@ const {t} = useTranslation();
       //setLoading(false); // End loading after fetching
     }
   };
+  console.log("====================================");
+  console.log(data);
+  console.log("====================================");
 
   return (
     <View style={styles.mainContainer}>
       <StatusBar style="dark" backgroundColor="#fff" />
 
       {data.map((product) => (
-        <ProductCard
-          key={product.id}
-          image={product.productImg}
-          name={product.productName}
-          price={product.price}
-          unit={product.units}
-          moisture={product.moisture}
-          Organic={product.Organic}
-          shelfLife={product.shelfLife}
-          validity={product.validity}
-          desc={product.desc}
-          quality={product.packaging[3]}
-        />
+        <View style={styles.mainContainer}>
+          <StatusBar style="dark" backgroundColor="#fff" />
+
+          <View style={styles.container}>
+            {/* Product Image */}
+            <View>
+              <Image source={{uri: product.productImg}} style={styles.image} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.editButton}>
+                  <Text style={styles.buttonText}>{t("edit")}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.deleteButton}>
+                  <Text style={styles.buttonText}>{t("delete")}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Product Details */}
+            <View style={styles.detailsContainer}>
+              <Text style={styles.productName}>{product.name}</Text>
+              <View style={styles.rowValue}>
+                <Text style={styles.label}>{t("price")}: </Text>
+                <Text style={styles.value}>{product.price}/</Text>
+                <Text style={styles.value}>{products.units}</Text>
+              </View>
+              <Text style={styles.label}>
+                {t("moisture")}: <Text style={styles.value}>{product.moisture}</Text>
+              </Text>
+              <Text style={styles.label}>
+                {t("organic")}:{" "}
+                <Text style={styles.value}>{product.isOrganic ? "Yes" : "No"}</Text>
+              </Text>
+              <Text style={styles.label}>
+                {t("shelf_life")}: <Text style={styles.value}>{product.shelfLife}</Text>
+              </Text>
+              <Text style={styles.label}>
+                {t("validity")}: <Text style={styles.value}>{product.validity}</Text>
+              </Text>
+              <Text style={styles.label}>
+                <Text style={styles.value}>{product.description}</Text>
+              </Text>
+              <Text style={styles.label}>
+              {Object.keys(product.packaging).map((kg) => (
+                      <Text key={kg} style={{ marginBottom: "4px" }}>
+                        {kg}: {product.packaging[kg]} TONNES
+                      </Text>
+                    ))}
+              </Text>
+
+              {/* Edit and Delete Buttons */}
+            </View>
+          </View>
+        </View>
       ))}
     </View>
   );
@@ -143,6 +184,82 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     marginTop: wp(5),
+  },
+  mainContainer: {
+    flex: 1,
+    marginVertical: hp(1),
+    marginHorizontal: wp(3),
+  },
+  container: {
+    flexDirection: "row",
+    backgroundColor: "#729EDB", 
+    borderRadius: wp(4),
+    padding: wp(3),
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  image: {
+    width: wp(35),
+    height: hp(20),
+    borderRadius: wp(3),
+    marginTop: wp(7),
+  },
+  detailsContainer: {
+    flex: 1,
+    marginLeft: wp(3),
+    justifyContent: "space-between",
+  },
+  productName: {
+    fontSize: wp(5),
+    // fontWeight: "bold",
+    color: "white",
+    marginBottom: wp(1),
+    fontFamily: "QuicksandSemiBold",
+  },
+  label: {
+    fontSize: wp(3.5),
+    // fontWeight: "600",
+    color: "white",
+    marginVertical: hp(0.3),
+    fontFamily: "QuicksandSemiBold",
+  },
+  value: {
+    fontSize: wp(3.5),
+    fontFamily: "QuicksandSemiBold",
+    color: "white",
+  },
+  rowValue: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: hp(1),
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: hp(1),
+  },
+  editButton: {
+    backgroundColor: "#2196F3",
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(4),
+    borderRadius: wp(2),
+    marginRight: wp(2),
+  },
+  deleteButton: {
+    backgroundColor: "#4574B3",
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(4),
+    borderRadius: wp(2),
+  },
+  buttonText: {
+    fontSize: wp(4),
+    color: "white",
+    // fontWeight: 'bold',
+    fontFamily: "QuicksandSemiBold",
+    textAlign: "center",
   },
 });
 
