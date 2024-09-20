@@ -11,6 +11,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../hooks/LanguageContext";
+import { StatusBar } from "expo-status-bar";
 
 const OnBoardingScreenOne = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ const OnBoardingScreenOne = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" backgroundColor="white" />
       <Onboarding
         containerStyles={{ paddingHorizontal: wp(5) }}
         pages={[

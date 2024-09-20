@@ -145,7 +145,7 @@ const SellerHomeScreen = () => {
       ) : (
         <>
           <StatusBar style="dark" backgroundColor="#fff" />
-          <ScrollView contentContainerStyle={styles.container}>
+          <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
             <View>
               <View style={styles.header}>
                 <View>
@@ -184,36 +184,38 @@ const SellerHomeScreen = () => {
                 </View>
               </View>
               <LanguageModal visible={languageModel} />
+
+              
               <View style={styles.cardsContainer}>
-                <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
+                {/* <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
                   <Text style={styles.cardTitle}>{t("active_product")}</Text>
                   <Text style={styles.cardNumber}>
                     {activeProduct > 0
                       ? activeProduct
                       : "Currently no products added"}
                   </Text>
-                  {/* <Text style={styles.cardDescription}>↑ 3 in last 7 days</Text> */}
-                </View>
+                  <Text style={styles.cardDescription}>↑ 3 in last 7 days</Text>
+                </View> */}
 
-                <View style={[styles.card, { backgroundColor: "#F7A7A6" }]}>
+                {/* <View style={[styles.card, { backgroundColor: "#F7A7A6" }]}>
                   <Text style={styles.cardTitle}>{t("total_order")}</Text>
                   <Text style={styles.cardNumber}>
                     {totalOrders > 0 ? totalOrders : "None"}
                   </Text>
-                  {/* <Text style={styles.cardDescription}>
+                   <Text style={styles.cardDescription}>
                     ↓ 1 Less vs last month
-                  </Text> */}
-                </View>
+                  </Text> 
+                </View> */}
 
-                <View style={[styles.card, { backgroundColor: "#F9D276" }]}>
+                {/* <View style={[styles.card, { backgroundColor: "#F9D276" }]}>
                   <Text style={styles.cardTitle}>{t("pending_publish")}</Text>
                   <Text style={styles.cardNumber}>
                     {productPublished > 0 ? productPublished : "None"}
                   </Text>
                   <Text style={styles.cardDescription}>{t("waiting")}</Text>
-                </View>
+                </View> */}
 
-                <View style={[styles.card, { backgroundColor: "#A0C4FF" }]}>
+                {/* <View style={[styles.card, { backgroundColor: "#A0C4FF" }]}>
                   <Text style={styles.cardTitle}>{t("new_order")}</Text>
                   <Text style={styles.cardNumber}>
                     {newOrders > 0 ? newOrders : "None"}
@@ -221,7 +223,7 @@ const SellerHomeScreen = () => {
                   <Text style={styles.cardDescription}>
                     {t("no_new_orders")}
                   </Text>
-                </View>
+                </View> */}
               </View>
             </View>
 
@@ -335,7 +337,7 @@ const styles = StyleSheet.create({
 
   languageModalContainer: {
     width: wp(80),
-    backgroundColor: "#4870F4",
+    backgroundColor: "orange",
     elevation: 4,
     borderRadius: wp(3),
   },

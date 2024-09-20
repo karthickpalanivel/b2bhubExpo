@@ -1,7 +1,7 @@
 // Home.js
-import React, {useEffect, useState} from "react";
-import {ScrollView, StyleSheet, View,Image,Text} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,7 +10,9 @@ import { TouchableOpacity } from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import * as Font from "expo-font";
+import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
 const products = [
   {
@@ -48,7 +50,8 @@ const ProductDisplay = () => {
   const [noData, setNoData] = useState(false);
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
-  const {t} = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
   AsyncStorage.getItem("customerId")
     .then((value) => {
       if (value !== null) {
@@ -63,7 +66,19 @@ const ProductDisplay = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
 
+    loadFonts();
+  }, []);
   AsyncStorage.getItem("token")
     .then((value) => {
       if (value !== null) {
@@ -89,7 +104,7 @@ const ProductDisplay = () => {
         "/seller/getProductsBySellerId";
       const res = await axios.post(
         url,
-        {customerId: customerId},
+        { customerId: customerId },
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -118,65 +133,83 @@ const ProductDisplay = () => {
   console.log("====================================");
 
   return (
-    <View style={styles.mainContainer}>
-      <StatusBar style="dark" backgroundColor="#fff" />
-
-      {data.map((product) => (
-        <View style={styles.mainContainer}>
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
+      ) : (
+        <View>
           <StatusBar style="dark" backgroundColor="#fff" />
+          <ScrollView
+            style={styles.mainContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {data.map((product) => (
+              <View style={styles.subMainContainer}>
+                <StatusBar style="dark" backgroundColor="#fff" />
 
-          <View style={styles.container}>
-            {/* Product Image */}
-            <View>
-              <Image source={{uri: product.productImg}} style={styles.image} />
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.editButton}>
-                  <Text style={styles.buttonText}>{t("edit")}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteButton}>
-                  <Text style={styles.buttonText}>{t("delete")}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+                <View style={styles.container}>
+                  {/* Product Image */}
+                  <View>
+                    <Image
+                      source={{ uri: product.productImg }}
+                      style={styles.image}
+                    />
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity style={styles.editButton}>
+                        <Text style={styles.buttonText}>{t("edit")}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deleteButton}>
+                        <Text style={styles.buttonText}>{t("delete")}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
 
-            {/* Product Details */}
-            <View style={styles.detailsContainer}>
-              <Text style={styles.productName}>{product.name}</Text>
-              <View style={styles.rowValue}>
-                <Text style={styles.label}>{t("price")}: </Text>
-                <Text style={styles.value}>{product.price}/</Text>
-                <Text style={styles.value}>{products.units}</Text>
-              </View>
-              <Text style={styles.label}>
-                {t("moisture")}: <Text style={styles.value}>{product.moisture}</Text>
-              </Text>
-              <Text style={styles.label}>
-                {t("organic")}:{" "}
-                <Text style={styles.value}>{product.isOrganic ? "Yes" : "No"}</Text>
-              </Text>
-              <Text style={styles.label}>
-                {t("shelf_life")}: <Text style={styles.value}>{product.shelfLife}</Text>
-              </Text>
-              <Text style={styles.label}>
-                {t("validity")}: <Text style={styles.value}>{product.validity}</Text>
-              </Text>
-              <Text style={styles.label}>
-                <Text style={styles.value}>{product.description}</Text>
-              </Text>
-              <Text style={styles.label}>
-              {Object.keys(product.packaging).map((kg) => (
-                      <Text key={kg} style={{ marginBottom: "4px" }}>
-                        {kg}: {product.packaging[kg]} TONNES
+                  {/* Product Details */}
+                  <View style={styles.detailsContainer}>
+                    <Text style={styles.productName}>{product.name}</Text>
+                    <View style={styles.rowValue}>
+                      <Text style={styles.label}>{t("price")}: </Text>
+                      <Text style={styles.value}>{product.price}/</Text>
+                      <Text style={styles.value}>{products.units}</Text>
+                    </View>
+                    <Text style={styles.label}>
+                      {t("moisture")}:{" "}
+                      <Text style={styles.value}>{product.moisture}</Text>
+                    </Text>
+                    <Text style={styles.label}>
+                      {t("organic")}:{" "}
+                      <Text style={styles.value}>
+                        {product.isOrganic ? "Yes" : "No"}
                       </Text>
-                    ))}
-              </Text>
+                    </Text>
+                    <Text style={styles.label}>
+                      {t("shelf_life")}:{" "}
+                      <Text style={styles.value}>{product.shelfLife}</Text>
+                    </Text>
+                    <Text style={styles.label}>
+                      {t("validity")}:{" "}
+                      <Text style={styles.value}>{product.validity}</Text>
+                    </Text>
+                    <Text style={styles.label}>
+                      <Text style={styles.value}>{product.description}</Text>
+                    </Text>
+                    <Text style={styles.label}>
+                      {Object.keys(product.packaging).map((kg) => (
+                        <Text key={kg} style={{ marginBottom: "4px" }}>
+                          {kg}: {product.packaging[kg]} TONNES
+                        </Text>
+                      ))}
+                    </Text>
 
-              {/* Edit and Delete Buttons */}
-            </View>
-          </View>
+                    {/* Edit and Delete Buttons */}
+                  </View>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
         </View>
-      ))}
-    </View>
+      )}
+    </>
   );
 };
 
@@ -185,20 +218,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: wp(5),
   },
-  mainContainer: {
+  subMainContainer: {
     flex: 1,
-    marginVertical: hp(1),
     marginHorizontal: wp(3),
   },
   container: {
     flexDirection: "row",
-    backgroundColor: "#729EDB", 
+    backgroundColor: "#729EDB",
     borderRadius: wp(4),
     padding: wp(3),
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
     elevation: 5,
   },
   image: {
