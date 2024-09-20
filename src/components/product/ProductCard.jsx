@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { XCircleIcon } from "react-native-heroicons/outline";
+import { TouchableOpacity } from "react-native";
 
 const ProductCard = ({ props, index }) => {
   const { t } = useTranslation();

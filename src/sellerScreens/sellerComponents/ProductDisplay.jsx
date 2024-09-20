@@ -49,6 +49,8 @@ const ProductDisplay = () => {
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
   const {t} = useTranslation();
+
+  
   AsyncStorage.getItem("customerId")
     .then((value) => {
       if (value !== null) {
@@ -69,6 +71,7 @@ const ProductDisplay = () => {
       if (value !== null) {
         // Value was found, do something with it
         settoken(value);
+        handleFetch();
         //console.log("Value:", value);
       } else {
         console.log("No value found");
@@ -113,12 +116,23 @@ const ProductDisplay = () => {
       //setLoading(false); // End loading after fetching
     }
   };
-  console.log("====================================");
-  console.log(data);
-  console.log("====================================");
+
+  const formatDate = (isoDate) => {
+    if (!isoDate) return ''; // Handle case where date is null or undefined
+
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+  // console.log("====================================");
+  // console.log(data);
+  // console.log("====================================");
 
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView style={styles.mainContainer1}>
       <StatusBar style="dark" backgroundColor="#fff" />
 
       {data.map((product) => (
@@ -158,7 +172,7 @@ const ProductDisplay = () => {
                 {t("shelf_life")}: <Text style={styles.value}>{product.shelfLife}</Text>
               </Text>
               <Text style={styles.label}>
-                {t("validity")}: <Text style={styles.value}>{product.validity}</Text>
+                {t("validity")}: <Text style={styles.value}>{formatDate(product.validity)}</Text>
               </Text>
               <Text style={styles.label}>
                 <Text style={styles.value}>{product.description}</Text>
@@ -176,12 +190,12 @@ const ProductDisplay = () => {
           </View>
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  mainContainer1: {
     flex: 1,
     marginTop: wp(5),
   },
