@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    backgroundColor: "#729EDB", // Green background for the card
+    backgroundColor: "#729EDB", 
     borderRadius: wp(4),
     padding: wp(3),
     shadowColor: "#000",
