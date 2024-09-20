@@ -122,7 +122,7 @@ const LoginScreen = () => {
 
   async function handleLogin() {
     await axios
-      .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
+      .post("https://erp-backend-new-4s57.onrender.com/b2b/login", {
         email: buyerEmail,
         pwd: password,
         isSeller: false,

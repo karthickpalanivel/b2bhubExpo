@@ -40,9 +40,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import * as Font from "expo-font";
 import { useTranslation } from "react-i18next";
-import i18n from "../language/i18next";
 import LanguageList from "../language/LanguageList.json";
-import i18next from "i18next";
 import { useLanguage } from "../hooks/LanguageContext";
 
 const ProfileScreen = () => {
@@ -72,37 +70,31 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     navigation.navigate("Login");
-    AsyncStorage.setItem("loginstate","false")
+    AsyncStorage.setItem("loginstate", "false");
     // console.log("Logout button clicked");
   };
 
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setCompanyName(value);
       } else {
-        // No value found
         console.log("No value found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
   AsyncStorage.getItem("phone")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
         setPhone(value);
       } else {
-        // No value found
         console.log("No value found");
       }
     })
     .catch((error) => {
-      // Error retrieving value
       console.error("Error:", error);
     });
 
@@ -113,7 +105,6 @@ const ProfileScreen = () => {
   const whatsappSupportTeam = "http://wa.me/+14155238886?text=Hi%20";
 
   const connectionToWhatsapp = async () => {
-    // console.log("whatsapp");
     try {
       const canOpen = await Linking.canOpenURL(whatsappSupportTeam);
       if (!canOpen) {

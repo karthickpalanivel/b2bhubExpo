@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
+  Pressable,
   ScrollView,
+  StyleSheet,
+  Text,
+  View,
   TouchableOpacity,
+  Modal,
+  SafeAreaView,
+  FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
@@ -18,19 +21,31 @@ import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { ArrowRightStartOnRectangleIcon } from "react-native-heroicons/outline";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../hooks/LanguageContext";
+import { LanguageIcon, XCircleIcon } from "react-native-heroicons/outline";
+import LanguageList from '../../language/LanguageList.json'
 
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
-
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [languageModel, setLanguageModel] = useState(false);
-  const [language, setLanguage] = useState("en");
+  const [yourLanguage, setYourLanguage] = useState("English");
   const [sellerName, setSellerName] = useState("");
   const [activeProduct, setActiveProduct] = useState(25);
   const [newOrders, setNewOrders] = useState(4);
   const [productPublished, setProductPublished] = useState(10);
   const [totalOrders, setTotalOrders] = useState(15);
 
+  const { language, changeLanguage } = useLanguage();
+
+  const show = () => {
+    setLanguageModel(true);
+  };
+  const hide = () => {
+    setLanguageModel(false);
+  };
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -45,6 +60,11 @@ const SellerHomeScreen = () => {
     loadFonts();
   }, []);
 
+  const changeLng = (lng) => {
+    setYourLanguage(LanguageList[lng].nativeName);
+    changeLanguage(LanguageList[lng].shortName);
+    hide();
+  };
   const navigationToAddProduct = () => {
     navigation.navigate("ModifyProduct");
   };
@@ -76,6 +96,48 @@ const SellerHomeScreen = () => {
       //console.error("Error:", error);
     });
 
+  const LanguageModal = ({ visible }) => {
+    return (
+      <>
+        <Modal
+          visible={visible}
+          animationType="slide"
+          onRequestClose={hide}
+          transparent
+        >
+        <SafeAreaView style={styles.safeAreaContent}>
+          <View style={styles.languageModalContainer}>
+            <View>
+              <TouchableOpacity>
+                <XCircleIcon
+                  size={wp(8)}
+                  color="white"
+                  style={styles.iconX}
+                  onPress={hide}
+                />
+              </TouchableOpacity>
+
+              <FlatList
+                data={Object.keys(LanguageList)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.languageContainer}
+                    onPress={() => changeLng(item)}
+                  >
+                    <Text style={styles.languageText}>
+                      {LanguageList[item].nativeName}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+        </Modal>
+      </>
+    );
+  };
+
   return (
     <>
       {isLoading ? (
@@ -87,8 +149,18 @@ const SellerHomeScreen = () => {
             <View>
               <View style={styles.header}>
                 <View>
-                  <Text style={styles.welcomeText}>{t("welcome")}</Text>
-                  <Text style={styles.nameText}>{sellerName},</Text>
+                  <View style={{ flexDirection: "row", marginVertical: wp(3) }}>
+                    <Text style={styles.welcomeText}>{t("welcome")} </Text>
+                    <Text style={styles.welcomeText}>{sellerName},</Text>
+                  </View>
+
+                  <TouchableOpacity
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                    onPress={show}
+                  >
+                    <LanguageIcon size={hp(2.8)} color={"orange"} />
+                    <Text style={{ fontSize: wp(3.4), marginLeft: wp(1), fontFamily: "QuicksandSemiBold" }}>{yourLanguage}</Text>
+                  </TouchableOpacity>
                 </View>
                 {/* <Image
                   source={{
@@ -111,7 +183,7 @@ const SellerHomeScreen = () => {
                   <Text>{t("logout")}</Text>
                 </View>
               </View>
-
+              <LanguageModal visible={languageModel} />
               <View style={styles.cardsContainer}>
                 <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
                   <Text style={styles.cardTitle}>{t("active_product")}</Text>
@@ -138,7 +210,7 @@ const SellerHomeScreen = () => {
                   <Text style={styles.cardNumber}>
                     {productPublished > 0 ? productPublished : "None"}
                   </Text>
-                  <Text style={styles.cardDescription}>{t("waitingh")}</Text>
+                  <Text style={styles.cardDescription}>{t("waiting")}</Text>
                 </View>
 
                 <View style={[styles.card, { backgroundColor: "#A0C4FF" }]}>
@@ -173,7 +245,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: wp(5),
     padding: wp("5%"),
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#FFFFF9",
   },
   header: {
     flexDirection: "row",
@@ -246,6 +318,46 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: wp(5),
     fontFamily: "QuicksandBold",
+  },
+
+  // language modal styles
+
+  safeAreaContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: wp(100),
+    height: hp(100),
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
+  },
+
+  languageModalContainer: {
+    width: wp(80),
+    backgroundColor: "#4870F4",
+    elevation: 4,
+    borderRadius: wp(3),
+  },
+
+  iconX: {
+    position: "absolute",
+    right: -10,
+    top: -10,
+  },
+
+  languageContainer: {
+    alignItems: "center",
+    padding: hp(2),
+    borderRadius: 4,
+  },
+
+  languageText: {
+    fontSize: hp(2.5),
+    color: "white",
+    borderBottomWidth: 0.2,
+    borderColor: "white",
+    fontFamily: "QuicksandSemiBold",
   },
 });
 

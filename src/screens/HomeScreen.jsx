@@ -8,6 +8,7 @@ import {
   Pressable,
   TouchableOpacity,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -44,6 +45,7 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [companyName, setcompanyName] = useState("");
   const [buyersLoginContent, setBuyersLoginContent] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { t } = useTranslation();
 
@@ -160,6 +162,12 @@ const HomeScreen = () => {
     setLanguageHeader("మీ భాషను ఎంచుకోండి");
     hide();
   };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   const LanguageModal = ({ visible, setVisible }) => {
     return (
@@ -235,6 +243,9 @@ const HomeScreen = () => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollViewContainer}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
             <View style={styles.avatarContainer}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -265,7 +276,9 @@ const HomeScreen = () => {
                 }}
               >
                 <View>
+                  <Text style={styles.userName}>{t("welcome")},</Text>
                   <Text style={styles.userName}>{companyName}</Text>
+
                   <View style={styles.iconContainer}>
                     {/*<MapPinIcon size={hp(2)} color="#f59e0b" />
                      <Text
@@ -283,7 +296,7 @@ const HomeScreen = () => {
                   <Pressable style={{ flexDirection: "row" }}>
                     <LanguageIcon size={hp(2)} color="#f59e0b" />
                     <Text style={{ color: "#475569", fontFamily: "QuicksandBold",
- }}>Language</Text>
+                          }}>Language</Text>
                   </Pressable>
 
                   <TouchableOpacity onPress={() => setModalVisible(show)}>
@@ -317,7 +330,7 @@ const HomeScreen = () => {
               loop
             />
             <Text>Lottie icon</Text>
-          </View> */}
+              </View> */}
             </View>
 
             {/* Search bar */}
@@ -351,7 +364,7 @@ const HomeScreen = () => {
           </ScrollView>
           {/* <Footer /> */}
           <View style={styles.floatNavigationContainer}>
-            <FloatingNavigationButton buttonColor={"#f59e0b"}/>
+            <FloatingNavigationButton buttonColor={"#f59e0b"} />
           </View>
         </View>
       )}

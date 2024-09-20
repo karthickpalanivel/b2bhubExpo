@@ -31,6 +31,7 @@ import * as Font from "expo-font";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import { useTranslation } from "react-i18next";
 
 const ProductDetailsForm = () => {
   const [isOrganic, setIsOrganic] = useState(false);
@@ -50,10 +51,11 @@ const ProductDetailsForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("")
+  const [imageUrl, setImageUrl] = useState("");
 
-  console.log("imageurl"+imageUrl);
-  
+  const { t } = useTranslation();
+
+  console.log("imageurl" + imageUrl);
 
   const onSubmit = () => {
     if (
@@ -155,26 +157,30 @@ const ProductDetailsForm = () => {
     const fileName = imageUri.assets[0].fileName;
     const fileType = imageUri.assets[0].type;
 
-    formData.append('file', imageUri)
-    formData.append('upload_preset', 'ml_default'); // Add your upload preset
-    formData.append('cloud_name', 'dalzs7bc2'); // Add your cloud name if necessary
+    formData.append("file", imageUri);
+    formData.append("upload_preset", "ml_default"); // Add your upload preset
+    formData.append("cloud_name", "dalzs7bc2"); // Add your cloud name if necessary
 
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.data.secure_url) {
-        setImageUrl(response.data.secure_url);  // Store the image URL
-        console.log("upload succesfull"+response.data.secure_url);
-        
-        Alert.alert('Upload successful', 'Image has been uploaded!');
+        setImageUrl(response.data.secure_url); // Store the image URL
+        console.log("upload succesfull" + response.data.secure_url);
+
+        Alert.alert("Upload successful", "Image has been uploaded!");
       }
     } catch (error) {
-      console.error('Upload error', error);
-      Alert.alert('Upload failed', 'Something went wrong during the upload.');
+      console.error("Upload error", error);
+      Alert.alert("Upload failed", "Something went wrong during the upload.");
     } finally {
       // setUploading(false);
     }
@@ -190,7 +196,7 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        }).then(uploadImage(result));;
+        }).then(uploadImage(result));
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
@@ -199,7 +205,6 @@ const ProductDetailsForm = () => {
           aspect: [1, 1],
           quality: 1,
         }).then(uploadImage(result));
-        ;
       }
       if (!result.cancelled) {
         setImage(result.assets[0].uri); // Update the image state with the selected image URI

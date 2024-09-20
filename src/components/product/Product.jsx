@@ -27,7 +27,7 @@ export default function Product({
   console.log("====================================");
   const { t } = useTranslation();
   useEffect(() => {
-    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {
@@ -51,7 +51,7 @@ export default function Product({
     }
 
     loadFonts();
-  }, [products]);
+  }, []);
   const handlePress = () => {
     setProductActiveData(t("exclusive_products"));
   };

@@ -166,11 +166,12 @@ const styles = StyleSheet.create({
   },
 
   noOrderOne: {
-    fontSize: hp(2),
+    fontSize: hp(1.75),
     color: "grey",
+    textAlign:'center',
   },
   noOrderTwo: {
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     color: "grey",
     textAlign: "center",
   },
