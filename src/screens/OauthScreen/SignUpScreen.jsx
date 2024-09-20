@@ -30,9 +30,10 @@ const SignUpScreen = () => {
   const [termsModal, setTermsModal] = useState(false);
   const { t } = useTranslation();
   async function HandleSignup() {
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/customer-registration";
     await axios
       .post(
-        "https://erp-backend-new-plqp.onrender.com/b2b/customer-registration",
+        url,
         {
           Email: email,
           PAN: panNumber,

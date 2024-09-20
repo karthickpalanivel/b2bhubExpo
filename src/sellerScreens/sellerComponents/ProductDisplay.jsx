@@ -9,8 +9,12 @@ import {
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+
 
 const products = [
+
+
   {
     id: 1,
     image:
@@ -46,7 +50,7 @@ const ProductDisplay = () => {
   const [noData, setNoData] = useState(false);
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
-
+const {t} = useTranslation();
   AsyncStorage.getItem("customerId")
     .then((value) => {
       if (value !== null) {

@@ -121,8 +121,13 @@ const LoginScreen = () => {
   }, []);
 
   async function handleLogin() {
+
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
+    console.log('====================================');
+    console.log(url);
+    console.log('====================================');
     await axios
-      .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
+      .post(url, {
         email: buyerEmail,
         pwd: password,
         isSeller: false,

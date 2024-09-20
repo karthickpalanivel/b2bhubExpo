@@ -18,9 +18,11 @@ import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { ArrowRightStartOnRectangleIcon } from "react-native-heroicons/outline";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useTranslation } from "react-i18next";
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
+
+  const {t} = useTranslation();
 
   const [isLoading, setIsLoading] = useState(true);
   const [languageModel, setLanguageModel] = useState(false);

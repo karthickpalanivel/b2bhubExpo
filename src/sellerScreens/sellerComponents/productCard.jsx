@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
+import { useTranslation } from "react-i18next";
 
 const ProductCard = ({
   image,
@@ -34,6 +35,8 @@ const ProductCard = ({
 
     loadFonts();
   }, []);
+
+  const {t} = useTranslation();
   return (
     <View style={styles.mainContainer}>
       <StatusBar style="dark" backgroundColor="#fff" />
