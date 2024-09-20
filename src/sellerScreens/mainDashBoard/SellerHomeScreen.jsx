@@ -23,7 +23,8 @@ const SellerHomeScreen = () => {
   const navigation = useNavigation();
 
   const [isLoading, setIsLoading] = useState(true);
-
+  const [languageModel, setLanguageModel] = useState(false);
+  const [language, setLanguage] = useState("en");
   const [sellerName, setSellerName] = useState("");
   const [activeProduct, setActiveProduct] = useState(25);
   const [newOrders, setNewOrders] = useState(4);
@@ -60,7 +61,6 @@ const SellerHomeScreen = () => {
     return num * 1000;
   };
 
-
   AsyncStorage.getItem("customerId")
     .then((value) => {
       if (value !== null) {
@@ -87,8 +87,8 @@ const SellerHomeScreen = () => {
             <View>
               <View style={styles.header}>
                 <View>
-                  <Text style={styles.welcomeText}>Welcome Back Seller,</Text>
-                  <Text style={styles.nameText}>{sellerName}</Text>
+                  <Text style={styles.welcomeText}>{t("welcome")}</Text>
+                  <Text style={styles.nameText}>{sellerName},</Text>
                 </View>
                 {/* <Image
                   source={{
@@ -108,13 +108,13 @@ const SellerHomeScreen = () => {
                       style={styles.profilePic}
                     />
                   </TouchableOpacity>
-                  <Text>Logout</Text>
+                  <Text>{t("logout")}</Text>
                 </View>
               </View>
 
               <View style={styles.cardsContainer}>
                 <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
-                  <Text style={styles.cardTitle}>Active Product</Text>
+                  <Text style={styles.cardTitle}>{t("active_product")}</Text>
                   <Text style={styles.cardNumber}>
                     {activeProduct > 0
                       ? activeProduct
@@ -124,7 +124,7 @@ const SellerHomeScreen = () => {
                 </View>
 
                 <View style={[styles.card, { backgroundColor: "#F7A7A6" }]}>
-                  <Text style={styles.cardTitle}>Total Order</Text>
+                  <Text style={styles.cardTitle}>{t("total_order")}</Text>
                   <Text style={styles.cardNumber}>
                     {totalOrders > 0 ? totalOrders : "None"}
                   </Text>
@@ -134,19 +134,21 @@ const SellerHomeScreen = () => {
                 </View>
 
                 <View style={[styles.card, { backgroundColor: "#F9D276" }]}>
-                  <Text style={styles.cardTitle}>Pending publish</Text>
+                  <Text style={styles.cardTitle}>{t("pending_publish")}</Text>
                   <Text style={styles.cardNumber}>
                     {productPublished > 0 ? productPublished : "None"}
                   </Text>
-                  <Text style={styles.cardDescription}>Waiting</Text>
+                  <Text style={styles.cardDescription}>{t("waitingh")}</Text>
                 </View>
 
                 <View style={[styles.card, { backgroundColor: "#A0C4FF" }]}>
-                  <Text style={styles.cardTitle}>New Order</Text>
+                  <Text style={styles.cardTitle}>{t("new_order")}</Text>
                   <Text style={styles.cardNumber}>
                     {newOrders > 0 ? newOrders : "None"}
                   </Text>
-                  <Text style={styles.cardDescription}>No new orders</Text>
+                  <Text style={styles.cardDescription}>
+                    {t("no_new_orders")}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -157,7 +159,7 @@ const SellerHomeScreen = () => {
               style={styles.addProductContainer}
               onPress={navigationToAddProduct}
             >
-              <Text style={styles.addProductText}>Add New product</Text>
+              <Text style={styles.addProductText}>{t("add_new_product")}</Text>
             </TouchableOpacity>
           </ScrollView>
         </>

@@ -34,11 +34,14 @@ import axios from "axios";
 
 //component starts
 const ProductDetails = ({ route }) => {
+  const { params } = route;
+  console.log(params)
+
   const [product, setProduct] = useState(null);
   const [favorite, setFavorite] = useState(false);
   //const [quantity, setQuantity] = useState(1);
   const navigation = useNavigation();
-  const { params } = route;
+  
   const [productName, setProductName] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
   const [data, setData] = useState(false);
@@ -101,7 +104,7 @@ const ProductDetails = ({ route }) => {
       setShowSummary(false);
       setTermsVisible(false);
     }, 5);
-  }, [params?.productId]);
+  }, []);
   //showSummary
   const handleContinue = () => {
     setShowSummary(true);

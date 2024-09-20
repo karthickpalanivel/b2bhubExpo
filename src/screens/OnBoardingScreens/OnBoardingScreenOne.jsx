@@ -46,7 +46,7 @@ const OnBoardingScreenOne = () => {
               <View style={styles.languageContainer}>
                 <View>
                   <Text style={[styles.welcomeText, { fontSize: wp(6) }]}>
-                    Welcome to B2B Hub India
+                    {t("welcome_to_b2b_hub_india")}
                   </Text>
                   <View style={styles.logoContainer}>
                     <Image
@@ -56,7 +56,9 @@ const OnBoardingScreenOne = () => {
                   </View>
 
                   <View style={styles.dropDownContainer}>
-                    <Text style={styles.selectLanguage}>Select Language</Text>
+                    <Text style={styles.selectLanguage}>
+                      {t("select_language")}
+                    </Text>
                     <DropDownPicker
                       open={open}
                       value={selectLanguage}
@@ -128,7 +130,9 @@ const OnBoardingScreenOne = () => {
                     1
                   </Text>
                 </View>
-                <Text style={styles.registerText}>Register a new Account</Text>
+                <Text style={styles.registerText}>
+                  {t("register_a_new_account")}
+                </Text>
                 <LottieView
                   source={require("../../assets/lottie/register.json")}
                   width={wp(90)}
@@ -138,8 +142,7 @@ const OnBoardingScreenOne = () => {
                 />
                 <View style={styles.textContainer}>
                   <Text style={styles.registerDescription}>
-                    Register using your Mobile Number, Business Name, Email, GST
-                    Number and PAN Number
+                    {t("register_using_your_mobile_number")}
                   </Text>
                 </View>
               </Animated.View>
@@ -172,7 +175,7 @@ const OnBoardingScreenOne = () => {
                   </Text>
                 </View>
                 <Text style={styles.registerText}>
-                  Become a Seller or Buyer
+                  {t("become_a_seller_or_buyer")}
                 </Text>
                 <View style={{ alignItems: "center", marginVertical: hp(4) }}>
                   <LottieView
@@ -185,8 +188,7 @@ const OnBoardingScreenOne = () => {
                 </View>
                 <View style={styles.textContainer}>
                   <Text style={styles.registerDescription}>
-                    Enter your Business Email, Location and Start trading your
-                    products
+                    {t("enter_your_business_email")}
                   </Text>
                 </View>
               </View>
@@ -219,7 +221,7 @@ const OnBoardingScreenOne = () => {
                   </Text>
                 </View>
                 <Text style={styles.registerText}>
-                  Start Ordering & Selling
+                  {t("start_ordering_selling")}
                 </Text>
                 <View style={{ alignItems: "center" }}>
                   <LottieView
@@ -232,7 +234,7 @@ const OnBoardingScreenOne = () => {
                 </View>
                 <View style={styles.textContainer}>
                   <Text style={styles.registerDescription}>
-                    Browse and order products from top sellers & brands.
+                    {t("browse_and_order_products")}.
                   </Text>
                 </View>
               </View>

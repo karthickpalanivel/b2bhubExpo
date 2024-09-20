@@ -294,7 +294,7 @@ const HomeScreen = () => {
                 </View> */}
               </View>
               <View>
-                <Text style={styles.punchOne}>{t('start_your_business')}</Text>
+                <Text style={styles.punchOne}>{t("start_your_business")}</Text>
               </View>
               <View
                 style={{
@@ -350,6 +350,9 @@ const HomeScreen = () => {
             />
           </ScrollView>
           {/* <Footer /> */}
+          <View style={styles.floatNavigationContainer}>
+            <FloatingNavigationButton buttonColor={"#f59e0b"}/>
+          </View>
         </View>
       )}
     </>
@@ -407,7 +410,7 @@ const styles = StyleSheet.create({
 
   userName: {
     fontSize: hp(2),
-    fontFamily: "",
+    fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
 
@@ -499,6 +502,11 @@ const styles = StyleSheet.create({
     right: wp(10),
     bottom: wp(10),
     backgroundColor: "rgba(255,255,255,0)",
+  },
+  floatNavigationContainer: {
+    position: "absolute",
+    bottom: hp(5),
+    right: wp(5),
   },
   buyersLogin: {
     fontSize: wp(3.5),

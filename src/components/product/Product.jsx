@@ -19,31 +19,26 @@ export default function Product({
   productActiveData,
   setProductActiveData,
 }) {
-
-
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log('====================================');
+  console.log("====================================");
   console.log(products);
-  console.log('====================================');
-  const {t} = useTranslation();
+  console.log("====================================");
+  const { t } = useTranslation();
   useEffect(() => {
-
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {
         // console.log(response.data);
         setProducts(response.data);
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
+        setIsLoading(false);
         // console.log(err);
       });
-
-
 
     async function loadFonts() {
       await Font.loadAsync({
@@ -56,7 +51,7 @@ export default function Product({
     }
 
     loadFonts();
-  }, []);
+  }, [products]);
   const handlePress = () => {
     setProductActiveData(t("exclusive_products"));
   };
@@ -116,11 +111,11 @@ export default function Product({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: "5%",
-    paddingVertical: 12,
+    paddingVertical: wp(3),
   },
 
   productHeader: {
-    fontSize: hp("3%"),
+    fontSize: hp(3),
     marginVertical: "5%",
     color: "#475569",
     fontFamily: "QuicksandSemiBold",

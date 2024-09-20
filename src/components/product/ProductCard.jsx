@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  Modal,
+  SafeAreaView,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   widthPercentageToDP as wp,
@@ -11,12 +19,22 @@ import Entypo from "react-native-vector-icons/Entypo";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { MapPinIcon } from "react-native-heroicons/solid";
+import { XCircleIcon } from "react-native-heroicons/outline";
 
 const ProductCard = ({ props, index }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   let isEven = index % 2 === 0;
   const [isLoading, setIsLoading] = useState(true);
+  const [productDetailsModal, setProductDetailsModal] = useState(false);
+
+  const show = () => {
+    setProductDetailsModal(true);
+  };
+  const hide = () => {
+    setProductDetailsModal(false);
+  };
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -54,9 +72,33 @@ const ProductCard = ({ props, index }) => {
     else if (props.category == "GOLD") return "#FFD700"; //Platnium
     else return "#000000";
   };
+
+  const productCategoryName = () => {
+    if (props.category == "PLATINUM") return t("platinum");
+    else if (props.category == "GOLD") return t("gold");
+  };
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
   const gradeAUnit = props.costPerUnit[0];
+
+  const ProductModal = ({ visible }) => {
+    <Modal
+      visible={visible}
+      animationType="slide"
+      onRequestClose={hide}
+      transparent
+    >
+      <SafeAreaView style={styles.safeAreaContent}>
+        <View style={styles.languageModalContainer}>
+          <View>
+            <XCircleIcon size={wp(3)} color={"#fff"} strokeWidth={wp(0.2)} />
+          </View>
+          <Text>testing modal</Text>
+        </View>
+      </SafeAreaView>
+    </Modal>;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -77,7 +119,12 @@ const ProductCard = ({ props, index }) => {
               borderWidth: 0.1,
               borderColor: "#111",
             }}
-            onPress={() => onMoreDetails(props.productId)}
+            onPress={() => {
+              onMoreDetails(props);
+              console.log(
+                "\n-------------------" + props.productId + productDetailsModal
+              );
+            }}
           >
             <Image
               source={{ uri: props.CommonImage }}
@@ -128,16 +175,21 @@ const ProductCard = ({ props, index }) => {
                 <Entypo name="price-ribbon" size={24} color={color} />
                 <View>
                   <Text style={styles.memberShipText}>
-                    {props.category.charAt(0).toUpperCase() +
-                      props.category.slice(1).toLowerCase()}
+                    {
+                      /* {props.category.charAt(0).toUpperCase() +
+                      props.category.slice(1).toLowerCase()} */
+                      productCategoryName()
+                    }
                   </Text>
-                  <Text style={styles.memberShipText}>Product</Text>
+                  {/* <Text style={styles.memberShipText}>Product</Text> */}
                 </View>
               </View>
             )}
           </Pressable>
         </Animated.View>
       )}
+
+      {/* <ProductModal visible={productDetailsModal} /> */}
     </>
   );
 };
@@ -189,5 +241,25 @@ const styles = StyleSheet.create({
     fontSize: hp(1.7),
     fontFamily: "QuicksandSemiBold",
     color: "white",
+  },
+
+  // Modal styles
+
+  safeAreaContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: wp(100),
+    height: hp(100),
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
+  },
+  languageModalContainer: {
+    width: wp(100),
+    backgroundColor: "#fff",
+    elevation: 4,
+    borderTopLeftRadius: wp(3),
+    borderTopRightRadius: wp(3),
   },
 });
