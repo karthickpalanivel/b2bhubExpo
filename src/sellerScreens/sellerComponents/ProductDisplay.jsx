@@ -278,9 +278,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(1),
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: hp(1),
+    marginVertical: hp(1),
   },
   editButton: {
     backgroundColor: "#2196F3",

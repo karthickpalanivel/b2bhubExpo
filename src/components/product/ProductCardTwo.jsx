@@ -9,8 +9,10 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { useTranslation } from "react-i18next";
 
 const ProductCardTwo = ({ props }) => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [offerVisible, setOfferVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +48,7 @@ const ProductCardTwo = ({ props }) => {
     navigation.navigate("ProductDetails", { _id: id });
   };
 
-  const gradeAUnit = props.costPerUnit[0];
+  // const gradeAUnit = props.costPerUnit[0];
   // "Orders", { _id: id }
 
   const calculatePrice = (price, discount) => {
@@ -103,7 +105,7 @@ const ProductCardTwo = ({ props }) => {
               )}
             </View> */}
                 <View>
-                  <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text>
+                  {/* <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text> */}
                 </View>
               </View>
               <View>

@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   addProductText: {
     color: "white",
-    fontSize: wp(5),
+    fontSize: wp(3.5),
     fontFamily: "QuicksandBold",
   },
 

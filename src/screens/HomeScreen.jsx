@@ -423,6 +423,7 @@ const styles = StyleSheet.create({
 
   userName: {
     fontSize: hp(2),
+    width: wp(100),
     fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
@@ -523,6 +524,7 @@ const styles = StyleSheet.create({
   },
   buyersLogin: {
     fontSize: wp(3.5),
+    width: wp(40),
     fontFamily: "QuicksandSemiBold",
     color: "black",
   },
