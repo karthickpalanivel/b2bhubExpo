@@ -51,49 +51,52 @@ const ProductDisplay = () => {
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
+  const [apiCalled, setApiCalled] = useState(false);
 
-  AsyncStorage.getItem("customerId")
-    .then((value) => {
-      if (value !== null) {
-        // Value was found, do something with it
-        //console.log("Value:", value);
-        setcustomerId(value);
-        handleFetch();
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    AsyncStorage.getItem("customerId")
+      .then((value) => {
+        if (value !== null) {
+          // Value was found, do something with it
+          //console.log("Value:", value);
+          setcustomerId(value);
+          handleFetch();
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
-  AsyncStorage.getItem("token")
-    .then((value) => {
-      if (value !== null) {
-        // Value was found, do something with it
-        settoken(value);
-        handleFetch();
-        //console.log("Value:", value);
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    AsyncStorage.getItem("token")
+      .then((value) => {
+        if (value !== null) {
+          // Value was found, do something with it
+          settoken(value);
+          handleFetch();
+          //console.log("Value:", value);
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
-  async function loadFonts() {
-    await Font.loadAsync({
-      Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-      QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
-      QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
-      QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
-    });
-    setIsLoading(false);
-  }
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
 
-  loadFonts();
+    loadFonts();
+    
+
 
   const handleFetch = async () => {
     if (!token) {
@@ -104,6 +107,7 @@ const ProductDisplay = () => {
       const url =
         `${process.env.REACT_APP_BACKEND_URL}` +
         "/seller/getProductsBySellerId";
+      console.log(url);
 
       const res = await axios.post(
         url,

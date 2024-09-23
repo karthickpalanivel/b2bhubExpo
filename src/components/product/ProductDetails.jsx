@@ -80,6 +80,8 @@ const ProductDetails = ({ route }) => {
     navigation.navigate("paymentSummary", { productDetailsInArray });
   };
 
+  
+
   const { t } = useTranslation();
 
   const productDetails = {
@@ -457,6 +459,10 @@ const ProductDetails = ({ route }) => {
             </Modal>
 
             {/* Other Products */}
+            {/* product Card two */}
+          {products?.map((item) => {
+              return <ProductCardTwo props={item} />;
+          })}
           </ScrollView>
           {/* <ProductCardTwo /> */}
           <View style={styles.floatNavigationContainer}>

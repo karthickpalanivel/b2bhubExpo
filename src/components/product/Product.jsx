@@ -52,6 +52,8 @@ export default function Product({
 
     loadFonts();
   }, []);
+
+  
   const handlePress = () => {
     setProductActiveData(t("exclusive_products"));
   };
