@@ -50,6 +50,8 @@ const ProductDetails = ({ route }) => {
     );
   };
 
+  
+
   const { t } = useTranslation();
 
   const productDetails = {
@@ -290,6 +292,10 @@ const ProductDetails = ({ route }) => {
             </View>
 
             {/* Other Products */}
+            {/* product Card two */}
+          {products?.map((item) => {
+              return <ProductCardTwo props={item} />;
+          })}
           </ScrollView>
           {/* <ProductCardTwo /> */}
           <View style={styles.floatNavigationContainer}>
