@@ -1,16 +1,16 @@
 // Home.js
-import React, {useEffect, useState} from "react";
-import {ScrollView, StyleSheet, View, Image, Text} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, View, Image, Text } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import {TouchableOpacity} from "react-native";
+import { TouchableOpacity } from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
@@ -51,52 +51,49 @@ const ProductDisplay = () => {
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
+  AsyncStorage.getItem("customerId")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        //console.log("Value:", value);
+        setcustomerId(value);
+        handleFetch();
+      } else {
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-    AsyncStorage.getItem("customerId")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          //console.log("Value:", value);
-          setcustomerId(value);
-          handleFetch();
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  AsyncStorage.getItem("token")
+    .then((value) => {
+      if (value !== null) {
+        // Value was found, do something with it
+        settoken(value);
+        handleFetch();
+        //console.log("Value:", value);
+      } else {
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-    AsyncStorage.getItem("token")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          settoken(value);
-          handleFetch();
-          //console.log("Value:", value);
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  async function loadFonts() {
+    await Font.loadAsync({
+      Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+      QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+      QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+      QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+    });
+    setIsLoading(false);
+  }
 
-    async function loadFonts() {
-      await Font.loadAsync({
-        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
-        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
-        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
-      });
-      setIsLoading(false);
-    }
-
-    loadFonts();
-    
-
+  loadFonts();
 
   const handleFetch = async () => {
     if (!token) {
@@ -110,7 +107,7 @@ const ProductDisplay = () => {
 
       const res = await axios.post(
         url,
-        {customerId: customerId},
+        { customerId: customerId },
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -170,7 +167,7 @@ const ProductDisplay = () => {
                   {/* Product Image */}
                   <View>
                     <Image
-                      source={{uri: product.productImg}}
+                      source={{ uri: product.productImg }}
                       style={styles.image}
                     />
                     <View style={styles.buttonContainer}>
@@ -188,7 +185,9 @@ const ProductDisplay = () => {
                     <Text style={styles.productName}>{product.name}</Text>
                     <View style={styles.rowValue}>
                       <Text style={styles.label}>{t("price")}: </Text>
-                      <Text style={styles.value}>{product.price}/</Text>
+                      <Text style={styles.value}>
+                        {product.price}/ {t("kg")}
+                      </Text>
                       <Text style={styles.value}>{products.units}</Text>
                     </View>
                     <Text style={styles.label}>
@@ -207,15 +206,17 @@ const ProductDisplay = () => {
                     </Text>
                     <Text style={styles.label}>
                       {t("validity")}:{" "}
-                      <Text style={styles.value}>{product.validity}</Text>
+                      <Text style={styles.value}>
+                        {product.validity.slice(0, 10)}
+                      </Text>
                     </Text>
                     <Text style={styles.label}>
                       <Text style={styles.value}>{product.description}</Text>
                     </Text>
                     <Text style={styles.label}>
                       {Object.keys(product.packaging).map((kg) => (
-                        <Text key={kg} style={{marginBottom: "4px"}}>
-                          {kg}: {product.packaging[kg]} TONNES
+                        <Text key={kg} style={{ marginBottom: "4px" }}>
+                          {kg}: {product.packaging[kg]} / {t("tonnes")}
                         </Text>
                       ))}
                     </Text>
@@ -278,6 +279,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
     fontFamily: "QuicksandSemiBold",
     color: "white",
+    // width: wp(),
   },
   rowValue: {
     flexDirection: "row",
@@ -288,16 +290,19 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
   },
   editButton: {
+    width: wp(35),
     backgroundColor: "#2196F3",
     paddingVertical: hp(1),
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
     marginRight: wp(2),
+    marginVertical: wp(2),
   },
   deleteButton: {
+    width: wp(35),
     backgroundColor: "#4574B3",
     paddingVertical: hp(1),
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(2),
     borderRadius: wp(2),
   },
   buttonText: {

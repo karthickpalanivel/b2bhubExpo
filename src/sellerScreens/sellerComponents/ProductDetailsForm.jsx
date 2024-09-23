@@ -35,7 +35,6 @@ import { useTranslation } from "react-i18next";
 import pickerProductList from "../pickerProductList.json";
 
 const ProductDetailsForm = () => {
-  const [isOrganic, setIsOrganic] = useState(false);
   const [productName, setProductName] = useState("");
   const [pricing, setPricing] = useState("");
   const [units, setUnits] = useState("Select Unit");
@@ -55,12 +54,27 @@ const ProductDetailsForm = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [totalValue, setTotalValue] = useState(0);
   const { t } = useTranslation();
+  const [productType, setProductType] = useState("");
+  const calculateTotalValue = () => {
+    const total = packageDetails.reduce((sum, detail) => {
+      if (detail.quantity && pricing) {
+        const quantityInKg =
+          units === "1KG"
+            ? parseFloat(detail.quantity)
+            : parseFloat(detail.quantity) * 1000; // Convert to KG if it's in tons
+        return sum + quantityInKg * parseFloat(pricing);
+      }
+      return sum;
+    }, 0);
+    setTotalValue(total);
+  };
 
   console.log("imageurl" + imageUrl);
 
   const onSubmit = () => {
     if (
       productName &&
+      productType &&
       pricing &&
       units !== "Select Unit" &&
       moisture !== "Select Moisture" &&
@@ -73,10 +87,10 @@ const ProductDetailsForm = () => {
     ) {
       console.log(
         productName,
+        productType,
         pricing,
         units,
         moisture,
-        isOrganic,
         shelfLife,
         validity,
         description,
@@ -84,7 +98,6 @@ const ProductDetailsForm = () => {
         image
       );
       // setting a everything as blank
-      setIsOrganic(false);
       setDescription("");
       setProductName("");
       setPricing("");
@@ -98,15 +111,34 @@ const ProductDetailsForm = () => {
       Alert.alert("Enter every field");
     }
   };
+  const productTypeOptions = {
+    moongdal: [
+      "Polished Moong dal",
+      "Imported Moong dal",
+      "Desi Moong dal",
+      "other",
+    ],
+    turdal: [
+      "Fatka Toor dal",
+      "Polished Toor dal",
+      "Imported Toor dal",
+      "Desi Toor dal",
+      "other",
+    ],
+    uraddal: ["Black Urad dal", "Imported Urad dal", "Desi Urad dal", "other"],
+    gramdal: ["Premium  Gram dal", "Gold Gram dal", "other"],
+  };
+
+  // Get the corresponding product types based on the selected product name
+  const availableProductTypes = productTypeOptions[productName] || [];
 
   const navigation = useNavigation();
   const navigateToSellerHome = () => {
     navigation.navigate("SellerHome");
   };
-
-  const toggleCheckbox = () => {
-    setIsOrganic(!isOrganic);
-  };
+  useEffect(() => {
+    calculateTotalValue();
+  }, [packageDetails, pricing, units]);
 
   useEffect(() => {
     async function loadFonts() {
@@ -137,8 +169,8 @@ const ProductDetailsForm = () => {
   };
 
   const addPackageDetail = () => {
-    setPackageDetails([
-      ...packageDetails,
+    setPackageDetails((prevDetails) => [
+      ...prevDetails,
       { type: "Select Package Type", quantity: "" },
     ]);
   };
@@ -217,26 +249,12 @@ const ProductDetailsForm = () => {
     }
   };
 
-  const calculateTotalValue = () => {
-    const total = packageDetails.reduce((sum, detail) => {
-      if (detail.quantity && pricing) {
-        const quantityInKg =
-          units === "ton"
-            ? parseFloat(detail.quantity) * 1000
-            : parseFloat(detail.quantity);
-        return sum + quantityInKg * parseFloat(pricing);
-      }
-      return sum;
-    }, 0);
-    setTotalValue(total);
-  };
-
   const calculateTotalQuantity = () => {
     const totalQuantity = packageDetails.reduce((sum, detail) => {
       if (detail.quantity) {
         const quantityInKg =
-          units === "ton"
-            ? parseFloat(detail.quantity) * 1000
+          units === "1ton"
+            ? parseFloat(detail.quantity)
             : parseFloat(detail.quantity);
         return sum + quantityInKg;
       }
@@ -367,23 +385,51 @@ const ProductDetailsForm = () => {
                 </Text>
 
                 {/* Product Name */}
-                <Picker
-                  selectedValue={productName}
-                  style={styles.picker}
-                  onValueChange={(itemValue) => setProductName(itemValue)}
-                >
-                  <Picker.Item label="Select Product" value="" />
-                  <Picker.Item label={t("toor_dal")} value="turdal" />
-                  <Picker.Item label={t("moong_dal")} value="moongdal" />
-                  <Picker.Item label={t("urad_dal")} value="uraddal" />
-                  <Picker.Item label={t("gram_dal")} value="gramdal" />
-                </Picker>
+                <Text style={styles.pickerLabel}>{t("product_name")}:</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={productName}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => {
+                      setProductName(itemValue);
+                      setProductType(""); // Reset product type when product name changes
+                    }}
+                  >
+                    <Picker.Item label="Select Product" value="" />
+                    <Picker.Item label={t("toor_dal")} value="turdal" />
+                    <Picker.Item label={t("moong_dal")} value="moongdal" />
+                    <Picker.Item label={t("urad_dal")} value="uraddal" />
+                    <Picker.Item label={t("gram_dal")} value="gramdal" />
+                  </Picker>
+                </View>
+                {/* Product Type*/}
+                <Text style={styles.pickerLabel}>Product Type:</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={productType}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => setProductType(itemValue)}
+                    enabled={!!productName} // Disable if no product is selected
+                  >
+                    <Picker.Item label="Select Product Type" value="" />
+                    {availableProductTypes.map((type, index) => (
+                      <Picker.Item
+                        key={index}
+                        label={type}
+                        value={type.toLowerCase()}
+                      />
+                    ))}
+                  </Picker>
+                </View>
 
                 {/* Pricing */}
                 <FloatingLabelInput
                   label="Pricing"
                   value={pricing}
-                  onChangeText={setPricing}
+                  onChangeText={(text) => {
+                    setPricing(text);
+                    calculateTotalValue();
+                  }}
                   width={wp(20)}
                   keyboardType="numeric"
                 />
@@ -398,7 +444,7 @@ const ProductDetailsForm = () => {
                   >
                     <Picker.Item label="Select Unit" value="" />
                     <Picker.Item label={`1${t("kg")}`} value="1KG" />
-                    <Picker.Item label="1 ton" value="2ton" />
+                    <Picker.Item label="1 ton" value="1ton" />
                   </Picker>
                 </View>
 
@@ -419,23 +465,6 @@ const ProductDetailsForm = () => {
                     <Picker.Item label="30%" value="30%" />
                     <Picker.Item label="40%" value="40%" />
                   </Picker>
-                </View>
-
-                {/* Organic Checkbox */}
-                <View style={styles.checkboxContainer}>
-                  <TouchableOpacity
-                    onPress={toggleCheckbox}
-                    style={styles.customCheckbox}
-                  >
-                    {isOrganic ? (
-                      <CheckIcon
-                        width={wp("4%")}
-                        height={hp("4%")}
-                        color="#2196F3"
-                      />
-                    ) : null}
-                  </TouchableOpacity>
-                  <Text style={styles.checkboxLabel}>{t("is_organic")}?</Text>
                 </View>
 
                 {/* Shelf Life */}
@@ -531,6 +560,7 @@ const ProductDetailsForm = () => {
                         const updatedDetails = [...packageDetails];
                         updatedDetails[index].quantity = value;
                         setPackageDetails(updatedDetails);
+                        calculateTotalValue();
                       }}
                       width={wp(20)}
                       keyboardType="numeric"
@@ -571,8 +601,8 @@ const ProductDetailsForm = () => {
                   <Text style={styles.totalValueText}>
                     Total Quantity:{" "}
                     {units === "ton"
-                      ? (calculateTotalQuantity() / 1000) + " tons"
-                      : calculateTotalQuantity() + " KG"}
+                      ? calculateTotalQuantity() / 1000 + " tons"
+                      : calculateTotalQuantity() + " tons"}
                   </Text>
                 </View>
 

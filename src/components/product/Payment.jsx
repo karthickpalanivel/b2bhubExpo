@@ -52,6 +52,14 @@ const PaymentSummary = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const { productSummary } = route.params;
+
+  // console.log(productSummary);
+  useEffect(() => {
+    console.log("Payment Page");
+    console.log(productSummary);
+  }, []);
+
   const { t } = useTranslation();
 
   const orderPlaced = () => {
@@ -220,6 +228,18 @@ const PaymentSummary = ({ route }) => {
   const goBack = () => {
     navigation.goBack();
   };
+
+  const gstCalculatedPrice = () =>{
+    return productSummary.currentOrderPrice + (productSummary.currentOrderPrice * productSummary.gst) 
+  }
+
+  const translatedProductName = () => {
+    if (productSummary.productName == "ToorDal") return t("toor_dal");
+    if (productSummary.productName == "MoongDal") return t("moong_dal");
+    if (productSummary.productName == "UradDal") return t("urad_dal");
+    if (productSummary.productName == "GramDal") return t("gram_dal");
+  };
+
   return (
     <>
       {isLoading ? (
@@ -241,26 +261,24 @@ const PaymentSummary = ({ route }) => {
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("product_name")}</Text>
-                <Text style={styles.tableCell}>
-                  {/* {productSummary.productName} */}
-                </Text>
+                <Text style={styles.tableCell}>{translatedProductName()}</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("total_price")}</Text>
                 <Text style={styles.tableCell}>
-                  {/* ₹ {productSummary.currentOrderPrice} */}
+                  ₹ {productSummary.currentOrderPrice}
                 </Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>
                   {t("gst")} ({t("exempted")})
                 </Text>
-                <Text style={styles.tableCell}>₹ 0</Text>
+                <Text style={styles.tableCell}>{productSummary.gst}</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("total_amount")}</Text>
                 <Text style={styles.tableCell}>
-                  {/* ₹ {productSummary.totalAmount} */}
+                  ₹ {productSummary.totalAmount}
                 </Text>
               </View>
             </View>

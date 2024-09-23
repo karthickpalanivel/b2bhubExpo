@@ -149,16 +149,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fefefe",
     alignItems: "center",
   },
+
   floatNavigationContainer: {
     position: "absolute",
     bottom: hp(3),
     right: wp(5),
   },
+  
   imageCard: {
     width: wp(100),
     height: wp(100),
     marginTop: hp(50),
   },
+  
   emptyBox: {
     marginTop: wp(50),
     width: wp(30),
@@ -170,6 +173,7 @@ const styles = StyleSheet.create({
     color: "grey",
     textAlign:'center',
   },
+  
   noOrderTwo: {
     fontSize: hp(2),
     color: "grey",

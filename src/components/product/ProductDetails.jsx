@@ -24,23 +24,52 @@ import ProductCardTwo from "./ProductCardTwo";
 import {
   ChevronLeftIcon,
   CheckCircleIcon,
+  XCircleIcon,
 } from "react-native-heroicons/outline";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { useTranslation } from "react-i18next";
 import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
+import TermsAndConditionsModal from "./TermsandCondition";
 
 const ProductDetails = ({ route }) => {
   const { productDetailsInArray } = route.params;
-  console.log("details page");
+  // console.log("details page");
   // console.log(productDetailsInArray);
+
+  //modal
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalQuantity, setModalQuantity] = useState(100);
+  const [showSummary, setShowSummary] = useState(false);
+  const [termsVisible, setTermsVisible] = useState(false);
+  const [modalTermVisible, setModalTermVisible] = useState(false);
+
+  const handleContinue = () => {
+    setShowSummary(true);
+  };
+  const handlePayment = () => {
+    // Handle payment logic here
+    setModalVisible(false);
+    setModalTermVisible(true);
+    setTermsVisible(true);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setModalVisible(false);
+      setModalTermVisible(false);
+      setShowSummary(false);
+      setTermsVisible(false);
+    }, 50);
+  }, []);
+
   const navigation = useNavigation();
 
   const goback = () => {
     navigation.navigate("Home");
   };
 
-  const orderNow = () => {
+  const orderNow = (productDetailsInArray) => {
     console.log(
       productDetails.productName +
         " " +
@@ -48,6 +77,7 @@ const ProductDetails = ({ route }) => {
         " " +
         "ordered"
     );
+    navigation.navigate("paymentSummary", { productDetailsInArray });
   };
 
   const { t } = useTranslation();
@@ -77,6 +107,18 @@ const ProductDetails = ({ route }) => {
 
     productCategory: productDetailsInArray[9],
   };
+
+  const calculateTotal = (productPrice) => {
+    const totalPrice = productPrice * modalQuantity * 1000;
+    const gst = totalPrice * 0;
+    const totalAmount = totalPrice + gst;
+
+    return { totalPrice, gst, totalAmount };
+  };
+
+  const { totalPrice, gst, totalAmount } = calculateTotal(
+    productDetails.productPrice
+  );
 
   // console.log("--------------------------object log--------------------------");
   console.log(productDetails);
@@ -132,29 +174,38 @@ const ProductDetails = ({ route }) => {
 
   const translatingLocation = () => {};
 
-  useEffect(() => {
-    const url = `${process.env.REACT_APP_BACKEND_URL}/admin/getProducts`;
-    axios
-      .post(url, {})
-      .then((response) => {
-        setProducts(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.error(err);
-      });
+  // useEffect(() => {
+  //   const url = `${process.env.REACT_APP_BACKEND_URL}/admin/getProducts`;
+  //   axios
+  //     .post(url, {})
+  //     .then((response) => {
+  //       setProducts(response.data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setIsLoading(false);
+  //       console.error(err);
+  //     });
 
-    async function loadFonts() {
-      await Font.loadAsync({
-        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-        // Load other fonts as needed
-      });
-      setIsLoading(false);
-    }
+  //   async function loadFonts() {
+  //     await Font.loadAsync({
+  //       Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+  //       // Load other fonts as needed
+  //     });
+  //     setIsLoading(false);
+  //   }
 
-    loadFonts();
-  }, []);
+  //   loadFonts();
+  // }, []);
+
+  const finalValue = {
+    productName: productDetails.productName,
+    productId: productDetails.productId,
+    productCategory: productDetails.productCategory,
+    totalPrice: totalPrice,
+    gst: gst,
+    totalAmount: totalAmount,
+  };
 
   return (
     <>
@@ -197,7 +248,11 @@ const ProductDetails = ({ route }) => {
                     </Text>
                   </View>
                   <View style={styles.locationContainer}>
-                    <MapPinIcon size={hp(3)} color={"white"} style={styles.mapIcon} />
+                    <MapPinIcon
+                      size={hp(3)}
+                      color={"white"}
+                      style={styles.mapIcon}
+                    />
                     <View>
                       <Text style={styles.locationLabel}>{t("location")}</Text>
                     </View>
@@ -233,7 +288,7 @@ const ProductDetails = ({ route }) => {
                     </Text>
                     <TouchableOpacity
                       style={styles.orderNowContainer}
-                      onPress={orderNow}
+                      onPress={() => setModalVisible(true)}
                     >
                       <Feather
                         name={"shopping-cart"}
@@ -250,16 +305,39 @@ const ProductDetails = ({ route }) => {
                 <View>
                   {productDetails.productIsOrganic == 1 ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon size={hp(3)} color={"white"} style={styles.verifiedIcon} />
+                      <CheckCircleIcon
+                        size={hp(3)}
+                        color={"white"}
+                        style={styles.verifiedIcon}
+                      />
                       <Text style={styles.descriptionText}>
                         {t("organic") + " " + t("product")}
                       </Text>
                     </View>
                   ) : null}
 
+                  {productDetails.productSpeciality ? (
+                    <View style={styles.verifedDescription}>
+                      <CheckCircleIcon
+                        size={hp(3)}
+                        color={"white"}
+                        style={styles.verifiedIcon}
+                      />
+                      <Text style={styles.descriptionText}>
+                        {t("high_in_protein")}
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
+
+                <View>
                   {productDetails.productQualityAvailable ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon size={hp(3)} color={"white"} style={styles.verifiedIcon} />
+                      <CheckCircleIcon
+                        size={hp(3)}
+                        color={"white"}
+                        style={styles.verifiedIcon}
+                      />
                       <Text style={styles.descriptionText}>
                         {productDetails.productQualityAvailable.slice(0, 2) +
                           t("grade") +
@@ -268,26 +346,115 @@ const ProductDetails = ({ route }) => {
                       </Text>
                     </View>
                   ) : null}
-                </View>
 
-                <View>
-                  {productDetails.productSpeciality ? (
-                    <View style={styles.verifedDescription}>
-                      <CheckCircleIcon size={hp(3)} color={"white"} style={styles.verifiedIcon} />
-                      <Text style={styles.descriptionText}>
-                        {t("high_in_protein")}
-                      </Text>
-                    </View>
-                  ) : null}
                   {productDetails.productMoisture ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon size={hp(3)} color={"white"} style={styles.verifiedIcon} />
+                      <CheckCircleIcon
+                        size={hp(3)}
+                        color={"white"}
+                        style={styles.verifiedIcon}
+                      />
                       <Text>{t("moisture")}</Text>
                     </View>
                   ) : null}
                 </View>
               </View>
             </View>
+
+            <Modal
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+              animationType="slide"
+            >
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContent}>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <XCircleIcon size={hp(3)} color={"black"} />
+                  </TouchableOpacity>
+                  {!showSummary ? (
+                    <>
+                      <Text style={styles.modalTitle}>
+                        {t("select_quantity_in_tons")}
+                      </Text>
+
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Quantity in Tones"
+                        keyboardType="numeric"
+                        value={modalQuantity.toString()}
+                        onChangeText={(text) => setModalQuantity(Number(text))}
+                      />
+
+                      <TouchableOpacity
+                        style={styles.continueButton}
+                        onPress={handleContinue}
+                      >
+                        <Text style={styles.continueButtonText}>
+                          {t("continue")}
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  ) : (
+                    <>
+                      <Text style={styles.modalTitle}>
+                        {t("order_summary")}
+                      </Text>
+                      <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>
+                            {t("total_price")}
+                          </Text>
+                          <Text style={styles.tableCell}>
+                            ₹ {totalPrice.toFixed(0)}
+                          </Text>
+                        </View>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>{t("gst")} (0%)</Text>
+                          <Text style={styles.tableCell}>
+                            ₹ {gst.toFixed(0)}
+                          </Text>
+                        </View>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>
+                            {t("total_amount")}
+                          </Text>
+                          <Text style={styles.tableCell}>
+                            ₹ {totalAmount.toFixed(0)}
+                          </Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={styles.paymentButton}
+                        onPress={handlePayment}
+                      >
+                        <Text style={styles.paymentButtonText}>
+                          {t("proceed_to_payment")}
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  )}
+                </View>
+              </View>
+            </Modal>
+            <Modal
+              transparent={true}
+              visible={modalTermVisible}
+              onRequestClose={() => setModalTermVisible(false)}
+              animationType="slide"
+            >
+              <TermsAndConditionsModal
+                visible={termsVisible}
+                onClose={() => setTermsVisible(false)}
+                currentOrderPrice={totalPrice}
+                totalAmount={totalAmount}
+                productName={productDetails.productName}
+                productId={productDetails.productId}
+              />
+            </Modal>
 
             {/* Other Products */}
           </ScrollView>
@@ -303,7 +470,6 @@ const ProductDetails = ({ route }) => {
 export default ProductDetails;
 
 const styles = StyleSheet.create({
-  
   // full screen container
 
   mainContainer: {
@@ -397,7 +563,7 @@ const styles = StyleSheet.create({
     marginVertical: wp(1),
   },
 
-  mapIcon:{
+  mapIcon: {
     color: "white",
   },
 
@@ -429,7 +595,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 0.1,
     elevation: 3,
-    justifyContent: 'center',
+    justifyContent: "center",
     alignItems: "center",
     height: hp(5),
     flexDirection: "row",
@@ -450,7 +616,6 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     flexDirection: "row",
     marginLeft: wp(2.5),
-  
   },
 
   verifedDescription: {
@@ -467,19 +632,114 @@ const styles = StyleSheet.create({
 
   descriptionText: {
     fontSize: wp(4),
-    width: wp(35),
+    width: wp(30),
     marginLeft: wp(2),
     fontFamily: "QuicksandSemiBold",
     color: "#333",
     marginRight: wp(3),
   },
 
-  verifiedIcon:{
+  verifiedIcon: {
     width: wp(5),
     height: wp(5),
-    color: '#333',
+    color: "#333",
     marginLeft: wp(2),
-    
+  },
+
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
+  modalContent: {
+    width: "90%",
+    maxWidth: wp(80),
+    padding: wp(5),
+    backgroundColor: "white",
+    borderRadius: wp(2.5),
+    elevation: 5,
+    position: "relative",
+  },
+
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    padding: 10,
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+
+  picker: {
+    height: 50,
+    width: "100%",
+    marginBottom: 15,
+  },
+
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    marginBottom: 15,
+    paddingVertical: 5,
+    fontSize: 16,
+  },
+
+  continueButton: {
+    backgroundColor: "#4870F4",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+
+  continueButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+
+  paymentButton: {
+    backgroundColor: "#4870F4",
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+
+  paymentButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+
+  closeButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+
+  table: {
+    width: "100%",
+    marginVertical: 15,
+    borderRadius: 10,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  tableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  tableCell: {
+    fontSize: 16,
+    color: "#333",
   },
 
   floatNavigationContainer: {
