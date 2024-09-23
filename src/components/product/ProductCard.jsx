@@ -23,6 +23,7 @@ import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { XCircleIcon } from "react-native-heroicons/outline";
 
+
 const ProductCard = ({ props, index }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();

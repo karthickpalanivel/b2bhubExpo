@@ -1,16 +1,16 @@
 // Home.js
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View, Image, Text } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {ScrollView, StyleSheet, View, Image, Text} from "react-native";
+import {StatusBar} from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { TouchableOpacity } from "react-native";
+import {TouchableOpacity} from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
@@ -51,22 +51,39 @@ const ProductDisplay = () => {
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const { t } = useTranslation();
-  AsyncStorage.getItem("customerId")
-    .then((value) => {
-      if (value !== null) {
-        // Value was found, do something with it
-        //console.log("Value:", value);
-        setcustomerId(value);
-        handleFetch();
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-  useEffect(() => {
+  const {t} = useTranslation();
+
+
+    AsyncStorage.getItem("customerId")
+      .then((value) => {
+        if (value !== null) {
+          // Value was found, do something with it
+          //console.log("Value:", value);
+          setcustomerId(value);
+          handleFetch();
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    AsyncStorage.getItem("token")
+      .then((value) => {
+        if (value !== null) {
+          // Value was found, do something with it
+          settoken(value);
+          handleFetch();
+          //console.log("Value:", value);
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -78,20 +95,8 @@ const ProductDisplay = () => {
     }
 
     loadFonts();
-  }, []);
-  AsyncStorage.getItem("token")
-    .then((value) => {
-      if (value !== null) {
-        // Value was found, do something with it
-        settoken(value);
-        //console.log("Value:", value);
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    
+
 
   const handleFetch = async () => {
     if (!token) {
@@ -102,9 +107,10 @@ const ProductDisplay = () => {
       const url =
         `${process.env.REACT_APP_BACKEND_URL}` +
         "/seller/getProductsBySellerId";
+
       const res = await axios.post(
         url,
-        { customerId: customerId },
+        {customerId: customerId},
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -128,9 +134,22 @@ const ProductDisplay = () => {
       //setLoading(false); // End loading after fetching
     }
   };
-  console.log("====================================");
-  console.log(data);
-  console.log("====================================");
+
+  async function handleDeleteProduct(params) {}
+
+  const formatDate = (isoDate) => {
+    if (!isoDate) return ""; // Handle case where date is null or undefined
+
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+  // console.log("====================================");
+  // console.log(data);
+  // console.log("====================================");
 
   return (
     <>
@@ -151,7 +170,7 @@ const ProductDisplay = () => {
                   {/* Product Image */}
                   <View>
                     <Image
-                      source={{ uri: product.productImg }}
+                      source={{uri: product.productImg}}
                       style={styles.image}
                     />
                     <View style={styles.buttonContainer}>
@@ -195,7 +214,7 @@ const ProductDisplay = () => {
                     </Text>
                     <Text style={styles.label}>
                       {Object.keys(product.packaging).map((kg) => (
-                        <Text key={kg} style={{ marginBottom: "4px" }}>
+                        <Text key={kg} style={{marginBottom: "4px"}}>
                           {kg}: {product.packaging[kg]} TONNES
                         </Text>
                       ))}
@@ -214,13 +233,14 @@ const ProductDisplay = () => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  mainContainer1: {
     flex: 1,
     marginTop: wp(5),
   },
   subMainContainer: {
     flex: 1,
     marginHorizontal: wp(3),
+    marginBottom: 20,
   },
   container: {
     flexDirection: "row",
