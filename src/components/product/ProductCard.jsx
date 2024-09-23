@@ -102,7 +102,7 @@ const ProductCard = ({ props, index }) => {
   }, []);
 
   const onMoreDetails = (productDetailsInArray) => {
-    console.log(productDetailsInArray);
+    // console.log(productDetailsInArray);
     // console.log(id);
     navigation.navigate("ProductDetails", { productDetailsInArray });
     // console.log("=============================");
@@ -249,7 +249,7 @@ const ProductCard = ({ props, index }) => {
 
                 props.name,
 
-                gradeAUnit.PricePerUnit.toFixed(2),
+                gradeAUnit.PricePerUnit?.toFixed(2),
 
                 props.location,
 
@@ -293,7 +293,7 @@ const ProductCard = ({ props, index }) => {
               </Text>
               <View>
                 <Text style={styles.offerPrice}>
-                  ₹ {gradeAUnit.PricePerUnit.toFixed(2)}
+                  ₹ {gradeAUnit.PricePerUnit?.toFixed(2)}
                 </Text>
                 <Text style={styles.offerPrice}>{t("kg")}</Text>
               </View>

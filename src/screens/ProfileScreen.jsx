@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
   },
   floatNavigationContainer: {
     position: "absolute",
-    bottom: hp(5),
+    bottom: hp(3),
     right: wp(5),
   },
   languageModalContainer: {

@@ -67,17 +67,17 @@ const FloatingNavigationButton = ({buttonColor}) => {
   const popOut = () => {
     setPop(false);
     Animated.timing(icon_1, {
-      toValue: -hp(45),
+      toValue: -hp(100),
       duration: 300,
       useNativeDriver: false,
     }).start();
     Animated.timing(icon_2, {
-      toValue: -hp(15),
+      toValue: -hp(100),
       duration: 300,
       useNativeDriver: false,
     }).start();
     Animated.timing(icon_3, {
-      toValue: -hp(7.7),
+      toValue: -hp(100),
       duration: 300,
       useNativeDriver: false,
     }).start();
