@@ -1,16 +1,16 @@
 // Home.js
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View, Image, Text } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {ScrollView, StyleSheet, View, Image, Text} from "react-native";
+import {StatusBar} from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { TouchableOpacity } from "react-native";
+import {TouchableOpacity} from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
@@ -54,36 +54,62 @@ const ProductDisplay = () => {
   const {t} = useTranslation();
   const [apiCalled, setApiCalled] = useState(false);
 
-    AsyncStorage.getItem("customerId")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          //console.log("Value:", value);
-          setcustomerId(value);
-          handleFetch();
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  useEffect(() => {
+    const fetchDataFromAsyncStorageAndCallApi = async () => {
+      try {
+        // Step 1: Get the item from AsyncStorage
+        const token1 = await AsyncStorage.getItem("token");
+        const customerId1 = await AsyncStorage.getItem("customerId");
 
-    AsyncStorage.getItem("token")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          settoken(value);
-          handleFetch();
-          //console.log("Value:", value);
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        console.log(token1 + customerId1);
 
+        if (token1 && customerId1) {
+          // Step 2: Call API only if it hasn't been called before
+          if (!apiCalled) {
+            try {
+              const url =
+                `${process.env.REACT_APP_BACKEND_URL}` +
+                "/seller/getProductsBySellerId";
+              console.log(url);
+
+              const res = await axios.post(
+                url,
+                {customerId: customerId1},
+                {
+                  headers: {
+                    Authorization: ` Bearer ${token1}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (res.data.length === 0) {
+                setNoData(true);
+                console.log("length is 0");
+                setApiCalled(true);
+              } else {
+                setData(res.data);
+                setNoData(false);
+                setApiCalled(true);
+                //console.log("no data");
+              }
+            } catch (error) {
+              console.error("Error fetching products by seller ID:", error);
+              setNoData(true);
+            }
+          }
+        } else {
+          console.log("No item found in AsyncStorage");
+        }
+      } catch (error) {
+        console.error("Error fetching from AsyncStorage:", error);
+      }
+    };
+
+    fetchDataFromAsyncStorageAndCallApi(); // Call this function only once in useEffect
+  }, [apiCalled]);
+
+  useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -93,10 +119,8 @@ const ProductDisplay = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
-    
-
+  }, []);
 
   const handleFetch = async () => {
     if (!token) {
@@ -111,7 +135,7 @@ const ProductDisplay = () => {
 
       const res = await axios.post(
         url,
-        { customerId: customerId },
+        {customerId: customerId},
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -171,7 +195,7 @@ const ProductDisplay = () => {
                   {/* Product Image */}
                   <View>
                     <Image
-                      source={{ uri: product.productImg }}
+                      source={{uri: product.productImg}}
                       style={styles.image}
                     />
                     <View style={styles.buttonContainer}>
@@ -189,9 +213,7 @@ const ProductDisplay = () => {
                     <Text style={styles.productName}>{product.name}</Text>
                     <View style={styles.rowValue}>
                       <Text style={styles.label}>{t("price")}: </Text>
-                      <Text style={styles.value}>
-                        {product.price}/ {t("kg")}
-                      </Text>
+                      <Text style={styles.value}>{product.price}/</Text>
                       <Text style={styles.value}>{products.units}</Text>
                     </View>
                     <Text style={styles.label}>
@@ -210,17 +232,15 @@ const ProductDisplay = () => {
                     </Text>
                     <Text style={styles.label}>
                       {t("validity")}:{" "}
-                      <Text style={styles.value}>
-                        {product.validity.slice(0, 10)}
-                      </Text>
+                      <Text style={styles.value}>{product.validity}</Text>
                     </Text>
                     <Text style={styles.label}>
                       <Text style={styles.value}>{product.description}</Text>
                     </Text>
                     <Text style={styles.label}>
                       {Object.keys(product.packaging).map((kg) => (
-                        <Text key={kg} style={{ marginBottom: "4px" }}>
-                          {kg}: {product.packaging[kg]} / {t("tonnes")}
+                        <Text key={kg} style={{marginBottom: "4px"}}>
+                          {kg}: {product.packaging[kg]} TONNES
                         </Text>
                       ))}
                     </Text>
@@ -283,7 +303,6 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
     fontFamily: "QuicksandSemiBold",
     color: "white",
-    // width: wp(),
   },
   rowValue: {
     flexDirection: "row",
@@ -294,19 +313,16 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
   },
   editButton: {
-    width: wp(35),
     backgroundColor: "#2196F3",
     paddingVertical: hp(1),
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
     marginRight: wp(2),
-    marginVertical: wp(2),
   },
   deleteButton: {
-    width: wp(35),
     backgroundColor: "#4574B3",
     paddingVertical: hp(1),
-    paddingHorizontal: wp(2),
+    paddingHorizontal: wp(4),
     borderRadius: wp(2),
   },
   buttonText: {
