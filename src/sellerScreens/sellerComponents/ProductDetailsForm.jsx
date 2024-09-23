@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Alert,
-  Platform,
-  TextInput,
-} from "react-native";
-import { CheckIcon, CalendarIcon } from "react-native-heroicons/outline";
-import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import Modal from "react-native-modal";
+import {Picker} from "@react-native-picker/picker";
+import {useNavigation} from "@react-navigation/native";
+import * as Font from "expo-font";
+import * as ImagePicker from "expo-image-picker";
+import {StatusBar} from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+  Alert,
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  CalendarIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+} from "react-native-heroicons/outline";
 import {
   CameraIcon,
   PhotoIcon,
   TrashIcon,
   XMarkIcon,
 } from "react-native-heroicons/solid";
-import * as ImagePicker from "expo-image-picker";
-import FloatingLabelInput from "./FloatingLabelInput";
-import { StatusBar } from "expo-status-bar";
-import * as Font from "expo-font";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
-import { useNavigation } from "@react-navigation/native";
+import Modal from "react-native-modal";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-import { useTranslation } from "react-i18next";
-import pickerProductList from "../pickerProductList.json";
+import FloatingLabelInput from "./FloatingLabelInput";
+import axios from "axios";
 
 const ProductDetailsForm = () => {
   const [isOrganic, setIsOrganic] = useState(false);
@@ -44,7 +47,7 @@ const ProductDetailsForm = () => {
   const [validity, setValidity] = useState(new Date());
   const [description, setDescription] = useState("");
   const [packageDetails, setPackageDetails] = useState([
-    { type: "Select Package Type", quantity: "" },
+    {type: "Select Package Type", quantity: ""},
   ]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [image, setImage] = useState(null);
@@ -54,9 +57,9 @@ const ProductDetailsForm = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [totalValue, setTotalValue] = useState(0);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
-  console.log("imageurl" + imageUrl);
+  console.log("image " + image);
 
   const onSubmit = () => {
     if (
@@ -92,7 +95,7 @@ const ProductDetailsForm = () => {
       setMoisture("Select Moisture");
       setShelfLife("Select Shelf Life");
       setValidity(new Date());
-      setPackageDetails([{ type: "Select Package Type", quantity: "" }]);
+      setPackageDetails([{type: "Select Package Type", quantity: ""}]);
       setImage(null);
     } else {
       Alert.alert("Enter every field");
@@ -139,7 +142,7 @@ const ProductDetailsForm = () => {
   const addPackageDetail = () => {
     setPackageDetails([
       ...packageDetails,
-      { type: "Select Package Type", quantity: "" },
+      {type: "Select Package Type", quantity: ""},
     ]);
   };
 
@@ -155,22 +158,19 @@ const ProductDetailsForm = () => {
 
   const uploadImage = async (imageUri) => {
     const formData = new FormData();
-    const fileName = imageUri.assets[0].fileName;
-    const fileType = imageUri.assets[0].type;
 
-    formData.append("file", imageUri);
+    formData.append("file", {
+      uri: imageUri,
+      type: "image/jpeg", // or the actual MIME type of the image
+      name: "upload.jpg",
+    });
     formData.append("upload_preset", "ml_default"); // Add your upload preset
     formData.append("cloud_name", "dalzs7bc2"); // Add your cloud name if necessary
 
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       if (response.data.secure_url) {
@@ -197,7 +197,7 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        }).then(uploadImage(result));
+        });
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
@@ -205,12 +205,11 @@ const ProductDetailsForm = () => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
-        }).then(uploadImage(result));
+        });
       }
       if (!result.canceled) {
         setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
-        uploadImage(result);
       }
     } catch (error) {
       console.error(error);
@@ -303,7 +302,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color="#2196F3"
                           />
-                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("camera")}
                           </Text>
                         </TouchableOpacity>
@@ -316,7 +315,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color="#2196F3"
                           />
-                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("gallery")}
                           </Text>
                         </TouchableOpacity>
@@ -332,7 +331,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color="#2196F3"
                           />
-                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("remove")}
                           </Text>
                         </TouchableOpacity>
@@ -346,7 +345,7 @@ const ProductDetailsForm = () => {
                   >
                     {image ? (
                       <Image
-                        source={{ uri: image }}
+                        source={{uri: image}}
                         style={styles.uploadedImage}
                       />
                     ) : (
@@ -359,6 +358,12 @@ const ProductDetailsForm = () => {
                   </TouchableOpacity>
                 )}
               </View>
+
+              <TouchableOpacity onPress={() => uploadImage()}>
+                <View>
+                  <Text>Upload</Text>
+                </View>
+              </TouchableOpacity>
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
@@ -449,12 +454,12 @@ const ProductDetailsForm = () => {
                     <Picker.Item
                       label={`${t("select")} ${t("shelf_life")}`}
                       value="Select Shelf Life"
-                      style={{ fontFamily: "QuicksandSemiBold" }}
+                      style={{fontFamily: "QuicksandSemiBold"}}
                     />
                     <Picker.Item
                       label={`1 ${t("month")}`}
                       value="1 month"
-                      style={{ fontFamily: "QuicksandSemiBold" }}
+                      style={{fontFamily: "QuicksandSemiBold"}}
                     />
                     <Picker.Item label={`3 ${t("month")}`} value="3 months" />
                     <Picker.Item label={`6 ${t("month")}`} value="6 months" />
@@ -504,7 +509,7 @@ const ProductDetailsForm = () => {
                       <Picker
                         selectedValue={detail.type}
                         style={[
-                          { borderColor: "#2196F3" },
+                          {borderColor: "#2196F3"},
                           styles.packageTypePicker,
                         ]}
                         onValueChange={(itemValue) => {
@@ -571,7 +576,7 @@ const ProductDetailsForm = () => {
                   <Text style={styles.totalValueText}>
                     Total Quantity:{" "}
                     {units === "ton"
-                      ? (calculateTotalQuantity() / 1000) + " tons"
+                      ? calculateTotalQuantity() / 1000 + " tons"
                       : calculateTotalQuantity() + " KG"}
                   </Text>
                 </View>

@@ -52,38 +52,64 @@ const ProductDisplay = () => {
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const {t} = useTranslation();
+  const [apiCalled, setApiCalled] = useState(false);
 
+  useEffect(() => {
+    const fetchDataFromAsyncStorageAndCallApi = async () => {
+      try {
+        // Step 1: Get the item from AsyncStorage
+        const token1 = await AsyncStorage.getItem("token");
+        const customerId1 = await AsyncStorage.getItem("customerId");
 
-    AsyncStorage.getItem("customerId")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          //console.log("Value:", value);
-          setcustomerId(value);
-          handleFetch();
+        console.log(token1 + customerId1);
+
+        if (token1 && customerId1) {
+          // Step 2: Call API only if it hasn't been called before
+          if (!apiCalled) {
+            try {
+              const url =
+                `${process.env.REACT_APP_BACKEND_URL}` +
+                "/seller/getProductsBySellerId";
+              console.log(url);
+
+              const res = await axios.post(
+                url,
+                {customerId: customerId1},
+                {
+                  headers: {
+                    Authorization: ` Bearer ${token1}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (res.data.length === 0) {
+                setNoData(true);
+                console.log("length is 0");
+                setApiCalled(true);
+              } else {
+                setData(res.data);
+                setNoData(false);
+                setApiCalled(true);
+                //console.log("no data");
+              }
+            } catch (error) {
+              console.error("Error fetching products by seller ID:", error);
+              setNoData(true);
+            }
+          }
         } else {
-          console.log("No value found");
+          console.log("No item found in AsyncStorage");
         }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      } catch (error) {
+        console.error("Error fetching from AsyncStorage:", error);
+      }
+    };
 
-    AsyncStorage.getItem("token")
-      .then((value) => {
-        if (value !== null) {
-          // Value was found, do something with it
-          settoken(value);
-          handleFetch();
-          //console.log("Value:", value);
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    fetchDataFromAsyncStorageAndCallApi(); // Call this function only once in useEffect
+  }, [apiCalled]);
 
+  useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -93,10 +119,8 @@ const ProductDisplay = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
-    
-
+  }, []);
 
   const handleFetch = async () => {
     if (!token) {
@@ -107,6 +131,7 @@ const ProductDisplay = () => {
       const url =
         `${process.env.REACT_APP_BACKEND_URL}` +
         "/seller/getProductsBySellerId";
+      console.log(url);
 
       const res = await axios.post(
         url,
