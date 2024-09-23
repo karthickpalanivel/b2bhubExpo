@@ -233,6 +233,7 @@ const styles = StyleSheet.create({
   subMainContainer: {
     flex: 1,
     marginHorizontal: wp(3),
+    marginBottom:20
   },
   container: {
     flexDirection: "row",
