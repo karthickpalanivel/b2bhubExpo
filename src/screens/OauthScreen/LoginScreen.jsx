@@ -121,11 +121,10 @@ const LoginScreen = () => {
   }, []);
 
   async function handleLogin() {
-
     const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
-    console.log('====================================');
+    console.log("====================================");
     console.log(url);
-    console.log('====================================');
+    console.log("====================================");
     await axios
       .post(url, {
         email: buyerEmail,
@@ -391,9 +390,7 @@ const LoginScreen = () => {
             </>
           )}
           <TouchableOpacity onPress={navigateToRegister}>
-            <Text style={styles.register}>
-              {t("register_a_new_account")}
-            </Text>
+            <Text style={styles.register}>{t("register_a_new_account")}</Text>
           </TouchableOpacity>
           {visible ? (
             <Modal>
@@ -705,9 +702,10 @@ const styles = StyleSheet.create({
   termsSentence: {
     fontSize: wp(3.5),
     marginBottom: wp(5),
+    fontFamily: "QuicksandSemiBold",
   },
   boldSentence: {
-    fontWeight: "bold",
+    fontFamily: "QuicksandSemiBold",
   },
   checkboxContainer: {
     flexDirection: "row",

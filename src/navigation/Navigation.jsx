@@ -69,7 +69,7 @@ export default function Navigation() {
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="EntryShopDetails" component={ShopDetails} />
+        {/* <Stack.Screen name="EntryShopDetails" component={ShopDetails} /> */}
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen
           name="OtpConformScreen"

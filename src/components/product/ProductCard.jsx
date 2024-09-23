@@ -7,7 +7,7 @@ import {
   Modal,
   SafeAreaView,
   TouchableOpacity,
-  TextInput
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -29,6 +29,17 @@ const ProductCard = ({ props, index }) => {
   let isEven = index % 2 === 0;
   const [isLoading, setIsLoading] = useState(true);
   const [productDetailsModal, setProductDetailsModal] = useState(false);
+  const [productDetails, setProductDetails] = useState({
+    name: "",
+    imageSource: "",
+    category: "",
+    costPerUnit: "",
+    description: {},
+    location: "",
+    offerDuration: "",
+    offerStartDate: "",
+    offerStartTime: "",
+  });
   // const [timeRemaining, setTimeRemaining] = useState(
   //   formatTimeRemaining()
   // );
@@ -37,16 +48,20 @@ const ProductCard = ({ props, index }) => {
   const [quantity, setQuantity] = useState(100);
   const [showSummary, setShowSummary] = useState(false);
 
-  // useEffect(() => {
-  //   const updateTimer = () => {
-  //     setTimeRemaining(formatTimeRemaining());
-  //   };
-
-  //   const interval = setInterval(updateTimer, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-const handleContinue = () => {
+  useEffect(() => {
+    setProductDetails({
+      name: props.name,
+      imageSource: props.CommonImage,
+      category: props.category,
+      costPerUnit: props.costPerUnit,
+      description: props.description,
+      location: props.location,
+      offerDuration: props.offerDuration,
+      offerStartDate: props.offerStartDate,
+      offerStartTime: props.offerStartTime,
+    });
+  }, [props.productId]);
+  const handleContinue = () => {
     onGradeSelect(id, selectedGrade);
     setShowSummary(true);
   };
@@ -86,11 +101,11 @@ const handleContinue = () => {
     loadFonts();
   }, []);
 
-  const onMoreDetails = (id) => {
-    console.log("=============================");
-    console.log(id);
-    navigation.navigate("ProductDetails", { productId: id });
-    console.log("=============================");
+  const onMoreDetails = (productDetailsInArray) => {
+    console.log(productDetailsInArray);
+    // console.log(id);
+    navigation.navigate("ProductDetails", { productDetailsInArray });
+    // console.log("=============================");
   };
 
   const translatedName = (name) => {
@@ -142,11 +157,11 @@ const handleContinue = () => {
                 Offer ends in: {timeRemaining}
               </Text> */}
               <View style={styles.priceContainer}>
-                <Text style={styles.originalPrice}>
+                {/* <Text style={styles.originalPrice}>
                   Original: ₹ {props.price}
-                </Text>
+                </Text> */}
                 <Text style={styles.modalOfferPrice}>
-                  Offer: ₹ {props.costPerUnit}
+                  ₹ {props.costPerUnit}
                 </Text>
               </View>
 
@@ -182,9 +197,7 @@ const handleContinue = () => {
               <View style={styles.table}>
                 <View style={styles.tableRow}>
                   <Text style={styles.tableCell}>Total Price</Text>
-                  <Text style={styles.tableCell}>
-                    ₹ {totalPrice}
-                  </Text>
+                  <Text style={styles.tableCell}>₹ {totalPrice}</Text>
                 </View>
                 <View style={styles.tableRow}>
                   <Text style={styles.tableCell}>GST (18%)</Text>
@@ -192,9 +205,7 @@ const handleContinue = () => {
                 </View>
                 <View style={styles.tableRow}>
                   <Text style={styles.tableCell}>Total Amount</Text>
-                  <Text style={styles.tableCell}>
-                    ₹ {totalAmount}
-                  </Text>
+                  <Text style={styles.tableCell}>₹ {totalAmount}</Text>
                 </View>
               </View>
               <TouchableOpacity
@@ -231,10 +242,34 @@ const handleContinue = () => {
               borderColor: "#111",
             }}
             onPress={() => {
-              onMoreDetails(props);
-              console.log(
-                "\n-------------------" + props.productId + productDetailsModal
-              );
+              const productArray = [
+                props.productId,
+
+                props.CommonImage,
+
+                props.name,
+
+                gradeAUnit.PricePerUnit.toFixed(2),
+
+                props.location,
+
+                props?.description.moisture,
+
+                props?.description.QualityAvailable,
+
+                props?.description.IsOrganic,
+
+                props?.description.Speciality,
+
+                props.category,
+              ];
+
+              onMoreDetails(productArray);
+
+              // Object.entries(productArray).forEach(([key, value]) => {
+              //   console.log(key + " : " + value + " ");
+              // });
+              // modalVisible = true;
             }}
           >
             <Image
@@ -248,7 +283,6 @@ const handleContinue = () => {
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
@@ -259,8 +293,9 @@ const handleContinue = () => {
               </Text>
               <View>
                 <Text style={styles.offerPrice}>
-                  ₹ {gradeAUnit.PricePerUnit.toFixed(2)} {t("kg")}
+                  ₹ {gradeAUnit.PricePerUnit.toFixed(2)}
                 </Text>
+                <Text style={styles.offerPrice}>{t("kg")}</Text>
               </View>
             </View>
             <View
@@ -320,6 +355,8 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     fontSize: 15,
     color: "black",
+    textAlign: "right",
+    marginRight: wp(3),
     fontFamily: "QuicksandSemiBold",
   },
 
