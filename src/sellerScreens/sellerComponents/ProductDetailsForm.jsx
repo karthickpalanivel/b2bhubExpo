@@ -601,8 +601,8 @@ const ProductDetailsForm = () => {
                   <Text style={styles.totalValueText}>
                     Total Quantity:{" "}
                     {units === "ton"
-                      ? calculateTotalQuantity() / 1000 + " tons"
-                      : calculateTotalQuantity() + " tons"}
+                      ? calculateTotalQuantity() / 1000 + " tonnes"
+                      : calculateTotalQuantity() + " tonnes"}
                   </Text>
                 </View>
 

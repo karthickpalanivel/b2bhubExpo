@@ -243,5 +243,11 @@
   "location": "Location",
   "open": "Open",
   "premium_quality_product": "Premium Quality Product",
-  "grade": "Grade"
+  "grade": "Grade",
+  
+  "delete_product": "Delete Product",
+  "total_quantity": "Total Quantity",
+  "delete_confirmation": "Do you want to delete the Product?",
+  "yes": "Yes",
+  "no": "No"
 }
