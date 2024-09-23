@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import {
   View,
   Text,
@@ -16,24 +16,24 @@ import axios from "axios";
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { XCircleIcon } from "react-native-heroicons/outline";
-import { useTranslation } from "react-i18next";
+import {XCircleIcon} from "react-native-heroicons/outline";
+import {useTranslation} from "react-i18next";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useNavigation } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
+import {useFocusEffect} from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "react-native-heroicons/outline";
-import { StatusBar } from "expo-status-bar";
-import Animated, { FadeInRight } from "react-native-reanimated";
+import {StatusBar} from "expo-status-bar";
+import Animated, {FadeInRight} from "react-native-reanimated";
 
-const CustomCheckBox = ({ value, onValueChange }) => (
+const CustomCheckBox = ({value, onValueChange}) => (
   <TouchableOpacity
     style={[styles.checkbox, value && styles.checkboxChecked]}
     onPress={() => onValueChange(!value)}
@@ -57,7 +57,7 @@ const LoginScreen = () => {
   //const [email, setEmail] = useState('');
   const [sellerEmail, setSellerEmail] = useState("");
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const navigation = useNavigation();
 
@@ -119,6 +119,52 @@ const LoginScreen = () => {
 
     loadFonts();
   }, []);
+
+  const handleSellerSubmit = async () => {
+    if (sellerEmail && sellerPassword) {
+      console.log("Email:", sellerEmail);
+      console.log("Password:", sellerPassword);
+
+      const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
+      console.log("====================================");
+      console.log(url);
+      console.log("====================================");
+      await axios
+        .post(url, {
+          email: sellerEmail,
+          pwd: sellerPassword,
+          isSeller: true,
+        })
+        .then((res) => {
+          console.log(res.status);
+          if (res.status === 200) {
+            const customer = res.data.user;
+            console.log(customer);
+            navigation.navigate("SellerHome");
+            try {
+              AsyncStorage.setItem("loginstate", "false");
+              AsyncStorage.setItem("userEmail", sellerEmail);
+              AsyncStorage.setItem("customerId", customer.customerId);
+              AsyncStorage.setItem("companyname", customer.CompanyName);
+              AsyncStorage.setItem("phone", customer.phoneNo);
+              AsyncStorage.setItem("gst", customer.gstNo);
+              AsyncStorage.setItem("email", customer.Email);
+              AsyncStorage.setItem("token", res.data.token);
+              AsyncStorage.setItem("pan", customer.PAN);
+            } catch (e) {
+              // saving error
+              console.error(e);
+            }
+          } else window.alert(res.message);
+        })
+        .catch((error) => {
+          window.alert(error);
+          return;
+        });
+    } else {
+      Alert.alert("Error", "Please enter both email and password.");
+    }
+  };
 
   async function handleLogin() {
     const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
@@ -184,17 +230,6 @@ const LoginScreen = () => {
     }
   };
 
-  const handleSellerSubmit = () => {
-    if (sellerEmail && sellerPassword) {
-      console.log("Email:", sellerEmail);
-      console.log("Password:", sellerPassword);
-
-      navigation.navigate("SellerHome");
-    } else {
-      Alert.alert("Error", "Please enter both email and password.");
-    }
-  };
-
   const navigateToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
   };
@@ -243,12 +278,12 @@ const LoginScreen = () => {
           </View>
 
           {/* style={{textAlign: 'center'}} */}
-          <View style={{ alignItems: "center" }}>
+          <View style={{alignItems: "center"}}>
             <Toggle
               value={toggleValue}
               onPress={(newState) => setToggleValue(newState)}
               leftComponent={
-                <Text style={{ fontFamily: "QuicksandSemiBold" }}>
+                <Text style={{fontFamily: "QuicksandSemiBold"}}>
                   {t("buyer")}
                 </Text>
               }
@@ -528,9 +563,9 @@ const LoginScreen = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => setVisible(false)} // Close modal
-                    style={{ marginTop: wp(5), alignSelf: "center" }}
+                    style={{marginTop: wp(5), alignSelf: "center"}}
                   >
-                    <Text style={{ color: "red", fontSize: wp(4) }}>
+                    <Text style={{color: "red", fontSize: wp(4)}}>
                       {t("close")}
                     </Text>
                   </TouchableOpacity>
