@@ -37,12 +37,18 @@ export default function Categories({ activeCategory, setActiveCategory }) {
   const { t } = useTranslation();
 
   const categoryNameDal = (name) => {
-    if (name == "moong dal") return `${t("moong_dal")}`;
-    else if (name == "tur dal") return `${t("toor_dal")}`;
-    else if (name == "urad dal") return `${t("urad_dal")}`;
-    else if (name == "gram dal") return `${t("gram_dal")}`;
+    if (name == "Moong Dal") return t("moong_dal");
+    else if (name == "Tur Dal") return t("toor_dal");
+    else if (name == "Urad Dal") return t("urad_dal");
+    else if (name == "Gram Dal") return t("gram_dal");
   };
 
+  const translatedProductName = () => {
+    if (productDetails.productName == "ToorDal") return t("toor_dal");
+    if (productDetails.productName == "MoongDal") return t("moong_dal");
+    if (productDetails.productName == "UradDal") return t("urad_dal");
+    if (productDetails.productName == "GramDal") return t("gram_dal");
+  };
   return (
     <>
       {isLoading ? (
@@ -55,6 +61,8 @@ export default function Categories({ activeCategory, setActiveCategory }) {
             contentContainerStyle={styles.scrollConatiner}
           >
             {categoriesData?.map((category, index) => {
+
+              const name = category.name
               return (
                 <Pressable
                   key={index}
@@ -69,7 +77,9 @@ export default function Categories({ activeCategory, setActiveCategory }) {
                     {/* <Images uri={category.name}
                   style={styles.imagesComp}
                 /> */}
-                    <Text style={styles.categoryName}>{categoryNameDal(category.name)}</Text>
+                    <Text style={styles.categoryName}>
+                    {categoryNameDal(category.name)}
+                    </Text>
                   </View>
                 </Pressable>
               );
@@ -82,7 +92,9 @@ export default function Categories({ activeCategory, setActiveCategory }) {
                   onPress={() => setActiveCategory(product.name)}
                 >
                   <View style={styles.categoryView}>
-                    <Text style={styles.categoryName}>{categoryNameDal(product.name)}</Text>
+                    <Text style={styles.categoryName}>
+                      {categoryNameDal(product.name)}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -105,6 +117,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(2),
     alignItems: "center",
     justifyContent: "center",
+    width: wp(20),
   },
 
   imagesComp: {

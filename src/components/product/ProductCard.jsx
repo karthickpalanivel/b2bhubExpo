@@ -103,7 +103,7 @@ const ProductCard = ({ props, index }) => {
   }, []);
 
   const onMoreDetails = (productDetailsInArray) => {
-    console.log(productDetailsInArray);
+    // console.log(productDetailsInArray);
     // console.log(id);
     navigation.navigate("ProductDetails", { productDetailsInArray });
     // console.log("=============================");

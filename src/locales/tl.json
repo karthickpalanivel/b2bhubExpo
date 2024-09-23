@@ -231,5 +231,10 @@
   "package_details": "ప్యాకేజీ వివరాలు",
   "unpacked": "అన్ప్యాక్డ్",
   "add_package_details": "ప్యాకేజీ వివరాలను జోడించండి",
-  "submit": "సమర్పించండి"
+  "submit": "సమర్పించండి",
+  
+  "location": "స్థానం",
+  "open": "తెరవండి",
+  "premium_quality_product": "ప్రీమియం నాణ్యమైన ఉత్పత్తి",
+  "grade": "గ్రేడ్"
 }

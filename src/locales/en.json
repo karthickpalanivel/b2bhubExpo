@@ -238,6 +238,10 @@
   "package_details": "Package Details",
   "unpacked": "Unpacked",
   "add_package_details": "Add Package Details",
-  "submit": "Submit"
+  "submit": "Submit",
 
+  "location": "Location",
+  "open": "Open",
+  "premium_quality_product": "Premium Quality Product",
+  "grade": "Grade"
 }

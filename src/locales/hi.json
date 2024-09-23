@@ -231,5 +231,10 @@
   "package_details": "पैकेज विवरण",
   "unpacked": "अनपैक्ड",
   "add_package_details": "पैकेज विवरण जोड़ें",
-  "submit": "प्रस्तुत करें"
+  "submit": "प्रस्तुत करें",
+
+  "location": "स्थान",
+  "open": "खोलें",
+  "premium_quality_product": "उत्तम गुणवत्ता उत्पाद",
+  "grade": "ग्रेड"
 }

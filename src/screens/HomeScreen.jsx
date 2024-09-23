@@ -313,7 +313,7 @@ const HomeScreen = () => {
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  height: wp(20),
+                  height: hp(5),
                 }}
               >
                 <Text style={styles.punchTwo}>
@@ -519,7 +519,7 @@ const styles = StyleSheet.create({
   },
   floatNavigationContainer: {
     position: "absolute",
-    bottom: hp(5),
+    bottom: hp(3),
     right: wp(5),
   },
   buyersLogin: {

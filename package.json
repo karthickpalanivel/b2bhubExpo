@@ -52,7 +52,7 @@
     "react-native-screens": "3.31.1",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-toggle-element": "^2.0.1",
-    "react-native-vector-icons": "^10.1.0",
+    "react-native-vector-icons": "^10.2.0",
     "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {
