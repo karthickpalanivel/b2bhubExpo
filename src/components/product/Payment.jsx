@@ -103,24 +103,24 @@ const PaymentSummary = ({ route }) => {
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
+
         //console.log("Value:", value);
         setCompanyName(value);
       } else {
-        // No value found
+
         console.log("No value found");
         setCompanyName("");
       }
     })
     .catch((error) => {
-      // Error retrieving value
+
       console.error("Error:", error);
     });
   AsyncStorage.getItem("gst")
     .then((value) => {
       if (value !== null) {
         setGstNo(value);
-        // Value was found, do something with it
+
         //console.log("Value:", value);
       } else {
         // No value found
@@ -136,7 +136,7 @@ const PaymentSummary = ({ route }) => {
     .then((value) => {
       if (value !== null) {
         setEmail(value);
-        // Value was found, do something with it
+
         //console.log("Value:", value);
       } else {
         // No value found
@@ -145,17 +145,17 @@ const PaymentSummary = ({ route }) => {
       }
     })
     .catch((error) => {
-      // Error retrieving value
+
       console.error("Error:", error);
     });
   AsyncStorage.getItem("phone")
     .then((value) => {
       if (value !== null) {
-        // Value was found, do something with it
+
         //console.log("Value:", value);
         setPhoneNo(value);
       } else {
-        // No value found
+
         console.log("No value found");
         setPhoneNo("");
       }
@@ -229,9 +229,12 @@ const PaymentSummary = ({ route }) => {
     navigation.goBack();
   };
 
-  const gstCalculatedPrice = () =>{
-    return productSummary.currentOrderPrice + (productSummary.currentOrderPrice * productSummary.gst) 
-  }
+  const gstCalculatedPrice = () => {
+    return (
+      productSummary.currentOrderPrice +
+      productSummary.currentOrderPrice * productSummary.gst
+    );
+  };
 
   const translatedProductName = () => {
     if (productSummary.productName == "ToorDal") return t("toor_dal");
@@ -267,6 +270,12 @@ const PaymentSummary = ({ route }) => {
                 <Text style={styles.tableCell}>{t("total_price")}</Text>
                 <Text style={styles.tableCell}>
                   ₹ {productSummary.currentOrderPrice}
+                </Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableCell}>{t("quantity")}</Text>
+                <Text style={styles.tableCell}>
+                 {productSummary.productQuantity} {t('tonnes')}
                 </Text>
               </View>
               <View style={styles.tableRow}>

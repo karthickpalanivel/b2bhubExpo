@@ -46,6 +46,7 @@ const ProductDetails = ({ route }) => {
   const [modalTermVisible, setModalTermVisible] = useState(false);
 
   const handleContinue = () => {
+    
     setShowSummary(true);
   };
   const handlePayment = () => {
@@ -433,6 +434,7 @@ const ProductDetails = ({ route }) => {
                 totalAmount={totalAmount}
                 productName={productDetails.productName}
                 productId={productDetails.productId}
+                productQuantity ={modalQuantity}
               />
             </Modal>
 
@@ -472,7 +474,7 @@ const styles = StyleSheet.create({
   },
 
   headerOfProductDetails: {
-    marginTop: hp(5),
+    marginTop: hp(7),
     flexDirection: "row",
     alignItems: "center",
   },
