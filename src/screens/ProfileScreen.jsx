@@ -489,6 +489,8 @@ const styles = StyleSheet.create({
     backgroundColor:colors,
     elevation: 4,
     borderRadius: wp(3),
+    borderColor:backgrounds,
+    borderWidth:wp(0.5)
   },
   languageText: {
     fontSize: hp(2.5),
@@ -501,6 +503,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: hp(2),
     borderRadius: 4,
+    borderTopColor:backgrounds,
+    borderTopWidth:wp(0.1)
+
+    
   },
   iconX: {
     position: "absolute",

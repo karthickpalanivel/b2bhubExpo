@@ -32,6 +32,8 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import TermsAndConditionsModal from "./TermsandCondition";
 import { useScrollToTop } from "@react-navigation/native";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const ProductDetails = ({ route }) => {
   const { productDetailsInArray } = route.params;
@@ -193,7 +195,7 @@ const ProductDetails = ({ route }) => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" backgroundColor="#fbbf24" />
+          <StatusBar style="dark" backgroundColor={colors}/>
           <ScrollView style={styles.mainContainer}>
             <View style={styles.productDetailsContainer}>
               <View style={styles.headerOfProductDetails}>
@@ -204,7 +206,7 @@ const ProductDetails = ({ route }) => {
                   <ChevronLeftIcon
                     size={hp(3.5)}
                     strokeWidth={4.5}
-                    color={"#fbbf24"}
+                    color={colors}
                   />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>{translatedProductName()}</Text>
@@ -459,14 +461,14 @@ const styles = StyleSheet.create({
 
   mainContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: backgrounds,
   },
 
   //top product screen design
 
   productDetailsContainer: {
     height: hp(63),
-    backgroundColor: "#fbbf24",
+    backgroundColor: colors,
     borderBottomLeftRadius: wp(5),
     borderBottomRightRadius: wp(5),
   },
@@ -676,7 +678,7 @@ const styles = StyleSheet.create({
   },
 
   continueButton: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",
@@ -689,7 +691,7 @@ const styles = StyleSheet.create({
   },
 
   paymentButton: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",

@@ -10,6 +10,8 @@ import {
 } from "react-native-responsive-screen";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { useTranslation } from "react-i18next";
+const btn="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const ProductCardTwo = ({ props }) => {
   const { t } = useTranslation();
@@ -247,10 +249,10 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     borderWidth: 0.2,
     borderColor: "blue",
-    width: "80%",
+    width: "70%",
     padding: 5,
     borderRadius: 100,
-    backgroundColor: "#8B71FF",
+    backgroundColor: btn,
     color: "white",
     marginTop: "5%",
     fontFamily: "Quicksand Bold",
