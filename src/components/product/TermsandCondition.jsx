@@ -15,8 +15,8 @@ import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -63,40 +63,41 @@ const TermsAndConditionsModal = ({
       currentOrderPrice: currentOrderPrice,
       productId: productId,
       productQuantity: productQuantity,
-      productType: productType,
+      productType: productType.split(" ")[0],
+      
     };
+
+    const typeOfProduct = productSummaryDetails.productType;
 
     setProductSummary(productSummaryDetails);
 
     console.log(
-      productId,
-      currentOrderPrice,
-      totalAmount,
-      productName,
-      productType
-    );
-    console.log(
       "Product Summary Details Name: " + JSON.stringify(productSummaryDetails)
     );
 
-    const translatedCategory = () => {
-      return t(productDetails.productType).split(" ")[0];
+    const translatedCategory = (key) => {
+      return t(key).split(" ")[0];
     };
 
     const translatedProductName = () => {
-      if (productDetails.productName == "ToorDal") return t("toor_dal");
-      if (productDetails.productName == "MoongDal") return t("moong_dal");
-      if (productDetails.productName == "UradDal") return t("urad_dal");
-      if (productDetails.productName == "GramDal") return t("gram_dal");
+      if (productSummaryDetails.productName == "ToorDal") return t("toor_dal");
+      if (productSummaryDetails.productName == "MoongDal")
+        return t("moong_dal");
+      if (productSummaryDetails.productName == "UradDal") return t("urad_dal");
+      if (productSummaryDetails.productName == "GramDal") return t("gram_dal");
     };
 
     const combinedName = () => {
       return (
-        translatedCategory(productDetails.productType) +
+        translatedCategory(productSummaryDetails.productType) +
         " " +
         translatedProductName()
       );
     };
+
+    console.log(combinedName());
+
+    productSummaryDetails.productName = combinedName();
   }, []);
 
   useEffect(() => {

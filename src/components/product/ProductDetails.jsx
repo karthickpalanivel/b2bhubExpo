@@ -113,6 +113,8 @@ const ProductDetails = ({ route }) => {
     productType: productDetailsInArray[10],
   };
 
+  // console.log(productDetails.productType);
+
   const calculateTotal = (productPrice) => {
     const totalPrice = productPrice * modalQuantity * 1000;
     const gst = totalPrice * 0;
@@ -262,8 +264,7 @@ const ProductDetails = ({ route }) => {
                   <Text style={styles.productLocation}>
                     {productDetails.productLocation}
                   </Text>
-                  <Text style={styles.productLocation}>
-                                      </Text>
+                  <Text style={styles.productLocation}></Text>
 
                   {/* <Text>{productDetails.productCategory}</Text> */}
                 </View>
