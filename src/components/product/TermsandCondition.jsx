@@ -15,6 +15,8 @@ import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -252,7 +254,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   checkboxChecked: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   checkmark: {
     color: "#fff",
@@ -262,7 +266,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
   },
   completeButton: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     padding: wp(2.5),
     borderRadius: wp(1.25),
     alignItems: "center",
