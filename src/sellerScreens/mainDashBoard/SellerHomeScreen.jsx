@@ -98,6 +98,10 @@ const SellerHomeScreen = () => {
       //console.error("Error:", error);
     });
 
+    const arrayValues = () =>{
+
+    }
+
   const LanguageModal = ({ visible }) => {
     return (
       <>
@@ -146,7 +150,7 @@ const SellerHomeScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" backgroundColor="#fff" />
+          <StatusBar style="dark" />
           <ScrollView contentContainerStyle={styles.container} >
             <View>
               <View style={styles.header}>

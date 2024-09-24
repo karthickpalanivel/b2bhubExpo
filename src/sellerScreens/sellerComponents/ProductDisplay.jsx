@@ -24,8 +24,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-
-
+import { useNavigation } from "@react-navigation/native";
 
 const products = [
   {
@@ -174,6 +173,44 @@ const ProductDisplay = () => {
     }
   };
 
+  const navigation = useNavigation();
+
+  const editProduct = (products) => {
+    const productSend = [
+      
+      products.customerId,
+      
+      products.productId,
+      
+      products.category,
+      
+      products.description,
+      
+      products.isApproved,
+      
+      products.isOrganic,
+      
+      products.isPublish,
+      
+      products.moisture,
+      
+      products.packaging.value,
+      
+      products.productImg,
+      
+      products.productName,
+      
+      products.productType,
+      
+      products.shelfLife,
+      
+      products.validity,
+    ];
+
+    console.log(productSend);
+    navigation.navigate("ModifyProduct", { product: productSend });
+  };
+
   async function handleDeleteProduct(params) {}
 
   const formatDate = (isoDate) => {
@@ -190,19 +227,16 @@ const ProductDisplay = () => {
   // console.log(data);
   // console.log("====================================");
 
-  const EditModal = () => {};
-
-  
-  const handleDlete=()=>{
-    setDeleteModal(true)
-  }
-  const handleYes=()=>{
-    setDeleteModal(false)
-    Alert.alert("Deleted","Successfully product deleted")
-  }
-  const handleNo=()=>{
-    setDeleteModal(false)
-  }
+  const handleDlete = () => {
+    setDeleteModal(true);
+  };
+  const handleYes = () => {
+    setDeleteModal(false);
+    Alert.alert("Deleted", "Successfully product deleted");
+  };
+  const handleNo = () => {
+    setDeleteModal(false);
+  };
 
   return (
     <>
@@ -210,13 +244,11 @@ const ProductDisplay = () => {
         <AppLoaderAnimation />
       ) : (
         <View>
-          <StatusBar style="dark" backgroundColor="#fff" />
-          <ScrollView
-            style={styles.mainContainer}
-          >
+          <StatusBar style="dark" />
+          <ScrollView style={styles.mainContainer}>
             {data.map((product) => (
               <View style={styles.subMainContainer}>
-                <StatusBar style="dark" backgroundColor="#fff" />
+                <StatusBar style="dark" />
 
                 <View style={styles.container}>
                   {/* Product Image */}
@@ -226,37 +258,55 @@ const ProductDisplay = () => {
                       style={styles.image}
                     />
                     <View style={styles.buttonContainer}>
-                      <TouchableOpacity style={styles.editButton}>
+                      <TouchableOpacity
+                        style={styles.editButton}
+                        onPress={() => {
+                          editProduct(product);
+                        }}
+                      >
                         <Text style={styles.editText}>{t("edit")}</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.deleteButton} onPress={handleDlete}>
+                      <TouchableOpacity
+                        style={styles.deleteButton}
+                        onPress={handleDlete}
+                      >
                         <Text style={styles.buttonText}>{t("delete")}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
-                  {deleteModal ?(<>
-                     <Modal
-                         transparent={true}
-                         animationType="fade"
-                        >
-                          <View style={styles.modalBackground}>
+                  {deleteModal ? (
+                    <>
+                      <Modal transparent={true} animationType="fade">
+                        <View style={styles.modalBackground}>
                           <View style={styles.modalContainer}>
-                   
-                           <Text style={styles.successTitle}>Delete Product</Text>
-                          <Text style={styles.message}>Do you want to delete the Product?</Text>
-          
-                         <View style={styles.btnContainer}>
-                         <TouchableOpacity style={styles.btn} onPress={handleYes}>
-                      <Text style={styles.btnText}>Yes</Text>
-                      </TouchableOpacity>
-                <TouchableOpacity style={styles.cancelBtn} onPress={handleNo}>
-                   <Text style={styles.cancelBtnText}>No</Text>
-                </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
-       </>):null}
+                            <Text style={styles.successTitle}>
+                              {t("delete_product")}
+                            </Text>
+                            <Text style={styles.message}>
+                              {t("delete_confirmation")}
+                            </Text>
+
+                            <View style={styles.btnContainer}>
+                              <TouchableOpacity
+                                style={styles.btn}
+                                onPress={handleYes}
+                              >
+                                <Text style={styles.btnText}>{t("yes")}</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.cancelBtn}
+                                onPress={handleNo}
+                              >
+                                <Text style={styles.cancelBtnText}>
+                                  {t("no")}
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </View>
+                      </Modal>
+                    </>
+                  ) : null}
 
                   {/* Product Details */}
                   <View style={styles.detailsContainer}>
@@ -273,7 +323,7 @@ const ProductDisplay = () => {
                     <Text style={styles.label}>
                       {t("organic")}:{" "}
                       <Text style={styles.value}>
-                        {product.isOrganic ? "Yes" : "No"}
+                        {product.isOrganic ? t("yes") : t("no")}
                       </Text>
                     </Text>
                     <Text style={styles.label}>
@@ -311,7 +361,6 @@ const styles = StyleSheet.create({
   mainContainer1: {
     flex: 1,
     marginTop: wp(5),
-   
   },
   subMainContainer: {
     flex: 1,
@@ -369,7 +418,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
     marginRight: wp(2),
-    marginVertical:hp(1),
+    marginVertical: hp(1),
   },
   deleteButton: {
     backgroundColor: "#FCF8F3",
@@ -377,79 +426,75 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
     marginRight: wp(2),
-    marginVertical:hp(1),
+    marginVertical: hp(1),
   },
   buttonText: {
     fontSize: wp(4),
-    color:"#EA5455" ,
+    color: "#EA5455",
     // fontWeight: 'bold',
     fontFamily: "QuicksandSemiBold",
     textAlign: "center",
   },
-  editText:{
-   
-      fontSize: wp(4),
-      color:"white" ,
-      // fontWeight: 'bold',
-      fontFamily: "QuicksandSemiBold",
-      textAlign: "center",
-    },
-    modalBackground: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Semi-transparent background
-    },
-    modalContainer: {
-  
-      width: '80%',
-      padding: 20,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      alignItems: 'center',
-    },
+  editText: {
+    fontSize: wp(4),
+    color: "white",
+    // fontWeight: 'bold',
+    fontFamily: "QuicksandSemiBold",
+    textAlign: "center",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+  },
+  modalContainer: {
+    width: "80%",
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
   successTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   message: {
     fontSize: 14,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   btnContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
   btn: {
     flex: 1,
     margin: 5,
     backgroundColor: "#EA5455",
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
   },
   btnText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   cancelBtn: {
     flex: 1,
     margin: 5,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
   },
   cancelBtnText: {
-    color: '#333',
-  }
-  
-}
-);
+    color: "#333",
+  },
+});
 
 export default ProductDisplay;
