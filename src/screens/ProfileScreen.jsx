@@ -627,7 +627,7 @@ const styles = StyleSheet.create({
   logoutContainer: {
     width: wp(90),
     marginLeft: wp(5),
-    marginVertical: hp(5),
+    marginVertical: hp(3),
     backgroundColor: colors,
     padding: wp(2),
     borderRadius: 999,
