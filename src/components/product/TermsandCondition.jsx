@@ -33,6 +33,7 @@ const TermsAndConditionsModal = ({
   totalAmount,
   productName,
   productQuantity,
+  productType,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
@@ -60,14 +61,40 @@ const TermsAndConditionsModal = ({
       currentOrderPrice: currentOrderPrice,
       productId: productId,
       productQuantity: productQuantity,
+      productType: productType,
     };
 
     setProductSummary(productSummaryDetails);
 
-    console.log(productId, currentOrderPrice, totalAmount, productName);
     console.log(
-      "Product Summary Details " + JSON.stringify(productSummaryDetails)
+      productId,
+      currentOrderPrice,
+      totalAmount,
+      productName,
+      productType
     );
+    console.log(
+      "Product Summary Details Name: " + JSON.stringify(productSummaryDetails)
+    );
+
+    const translatedCategory = () => {
+      return t(productDetails.productType).split(" ")[0];
+    };
+
+    const translatedProductName = () => {
+      if (productDetails.productName == "ToorDal") return t("toor_dal");
+      if (productDetails.productName == "MoongDal") return t("moong_dal");
+      if (productDetails.productName == "UradDal") return t("urad_dal");
+      if (productDetails.productName == "GramDal") return t("gram_dal");
+    };
+
+    const combinedName = () => {
+      return (
+        translatedCategory(productDetails.productType) +
+        " " +
+        translatedProductName()
+      );
+    };
   }, []);
 
   useEffect(() => {

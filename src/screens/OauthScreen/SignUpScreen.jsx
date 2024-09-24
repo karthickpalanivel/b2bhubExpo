@@ -97,7 +97,7 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
 
   const navigateToLogin = () => {
-    navigation.navigate("Login");
+    navigation.goBack();
   };
 
   const validatePan = (pan) => {
