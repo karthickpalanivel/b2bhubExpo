@@ -150,8 +150,8 @@ const SellerHomeScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" />
-          <ScrollView contentContainerStyle={styles.container} >
+          <StatusBar style="dark" backgroundColor="#fff" />
+          <View style={styles.container} >
             <View>
               <View style={styles.header}>
                 <View>
@@ -159,7 +159,6 @@ const SellerHomeScreen = () => {
                     <Text style={styles.welcomeText}>{t("welcome")} </Text>
                     <Text style={styles.welcomeText}>{sellerName},</Text>
                   </View>
-
                   <TouchableOpacity
                     style={{ flexDirection: "row", alignItems: "center" }}
                     onPress={show}
@@ -252,7 +251,7 @@ const SellerHomeScreen = () => {
            
 
             
-          </ScrollView>
+          </View>
         </>
       )}
     </>
@@ -261,11 +260,11 @@ const SellerHomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-   
+    flex: 1,
     marginTop: wp(5),
     padding: wp("5%"),
     backgroundColor: backgrounds,
-    marginBottom:wp(5)
+    marginBottom:wp(0)
   },
   header: {
     flexDirection: "row",

@@ -1,5 +1,5 @@
 // Home.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   Pressable,
   SafeAreaView,
   Alert,
+  RefreshControl
 } from "react-native";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
@@ -24,7 +25,9 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
+
+
 
 const products = [
   {
@@ -67,6 +70,12 @@ const ProductDisplay = () => {
   const [apiCalled, setApiCalled] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //    setApiCalled(false)
+  //   }, [apiCalled])
+  // );
+
   useEffect(() => {
     const fetchDataFromAsyncStorageAndCallApi = async () => {
       try {
@@ -103,6 +112,8 @@ const ProductDisplay = () => {
               } else {
                 setData(res.data);
                 setNoData(false);
+                console.log(res.data);
+                
                 setApiCalled(true);
                 //console.log("no data");
               }
@@ -162,6 +173,8 @@ const ProductDisplay = () => {
         console.log("length is 0");
       } else {
         setData(res.data);
+  
+        
         setNoData(false);
         //console.log("no data");
       }
@@ -227,16 +240,63 @@ const ProductDisplay = () => {
   // console.log(data);
   // console.log("====================================");
 
-  const handleDlete = () => {
-    setDeleteModal(true);
-  };
-  const handleYes = () => {
-    setDeleteModal(false);
-    Alert.alert("Deleted", "Successfully product deleted");
-  };
-  const handleNo = () => {
-    setDeleteModal(false);
-  };
+  const EditModal = () => {};
+
+  
+  const handleDlete= async(id)=>{
+    console.log("delete clicked");
+    
+    const token1 = await AsyncStorage.getItem("token");
+
+    if (!token1) {
+      Alert.alert("User is not authenticated.");
+      return;
+    }
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_URL}`+"/seller/deleteProduct/"
+      await axios.delete(url+`${id}`, {
+        headers: {
+          Authorization: `Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+      })
+      setData((prevData) => prevData.filter((product) => product.productId !== id));
+      Alert.alert("Product Deleted Successfully")
+      
+    } catch (error) {
+      console.error('Error deleting product:', error+" " + id + " "+ url);
+      Alert.alert("Error Deleting Product")
+    }
+  }
+
+
+  const handleYes=async(id)=>{
+    setDeleteModal(false)
+    const token1 = await AsyncStorage.getItem("token");
+
+    if (!token1) {
+      Alert.alert("User is not authenticated.");
+      return;
+    }
+    try {
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}`+"/seller/deleteProduct/"+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      setData((prevData) => prevData.filter((product) => product.productId !== id));
+      Alert.alert("Product Deleted Successfully")
+      
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      message.error("Error Deleting Product")
+    }
+    Alert.alert("Deleted","Successfully product deleted")
+  }
+  const handleNo=()=>{
+    setDeleteModal(false)
+  }
 
   return (
     <>
@@ -244,8 +304,10 @@ const ProductDisplay = () => {
         <AppLoaderAnimation />
       ) : (
         <View>
-          <StatusBar style="dark" />
-          <ScrollView style={styles.mainContainer}>
+          <StatusBar style="dark" backgroundColor="#fff" />
+          <ScrollView refreshControl={<RefreshControl refreshing={!apiCalled} onRefresh={()=>setApiCalled(false)}/>}
+            style={{height:"80%",display:"flex"}}
+          >
             {data.map((product) => (
               <View style={styles.subMainContainer}>
                 <StatusBar style="dark" />
@@ -266,10 +328,7 @@ const ProductDisplay = () => {
                       >
                         <Text style={styles.editText}>{t("edit")}</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.deleteButton}
-                        onPress={handleDlete}
-                      >
+                      <TouchableOpacity style={styles.deleteButton} onPress={()=>handleDlete(product.productId)}>
                         <Text style={styles.buttonText}>{t("delete")}</Text>
                       </TouchableOpacity>
                     </View>
@@ -310,11 +369,11 @@ const ProductDisplay = () => {
 
                   {/* Product Details */}
                   <View style={styles.detailsContainer}>
-                    <Text style={styles.productName}>{product.name}</Text>
+                    <Text style={styles.productName}>{product.productName}</Text>
                     <View style={styles.rowValue}>
                       <Text style={styles.label}>{t("price")}: </Text>
                       <Text style={styles.value}>{product.price}/</Text>
-                      <Text style={styles.value}>{products.units}</Text>
+                      <Text style={styles.value}>{product.units}</Text>
                     </View>
                     <Text style={styles.label}>
                       {t("moisture")}:{" "}
@@ -340,7 +399,7 @@ const ProductDisplay = () => {
                     <Text style={styles.label}>
                       {Object.keys(product.packaging).map((kg) => (
                         <Text key={kg} style={{ marginBottom: "4px" }}>
-                          {kg}: {product.packaging[kg]} {t("tonnes")}
+                          {kg} Packed: {product.packaging[kg]} {t("tonnes")}
                         </Text>
                       ))}
                     </Text>
