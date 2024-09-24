@@ -36,6 +36,7 @@ import {
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProductDetailsForm = () => {
   const [productName, setProductName] = useState("");
@@ -48,6 +49,14 @@ const ProductDetailsForm = () => {
   const [packageDetails, setPackageDetails] = useState([
     {type: "Select Package Type", quantity: ""},
   ]);
+
+  const packageDict = packageDetails.reduce((acc, pkg) => {
+    if (pkg.type && pkg.quantity) {
+      acc[pkg.type] = pkg.quantity;
+    }
+    return acc;
+  }, {});
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [image, setImage] = useState(null);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
@@ -64,8 +73,8 @@ const ProductDetailsForm = () => {
       if (detail.quantity && pricing) {
         const quantityInKg =
           units === "1KG"
-            ? parseFloat(detail.quantity)
-            : parseFloat(detail.quantity) * 1000; // Convert to KG if it's in tons
+            ? parseFloat(detail.quantity)* 1000 
+            : parseFloat(detail.quantity) ; // Convert to KG if it's in tons
         return sum + quantityInKg * parseFloat(pricing);
       }
       return sum;
@@ -115,6 +124,49 @@ const ProductDetailsForm = () => {
       Alert.alert("Enter every field");
     }
   };
+
+  async function AddSellerProduct(){
+    const token1 = await AsyncStorage.getItem("token");
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`+"/seller/addProduct", {
+        method: 'POST',
+        headers: {
+          Authorization:`Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(allData),
+      });
+      console.log(allData);
+      
+      if (!response.ok) {
+        throw new Error('Something went wrong while sending the data.');
+      }
+  
+      const data = await response.json();
+      console.log('Success:', data);
+      Alert.alert('Product added successfully!');
+      navigation.navigate("SellerHome")
+
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Failed to submit form data', { position: "top-center" });
+    }
+  }
+
+  const allData = {
+    productName: productName,
+      productImg: "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726650496/image.2_xxq87v.jpg",
+      price: pricing,
+      units: units,
+      moisture: moisture,
+      isOrganic: true,
+      shelfLife: shelfLife,
+      validity: validity,
+      description: description,
+      packaging: packageDict,
+      productType: productType
+  }
+
   const productTypeOptions = {
     moongdal: [
       "Polished Moong dal",
@@ -378,11 +430,11 @@ const ProductDetailsForm = () => {
                 )}
               </View>
 
-              <TouchableOpacity onPress={() => uploadImage()}>
+              {/* <TouchableOpacity onPress={() => uploadImage()}>
                 <View>
                   <Text>Upload</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
@@ -615,7 +667,7 @@ const ProductDetailsForm = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={onSubmit}
+                  onPress={()=>AddSellerProduct()}
                 >
                   <Text style={styles.submitButtonText}>{t("submit")}</Text>
                 </TouchableOpacity>
