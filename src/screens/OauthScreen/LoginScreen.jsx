@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,
   Modal,
+  Pressable,
 } from "react-native";
 import * as Font from "expo-font";
 import axios from "axios";
@@ -225,6 +226,10 @@ const LoginScreen = () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, [])
   );
+
+  const exitApp = () =>{
+    BackHandler.exitApp();
+  }
 
   return (
     <>
@@ -550,16 +555,16 @@ const LoginScreen = () => {
             ) : null}
           </ScrollView>
           <View style={styles.exitAppPosition}>
-            <View style={{ alignItems: "center" }}>
+            <Pressable style={{ alignItems: "center" }} onPress={exitApp}>
               <ArrowRightStartOnRectangleIcon
                 strokeWidth={wp(0.2)}
                 color={"white"}
                 size={hp(4)}
               />
-              <TouchableOpacity style={styles.exitAppContainer}>
+              <View style={styles.exitAppContainer}>
                 <Text>{t("exit_app")}</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </Pressable>
           </View>
         </>
       )}

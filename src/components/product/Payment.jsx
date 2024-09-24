@@ -288,7 +288,7 @@ const PaymentSummary = ({ route }) => {
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("product_name")}</Text>
-                <Text style={styles.tableCell}>{translatedProductName()}</Text>
+                <Text style={styles.tableCell}>{productSummary.productName}</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("total_price")}</Text>

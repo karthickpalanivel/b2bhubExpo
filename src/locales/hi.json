@@ -266,5 +266,14 @@
   "verify_otp": "OTP सत्यापित करें",
   "ok": "ठीक",
 
-  "exit_app": "बंद करें"
+  "exit_app": "बंद करें",
+
+  "fatka": "फटका",
+  "imported": "आयातित",
+  "polished": "पॉलिश किया हुआ",
+  "unpolished": "अपरिष्कृत",
+  "desi": "देशी",
+  "mysore": "मैसूर",
+  "black": "काला",
+  "premium": "प्रीमियम"
 }

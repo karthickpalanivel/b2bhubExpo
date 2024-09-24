@@ -32,8 +32,8 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import TermsAndConditionsModal from "./TermsandCondition";
 import { useScrollToTop } from "@react-navigation/native";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const ProductDetails = ({ route }) => {
   const { productDetailsInArray } = route.params;
@@ -48,7 +48,6 @@ const ProductDetails = ({ route }) => {
   const [modalTermVisible, setModalTermVisible] = useState(false);
 
   const handleContinue = () => {
-    
     setShowSummary(true);
   };
   const handlePayment = () => {
@@ -110,7 +109,11 @@ const ProductDetails = ({ route }) => {
       productDetailsInArray[8] !== "" ? productDetailsInArray[8] : "",
 
     productCategory: productDetailsInArray[9],
+
+    productType: productDetailsInArray[10],
   };
+
+  // console.log(productDetails.productType);
 
   const calculateTotal = (productPrice) => {
     const totalPrice = productPrice * modalQuantity * 1000;
@@ -123,9 +126,6 @@ const ProductDetails = ({ route }) => {
   const { totalPrice, gst, totalAmount } = calculateTotal(
     productDetails.productPrice
   );
-
-  // console.log("--------------------------object log--------------------------");
-  // console.log(productDetails);
 
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -153,6 +153,8 @@ const ProductDetails = ({ route }) => {
       setIsLoading(false);
     }
     loadFonts();
+    // console.log("--------------------------object log--------------------------");
+    // console.log(productDetails.productType);
   }, [products]);
 
   // Premium qualtiy utilties
@@ -180,12 +182,32 @@ const ProductDetails = ({ route }) => {
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
 
+  const translatedCategory = (key) => {
+    if(key === 'Imported') return t('imported');
+    if(key === 'Desi') return t('desi');
+    if(key === 'Polished') return t('polished');
+    if(key === 'Unpolished') return t('unpolished');
+    if(key === 'Mysore') return t('mysore');
+    if(key === 'Fatka') return t('fatka');
+    if(key === 'Gold') return t('gold');
+    if(key === 'Premium') return t('premium');
+
+  };
+
   const translatedProductName = () => {
     if (productDetails.productName == "ToorDal") return t("toor_dal");
     if (productDetails.productName == "MoongDal") return t("moong_dal");
     if (productDetails.productName == "UradDal") return t("urad_dal");
     if (productDetails.productName == "GramDal") return t("gram_dal");
   };
+
+  
+
+  const combinedName = () =>{
+    return translatedCategory(productDetails.productType) + " " + translatedProductName()
+  }
+
+  
 
   const translatingLocation = () => {};
 
@@ -195,7 +217,7 @@ const ProductDetails = ({ route }) => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" backgroundColor={colors}/>
+          <StatusBar style="dark" backgroundColor={colors} />
           <ScrollView style={styles.mainContainer}>
             <View style={styles.productDetailsContainer}>
               <View style={styles.headerOfProductDetails}>
@@ -209,7 +231,7 @@ const ProductDetails = ({ route }) => {
                     color={colors}
                   />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>{translatedProductName()}</Text>
+                <Text style={styles.headerText}>{productDetails.productName}</Text>
               </View>
               <View style={styles.detailsContainer}>
                 <View>
@@ -221,7 +243,7 @@ const ProductDetails = ({ route }) => {
                 <View style={styles.textContainer}>
                   <View>
                     <Text style={styles.productName}>
-                      {translatedProductName()}
+                    {translatedProductName()}
                     </Text>
                   </View>
                   <View>
@@ -242,6 +264,7 @@ const ProductDetails = ({ route }) => {
                   <Text style={styles.productLocation}>
                     {productDetails.productLocation}
                   </Text>
+                  <Text style={styles.productLocation}></Text>
 
                   {/* <Text>{productDetails.productCategory}</Text> */}
                 </View>
@@ -430,12 +453,13 @@ const ProductDetails = ({ route }) => {
             >
               <TermsAndConditionsModal
                 visible={termsVisible}
-                onClose={() => setTermsVisible(false)}
+                onClose={() => navigation.goBack()}
                 currentOrderPrice={totalPrice}
                 totalAmount={totalAmount}
                 productName={productDetails.productName}
+                productType={productDetails.productType}
                 productId={productDetails.productId}
-                productQuantity ={modalQuantity}
+                productQuantity={modalQuantity}
               />
             </Modal>
 

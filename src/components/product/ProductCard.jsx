@@ -22,9 +22,8 @@ import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { XCircleIcon } from "react-native-heroicons/outline";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
-
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const ProductCard = ({ props, index }) => {
   const { t } = useTranslation();
@@ -62,15 +61,19 @@ const ProductCard = ({ props, index }) => {
       offerDuration: props.offerDuration,
       offerStartDate: props.offerStartDate,
       offerStartTime: props.offerStartTime,
+      productType: props.costPerUnit[0].grade,
     });
   }, [props.productId]);
+
   const handleContinue = () => {
     onGradeSelect(id, selectedGrade);
     setShowSummary(true);
   };
+
   const show = () => {
     setProductDetailsModal(true);
   };
+
   const hide = () => {
     setProductDetailsModal(false);
   };
@@ -135,7 +138,8 @@ const ProductCard = ({ props, index }) => {
   const color = premiumColor();
   const backgroundColor = memberShipBackgroundColor();
   const gradeAUnit = props.costPerUnit[0];
-
+  const typesOfProduct = props.costPerUnit[0].grade.split(" ")[0];
+  console.log(typesOfProduct);
   const ProductModal = ({ visible }) => {
     <Modal
       transparent={true}
@@ -265,6 +269,8 @@ const ProductCard = ({ props, index }) => {
                 props?.description.Speciality,
 
                 props.category,
+
+                props.costPerUnit[0].grade,
               ];
 
               onMoreDetails(productArray);

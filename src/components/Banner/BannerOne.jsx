@@ -21,11 +21,11 @@ const BannerOne = ({ someProp = "default value", anotherProp = 0 }) => {
       text: "#2",
       image: require("../../assets/banner/bannerTwo.png"),
     },
-    {
-      id: 3,
-      text: "#3",
-      image: require("../../assets/banner/bannerThree.png"),
-    },
+    // {
+    //   id: 3,
+    //   text: "#3",
+    //   image: require("../../assets/banner/bannerThree.png"),
+    // },
     {
       id: 4,
       text: "#4",

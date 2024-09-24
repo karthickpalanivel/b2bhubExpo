@@ -275,5 +275,14 @@
   "verify_otp": "Verify OTP",
   "ok": "OK",
 
-  "exit_app": "Exit App"
+  "exit_app": "Exit App",
+  
+  "fatka": "Fatka",
+  "imported": "Imported",
+  "polished": "Polished",
+  "unpolished": "Unpolished",
+  "desi": "Desi",
+  "mysore": "Mysore",
+  "black": "Black",
+  "premium": "Premium"
 }
