@@ -34,28 +34,41 @@ import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOn
 import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
 import ProductDetailsForm from "../sellerScreens/sellerComponents/ProductDetailsForm";
 
-
 //variables
 const Stack = createNativeStackNavigator();
 
 //functions
 export default function Navigation() {
-  const [onBoardingCompleted, setOnBoardingCompleted] = useState(false);
+  const [onBoardingCompleted, setOnBoardingCompleted] = useState(null);
   const [buyerLogin, setBuyerLogin] = useState(false);
   const [sellerLogin, setSellerLogin] = useState(false);
 
+  useEffect(() => {
+    alreadyOnBoarded();
+  }, []);
+
+  const alreadyOnBoarded = async () => {
+    let onBoard = await getItem("onboraded");
+    if (onBoard == 1) {
+      setOnBoardingCompleted(false);
+    } else {
+      setOnBoardingCompleted(true);
+    }
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-      >
-        {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
-
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
+        {onBoardingCompleted == true ? (
+          <Stack.Screen
+            name="onBoardScreenOne"
+            component={OnBoardingScreenOne}
+          />
+        ) : null}
+
         {/* Onboarding Screens */}
-
-
 
         {/* App loader */}
 
@@ -108,7 +121,7 @@ export default function Navigation() {
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />
         <Stack.Screen name="ModifyProduct" component={ModifyProductList} />
         <Stack.Screen name="SellerProfile" component={SellerProfile} />
-        <Stack.Screen name="SellerProductEdit" component={ProductDetailsForm}/>
+        <Stack.Screen name="SellerProductEdit" component={ProductDetailsForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
