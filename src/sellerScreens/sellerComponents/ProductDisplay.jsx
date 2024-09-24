@@ -1,16 +1,25 @@
 // Home.js
-import React, {useEffect, useState} from "react";
-import {ScrollView, StyleSheet, View, Image, Text} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Modal,
+  Pressable,
+  SafeAreaView,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import {TouchableOpacity} from "react-native";
+import { TouchableOpacity } from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
@@ -51,8 +60,9 @@ const ProductDisplay = () => {
   const [customerId, setcustomerId] = useState("");
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [apiCalled, setApiCalled] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchDataFromAsyncStorageAndCallApi = async () => {
@@ -61,7 +71,7 @@ const ProductDisplay = () => {
         const token1 = await AsyncStorage.getItem("token");
         const customerId1 = await AsyncStorage.getItem("customerId");
 
-        console.log(token1 + customerId1);
+        // console.log(token1 + customerId1);
 
         if (token1 && customerId1) {
           // Step 2: Call API only if it hasn't been called before
@@ -70,11 +80,11 @@ const ProductDisplay = () => {
               const url =
                 `${process.env.REACT_APP_BACKEND_URL}` +
                 "/seller/getProductsBySellerId";
-              console.log(url);
+              // console.log(url);
 
               const res = await axios.post(
                 url,
-                {customerId: customerId1},
+                { customerId: customerId1 },
                 {
                   headers: {
                     Authorization: ` Bearer ${token1}`,
@@ -135,7 +145,7 @@ const ProductDisplay = () => {
 
       const res = await axios.post(
         url,
-        {customerId: customerId},
+        { customerId: customerId },
         {
           headers: {
             Authorization: ` Bearer ${token}`,
@@ -176,6 +186,16 @@ const ProductDisplay = () => {
   // console.log(data);
   // console.log("====================================");
 
+  const EditModal = () => {};
+
+  const DeleteModal = ({ visible }) => {
+    <Modal>
+      <SafeAreaView>
+        <View></View>
+      </SafeAreaView>
+    </Modal>;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -195,7 +215,7 @@ const ProductDisplay = () => {
                   {/* Product Image */}
                   <View>
                     <Image
-                      source={{uri: product.productImg}}
+                      source={{ uri: product.productImg }}
                       style={styles.image}
                     />
                     <View style={styles.buttonContainer}>
@@ -239,8 +259,8 @@ const ProductDisplay = () => {
                     </Text>
                     <Text style={styles.label}>
                       {Object.keys(product.packaging).map((kg) => (
-                        <Text key={kg} style={{marginBottom: "4px"}}>
-                          {kg}: {product.packaging[kg]} TONNES
+                        <Text key={kg} style={{ marginBottom: "4px" }}>
+                          {kg}: {product.packaging[kg]} {t("tonnes")}
                         </Text>
                       ))}
                     </Text>

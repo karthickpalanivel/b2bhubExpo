@@ -235,5 +235,11 @@
   "location": "இடம்",
   "open": "திறக்கவும்",
   "premium_quality_product": "சிறந்த தரமான பொருள்",
-  "grade": "தரம்"
+  "grade": "தரம்",
+
+  "delete_product": "பொருளை நீக்கவும்",
+  "total_quantity": "மொத்த அளவு",
+  "delete_confirmation": "நீங்கள் பொருளை நீக்க விரும்புகிறீர்களா?",
+  "yes": "ஆம்",
+  "no": "இல்லை"
 }

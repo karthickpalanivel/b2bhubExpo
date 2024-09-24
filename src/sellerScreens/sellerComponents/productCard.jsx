@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,6 +22,19 @@ const ProductCard = ({
   quantity,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const handleDelete = () => {
+    Alert.alert("Deleted Successfully");
+    setDeleteModal(false);
+  };
+  const handleCancel = () => {
+    setDeleteModal(false);
+  };
+  const handleDeleteBtn = () => {
+    console.log(deleteModal);
+    setDeleteModal(true);
+  };
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -36,7 +49,7 @@ const ProductCard = ({
     loadFonts();
   }, []);
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <View style={styles.mainContainer}>
       <StatusBar style="dark" backgroundColor="#fff" />
@@ -49,11 +62,41 @@ const ProductCard = ({
             <TouchableOpacity style={styles.editButton}>
               <Text style={styles.buttonText}>{t("edit")}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.deleteButton}>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => handleDeleteBtn()}
+            >
               <Text style={styles.buttonText}>{t("delete")}</Text>
             </TouchableOpacity>
           </View>
         </View>
+
+        {deleteModal ? (
+          <>
+            <Modal transparent={true} animationType="fade">
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.successTitle}>Delete Product</Text>
+                  <Text style={styles.message}>
+                    Do you want to delete the Product?
+                  </Text>
+
+                  <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.btn} onPress={handleDelete}>
+                      <Text style={styles.btnText}>Yes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.cancelBtn}
+                      onPress={handleCancel}
+                    >
+                      <Text style={styles.cancelBtnText}>No</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </>
+        ) : null}
 
         {/* Product Details */}
         <View style={styles.detailsContainer}>
@@ -100,7 +143,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    backgroundColor: "#729EDB", 
+    backgroundColor: "#729EDB",
     borderRadius: wp(4),
     padding: wp(3),
     shadowColor: "#000",
@@ -133,6 +176,12 @@ const styles = StyleSheet.create({
     color: "white",
     marginVertical: hp(0.3),
     fontFamily: "QuicksandSemiBold",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
   },
   value: {
     fontSize: wp(3.5),
@@ -168,5 +217,53 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     fontFamily: "QuicksandSemiBold",
     textAlign: "center",
+  },
+
+  modalContainer: {
+    width: "80%",
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  successTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+    textAlign: "center",
+  },
+  message: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  btn: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: "#007bff",
+    padding: 10,
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  btnText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  cancelBtn: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: "#ccc",
+    padding: 10,
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  cancelBtnText: {
+    color: "#333",
   },
 });

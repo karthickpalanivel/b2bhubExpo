@@ -14,6 +14,8 @@ import {
 import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
+import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
     style={[styles.checkbox, value && styles.checkboxChecked]}
@@ -26,24 +28,44 @@ const CustomCheckBox = ({ value, onValueChange }) => (
 const TermsAndConditionsModal = ({
   visible,
   onClose,
+  productId,
   currentOrderPrice,
   totalAmount,
   productName,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const nav = useNavigation();
+  const navigation = useNavigation();
+
+  // Object.entries(finalDetails).forEach((key, objects) => {
+  //   console.log(key + " : " + objects);
+  // });
+  // const finalDetails = finalValue;
+
+  // useEffect(() => {
+  //   if (finalDetails) {
+  //     console.log("Final Details: ", finalDetails);
+  //     setProductSummary(finalDetails);
+  //   }
+  //   console.log("productSummary : " + productSummary);
+  // }, [finalDetails]);
 
   useEffect(() => {
     const productSummaryDetails = {
       productName: productName,
       totalAmount: totalAmount,
       currentOrderPrice: currentOrderPrice,
+      productId: productId,
     };
 
     setProductSummary(productSummaryDetails);
-    console.log(productSummary);
+
+    console.log(productId, currentOrderPrice, totalAmount, productName);
+    console.log(
+      "Product Summary Details " + JSON.stringify(productSummaryDetails)
+    );
   }, []);
 
   useEffect(() => {
@@ -65,9 +87,9 @@ const TermsAndConditionsModal = ({
   };
 
   const handleComplete = () => {
-    console.log(productSummary);
     if (isChecked) {
-      nav.navigate("paymentSummary", { productSummary: productSummary });
+      console.log(productSummary);
+      navigation.navigate("paymentSummary", { productSummary: productSummary });
     } else {
       alert("Please agree to the terms and conditions.");
     }
@@ -75,84 +97,104 @@ const TermsAndConditionsModal = ({
 
   const { t } = useTranslation();
 
-  return visible ? (
-    <View style={styles.modalBackground}>
-      <View style={styles.modalContent}>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <XCircleIcon color="black" />
-        </TouchableOpacity>
-        <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.termsText}>
-            1. <Text style={styles.boldText}>{t("introduction")}: </Text>{" "}
-            {t("terms_intro")}
-          </Text>
-          <Text style={styles.termsText}>
-            2. <Text style={styles.boldText}>{t("eligibility")}: </Text>{" "}
-            {t("business_use")}
-          </Text>
-          <Text style={styles.termsText}>
-            3. <Text style={styles.boldText}>{t("account_creation")}: </Text>{" "}
-            {t("account_access")}
-          </Text>
-          <Text style={styles.termsText}>
-            4.
-            <Text style={styles.boldText}>
-              {t("purchase_and_order_requirements")}:
-            </Text>
-            {t("purchase_minimum")}
-          </Text>
-          <Text style={styles.termsText}>
-            5. <Text style={styles.boldText}>{t("pricing_and_payment")}: </Text>
-            {t("pricing_payment")}
-          </Text>
-          <Text style={styles.termsText}>
-            6.{" "}
-            <Text style={styles.boldText}>{t("shipping_and_delivery")}:</Text>{" "}
-            {t("shipping")}
-          </Text>
-          <Text style={styles.termsText}>
-            7. <Text style={styles.boldText}>{t("returns_and_refunds")}: </Text>
-            {t("sales_final")}
-          </Text>
-          <Text style={styles.termsText}>
-            8.{" "}
-            <Text style={styles.boldText}>{t("intellectual_property")}:</Text>{" "}
-            {t("intellectual_property_tc")}
-          </Text>
-          <Text style={styles.termsText}>
-            9.{" "}
-            <Text style={styles.boldText}>{t("limitation_of_liability")}:</Text>{" "}
-            {t("liability")}
-          </Text>
-          <Text style={styles.termsText}>
-            10. <Text style={styles.boldText}>{t("changes_to_terms")}</Text>{" "}
-            {t("terms_change")}
-          </Text>
-          <Text style={styles.termsText}>
-            11. <Text style={styles.boldText}>{t("governing_law")}:</Text>{" "}
-            {t("governing_law_tc")}
-          </Text>
-          <Text style={styles.termsText}>
-            12. <Text style={styles.boldText}>{t("contact_information")}:</Text>{" "}
-            {t("contact_information_tc")}
-          </Text>
-        </ScrollView>
-        <View style={styles.checkboxContainer}>
-          <CustomCheckBox value={isChecked} onValueChange={setIsChecked} />
-          <Text style={styles.agreeText}>
-            {t("i_agree_to_terms_and_conditions")}
-          </Text>
+  return (
+    <>
+      {isLoading ? (
+        <AppLoaderAnimation />
+      ) : visible ? (
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <XCircleIcon color="black" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
+            <ScrollView style={styles.scrollView}>
+              <Text style={styles.termsText}>
+                1. <Text style={styles.boldText}>{t("introduction")}: </Text>{" "}
+                {t("terms_intro")}
+              </Text>
+              <Text style={styles.termsText}>
+                2. <Text style={styles.boldText}>{t("eligibility")}: </Text>{" "}
+                {t("business_use")}
+              </Text>
+              <Text style={styles.termsText}>
+                3.{" "}
+                <Text style={styles.boldText}>{t("account_creation")}: </Text>{" "}
+                {t("account_access")}
+              </Text>
+              <Text style={styles.termsText}>
+                4.
+                <Text style={styles.boldText}>
+                  {t("purchase_and_order_requirements")}:
+                </Text>
+                {t("purchase_minimum")}
+              </Text>
+              <Text style={styles.termsText}>
+                5.{" "}
+                <Text style={styles.boldText}>
+                  {t("pricing_and_payment")}:{" "}
+                </Text>
+                {t("pricing_payment")}
+              </Text>
+              <Text style={styles.termsText}>
+                6.{" "}
+                <Text style={styles.boldText}>
+                  {t("shipping_and_delivery")}:
+                </Text>{" "}
+                {t("shipping")}
+              </Text>
+              <Text style={styles.termsText}>
+                7.{" "}
+                <Text style={styles.boldText}>
+                  {t("returns_and_refunds")}:{" "}
+                </Text>
+                {t("sales_final")}
+              </Text>
+              <Text style={styles.termsText}>
+                8.{" "}
+                <Text style={styles.boldText}>
+                  {t("intellectual_property")}:
+                </Text>{" "}
+                {t("intellectual_property_tc")}
+              </Text>
+              <Text style={styles.termsText}>
+                9.{" "}
+                <Text style={styles.boldText}>
+                  {t("limitation_of_liability")}:
+                </Text>{" "}
+                {t("liability")}
+              </Text>
+              <Text style={styles.termsText}>
+                10. <Text style={styles.boldText}>{t("changes_to_terms")}</Text>{" "}
+                {t("terms_change")}
+              </Text>
+              <Text style={styles.termsText}>
+                11. <Text style={styles.boldText}>{t("governing_law")}:</Text>{" "}
+                {t("governing_law_tc")}
+              </Text>
+              <Text style={styles.termsText}>
+                12.{" "}
+                <Text style={styles.boldText}>{t("contact_information")}:</Text>{" "}
+                {t("contact_information_tc")}
+              </Text>
+            </ScrollView>
+            <View style={styles.checkboxContainer}>
+              <CustomCheckBox value={isChecked} onValueChange={setIsChecked} />
+              <Text style={styles.agreeText}>
+                {t("i_agree_to_terms_and_conditions")}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.completeButton}
+              onPress={handleComplete}
+            >
+              <Text style={styles.completeButtonText}>{t("complete")}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <TouchableOpacity
-          style={styles.completeButton}
-          onPress={handleComplete}
-        >
-          <Text style={styles.completeButtonText}>{t("complete")}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  ) : null;
+      ) : null}
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -178,31 +220,32 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     // fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: wp(2.5),
     fontFamily: "QuicksandSemiBold",
   },
   scrollView: {
     maxHeight: hp(50),
   },
   termsText: {
-    fontSize: 14,
+    fontSize: wp(3.5),
     fontFamily: "QuicksandSemiBold",
-    marginBottom: 10,
+    marginBottom: wp(2.5),
   },
   boldText: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "QuicksandBold",
   },
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    marginVertical: wp(2.5),
   },
   checkbox: {
     width: wp(6),
     height: wp(6),
     borderWidth: 2,
     borderColor: "#000",
-    marginRight: 10,
+    marginRight: wp(2.5),
     justifyContent: "center",
     alignItems: "center",
   },
@@ -214,12 +257,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   agreeText: {
-    fontSize: 14,
+    fontSize: wp(3.5),
   },
   completeButton: {
     backgroundColor: "#4870F4",
-    padding: 10,
-    borderRadius: 5,
+    padding: wp(2.5),
+    borderRadius: wp(1.25),
     alignItems: "center",
   },
   completeButtonText: {

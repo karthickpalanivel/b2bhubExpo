@@ -236,5 +236,11 @@
   "location": "स्थान",
   "open": "खोलें",
   "premium_quality_product": "उत्तम गुणवत्ता उत्पाद",
-  "grade": "ग्रेड"
+  "grade": "ग्रेड",
+
+  "delete_product": "उत्पाद हटाएं",
+  "total_quantity": "कुल मात्रा",
+  "delete_confirmation": "क्या आप उत्पाद को हटाना चाहते हैं?",
+  "yes": "हां",
+  "no": "नहीं"
 }

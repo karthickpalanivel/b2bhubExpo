@@ -71,41 +71,6 @@ const LoginScreen = () => {
     }
   };
 
-  // async function handleLogin() {
-  //   await axios
-  //     .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
-  //       email: buyerEmail,
-  //       pwd: password,
-  //       isSeller:false
-  //     })
-  //     .then((res) => {
-  //       console.log(res.status);
-  //       if (res.status === 200) {
-  //         const customer = res.data.user;
-  //         console.log(customer);
-  //         try {
-  //           AsyncStorage.setItem("loginstate", "true");
-  //           AsyncStorage.setItem("userEmail", email);
-  //           AsyncStorage.setItem("customerId", customer.customerId);
-  //           AsyncStorage.setItem("companyname", customer.CompanyName);
-  //           AsyncStorage.setItem("phone", customer.phoneNo);
-  //           AsyncStorage.setItem("gst", customer.gstNo);
-  //           AsyncStorage.setItem("email", customer.Email);
-  //           AsyncStorage.setItem("token", res.data.token);
-  //         } catch (e) {
-  //           // saving error
-  //           console.error(e);
-  //         }
-
-  //         navigation.navigate("Home");
-  //       } else window.alert(res.message);
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error);
-  //       return;
-  //     });
-  // }
-
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -333,9 +298,9 @@ const LoginScreen = () => {
                     onPress={() => setViewPassword(!viewPassword)}
                   >
                     {viewPassword ? (
-                      <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                      <EyeSlashIcon size={20} color="gray" /> 
                     ) : (
-                      <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                      <EyeIcon size={20} color="gray" /> 
                     )}
                   </TouchableOpacity>
                 </View>
@@ -783,3 +748,40 @@ const styles = StyleSheet.create({
   },
 });
 export default LoginScreen;
+
+
+
+  // async function handleLogin() {
+  //   await axios
+  //     .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
+  //       email: buyerEmail,
+  //       pwd: password,
+  //       isSeller:false
+  //     })
+  //     .then((res) => {
+  //       console.log(res.status);
+  //       if (res.status === 200) {
+  //         const customer = res.data.user;
+  //         console.log(customer);
+  //         try {
+  //           AsyncStorage.setItem("loginstate", "true");
+  //           AsyncStorage.setItem("userEmail", email);
+  //           AsyncStorage.setItem("customerId", customer.customerId);
+  //           AsyncStorage.setItem("companyname", customer.CompanyName);
+  //           AsyncStorage.setItem("phone", customer.phoneNo);
+  //           AsyncStorage.setItem("gst", customer.gstNo);
+  //           AsyncStorage.setItem("email", customer.Email);
+  //           AsyncStorage.setItem("token", res.data.token);
+  //         } catch (e) {
+  //           // saving error
+  //           console.error(e);
+  //         }
+
+  //         navigation.navigate("Home");
+  //       } else window.alert(res.message);
+  //     })
+  //     .catch((error) => {
+  //       window.alert(error);
+  //       return;
+  //     });
+  // }

@@ -47,10 +47,13 @@ export default function Navigation() {
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
       >
-        {/* Onboarding Screens */}
-        {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
+        <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} />
 
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+
+        {/* Onboarding Screens */}
+
+
 
         {/* App loader */}
 
