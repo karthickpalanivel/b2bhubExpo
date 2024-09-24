@@ -152,7 +152,6 @@ const ProductDetails = ({ route }) => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, [products]);
 
