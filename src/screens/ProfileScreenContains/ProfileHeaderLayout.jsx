@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+const colors="#EF5A6F";
 
 const ProfileHeaderLayout = ({ header }) => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: hp(3),
     paddingLeft: hp(3),
-    backgroundColor: "#4870F4",
+    backgroundColor:colors,
     elevation: 3,
   },
   header: {

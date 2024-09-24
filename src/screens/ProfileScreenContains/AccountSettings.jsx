@@ -34,6 +34,9 @@ import { CompanyData } from "../../data/CompanyData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
 
+const colors="#EF5A6F";
+const backgrounds="#FCF8F3";
+
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
@@ -50,7 +53,7 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
 
   return (
     <View style={styles.detailBarContainer}>
-      <StatusBar style="light" backgroundColor="#4870F4" />
+      <StatusBar style="light" backgroundColor={colors} />
       <View>
         <Text style={{ color: "white", fontFamily: "QuicksandSemiBold" }}>
           {topic}
@@ -87,7 +90,7 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
                 style={styles.textInput}
                 onChangeText={setValue}
                 placeholder={"New " + topic}
-                placeholderTextColor={"#4870F4"}
+                placeholderTextColor={colors}
               />
             </View>
             <TouchableOpacity
@@ -185,11 +188,12 @@ const AccountSettings = () => {
         <>
           <View>
             <ProfileHeaderLayout header="Accounts" />
-            <ScrollView>
+            <ScrollView style={{backgroundColor: backgrounds,height:wp(200)}}>
               <View
                 style={{
                   alignItems: "center",
                   marginTop: hp(5),
+                  
                 }}
               >
                 <View style={styles.profileImageContainer}>
@@ -225,6 +229,10 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      borderTopColor:backgrounds,
+                      borderBottomColor:backgrounds,
+                      borderTopWidth:wp(0.5),
+                      borderBottomWidth:wp(0.5)
                     }}
                   >
                     <DetailsBar
@@ -263,6 +271,11 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      borderTopColor:backgrounds,
+                      borderBottomColor:backgrounds,
+                      borderTopWidth:wp(0.5),
+                      borderBottomWidth:wp(0.5)
+
                     }}
                   >
                     <DetailsBar
@@ -283,6 +296,9 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
+                     
+                      
+
                     }}
                   >
                     <DetailsBar
@@ -322,7 +338,7 @@ export default AccountSettings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "FCFCFC",
+    backgroundColor: backgrounds,
   },
   profileImageContainer: {
     backgroundColor: "F9F9F9",
@@ -346,7 +362,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.3,
     borderBottomColor: 0.1,
     width: "90%",
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
   },
   detailBarContainer: {
     padding: hp(2),
@@ -387,7 +403,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
     width: wp(90),
     padding: wp(4),
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     paddingLeft: wp(5),
   },
 
@@ -408,7 +424,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   conformText: {
-    color: "#4870F4",
+    color: colors,
     fontWeight: "bold",
     textAlign: "center",
   },

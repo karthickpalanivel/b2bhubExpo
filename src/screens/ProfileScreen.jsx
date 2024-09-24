@@ -42,6 +42,8 @@ import * as Font from "expo-font";
 import { useTranslation } from "react-i18next";
 import LanguageList from "../language/LanguageList.json";
 import { useLanguage } from "../hooks/LanguageContext";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -233,7 +235,7 @@ const ProfileScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="light" backgroundColor="#4870F4" />
+          <StatusBar style="light" backgroundColor={colors}/>
           <ScrollView>
             <View style={styles.headerContainer}>
               <TouchableOpacity style={styles.iconButton} onPress={goback}>
@@ -279,11 +281,11 @@ const ProfileScreen = () => {
                 onPress={() => navigation.navigate("AccountDetails")}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <IdentificationIcon color={"#4870F4"} size={hp(5)} />
+                  <IdentificationIcon color={colors} size={hp(5)} />
                   <Text style={styles.contextName}>{t("accounts")}</Text>
                 </View>
                 <ChevronRightIcon
-                  color={"#4870F4"}
+                  color={colors}
                   size={hp(2.5)}
                   strokeWidth={4.5}
                 />
@@ -299,11 +301,11 @@ const ProfileScreen = () => {
                 onPress={() => navigation.navigate("DeliveryDetails")}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <TruckIcon color={"#4870F4"} size={hp(5)} />
+                  <TruckIcon color={colors} size={hp(5)} />
                   <Text style={styles.contextName}>{t("orders")}</Text>
                 </View>
                 <ChevronRightIcon
-                  color={"#4870F4"}
+                  color={colors}
                   size={hp(2.5)}
                   strokeWidth={4.5}
                 />
@@ -409,7 +411,7 @@ const ProfileScreen = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <EnvelopeIcon size={hp(5)} color={"#4870F4"} />
+                <EnvelopeIcon size={hp(5)} color={colors} />
                 <Text style={styles.contextName}>{t("mail_us")}</Text>
               </View>
               <TouchableOpacity
@@ -428,7 +430,7 @@ const ProfileScreen = () => {
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <LanguageIcon size={hp(5)} color={"#4870F4"} />
+                  <LanguageIcon size={hp(5)} color={colors} />
                   <View>
                     <Text style={styles.languageSelect}>{t("language")}</Text>
                     <Text style={styles.language}>{yourLanguage}</Text>
@@ -465,7 +467,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fffff0",
+    backgroundColor:backgrounds,
   },
   safeAreaContent: {
     flex: 1,
@@ -484,7 +486,7 @@ const styles = StyleSheet.create({
   },
   languageModalContainer: {
     width: wp(80),
-    backgroundColor: "#4870F4",
+    backgroundColor:colors,
     elevation: 4,
     borderRadius: wp(3),
   },
@@ -508,7 +510,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: "5%",
     flexDirection: "row",
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     justifyContent: "space-between",
     alignItems: "center",
     height: hp(22),
@@ -553,7 +555,7 @@ const styles = StyleSheet.create({
     // fontWeight: "600",
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
-    color: "#4870F4",
+    color: "#EF5A6F",
   },
   detailsContainer: {
     Width: "90%",
@@ -592,7 +594,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(2),
     paddingVertical: wp(1),
     marginRight: wp(2),
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     borderRadius: wp(1),
   },
   callText: {
@@ -613,14 +615,14 @@ const styles = StyleSheet.create({
     // fontWeight: "700",
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4),
-    color: "#4870F4",
+    color: colors,
   },
 
   logoutContainer: {
     width: wp(90),
     marginLeft: wp(5),
     marginVertical: hp(5),
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     padding: wp(2),
     borderRadius: 999,
   },
