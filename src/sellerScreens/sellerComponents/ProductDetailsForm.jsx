@@ -1,11 +1,11 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {Picker} from "@react-native-picker/picker";
-import {useNavigation} from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
 import * as Font from "expo-font";
 import * as ImagePicker from "expo-image-picker";
-import {StatusBar} from "expo-status-bar";
-import React, {useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Alert,
   Image,
@@ -37,11 +37,18 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
-const ProductDetailsForm = () => {
+const ProductDetailsForm = ({ route }) => {
+  const [isProduct, setIsProduct] = useState({});
   const [productName, setProductName] = useState("");
+  const [productId, setProductId] = useState("");
+  const [customerId, setCustomerId] = useState("");
+  const [customerCategory, setCustomerCategory] = useState("");
+  const [isOrganic, setIsOrganic] = useState(0);
+  const [isPublished, setPublished] = useState(0);
+  const [isApproved, setApproved] = useState(0);
   const [pricing, setPricing] = useState("");
   const [units, setUnits] = useState("Select Unit");
   const [moisture, setMoisture] = useState("Select Moisture");
@@ -49,7 +56,7 @@ const ProductDetailsForm = () => {
   const [validity, setValidity] = useState(new Date());
   const [description, setDescription] = useState("");
   const [packageDetails, setPackageDetails] = useState([
-    {type: "Select Package Type", quantity: ""},
+    { type: "Select Package Type", quantity: "" },
   ]);
 
   const packageDict = packageDetails.reduce((acc, pkg) => {
@@ -75,8 +82,8 @@ const ProductDetailsForm = () => {
       if (detail.quantity && pricing) {
         const quantityInKg =
           units === "1KG"
-            ? parseFloat(detail.quantity)* 1000
-            : parseFloat(detail.quantity) ; // Convert to KG if it's in tons
+            ? parseFloat(detail.quantity) * 1000
+            : parseFloat(detail.quantity); // Convert to KG if it's in tons
         return sum + quantityInKg * parseFloat(pricing);
       }
       return sum;
@@ -84,7 +91,7 @@ const ProductDetailsForm = () => {
     setTotalValue(total);
   };
 
-  console.log("imageurl" + imageUrl);
+  // console.log("imageurl" + imageUrl);
 
   const onSubmit = () => {
     if (
@@ -120,54 +127,57 @@ const ProductDetailsForm = () => {
       setMoisture("Select Moisture");
       setShelfLife("Select Shelf Life");
       setValidity(new Date());
-      setPackageDetails([{type: "Select Package Type", quantity: ""}]);
+      setPackageDetails([{ type: "Select Package Type", quantity: "" }]);
       setImage(null);
     } else {
       Alert.alert("Enter every field");
     }
   };
 
-  async function AddSellerProduct(){
+  async function AddSellerProduct() {
     const token1 = await AsyncStorage.getItem("token");
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`+"/seller/addProduct", {
-        method: 'POST',
-        headers: {
-          Authorization:`Bearer ${token1}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(allData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}` + "/seller/addProduct",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token1}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(allData),
+        }
+      );
       console.log(allData);
-      
-      if (!response.ok) {
-        throw new Error('Something went wrong while sending the data.');
-      }
-  
-      const data = await response.json();
-      console.log('Success:', data);
-      Alert.alert('Product added successfully!');
-      navigation.navigate("SellerHome",{ refresh: true })
 
+      if (!response.ok) {
+        throw new Error("Something went wrong while sending the data.");
+      }
+
+      const data = await response.json();
+      console.log("Success:", data);
+      Alert.alert("Product added successfully!");
+      navigation.navigate("SellerHome");
     } catch (error) {
-      console.error('Error:', error);
-      Alert.alert('Failed to submit form data', { position: "top-center" });
+      console.error("Error:", error);
+      Alert.alert("Failed to submit form data", { position: "top-center" });
     }
   }
 
   const allData = {
     productName: productName,
-      productImg: "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726650496/image.2_xxq87v.jpg",
-      price: pricing,
-      units: units,
-      moisture: moisture,
-      isOrganic: true,
-      shelfLife: shelfLife,
-      validity: validity,
-      description: description,
-      packaging: packageDict,
-      productType: productType
-  }
+    productImg:
+      "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726650496/image.2_xxq87v.jpg",
+    price: pricing,
+    units: units,
+    moisture: moisture,
+    isOrganic: true,
+    shelfLife: shelfLife,
+    validity: validity,
+    description: description,
+    packaging: packageDict,
+    productType: productType,
+  };
 
   const productTypeOptions = {
     moongdal: [
@@ -208,6 +218,50 @@ const ProductDetailsForm = () => {
       });
       setIsLoading(false);
     }
+    const { product } = route.params;
+
+    if (product) {
+      setCustomerCategory(product?.category);
+      setCustomerId(product?.customerId);
+      setDescription(product?.description);
+      product.isApproved == 1 && setApproved(1);
+      product.isPublished == 1 && setPublished(1);
+      product.isOrganic == 1 && setIsOrganic(1);
+      setMoisture(product?.moisture);
+      setPackageDetails([
+        { type: product.packaging.type, quantity: product.packaging.quantity },
+      ]);
+      setPricing(product?.price);
+      setProductId(product?.productId);
+      setProductName(product?.productName);
+      setProductType(product?.productType);
+      setShelfLife(product?.shelfLife);
+
+      setImage(product?.productImg);
+      setValidity(product?.validity);
+      setUnits(product?.units);
+      console.log(
+        customerId,
+        customerCategory,
+        description,
+        isApproved,
+        isPublished,
+        moisture,
+        pricing,
+        packageDetails,
+        productId,
+        productName,
+        productType,
+        shelfLife,
+        image,
+        validity,
+        units
+      );
+    }
+
+    const availableProductData = {};
+
+    console.log(product);
     loadFonts();
   }, []);
 
@@ -375,7 +429,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color={colors}
                           />
-                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
+                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
                             {t("camera")}
                           </Text>
                         </TouchableOpacity>
@@ -388,7 +442,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color={colors}
                           />
-                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
+                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
                             {t("gallery")}
                           </Text>
                         </TouchableOpacity>
@@ -404,7 +458,7 @@ const ProductDetailsForm = () => {
                             height={hp("10%")}
                             color={colors}
                           />
-                          <Text style={{fontFamily: "QuicksandSemiBold"}}>
+                          <Text style={{ fontFamily: "QuicksandSemiBold" }}>
                             {t("remove")}
                           </Text>
                         </TouchableOpacity>
@@ -418,29 +472,26 @@ const ProductDetailsForm = () => {
                   >
                     {image ? (
                       <Image
-                        source={{uri: image}}
+                        source={{ uri: image }}
                         style={styles.uploadedImage}
                       />
                     ) : (
-                     <View>
-                       <PhotoIcon
-                        width={wp("8%")}
-                        height={hp("8%")}
-                        color={colors}
-                      />
-                      <TouchableOpacity onPress={() => uploadImage()}>
                       <View>
-                        <Text>Upload</Text>
+                        <PhotoIcon
+                          width={wp("8%")}
+                          height={hp("8%")}
+                          color={colors}
+                        />
+                        <TouchableOpacity onPress={() => uploadImage()}>
+                          <View>
+                            <Text>Upload</Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
-                    </TouchableOpacity>
-                     </View>
                     )}
                   </TouchableOpacity>
                 )}
-                
               </View>
-
-              
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
@@ -542,12 +593,12 @@ const ProductDetailsForm = () => {
                     <Picker.Item
                       label={`${t("select")} ${t("shelf_life")}`}
                       value="Select Shelf Life"
-                      style={{fontFamily: "QuicksandSemiBold"}}
+                      style={{ fontFamily: "QuicksandSemiBold" }}
                     />
                     <Picker.Item
                       label={`1 ${t("month")}`}
                       value="1 month"
-                      style={{fontFamily: "QuicksandSemiBold"}}
+                      style={{ fontFamily: "QuicksandSemiBold" }}
                     />
                     <Picker.Item label={`3 ${t("month")}`} value="3 months" />
                     <Picker.Item label={`6 ${t("month")}`} value="6 months" />
@@ -597,7 +648,7 @@ const ProductDetailsForm = () => {
                       <Picker
                         selectedValue={detail.type}
                         style={[
-                          {borderColor: colors},
+                          { borderColor: colors },
                           styles.packageTypePicker,
                         ]}
                         onValueChange={(itemValue) => {
@@ -673,7 +724,7 @@ const ProductDetailsForm = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={()=>AddSellerProduct()}
+                  onPress={() => AddSellerProduct()}
                 >
                   <Text style={styles.submitButtonText}>{t("submit")}</Text>
                 </TouchableOpacity>

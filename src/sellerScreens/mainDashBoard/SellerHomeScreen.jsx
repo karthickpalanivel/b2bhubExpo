@@ -98,6 +98,10 @@ const SellerHomeScreen = () => {
       //console.error("Error:", error);
     });
 
+    const arrayValues = () =>{
+
+    }
+
   const LanguageModal = ({ visible }) => {
     return (
       <>

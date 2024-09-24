@@ -36,7 +36,10 @@ const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
 const ProductDetails = ({ route }) => {
-  const { productDetailsInArray } = route.params;
+  if (route.params) {
+    const { productDetailsInArray } = route.params;
+    console.log(productDetailsInArray);
+  }
   // console.log("details page");
   // console.log(productDetailsInArray);
 
@@ -183,15 +186,14 @@ const ProductDetails = ({ route }) => {
   const backgroundColor = memberShipBackgroundColor();
 
   const translatedCategory = (key) => {
-    if(key === 'Imported') return t('imported');
-    if(key === 'Desi') return t('desi');
-    if(key === 'Polished') return t('polished');
-    if(key === 'Unpolished') return t('unpolished');
-    if(key === 'Mysore') return t('mysore');
-    if(key === 'Fatka') return t('fatka');
-    if(key === 'Gold') return t('gold');
-    if(key === 'Premium') return t('premium');
-
+    if (key === "Imported") return t("imported");
+    if (key === "Desi") return t("desi");
+    if (key === "Polished") return t("polished");
+    if (key === "Unpolished") return t("unpolished");
+    if (key === "Mysore") return t("mysore");
+    if (key === "Fatka") return t("fatka");
+    if (key === "Gold") return t("gold");
+    if (key === "Premium") return t("premium");
   };
 
   const translatedProductName = () => {
@@ -201,13 +203,13 @@ const ProductDetails = ({ route }) => {
     if (productDetails.productName == "GramDal") return t("gram_dal");
   };
 
-  
-
-  const combinedName = () =>{
-    return translatedCategory(productDetails.productType) + " " + translatedProductName()
-  }
-
-  
+  const combinedName = () => {
+    return (
+      translatedCategory(productDetails.productType) +
+      " " +
+      translatedProductName()
+    );
+  };
 
   const translatingLocation = () => {};
 
@@ -217,7 +219,7 @@ const ProductDetails = ({ route }) => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" backgroundColor={colors} />
+          <StatusBar style="light" />
           <ScrollView style={styles.mainContainer}>
             <View style={styles.productDetailsContainer}>
               <View style={styles.headerOfProductDetails}>
@@ -231,7 +233,9 @@ const ProductDetails = ({ route }) => {
                     color={colors}
                   />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>{productDetails.productName}</Text>
+                <Text style={styles.headerText}>
+                  {productDetails.productName}
+                </Text>
               </View>
               <View style={styles.detailsContainer}>
                 <View>
@@ -243,7 +247,7 @@ const ProductDetails = ({ route }) => {
                 <View style={styles.textContainer}>
                   <View>
                     <Text style={styles.productName}>
-                    {translatedProductName()}
+                      {translatedProductName()}
                     </Text>
                   </View>
                   <View>

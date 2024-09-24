@@ -95,9 +95,9 @@ const TermsAndConditionsModal = ({
       );
     };
 
-    console.log(combinedName());
+    console.log(combinedName().toLowerCase());
 
-    productSummaryDetails.productName = combinedName();
+    productSummaryDetails.productName = combinedName().toLowerCase();
   }, []);
 
   useEffect(() => {
