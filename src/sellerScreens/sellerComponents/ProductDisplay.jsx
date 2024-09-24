@@ -7,15 +7,16 @@ import {
   Image,
   Text,
   Modal,
+  TouchableOpacity,
   Pressable,
   SafeAreaView,
 } from "react-native";
+import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { TouchableOpacity } from "react-native";
 import ProductCard from "./productCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -191,7 +192,12 @@ const ProductDisplay = () => {
   const DeleteModal = ({ visible }) => {
     <Modal>
       <SafeAreaView>
-        <View></View>
+        <View>
+          <View>
+            <XCircleIcon />
+          </View>
+          <Text></Text>
+        </View>
       </SafeAreaView>
     </Modal>;
   };

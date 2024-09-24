@@ -166,8 +166,7 @@
   "seller_tc_14": "इन शर्तों और नियमों के संबंध में कोई भी प्रश्न या चिंता के लिए कृपया B2B हब से +91 7305096473 पर संपर्क करें।",
   "seller_tc_15": "B2B हब प्लेटफ़ॉर्म का उपयोग जारी रखते हुए, आप स्वीकार करते हैं कि आपने इन शर्तों और नियमों को पढ़ा, समझा और स्वीकार किया है।",
   "enter_your_email": "अपना ईमेल दर्ज करें",
-  
-  
+
   "send_otp": "OTP भेजें",
   "otp_confirmation": "OTP पुष्टि",
   "check_mail_for_otp": "OTP के लिए अपना मेल जांचें",
@@ -194,7 +193,7 @@
   "welcome_to_b2b_hub_india": "B2B Hub India में आपका स्वागत है",
   "select_language": "भाषा चुनें",
   "register_a_new_account": "नया खाता पंजीकृत करें",
-  
+
   "welcome": "स्वागत है",
   "active_product": "सक्रिय उत्पाद",
   "total_order": "कुल आदेश",
@@ -213,7 +212,6 @@
   "start_your_business_in_3_simple_steps": "3 आसान चरणों में अपना व्यवसाय शुरू करें",
   "start_your_business_in": "अपना व्यवसाय शुरू करें",
   "simple_steps": "आसान चरण",
-
 
   "shop_slogan": "आपकी एकमात्र दुकान प्रीमियम गुणवत्ता वाली दालों के लिए",
   "discover_variety": "अपने सभी पकाने के लिए संपूर्ण, पौष्टिक दालों की एक विस्तृत श्रृंखला खोजें।",
@@ -242,5 +240,31 @@
   "total_quantity": "कुल मात्रा",
   "delete_confirmation": "क्या आप उत्पाद को हटाना चाहते हैं?",
   "yes": "हां",
-  "no": "नहीं"
+  "no": "नहीं",
+
+  "select_location": "स्थान चुनें",
+  "registration": "पंजीकरण",
+  "enter_your_location": "अपना स्थान दर्ज करें",
+  "madhya_pradesh": "मध्य प्रदेश",
+  "maharashtra": "महाराष्ट्र",
+  "kerala": "केरल",
+  "andhra_pradesh": "आंध्र प्रदेश",
+  "telangana": "तेलंगाना",
+  "karnataka": "कर्नाटक",
+  "odisha": "ओडिशा",
+  "enter_otp": "OTP दर्ज करें",
+  "choose_your_category": "अपनी श्रेणी चुनें",
+  "eligibility_business": "पात्रता: व्यवसाय है",
+  "more_than_50_crore": "50 करोड़ से अधिक",
+  "less_than_50_crore": "50 करोड़ से कम",
+  "register_as": "के रूप में पंजीकरण करें",
+  "member": "सदस्य",
+  "successfully_registered_as_seller": "विक्रेता के रूप में सफलतापूर्वक पंजीकृत किया गया",
+  "use_existing_credentials": "लॉगिन करने के लिए अपने मौजूदा क्रेडेंशियल्स का उपयोग करें",
+
+  "gujarat": "गुजरात",
+  "verify_otp": "OTP सत्यापित करें",
+  "ok": "ठीक",
+
+  "exit_app": "बंद करें"
 }

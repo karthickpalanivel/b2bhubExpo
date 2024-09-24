@@ -32,6 +32,7 @@ const TermsAndConditionsModal = ({
   currentOrderPrice,
   totalAmount,
   productName,
+  productQuantity,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
@@ -58,6 +59,7 @@ const TermsAndConditionsModal = ({
       totalAmount: totalAmount,
       currentOrderPrice: currentOrderPrice,
       productId: productId,
+      productQuantity: productQuantity,
     };
 
     setProductSummary(productSummaryDetails);

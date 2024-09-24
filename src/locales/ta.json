@@ -241,5 +241,31 @@
   "total_quantity": "மொத்த அளவு",
   "delete_confirmation": "நீங்கள் பொருளை நீக்க விரும்புகிறீர்களா?",
   "yes": "ஆம்",
-  "no": "இல்லை"
+  "no": "இல்லை",
+
+  "select_location": "இடத்தை தேர்வுசெய்க",
+  "registration": "பதிவு",
+  "enter_your_location": "உங்கள் இடத்தை உள்ளிடவும்",
+  "madhya_pradesh": "மத்தியப் பிரதேசம்",
+  "maharashtra": "மகாராஷ்டிரா",
+  "kerala": "கேரளா",
+  "andhra_pradesh": "ஆந்திரா பிரதேசம்",
+  "telangana": "தெலுங்கானா",
+  "karnataka": "கர்நாடகா",
+  "odisha": "ஒடிஷா",
+  "enter_otp": "OTP ஐ உள்ளிடுக",
+  "choose_your_category": "உங்கள் வகையைத் தேர்ந்தெடுக்கவும்",
+  "eligibility_business": "தகுதி: வணிகம்",
+  "more_than_50_crore": "50 கோடிக்கு மேல்",
+  "less_than_50_crore": "50 கோடிக்கு குறைவாக",
+  "register_as": "பதிவு செய்யுங்கள்",
+  "member": "உறுப்பினர்",
+  "successfully_registered_as_seller": "விற்பனையாளராக வெற்றிகரமாக பதிவு செய்யப்பட்டது",
+  "use_existing_credentials": "உங்கள் ஏற்கனவே உள்ள சான்றுகளைப் பயன்படுத்தி உள்நுழைக",
+
+  "gujarat": "குஜராத்",
+  "verify_otp": "OTP சரிபார்க்கவும்",
+  "ok": "சரி",
+
+  "exit_app": "வெளியேறு"
 }

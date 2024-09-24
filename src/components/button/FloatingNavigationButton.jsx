@@ -16,6 +16,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
+const colors="#d53c46";
+const backgrounds="#FCF8F3";
 
 const FloatingNavigationButton = ({buttonColor}) => {
   const [icon_1] = useState(new Animated.Value(40));
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
   floatButton: {
     width: wp(15),
     height: wp(15),
-    backgroundColor: "orange",
+    backgroundColor: colors,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 999,

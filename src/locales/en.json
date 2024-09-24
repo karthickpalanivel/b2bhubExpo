@@ -249,5 +249,31 @@
   "total_quantity": "Total Quantity",
   "delete_confirmation": "Do you want to delete the Product?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+
+  "select_location": "Select Location",
+  "registration": "Registration",
+  "enter_your_location": "Enter your location",
+  "madhya_pradesh": "Madhya Pradesh",
+  "maharashtra": "Maharashtra",
+  "kerala": "Kerala",
+  "andhra_pradesh": "Andhra Pradesh",
+  "telangana": "Telangana",
+  "karnataka": "Karnataka",
+  "odisha": "Odisha",
+  "enter_otp": "Enter OTP",
+  "choose_your_category": "Choose Your Category",
+  "eligibility_business": "Eligibility: Business is",
+  "more_than_50_crore": "More than 50 Crore",
+  "less_than_50_crore": "Less than 50 Crore",
+  "register_as": "Register as",
+  "member": "Member",
+  "successfully_registered_as_seller": "Successfully Registered as Seller",
+  "use_existing_credentials": "Use Your Existing Credentials to login",
+
+  "gujarat": "Gujarat",
+  "verify_otp": "Verify OTP",
+  "ok": "OK",
+
+  "exit_app": "Exit App"
 }

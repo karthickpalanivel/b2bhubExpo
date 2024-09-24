@@ -21,6 +21,8 @@ import Radio from "../components/button/Radio";
 import { PencilSquareIcon, TrashIcon } from "react-native-heroicons/outline";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { useTranslation } from "react-i18next";
+const colors="#EF5A6F";
+const backgrounds="#FCF8F3";
 
 const OrderScreen = ({ route }) => {
   const [product, setProduct] = useState(null);
@@ -59,7 +61,7 @@ const OrderScreen = ({ route }) => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="auto" backgroundColor="#4870F4" />
+          <StatusBar style="auto" backgroundColor={colors}/>
           <View style={styles.headerBar}>
             <TouchableOpacity style={styles.iconButton} onPress={goback}>
               <ArrowLeftIcon size={hp(3.5)} strokeWidth={2.5} color={"black"} />
@@ -155,7 +157,7 @@ export default OrderScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: backgrounds,
   },
 
   radioContainer: {
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     padding: wp(2),
     borderRadius: 10,
     elevation: 5,
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
   },
 
   actionContainer: {

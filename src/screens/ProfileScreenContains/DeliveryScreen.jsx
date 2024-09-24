@@ -16,6 +16,8 @@ import { StatusBar } from "expo-status-bar";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
 import { useTranslation } from "react-i18next";
+const colors="#EF5A6F";
+const backgrounds="#FCF8F3";
 
 
 
@@ -91,7 +93,7 @@ const DeliveryScreen = () => {
       ) : (
         <View style={styles.container}>
           <ProfileHeaderLayout header={t('orders')} />
-          <StatusBar style="light" backgroundColor="#4870F4" />
+          <StatusBar style="light" backgroundColor={colors} />
           <ScrollView>
             {orderDetails.length !== 0 ? (
               <Text style={styles.orderHeader}>Orders</Text>
@@ -146,7 +148,7 @@ export default DeliveryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fefefe",
+    backgroundColor: backgrounds,
     alignItems: "center",
   },
 
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
     width: wp(30),
     height: wp(10),
     alignItems: "center",
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     justifyContent: "center",
     borderRadius: wp(10),
   },
