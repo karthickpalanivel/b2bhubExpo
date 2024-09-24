@@ -181,78 +181,162 @@ const PdfGeneration = ({ invoicedata }) => {
     return words.trim();
   }
   html = `
-    <div id="printdf" style="background-color: #f5f5f5; width: fit-content; min-height: 297mm; margin-left: auto; margin-right: auto;">
-     
-   <div style="font-family: Arial, sans-serif; color: #000000; margin: 0; padding: 20px; line-height: 1;">
+    <div id="printdf" style="background-color: #f5f5f5; width: fit-content; min-height: 320mm; margin-left: auto; margin-right: auto;">
+     <div style="font-family: Arial, sans-serif; font-size: 4px; line-height:1; margin: 0; padding: 0;">
 
-    <div style="border: 1px solid #ccc; padding: 20px; max-width: 800px; margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <img src=${logo} alt="B2BHub Logo" style="height: 60px;">
-            <div style="text-align: center;">
-                <p style="margin: 10px; font-size: 11px; color:#d9232d">B2Bhub</p>
-                <p style="margin: 5px; font-size: 11px;">Email Id:<a href="mailto:support@b2bhubinida.com" style="color: #000; text-decoration: none;">  support@b2bhubindia.com</a></p>
-                <p style="margin: 0 30px 0 0px; font-size: 11px;">Contact Number: 7824036322</p>
-            </div>
-            <img src=${pnb} alt="Axis Bank Logo" style="height: 50px;">
-        </div>
-        <hr>
-        <h4 style="text-align: center; color: #d9232d; margin: 30px 0;">PAYMENT SLIP</h4>
-        <div style="text-align: center; margin-bottom: 30px; font-size: 11px;">
-          <p style="margin: 0;"><strong>Generation Date :</strong> ${getCurrentDate()}</p>
-        </div>
+	<div style="width: 100%; margin: 0 auto;border:1px solid #000;padding:6px;">
+		<center>
+			<h1>Invoice Note</h1>
+		</center>
+		<table border="1px" width="95%" style="border-width:1px;border-color:black,border-collapse: collapse;">
+			<tr>
+				<td rowspan="3" style="border-right: none;border-bottom:none;line-height: 1.5;padding: 2px 0px 2px 2px;"><strong>VTS ENTERPRISES INDIA PVT
+						LTD</strong><br>
+					No 3B, 3RD FLOOR,<br>
+					25 PARK CENTER VENKATARAYANA ROAD<br>
+					T.NAGAR CHENNAI<br>
+					600017<br>
+					GSTIN/UIN: 33AAHCV0173B12T<br>
+					STATE NAME : TAMIL NADU, CODE : 33
+				</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px;">Credit Note No. ${invoiceId.replace(
+    "B2BINV",
+    ""
+  )}</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px;">Dated: ${getCurrentDate()}</td>
+			</tr>
+			<tr>
+				<td style="border-right: none;border-bottom:none;font-weight: bold; padding: 2px;">Invoice No.: ${invoiceId.replace(
+    "B2B",
+    ""
+  )} <br><br>Date:${getCurrentDate()}</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px;">Other Reference</td>
+			</tr>
+			<tr>
+				<td style="border-right: none;border-bottom:none;padding: 2px">Mode/Terms of Payment</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"></td>
+			</tr>
+			<tr>
+				<td rowspan="3" style="border-right: none;border-bottom:none;line-height: 1.5; padding: 2px 0px 2px 2px;">
+            Consignee (Ship To)<br>
+            <strong>${name.toUpperCase()}</strong><br>
+            ${address1.toUpperCase()},<br>
+            ${address2.toUpperCase()}, ${landmark.toUpperCase()}<br>
+            ${city.toUpperCase()} - ${pincode}, ${state.toUpperCase()}.<br>
+            GSTIN/UIN: ${gst_no.toUpperCase()}<br>
+            State Name: ${state.toUpperCase()}, Code: 33
+        </td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Dispatched Doc No.</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"></td>
+			</tr>
+			<tr>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Buyer’s Order No.</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px">Dated</td>
+			</tr>
+			<tr>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Dispatched through</td>
+				<td style="border-right: none;border-bottom:none;font-weight: bold;padding: 2px;">CHENNAI</td>
+			</tr>
+			<tr>
+			</tr>
+			<tr>
+				<td style="border-bottom:none;border-right: none; line-height: 1.5; padding: 2px 0px 2px 2px;">
+            Bill (Bill To)<br>
+            <strong>${name.toUpperCase()}</strong><br>
+            ${address1.toUpperCase()},<br>
+            ${address2.toUpperCase()}, ${landmark.toUpperCase()}<br>
+            ${city.toUpperCase()} - ${pincode}, ${state.toUpperCase()}.<br>
+            GSTIN/UIN: ${gst_no.toUpperCase()}<br>
+            State Name: ${state.toUpperCase()}, Code: 33
+        </td>
+				<td colspan="2" style="border-right: none;border-bottom:none;padding: 2px;">Terms & Conditions</td>
+			</tr>
+		</table>
+		<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+		</div>
 
-          <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; line-height: 24px;">
-                <div style="font-size: 11px;margin-right:10px">
-                    <p style="margin: 0;"><strong>Entity Name :</strong> ${name}</p>
-                    <p style="margin: 0;"><strong>Entity GST NO. :</strong> ${gst_no}</p>
-                    <p style="margin: 0;"><strong>Actual Amount :</strong>	₹ ${formatIndianNumber(
-                      amount
-                    )}</p>
-                    <p style="margin: 0;"><strong>GST Amount :</strong> ₹ 0</p>
-                    <p style="margin: 0;"><strong>Amount :</strong>	₹ ${formatIndianNumber(
-                      amount
-                    )}</p>
-                    <p style="margin: 0;"><strong>Payment Approved Date :</strong> ${getCurrentDateWithoutTime()}</p>
-                </div>
-                <div style="font-size: 11px;">
-                  <!-- <p style="margin: 0;"><strong>Generation Date :</strong> ${getCurrentDate()}</p> -->
-                  <p style="margin: 0;"><strong>Mobile No :</strong> ${mobile}</p>
-                  <p style="margin: 0;"><strong>Email Id :</strong> ${email}</p>
-                  <div style="font-size: 11px;">
-                    <p style="margin: 0;"><strong>GST @ 18% :</strong> NO</p>
-                    <p style="margin: 0;"><strong>Remarks :</strong> Master agreement E signing fees</p>
-                    <p style="margin: 0;"><strong>Amount (incl. service charges) :</strong> ₹ ${formatIndianNumber(
-                      amount
-                    )}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+		<table border="1px" style="width: 95%; border-collapse: collapse; margin-bottom: 10px;">
+			<thead>
+				<tr>
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">S.No.</th>
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">Product Name</th>
 
-          <div style="margin-top: 25px; padding: 20px; border: 1px solid #ccc; background-color: #f9f9f9;">
-            <table style="width: 100%; font-size: 11px; border-collapse: collapse;">
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">Quantity</th>
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">Rate</th>
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">Per</th>
+					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="border-right: none;border-bottom:none;padding: 5px;">1</td>
+					<td style="border-right: none;border-bottom:none;padding: 5px;">${product_type} </td>
+					<td style="border-right: none;border-bottom:none;padding: 5px;">${product_quantity} TONNES</td>
+					<td style="border-right: none;border-bottom:none;padding: 5px;">₹ ${formatIndianNumber(
+    parseInt(unitprice)
+  )}.00</td>
+					<td style="border-right: none;border-bottom:none;padding: 5px;">TONNE</td>
+					<td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
+    parseInt(total_amount)
+  )}</td>
+				</tr>				
+				<tr>
+					<td style="border-right: none;border-bottom:none;padding: 5px;" colspan="5">Total (GST Exempted)</td>
+					<td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
+    parseInt(total_amount)
+  )}</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div style="display: flex;flex-direction: column; justify-content: space-between;">
+      <strong>GST Exempted</strong>
+			<table border="1px" style="width: 95%; border-collapse: collapse; margin-bottom: 3px;margin-top:2px">
                 <tr>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center; background-color: #f3f3f3;"><strong>URN</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center; background-color: #f3f3f3;"><strong>Status</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center; background-color: #f3f3f3;"><strong>Mode of Payment</strong></td>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">HSN/SAC</th>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">CGST @ 0.0%</th>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">SGST @ 0.0%</th>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">IGST @ 0.0%</th>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">Total Tax Amount</th>
+                    <th style="border-right: none;border-bottom:none;padding: 5px;">Total Amount With Tax</th>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">${pid}</td>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">Success</td>
-                    <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">NET BANKING</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">07133100</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
+                    <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
+    total_amount
+  )}.00</td>
                 </tr>
             </table>
-          </div>
-
-          <div style="margin-top: 20px;">
-            <p style="font-size: 11px; color: #d9232d; margin-bottom: 5px;"><strong>Please note :</strong></p>
-            <ul style="font-size: 11px; padding-left: 20px; color: #d9232d; margin: 0;">
-                <li>This is a system-generated receipt. Hence it does not require signatures.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+            
+			<div style="border:none;padding:6px  3px;">
+				Total Amount (in words):<br><br>
+				<strong style="margin-top:7px;">INR ${numberToWords(
+    total_amount
+  ).toUpperCase()} ONLY</strong><br><br>
+				<strong>Company’s Bank Details :</strong><br>
+				Bank Name: PUNJAB NATIONAL BANK<br>
+				A/C No.: 3940002100057010<br>
+        IFSC Code.: PUNB0394000<br>
+				Branch : Tiruvanmiyur,CHENNAI<br>
+			</div>
+		</div>
+		<div style="border:none; padding: 3px; margin-bottom: 3px;">
+			<strong>Declaration :</strong><br><br>
+			We declare that this invoice shows the actual price of the goods described and that all particulars are true
+			and correct.<br>
+		</div>
+		<hr>
+		<div  style="text-align: right;width:95%">
+			<strong>For VTS ENTERPRISES INDIA PVT LTD</strong><br><br><br>
+			Authorised Signatory
+		</div>
+	</div>
+</div>
     </div>
   `;
 
