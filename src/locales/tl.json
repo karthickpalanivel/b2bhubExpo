@@ -232,7 +232,7 @@
   "unpacked": "అన్ప్యాక్డ్",
   "add_package_details": "ప్యాకేజీ వివరాలను జోడించండి",
   "submit": "సమర్పించండి",
-  
+
   "location": "స్థానం",
   "open": "తెరవండి",
   "premium_quality_product": "ప్రీమియం నాణ్యమైన ఉత్పత్తి",
@@ -242,5 +242,29 @@
   "total_quantity": "మొత్తం పరిమాణం",
   "delete_confirmation": "మీరు ఉత్పత్తిని తొలగించాలనుకుంటున్నారా?",
   "yes": "అవును",
-  "no": "కాదు"
+  "no": "కాదు",
+
+  "select_location": "ప్రాంతాన్ని ఎంచుకోండి",
+  "registration": "నమోదు",
+  "enter_your_location": "మీ ప్రాంతాన్ని నమోదు చేయండి",
+  "madhya_pradesh": "మధ్యప్రదేశ్",
+  "maharashtra": "మహారాష్ట్ర",
+  "kerala": "కేరళ",
+  "andhra_pradesh": "ఆంధ్రప్రదేశ్",
+  "telangana": "తెలంగాణ",
+  "karnataka": "కర్ణాటక",
+  "odisha": "ఒడిశా",
+  "enter_otp": "OTP నమోదు చేయండి",
+  "choose_your_category": "మీ వర్గాన్ని ఎంచుకోండి",
+  "eligibility_business": "అర్హత: వ్యాపారం",
+  "more_than_50_crore": "50 కోట్లకు పైగా",
+  "less_than_50_crore": "50 కోట్లకు తక్కువ",
+  "register_as": "గా నమోదు చేయండి",
+  "member": "సభ్యుడు",
+  "successfully_registered_as_seller": "విక్రేతగా విజయవంతంగా నమోదు అయ్యారు",
+  "use_existing_credentials": "లాగిన్ చేయడానికి మీ క్రెడెన్షియల్స్ ఉపయోగించండి",
+
+  "gujarat": "గుజరాత్",
+  "verify_otp": "OTP నిర్ధారించండి",
+  "ok": "సరే"
 }

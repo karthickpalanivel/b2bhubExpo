@@ -242,5 +242,29 @@
   "total_quantity": "कुल मात्रा",
   "delete_confirmation": "क्या आप उत्पाद को हटाना चाहते हैं?",
   "yes": "हां",
-  "no": "नहीं"
+  "no": "नहीं",
+
+  "select_location": "स्थान चुनें",
+  "registration": "पंजीकरण",
+  "enter_your_location": "अपना स्थान दर्ज करें",
+  "madhya_pradesh": "मध्य प्रदेश",
+  "maharashtra": "महाराष्ट्र",
+  "kerala": "केरल",
+  "andhra_pradesh": "आंध्र प्रदेश",
+  "telangana": "तेलंगाना",
+  "karnataka": "कर्नाटक",
+  "odisha": "ओडिशा",
+  "enter_otp": "OTP दर्ज करें",
+  "choose_your_category": "अपनी श्रेणी चुनें",
+  "eligibility_business": "पात्रता: व्यवसाय है",
+  "more_than_50_crore": "50 करोड़ से अधिक",
+  "less_than_50_crore": "50 करोड़ से कम",
+  "register_as": "के रूप में पंजीकरण करें",
+  "member": "सदस्य",
+  "successfully_registered_as_seller": "विक्रेता के रूप में सफलतापूर्वक पंजीकृत किया गया",
+  "use_existing_credentials": "लॉगिन करने के लिए अपने मौजूदा क्रेडेंशियल्स का उपयोग करें",
+
+  "gujarat": "गुजरात",
+  "verify_otp": "OTP सत्यापित करें",
+  "ok": "ठीक"
 }
