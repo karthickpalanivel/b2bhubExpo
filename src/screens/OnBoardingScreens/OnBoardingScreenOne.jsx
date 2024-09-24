@@ -39,6 +39,7 @@ const OnBoardingScreenOne = () => {
     }
   };
 
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
