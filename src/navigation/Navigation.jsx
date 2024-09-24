@@ -32,6 +32,8 @@ import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList"
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
 import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
 import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
+import ProductDetailsForm from "../sellerScreens/sellerComponents/ProductDetailsForm";
+
 
 //variables
 const Stack = createNativeStackNavigator();
@@ -106,6 +108,7 @@ export default function Navigation() {
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />
         <Stack.Screen name="ModifyProduct" component={ModifyProductList} />
         <Stack.Screen name="SellerProfile" component={SellerProfile} />
+        <Stack.Screen name="SellerProductEdit" component={ProductDetailsForm}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

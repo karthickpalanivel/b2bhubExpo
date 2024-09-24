@@ -208,7 +208,7 @@ const ProductDisplay = () => {
     ];
 
     console.log(productSend);
-    navigation.navigate("ModifyProduct", { product: productSend });
+    navigation.navigate("SellerProductEdit", { product: products });
   };
 
   async function handleDeleteProduct(params) {}

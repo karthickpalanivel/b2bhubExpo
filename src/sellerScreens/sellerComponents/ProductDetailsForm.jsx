@@ -41,9 +41,14 @@ const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
 const ProductDetailsForm = ({ route }) => {
-  const { product } = route.params;
   const [isProduct, setIsProduct] = useState({});
   const [productName, setProductName] = useState("");
+  const [productId, setProductId] = useState("");
+  const [customerId, setCustomerId] = useState("");
+  const [customerCategory, setCustomerCategory] = useState("");
+  const [isOrganic, setIsOrganic] = useState(0);
+  const [isPublished, setPublished] = useState(0);
+  const [isApproved, setApproved] = useState(0);
   const [pricing, setPricing] = useState("");
   const [units, setUnits] = useState("Select Unit");
   const [moisture, setMoisture] = useState("Select Moisture");
@@ -213,8 +218,50 @@ const ProductDetailsForm = ({ route }) => {
       });
       setIsLoading(false);
     }
-    // const { product } = route.params;
-    // console.log(product)
+    const { product } = route.params;
+
+    if (product) {
+      setCustomerCategory(product?.category);
+      setCustomerId(product?.customerId);
+      setDescription(product?.description);
+      product.isApproved == 1 && setApproved(1);
+      product.isPublished == 1 && setPublished(1);
+      product.isOrganic == 1 && setIsOrganic(1);
+      setMoisture(product?.moisture);
+      setPackageDetails([
+        { type: product.packaging.type, quantity: product.packaging.quantity },
+      ]);
+      setPricing(product?.price);
+      setProductId(product?.productId);
+      setProductName(product?.productName);
+      setProductType(product?.productType);
+      setShelfLife(product?.shelfLife);
+
+      setImage(product?.productImg);
+      setValidity(product?.validity);
+      setUnits(product?.units);
+      console.log(
+        customerId,
+        customerCategory,
+        description,
+        isApproved,
+        isPublished,
+        moisture,
+        pricing,
+        packageDetails,
+        productId,
+        productName,
+        productType,
+        shelfLife,
+        image,
+        validity,
+        units
+      );
+    }
+
+    const availableProductData = {};
+
+    console.log(product);
     loadFonts();
   }, []);
 
