@@ -15,6 +15,8 @@ import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -33,6 +35,7 @@ const TermsAndConditionsModal = ({
   totalAmount,
   productName,
   productQuantity,
+  productType,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
@@ -60,14 +63,41 @@ const TermsAndConditionsModal = ({
       currentOrderPrice: currentOrderPrice,
       productId: productId,
       productQuantity: productQuantity,
+      productType: productType.split(" ")[0],
+      
     };
+
+    const typeOfProduct = productSummaryDetails.productType;
 
     setProductSummary(productSummaryDetails);
 
-    console.log(productId, currentOrderPrice, totalAmount, productName);
     console.log(
-      "Product Summary Details " + JSON.stringify(productSummaryDetails)
+      "Product Summary Details Name: " + JSON.stringify(productSummaryDetails)
     );
+
+    const translatedCategory = (key) => {
+      return t(key).split(" ")[0];
+    };
+
+    const translatedProductName = () => {
+      if (productSummaryDetails.productName == "ToorDal") return t("toor_dal");
+      if (productSummaryDetails.productName == "MoongDal")
+        return t("moong_dal");
+      if (productSummaryDetails.productName == "UradDal") return t("urad_dal");
+      if (productSummaryDetails.productName == "GramDal") return t("gram_dal");
+    };
+
+    const combinedName = () => {
+      return (
+        translatedCategory(productSummaryDetails.productType) +
+        " " +
+        translatedProductName()
+      );
+    };
+
+    console.log(combinedName());
+
+    productSummaryDetails.productName = combinedName();
   }, []);
 
   useEffect(() => {
@@ -252,7 +282,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   checkboxChecked: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   checkmark: {
     color: "#fff",
@@ -262,7 +294,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
   },
   completeButton: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     padding: wp(2.5),
     borderRadius: wp(1.25),
     alignItems: "center",

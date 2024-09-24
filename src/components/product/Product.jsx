@@ -33,7 +33,7 @@ export default function Product({
     axios
       .post(url, {})
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data);
         setIsLoading(false);
       })

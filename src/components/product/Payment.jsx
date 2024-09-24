@@ -1,3 +1,4 @@
+
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import {
@@ -22,6 +23,8 @@ import PdfGeneration from "../InVoice/PdfGeneration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 // CustomCheckBox Component
 export const CustomCheckBox = ({ value, onValueChange }) => (
@@ -274,7 +277,7 @@ const PaymentSummary = ({ route }) => {
           {/* Total Price Card */}
           <View style={styles.headerContainer}>
             <TouchableOpacity onPress={goBack} style={styles.icon}>
-              <ArrowLeftIcon color="#4870F4" size={hp(3)} strokeWidth={2} />
+              <ArrowLeftIcon color={colors} size={hp(3)} strokeWidth={2} />
             </TouchableOpacity>
             <Text style={styles.goback}>{t("go_back_for_changes")}</Text>
           </View>
@@ -285,7 +288,7 @@ const PaymentSummary = ({ route }) => {
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("product_name")}</Text>
-                <Text style={styles.tableCell}>{translatedProductName()}</Text>
+                <Text style={styles.tableCell}>{productSummary.productName}</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("total_price")}</Text>
@@ -424,7 +427,7 @@ const PaymentSummary = ({ route }) => {
           <View style={styles.deliveryDetails}>
             <Text style={styles.cardTitle}>{t("delivery_details")}</Text>
             <Text style={styles.cardContent}>{t("delivery_time")}</Text>
-            <Text style={{ color: "#4870F4", fontFamily: "QuicksandSemiBold" }}>
+            <Text style={{ color: colors, fontFamily: "QuicksandSemiBold" }}>
               **{t("conditions_apply")}
             </Text>
             <Text style={styles.cardContent}>{t("samples_can_be_sent")} </Text>
@@ -446,7 +449,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: wp(5),
-    backgroundColor: "#f0f0f0",
+    backgroundColor: backgrounds,
     marginTop: wp(5),
   },
   card: {
@@ -466,7 +469,7 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     // fontWeight: "bold",
     fontFamily: "QuicksandSemiBold",
-    color: "#4870F4",
+    color: colors,
   },
   cardContent: {
     fontSize: 14,
@@ -517,13 +520,13 @@ const styles = StyleSheet.create({
     height: wp(5),
     borderRadius: wp(1),
     borderWidth: wp(0.5),
-    borderColor: "#007bff",
+    borderColor: colors,
     justifyContent: "center",
     alignItems: "center",
     marginRight: wp(2.5),
   },
   checkboxChecked: {
-    backgroundColor: "#007bff",
+    backgroundColor: colors,
   },
   checkmark: {
     fontSize: wp(3.5),
@@ -537,7 +540,7 @@ const styles = StyleSheet.create({
   supportEmail: {
     padding: wp(2.5),
 
-    color: "#4870F4",
+    color: colors,
   },
   deliveryDetails: {
     justifyContent: "center",
@@ -559,7 +562,7 @@ const styles = StyleSheet.create({
   goback: {
     fontSize: wp(4),
     marginLeft: wp(5),
-    color: "#4870F4",
+    color: colors,
     // fontWeight: "bold",
     fontFamily: "QuicksandSemiBold",
   },
@@ -570,7 +573,7 @@ const styles = StyleSheet.create({
   },
 
   preBookContainer: {
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     padding: wp(2),
     justifyContent: "center",
     borderRadius: wp(4),

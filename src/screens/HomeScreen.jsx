@@ -35,6 +35,8 @@ import { CompanyData } from "../data/CompanyData";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import { useTranslation } from "react-i18next";
 import { Banner } from "react-native-paper";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -238,7 +240,7 @@ const HomeScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="auto" backgroundColor="white" />
+          <StatusBar style="auto" backgroundColor={backgrounds} />
           <LanguageModal visible={modalVisible} setVisible={setModalVisible} />
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -277,7 +279,7 @@ const HomeScreen = () => {
               >
                 <View>
                   <Text style={styles.userName}>{t("welcome")},</Text>
-                  <Text style={styles.userName}>{companyName}</Text>
+                  <Text style={styles.user}>{companyName}</Text>
 
                   <View style={styles.iconContainer}>
                     {/*<MapPinIcon size={hp(2)} color="#f59e0b" />
@@ -427,6 +429,15 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
+  user: {
+    fontSize: hp(2),
+    width: wp(100),
+    fontFamily: "QuicksandSemiBold",
+    color: colors,
+    textDecorationColor:colors,
+    textDecorationLine:"underline",
+    textDecorationStyle:"dotted",
+  },
 
   headerContainer: {
     marginHorizontal: "5%",
@@ -453,7 +464,7 @@ const styles = StyleSheet.create({
     width: wp(100),
     fontSize: hp(3),
     fontFamily: "QuicksandSemiBold",
-    color: "#f59e0b",
+    color:colors,
   },
 
   searchBarText: {
