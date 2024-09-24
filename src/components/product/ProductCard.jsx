@@ -22,6 +22,8 @@ import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { XCircleIcon } from "react-native-heroicons/outline";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 
 const ProductCard = ({ props, index }) => {
@@ -115,7 +117,7 @@ const ProductCard = ({ props, index }) => {
   };
   const productName = translatedName(props.name);
   const memberShipBackgroundColor = () => {
-    if (props.category == "PLATINUM") return "#DD7522";
+    if (props.category == "PLATINUM") return colors;
     else if (props.category == "GOLD") return "#A10E38"; //#DD7522
     else return "#fff";
   };

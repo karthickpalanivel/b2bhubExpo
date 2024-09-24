@@ -13,6 +13,8 @@ import * as Font from "expo-font";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 export default function Product({
   category,
