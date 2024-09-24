@@ -43,10 +43,15 @@ const ForgotPasswordScreen = () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
       const res = await axios.post(url, {email});
-      setOriginalOtp(res.data.otp); 
-      console.log('====================================');
-      console.log(originalOtp);
-      console.log('====================================');
+      // setOriginalOtp(res.data.otp); 
+      // console.log('====================================');
+         console.log(res.data);
+         navigation.navigate("OtpConformScreen", {
+          email: email,
+          originalOtp: originalOtp,
+        });
+      // console.log('====================================');
+
       Alert.alert('OTP sent to your email!');
     } catch (error) {
       Alert.alert('Failed to send OTP'+error);

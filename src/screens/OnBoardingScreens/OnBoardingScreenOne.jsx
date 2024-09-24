@@ -111,7 +111,7 @@ const OnBoardingScreenOne = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" backgroundColor="white" />
+      <StatusBar style="dark" backgroundColor="#FF7262" />
       <Onboarding
         onDone={handleOnCompleteOnBoard}
         onSkip={handleOnCompleteOnBoard}

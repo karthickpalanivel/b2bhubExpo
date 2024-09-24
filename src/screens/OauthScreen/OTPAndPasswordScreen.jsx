@@ -16,15 +16,15 @@ import { useNavigation } from "@react-navigation/native";
 import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 
-const OTPAndPasswordScreen = () => {
-  const [otp, setOtp] = useState(["", "", "", ""]);
+const OTPAndPasswordScreen = ({route}) => {
+  const [otp, setOtp] = useState(["", "", "", "","",""]);
   const [isOtpValid, setIsOtpValid] = useState(null);
   const [otpVerified, setOtpVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPasswrod, setShowPassword] = useState(true);
-  const [originalOtp, setOriginalOtp] = useState("")
 
+  const {email} = route.params;
   const handleShowPassword = () => {
     setShowPassword(!showPasswrod);
   };
@@ -73,10 +73,36 @@ const OTPAndPasswordScreen = () => {
     }
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (newPassword === confirmPassword && newPassword.length >= 8) {
       Alert.alert("Success", "Password changed successfully!");
-      navigation.navigate("Login");
+      try {
+  
+        // Send the entered OTP along with other data to the backend for verification and password reset
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}` +"/b2b/resetpassword", {
+          email,
+          otp, // Send the entered OTP
+          newPassword,
+          confirmPassword,
+        });
+        console.log({
+          email,
+          otp, // Send the entered OTP
+          password,
+          confirmPassword,
+        });
+        
+        //toast.success('Password changed successfully!', { position: "top-center" });
+  
+        // Redirect to login after success
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, 3000);
+      } catch (error) {
+        toast.error('Failed to change password or OTP is incorrect', { position: "top-center" });
+        console.log(error);
+      }
+      
     } else if (newPassword.length < 8) {
       Alert.alert("Error", "Passwords must be more than 8!");
     } else {
