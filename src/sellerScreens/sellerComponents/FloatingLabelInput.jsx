@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Animated, TextInput, StyleSheet, View, Text } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+const colors="#E84A5F";
 
 const FloatingLabelInput = ({ label, value, onChangeText,width, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -38,7 +39,7 @@ const FloatingLabelInput = ({ label, value, onChangeText,width, ...props }) => {
               inputRange: [0, 1],
               outputRange: [12, 15]
             }),
-            color: isFocused ? '#2196F3' : '#aaa',
+            color: isFocused ? colors: '#aaa',
             width:width,
             fontFamily: 'QuicksandSemiBold',
           }
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: wp('0.4%'), 
-    borderColor: '#2196F3',
+    borderColor: colors,
     padding:wp(3),
     paddingVertical: hp('1%'), 
     borderRadius: wp('1.5%'), 

@@ -36,6 +36,9 @@ import {
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const ProductDetailsForm = () => {
   const [productName, setProductName] = useState("");
@@ -48,6 +51,14 @@ const ProductDetailsForm = () => {
   const [packageDetails, setPackageDetails] = useState([
     {type: "Select Package Type", quantity: ""},
   ]);
+
+  const packageDict = packageDetails.reduce((acc, pkg) => {
+    if (pkg.type && pkg.quantity) {
+      acc[pkg.type] = pkg.quantity;
+    }
+    return acc;
+  }, {});
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [image, setImage] = useState(null);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
@@ -64,8 +75,8 @@ const ProductDetailsForm = () => {
       if (detail.quantity && pricing) {
         const quantityInKg =
           units === "1KG"
-            ? parseFloat(detail.quantity)
-            : parseFloat(detail.quantity) * 1000; // Convert to KG if it's in tons
+            ? parseFloat(detail.quantity)* 1000
+            : parseFloat(detail.quantity) ; // Convert to KG if it's in tons
         return sum + quantityInKg * parseFloat(pricing);
       }
       return sum;
@@ -115,6 +126,49 @@ const ProductDetailsForm = () => {
       Alert.alert("Enter every field");
     }
   };
+
+  async function AddSellerProduct(){
+    const token1 = await AsyncStorage.getItem("token");
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}`+"/seller/addProduct", {
+        method: 'POST',
+        headers: {
+          Authorization:`Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(allData),
+      });
+      console.log(allData);
+      
+      if (!response.ok) {
+        throw new Error('Something went wrong while sending the data.');
+      }
+  
+      const data = await response.json();
+      console.log('Success:', data);
+      Alert.alert('Product added successfully!');
+      navigation.navigate("SellerHome")
+
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Failed to submit form data', { position: "top-center" });
+    }
+  }
+
+  const allData = {
+    productName: productName,
+      productImg: "https://res.cloudinary.com/dalzs7bc2/image/upload/v1726650496/image.2_xxq87v.jpg",
+      price: pricing,
+      units: units,
+      moisture: moisture,
+      isOrganic: true,
+      shelfLife: shelfLife,
+      validity: validity,
+      description: description,
+      packaging: packageDict,
+      productType: productType
+  }
+
   const productTypeOptions = {
     moongdal: [
       "Polished Moong dal",
@@ -269,7 +323,7 @@ const ProductDetailsForm = () => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar backgroundColor="#fff" style="dark"></StatusBar>
+          <StatusBar backgroundColor={backgrounds} style="dark"></StatusBar>
           <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
               <TouchableOpacity
@@ -299,7 +353,7 @@ const ProductDetailsForm = () => {
                         style={styles.xContainer}
                         onPress={() => setIsUploadVisible(false)}
                       >
-                        <XMarkIcon size={hp(3)} color="#2196F3" />
+                        <XMarkIcon size={hp(3)} color={colors} />
                       </TouchableOpacity>
                       <View style={styles.cancel}>
                         <Text
@@ -319,7 +373,7 @@ const ProductDetailsForm = () => {
                           <CameraIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("camera")}
@@ -332,7 +386,7 @@ const ProductDetailsForm = () => {
                           <PhotoIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("gallery")}
@@ -348,7 +402,7 @@ const ProductDetailsForm = () => {
                           <TrashIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("remove")}
@@ -368,21 +422,25 @@ const ProductDetailsForm = () => {
                         style={styles.uploadedImage}
                       />
                     ) : (
-                      <PhotoIcon
+                     <View>
+                       <PhotoIcon
                         width={wp("8%")}
                         height={hp("8%")}
-                        color="#2196F3"
+                        color={colors}
                       />
+                      <TouchableOpacity onPress={() => uploadImage()}>
+                      <View>
+                        <Text>Upload</Text>
+                      </View>
+                    </TouchableOpacity>
+                     </View>
                     )}
                   </TouchableOpacity>
                 )}
+                
               </View>
 
-              <TouchableOpacity onPress={() => uploadImage()}>
-                <View>
-                  <Text>Upload</Text>
-                </View>
-              </TouchableOpacity>
+              
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
@@ -506,7 +564,7 @@ const ProductDetailsForm = () => {
                   <CalendarIcon
                     width={wp("5%")}
                     height={hp("4%")}
-                    color="#2196F3"
+                    color={colors}
                     marginLeft={wp(42)}
                   />
                 </TouchableOpacity>
@@ -539,7 +597,7 @@ const ProductDetailsForm = () => {
                       <Picker
                         selectedValue={detail.type}
                         style={[
-                          {borderColor: "#2196F3"},
+                          {borderColor: colors},
                           styles.packageTypePicker,
                         ]}
                         onValueChange={(itemValue) => {
@@ -581,7 +639,7 @@ const ProductDetailsForm = () => {
                         <TrashIcon
                           width={wp("5%")}
                           height={hp("5%")}
-                          color="#2196F3"
+                          color={colors}
                         />
                       </TouchableOpacity>
                     )}
@@ -615,7 +673,7 @@ const ProductDetailsForm = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={onSubmit}
+                  onPress={()=>AddSellerProduct()}
                 >
                   <Text style={styles.submitButtonText}>{t("submit")}</Text>
                 </TouchableOpacity>
@@ -631,7 +689,7 @@ const ProductDetailsForm = () => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    backgroundColor: "#FFFFF1",
+    backgroundColor: backgrounds,
   },
   container: {
     marginTop: wp(5),
@@ -643,7 +701,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
     marginVertical: wp(3),
     fontFamily: "QuicksandSemiBold",
-    color: "#2196F3",
+    color: colors,
     textAlign: "center",
   },
   subHeader: {
@@ -661,7 +719,7 @@ const styles = StyleSheet.create({
     width: wp("40%"),
     height: wp("40%"),
     borderRadius: wp("5%"),
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
@@ -696,7 +754,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderRadius: wp("2%"),
     marginBottom: hp("1.5%"),
     padding: wp("2%"),
@@ -716,7 +774,7 @@ const styles = StyleSheet.create({
   },
   pickerTypeContainer: {
     marginRight: 5,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderWidth: 1,
     height: hp(6),
     borderRadius: 3,
@@ -729,7 +787,7 @@ const styles = StyleSheet.create({
   quantityInput: {
     width: wp(30),
     marginRight: 2,
-    borderColor: "#2196F3",
+    borderColor: colors,
     padding: wp(2),
     borderWidth: 1,
     borderRadius: 4,
@@ -743,7 +801,7 @@ const styles = StyleSheet.create({
     width: wp("7%"),
     height: wp("7%"),
     borderWidth: 2,
-    borderColor: "#2196F3",
+    borderColor: colors,
     justifyContent: "center",
     alignItems: "center",
     marginRight: wp("3%"),
@@ -757,7 +815,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderRadius: wp("2%"),
     paddingHorizontal: wp("3%"),
     paddingVertical: hp("1.5%"),
@@ -780,7 +838,7 @@ const styles = StyleSheet.create({
   addButton: {
     marginTop: hp("1.5%"),
     paddingVertical: hp("1.5%"),
-    backgroundColor: "#2196F3",
+    backgroundColor: colors,
     borderRadius: wp("2%"),
     alignItems: "center",
   },
@@ -792,7 +850,7 @@ const styles = StyleSheet.create({
   submitButton: {
     marginTop: hp("3%"),
     paddingVertical: hp("2%"),
-    backgroundColor: "#2196F3",
+    backgroundColor: colors,
     borderRadius: wp("2%"),
     alignItems: "center",
   },
