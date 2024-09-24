@@ -147,7 +147,7 @@ const ProductDetailsForm = () => {
       const data = await response.json();
       console.log('Success:', data);
       Alert.alert('Product added successfully!');
-      navigation.navigate("SellerHome")
+      navigation.navigate("SellerHome",{ refresh: true })
 
     } catch (error) {
       console.error('Error:', error);
