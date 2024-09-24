@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import Onboarding from "react-native-onboarding-swiper";
 import LottieView from "lottie-react-native";
@@ -12,6 +12,8 @@ import Animated, { FadeInLeft } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../hooks/LanguageContext";
 import { StatusBar } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const OnBoardingScreenOne = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +28,15 @@ const OnBoardingScreenOne = () => {
 
   const { language, changeLanguage } = useLanguage();
   const { t } = useTranslation();
+
+  const storeLanguage = async (selectedLang) => {
+    try {
+      await AsyncStorage.setItem("appLanguage", selectedLang);
+      changeLanguage(selectedLang);
+    } catch (err) {
+      console.error("Failed to save language in AsyncStroage", err);
+    }
+  };
 
   useEffect(() => {
     async function loadFonts() {
@@ -42,16 +53,74 @@ const OnBoardingScreenOne = () => {
 
   useEffect(() => {
     changeLanguage(selectLanguage);
+    storeLanguage(selectLanguage);
   }, [selectLanguage]);
+
+  useEffect(() => {
+    const getStoredlanguage = async () => {
+      try {
+        const storedLanguage = await AsyncStorage.getItem("appLanguage");
+        if (storedLanguage) {
+          setSelectLanguage(storedLanguage);
+          changeLanguage(storedLanguage);
+        }
+      } catch (e) {
+        console.error("Failed to get language from AsyncStroage", e);
+      }
+    };
+    getStoredlanguage();
+  }, []);
+
+  const navigation = useNavigation();
+  const handleOnCompleteOnBoard = () => {
+    navigation.navigate("SignUp");
+  };
+
+  const DoneButton = ({ ...props }) => {
+    return (
+      <TouchableOpacity
+        onPress={handleOnCompleteOnBoard}
+        style={styles.doneButton}
+        {...props}
+      >
+        <Text style={{ fontFamily: "QuicksandSemiBold" }}>Done</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const SkipButton = ({ ...props }) => {
+    return (
+      <TouchableOpacity
+        onPress={handleOnCompleteOnBoard}
+        style={styles.skipButton}
+        {...props}
+      >
+        <Text style={{ fontFamily: "QuicksandSemiBold" }}>Skip</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const NextButton = ({ ...props }) => {
+    return (
+      <TouchableOpacity style={styles.doneButton} {...props}>
+        <Text style={{ fontFamily: "QuicksandSemiBold" }}>Next</Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" backgroundColor="white" />
       <Onboarding
+        onDone={handleOnCompleteOnBoard}
+        onSkip={handleOnCompleteOnBoard}
+        DoneButtoncomponent={DoneButton}
+        SkipButtonComponent={SkipButton}
+        NextButtonComponent={NextButton}
         containerStyles={{ paddingHorizontal: wp(5) }}
         pages={[
           {
-            backgroundColor: "#fffff6",
+            backgroundColor: "#FF7262",
             image: (
               <View style={styles.languageContainer}>
                 <View>
@@ -112,7 +181,7 @@ const OnBoardingScreenOne = () => {
             subtitle: "",
           },
           {
-            backgroundColor: "#fff",
+            backgroundColor: "#D53C46",
             title: "",
             image: (
               <Animated.View
@@ -161,7 +230,7 @@ const OnBoardingScreenOne = () => {
             subtitle: "",
           },
           {
-            backgroundColor: "#fff",
+            backgroundColor: "#E81616",
             image: (
               <View>
                 <View
@@ -207,7 +276,7 @@ const OnBoardingScreenOne = () => {
             subtitle: "",
           },
           {
-            backgroundColor: "#fff",
+            backgroundColor: "#DB1F1F",
             image: (
               <View>
                 <View
@@ -303,5 +372,19 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
     textAlign: "justify",
     lineHeight: wp(7.5),
+  },
+
+  doneButton: {
+    padding: wp(5),
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 999,
+    borderBottomLeftRadius: 999,
+  },
+
+  skipButton: {
+    padding: wp(5),
+    backgroundColor: "#fff",
+    borderTopRightRadius: 999,
+    borderBottomRightRadius: 999,
   },
 });

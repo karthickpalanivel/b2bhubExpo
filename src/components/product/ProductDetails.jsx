@@ -31,6 +31,7 @@ import { useTranslation } from "react-i18next";
 import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import TermsAndConditionsModal from "./TermsandCondition";
+import { useScrollToTop } from "@react-navigation/native";
 
 const ProductDetails = ({ route }) => {
   const { productDetailsInArray } = route.params;
@@ -70,17 +71,15 @@ const ProductDetails = ({ route }) => {
   };
 
   const orderNow = (productDetailsInArray) => {
-    console.log(
-      productDetails.productName +
-        " " +
-        productDetails.productId +
-        " " +
-        "ordered"
-    );
+    // console.log(
+    //   productDetails.productName +
+    //     " " +
+    //     productDetails.productId +
+    //     " " +
+    //     "ordered"
+    // );
     navigation.navigate("paymentSummary", { productDetailsInArray });
   };
-
-  
 
   const { t } = useTranslation();
 
@@ -123,12 +122,24 @@ const ProductDetails = ({ route }) => {
   );
 
   // console.log("--------------------------object log--------------------------");
-  console.log(productDetails);
+  // console.log(productDetails);
 
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/admin/getProducts";
+    axios
+      .post(url, {})
+      .then((response) => {
+        // console.log(response.data);
+        setProducts(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
     async function loadFonts() {
       await Font.loadAsync({
         Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
@@ -140,7 +151,7 @@ const ProductDetails = ({ route }) => {
     }
 
     loadFonts();
-  }, []);
+  }, [products]);
 
   // Premium qualtiy utilties
 
@@ -175,39 +186,6 @@ const ProductDetails = ({ route }) => {
   };
 
   const translatingLocation = () => {};
-
-  // useEffect(() => {
-  //   const url = `${process.env.REACT_APP_BACKEND_URL}/admin/getProducts`;
-  //   axios
-  //     .post(url, {})
-  //     .then((response) => {
-  //       setProducts(response.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       setIsLoading(false);
-  //       console.error(err);
-  //     });
-
-  //   async function loadFonts() {
-  //     await Font.loadAsync({
-  //       Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-  //       // Load other fonts as needed
-  //     });
-  //     setIsLoading(false);
-  //   }
-
-  //   loadFonts();
-  // }, []);
-
-  const finalValue = {
-    productName: productDetails.productName,
-    productId: productDetails.productId,
-    productCategory: productDetails.productCategory,
-    totalPrice: totalPrice,
-    gst: gst,
-    totalAmount: totalAmount,
-  };
 
   return (
     <>
@@ -459,10 +437,11 @@ const ProductDetails = ({ route }) => {
             </Modal>
 
             {/* Other Products */}
-            {/* product Card two */}
-          {products?.map((item) => {
-              return <ProductCardTwo props={item} />;
-          })}
+
+            {products?.map((item) => {
+              if (productDetails.productId !== item.productId)
+                return <ProductCardTwo props={item} />;
+            })}
           </ScrollView>
           {/* <ProductCardTwo /> */}
           <View style={styles.floatNavigationContainer}>

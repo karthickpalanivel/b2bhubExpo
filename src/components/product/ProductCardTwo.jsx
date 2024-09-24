@@ -27,7 +27,7 @@ const ProductCardTwo = ({ props }) => {
       setIsLoading(false);
     }
     loadFonts();
-  }, []);
+  }, [props]);
   const hide = () => {
     setOfferVisible(false);
   };
@@ -44,12 +44,13 @@ const ProductCardTwo = ({ props }) => {
     // console.log(props);
   };
 
-  const onMoreDetails = (id) => {
-    navigation.navigate("ProductDetails", { _id: id });
+  const onMoreDetails = (productDetailsInArray) => {
+    navigation.navigate("ProductDetails", { productDetailsInArray });
   };
 
   // const gradeAUnit = props.costPerUnit[0];
   // "Orders", { _id: id }
+  const gradeAUnit = props.costPerUnit[0];
 
   const calculatePrice = (price, discount) => {
     if (price < discount) {
@@ -57,6 +58,13 @@ const ProductCardTwo = ({ props }) => {
     }
     const discountPrice = Math.round(price - (price * discount) / 100);
     return discountPrice;
+  };
+
+  const translatedProductName = () => {
+    if (props.name == "ToorDal") return t("toor_dal");
+    if (props.name == "MoongDal") return t("moong_dal");
+    if (props.name == "UradDal") return t("urad_dal");
+    if (props.name == "GramDal") return t("gram_dal");
   };
 
   // component return
@@ -73,7 +81,30 @@ const ProductCardTwo = ({ props }) => {
         >
           <Pressable
             style={[styles.container, styles.boxShadow, styles.androidShadow]}
-            onPress={() => onMoreDetails(props._id)}
+            onPress={() => {
+              const productArray = [
+                props.productId,
+
+                props.CommonImage,
+
+                props.name,
+
+                gradeAUnit.PricePerUnit?.toFixed(2),
+
+                props.location,
+
+                props?.description.moisture,
+
+                props?.description.QualityAvailable,
+
+                props?.description.IsOrganic,
+
+                props?.description.Speciality,
+
+                props.category,
+              ];
+              onMoreDetails(productArray);
+            }}
           >
             <View style={styles.cardImage}>
               <View style={styles.imageContainer}>
@@ -92,9 +123,7 @@ const ProductCardTwo = ({ props }) => {
           )} */}
             </View>
             <View style={styles.details}>
-              <Text style={styles.productName}>
-                {props.name.substring(0, 20)}
-              </Text>
+              <Text style={styles.productName}>{translatedProductName()}</Text>
 
               <View style={styles.ratingImage}>
                 {/* <View>
@@ -105,7 +134,9 @@ const ProductCardTwo = ({ props }) => {
               )}
             </View> */}
                 <View>
-                  {/* <Text style={styles.offerPrice}>₹{gradeAUnit.PricePerUnit.toFixed(2)}/ Kg</Text> */}
+                  <Text style={styles.offerPrice}>
+                    ₹{gradeAUnit.PricePerUnit.toFixed(2)}/ {t("kg")}
+                  </Text>
                 </View>
               </View>
               <View>
@@ -115,7 +146,7 @@ const ProductCardTwo = ({ props }) => {
                     style={styles.icon}
                     fill="green"
                   />
-                  <Text style={styles.order}>Show Product</Text>
+                  <Text style={styles.order}>{t("show_product")}</Text>
                 </View>
               </View>
             </View>
