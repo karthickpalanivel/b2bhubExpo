@@ -17,8 +17,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
-const { width } = Dimensions.get("window");
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import { useTranslation } from "react-i18next";
 
 const SellerRegistration = () => {
   const [city, setCity] = useState("");
@@ -26,22 +26,22 @@ const SellerRegistration = () => {
   const [emailError, setEmailError] = useState("");
   const [getOtp, setGetOtp] = useState(false);
   const [Otp, setOTP] = useState("");
-  const [serverOtp, setServerOtp] = useState(""); 
+  const [serverOtp, setServerOtp] = useState("");
   const [otpError, setOtpError] = useState("");
-  const [categoryModal,setCategotyModal]=useState(false)
+  const [categoryModal, setCategotyModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sucessModalVisible, setSucessModalVisible] = useState(false);
 
   const navigation = useNavigation();
 
+  const { t } = useTranslation();
 
-  // Function to validate email format
   const validateEmail = (inputEmail) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(inputEmail)) {
       setEmailError("Invalid email format");
     } else {
-      setEmailError(""); // Clear error if email is valid
+      setEmailError("");
     }
   };
 
@@ -77,24 +77,30 @@ const SellerRegistration = () => {
     }
   };
 
-  const handleCategory=() =>{
+  const handleCategory = () => {
     setCategotyModal(false);
     setSucessModalVisible(true);
-  }
+  };
 
-  const handlenav=()=>{
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  const handlenav = () => {
     setSucessModalVisible(false);
     navigation.navigate("Login");
+  };
 
-  }
-
-  
   const isFormValid = city !== "" && emailError === "" && email !== "";
   const isOtpValid = Otp !== ""; // Check if OTP is entered
 
   return (
     <ScrollView style={styles.container}>
       {/* Add logo */}
+      <TouchableOpacity style={styles.backButton} onPress={goBack}>
+        <ChevronLeftIcon size={hp(4)} color={"#d53c46"} strokeWidth={wp(1)} />
+      </TouchableOpacity>
+
       <View style={styles.logoContainer}>
         <Image
           source={require("../../assets/B2BlogoRounded.png")}
@@ -103,11 +109,14 @@ const SellerRegistration = () => {
       </View>
 
       <View style={styles.loginCard}>
-        <Text style={styles.title}>Seller Registration</Text>
+        <Text style={styles.title}>
+          {t("seller")} {t("registration")}
+        </Text>
 
         <View>
           <Text style={styles.inputName}>
-            <Text style={{ color: "#d53c46" }}>**</Text> Enter Your Location
+            <Text style={{ color: "#d53c46" }}>**</Text>{" "}
+            {t("enter_your_location")}
           </Text>
           <View style={styles.pickerContainer}>
             <Picker
@@ -115,40 +124,47 @@ const SellerRegistration = () => {
               style={styles.picker}
               onValueChange={(itemValue) => setCity(itemValue)}
             >
-              <Picker.Item label="Select Location" value="" />
-              <Picker.Item label="Chennai" value="Chennai" />
-              <Picker.Item label="Bangalore" value="Bangalore" />
-              <Picker.Item label="Andhra Pradesh" value="Andhra Pradesh" />
-              <Picker.Item label="Hyderabad" value="Hyderabad" />
-              <Picker.Item label="Delhi" value="Delhi" />
-              <Picker.Item label="Mumbai" value="Mumbai" />
+              <Picker.Item label={t("select_location")} value="" />
+              <Picker.Item label={t("chennai")} value="Tamil Nadu" />
+              <Picker.Item label={t("karnataka")} value="Karnataka" />
+              <Picker.Item label={t("andhra_pradesh")} value="Andhra Pradesh" />
+              <Picker.Item label={t("telangana")} value="Telangana" />
+              <Picker.Item label={t("odisha")} value="Odisha" />
+              <Picker.Item label={t("kerala")} value="Kerala" />
+              <Picker.Item label={t("madhya_pradesh")} value="Madhya Pradesh" />
+              <Picker.Item label={t("maharashtra")} value="Maharashtra" />
             </Picker>
           </View>
 
-          <Text style={styles.inputName}>Email</Text>
+          <Text style={styles.inputName}>{t("email")}</Text>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={t("email")}
             keyboardType="email-address"
             value={email}
             onChangeText={handleEmailChange} // Capture email input
           />
-          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
         </View>
 
         {getOtp ? (
           <>
-            <Text style={styles.inputName}>Enter OTP</Text>
+            <Text style={styles.inputName}>{t("enter_otp")}</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter OTP"
+              placeholder={t("enter_otp")}
               keyboardType="numeric"
               value={Otp}
               onChangeText={handleOtpChange} // Capture OTP input
             />
             {otpError ? <Text style={styles.errorText}>{otpError}</Text> : null}
             <TouchableOpacity
-              style={[styles.submitButton, !isOtpValid && styles.disabledButton]}
+              style={[
+                styles.submitButton,
+                !isOtpValid && styles.disabledButton,
+              ]}
               onPress={handleOtp} // Call your OTP verification function here
               disabled={!isOtpValid} // Disable the button if the form is not valid
             >
@@ -161,91 +177,107 @@ const SellerRegistration = () => {
             onPress={handleRegister} // Call your registration function here
             disabled={!isFormValid} // Disable the button if the form is not valid
           >
-            <Text style={styles.submitButtonText}>Send OTP</Text>
+            <Text style={styles.submitButtonText}>{t("send_otp")}</Text>
           </TouchableOpacity>
         )}
-        {
-  categoryModal ? (
-    <Modal
-      transparent={true}
-      animationType="slide"
-      visible={categoryModal}
-      onRequestClose={() => setCategotyModal(false)} // Add this to close the modal on back press
-    >
-      <View style={styles.modalBackground}>
-        <View style={styles.categorycontainer}>
-          <Text style={styles.title}>Choose Your Category</Text>
-
-          <TouchableOpacity
-            style={[styles.option, selectedCategory === "platinum" && styles.selected]}
-            onPress={() => setSelectedCategory("platinum")}
-          >
-            <View style={{ flexDirection: "row", }}>
-              <Image source={require("../../assets/sellerCategory/platinum.png")} style={styles.img} />
-              <View>
-                <Text style={styles.categoryTitle}>PLATINUM SELLER</Text>
-                <Text style={styles.eligibilityText}>
-                  Eligibility: Business is more than 50 Crore
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.option, selectedCategory === "gold" && styles.selected]}
-            onPress={() => setSelectedCategory("gold")}
-          >
-            <View style={{ flexDirection: "row", }}>
-            <Image source={require("../../assets/sellerCategory/gold.png")} style={styles.img} />
-             <View>
-             <Text style={styles.categoryTitle}>GOLD SELLER</Text>
-            <Text style={styles.eligibilityText}>
-              Eligibility: Business is less than 50 Crore
-            </Text>
-             </View>
-            </View>
-            
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={
-             handleCategory
-            }
-            disabled={!selectedCategory}
-          >
-            <Text style={styles.registerButtonText}>
-              Register as {selectedCategory ? (selectedCategory === "platinum" ? "PLATINUM" : "GOLD") : "Member"}
-            </Text>
-          </TouchableOpacity>
-
-          
-        </View>
-      </View>
-    </Modal>
-  ) : null
-
-}
- {sucessModalVisible ?(<>
+        {categoryModal ? (
           <Modal
             transparent={true}
-           animationType="fade"
-           >
+            animationType="slide"
+            visible={categoryModal}
+            onRequestClose={() => setCategotyModal(false)} // Add this to close the modal on back press
+          >
             <View style={styles.modalBackground}>
-                <View style={styles.modalContainer}>
-                   
-                       <Text style={styles.successTitle}>Successfully Registered as Seller</Text>
-                       <Text style={styles.message}>Use Your Existing Credentials to login</Text>
-          
-                     <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handlenav}>
-                   <Text style={styles.buttonText}>OK</Text>
+              <View style={styles.categorycontainer}>
+                <Text style={styles.title}>{t("choose_your_category")}</Text>
+
+                <TouchableOpacity
+                  style={[
+                    styles.option,
+                    selectedCategory === "platinum" && styles.selected,
+                  ]}
+                  onPress={() => setSelectedCategory("platinum")}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Image
+                      source={require("../../assets/sellerCategory/platinum.png")}
+                      style={styles.img}
+                    />
+                    <View>
+                      <Text style={styles.categoryTitle}>
+                        {t("platinum").toUpperCase()}{" "}
+                        {t("seller").toUpperCase()}
+                      </Text>
+                      <Text style={styles.eligibilityText}>
+                        {t("eligibility_business")} {t("more_than_50_crore")}
+                      </Text>
+                    </View>
+                  </View>
                 </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
-        </>):(null)}
+
+                <TouchableOpacity
+                  style={[
+                    styles.option,
+                    selectedCategory === "gold" && styles.selected,
+                  ]}
+                  onPress={() => setSelectedCategory("gold")}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Image
+                      source={require("../../assets/sellerCategory/gold.png")}
+                      style={styles.img}
+                    />
+                    <View>
+                      <Text style={styles.categoryTitle}>
+                        {t("gold").toUpperCase()} {t("seller").toUpperCase()}
+                      </Text>
+                      <Text style={styles.eligibilityText}>
+                        {t("eligibility_business")} {t("less_than_50_crore")}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.registerButton}
+                  onPress={handleCategory}
+                  disabled={!selectedCategory}
+                >
+                  <Text style={styles.registerButtonText}>
+                    {t("register_as")}{" "}
+                    {selectedCategory
+                      ? selectedCategory === "platinum"
+                        ? `${t("platinum")} ${t("member")}`
+                        : `${t("gold")} ${t("member")}`
+                      : "Member"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        ) : null}
+        {sucessModalVisible ? (
+          <>
+            <Modal transparent={true} animationType="fade">
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.successTitle}>
+                    {t("successfully_registered_as_seller")}
+                  </Text>
+                  <Text style={styles.message}>
+                    {t("use_existing_credentials")}
+                  </Text>
+
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={handlenav}>
+                      <Text style={styles.buttonText}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </>
+        ) : null}
       </View>
     </ScrollView>
   );
@@ -259,8 +291,18 @@ const styles = StyleSheet.create({
     height: hp(100),
     alignContent: "center",
   },
+
+  backButton: {
+    marginTop: hp(8),
+    marginLeft: wp(5),
+    width: wp(12),
+    height: wp(12),
+    borderRadius: 999,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   logoContainer: {
-    marginTop: hp(10),
     marginLeft: wp(35),
     marginBottom: hp(3),
     borderRadius: 999,
@@ -268,14 +310,15 @@ const styles = StyleSheet.create({
     width: wp(30),
     height: wp(30),
   },
+
   logo: {
     width: wp(30),
     height: wp(30),
   },
-  img:{
-    width:wp(15),
-    height:hp(7),
-    marginRight:wp(2)
+  img: {
+    width: wp(15),
+    height: hp(7),
+    marginRight: wp(2),
   },
   loginCard: {
     alignItems: "center",
@@ -287,12 +330,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: wp(8),
   },
-  title: {
-    fontSize: wp(8),
-    margin: wp(5),
-    color: "#d53c46",
-    fontFamily: "QuicksandBold",
-  },
+  // title: {
+  //   fontSize: wp(8),
+  //   margin: wp(5),
+  //   color: "#d53c46",
+  //   fontFamily: "QuicksandBold",
+  // },
   inputName: {
     width: wp(70),
     fontSize: wp(4),
@@ -328,6 +371,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: wp(1),
     fontSize: wp(1),
+    fontFamily: "QuicksandSemiBold",
   },
   submitButton: {
     backgroundColor: "#d53c46",
@@ -352,22 +396,23 @@ const styles = StyleSheet.create({
   },
   modalBackground: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Darken the background
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Darken the background
   },
   categorycontainer: {
     padding: 20,
     width: wp(80),
-    backgroundColor: '#fff', // Ensure it's visible
+    backgroundColor: "#fff", // Ensure it's visible
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
-  
+
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
+    // fontWeight: "b",
+    fontFamily: "QuicksandSemiBold",
+    marginBottom: wp(7.5),
   },
   option: {
     width: wp(70),
@@ -375,91 +420,88 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderWidth: 1,
     borderRadius: 10,
-    alignItems: 'center',
-    borderColor: '#ccc',
-    elevation:2,
-    backgroundColor:'#fff'
+    alignItems: "center",
+    borderColor: "#ccc",
+    elevation: 2,
+    backgroundColor: "#fff",
   },
   selected: {
-    borderColor: '#007bff',
-    backgroundColor: '#e7f1ff',
+    borderColor: "#007bff",
+    backgroundColor: "#e7f1ff",
   },
   categoryTitle: {
     fontSize: wp(4),
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   eligibilityText: {
     fontSize: wp(2.5),
-    color: '#555',
+    color: "#555",
     marginTop: 5,
   },
   registerButton: {
     marginTop: 30,
     padding: 15,
-    width: '90%',
-    backgroundColor: '#007bff',
+    width: "90%",
+    backgroundColor: "#007bff",
     borderRadius: 10,
-    alignItems: 'center',
-    
+    alignItems: "center",
   },
   registerButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
     fontSize: 16,
   },
   successTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   message: {
     fontSize: 14,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
   button: {
     flex: 1,
     margin: 5,
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   cancelButton: {
     flex: 1,
     margin: 5,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
   },
   cancelButtonText: {
-    color: '#333',
+    color: "#333",
   },
   modalBackground: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
   },
   modalContainer: {
-    width: '80%',
+    width: "80%",
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
-
 });
- 

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,24 +16,26 @@ import axios from "axios";
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import {XCircleIcon} from "react-native-heroicons/outline";
-import {useTranslation} from "react-i18next";
+import { XCircleIcon } from "react-native-heroicons/outline";
+import { useTranslation } from "react-i18next";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import {useNavigation} from "@react-navigation/native";
-import {useFocusEffect} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
+  ArrowRightStartOnRectangleIcon
 } from "react-native-heroicons/outline";
-import {StatusBar} from "expo-status-bar";
-import Animated, {FadeInRight} from "react-native-reanimated";
+import { StatusBar } from "expo-status-bar";
+import Animated, { FadeInRight } from "react-native-reanimated";
 
-const CustomCheckBox = ({value, onValueChange}) => (
+
+const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
     style={[styles.checkbox, value && styles.checkboxChecked]}
     onPress={() => onValueChange(!value)}
@@ -57,7 +59,7 @@ const LoginScreen = () => {
   //const [email, setEmail] = useState('');
   const [sellerEmail, setSellerEmail] = useState("");
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
 
@@ -117,7 +119,6 @@ const LoginScreen = () => {
               AsyncStorage.setItem("token", res.data.token);
               AsyncStorage.setItem("pan", customer.PAN);
             } catch (e) {
-              // saving error
               console.error(e);
             }
           } else window.alert(res.message);
@@ -159,7 +160,6 @@ const LoginScreen = () => {
             AsyncStorage.setItem("token", res.data.token);
             AsyncStorage.setItem("pan", customer.PAN);
           } catch (e) {
-            // saving error
             console.error(e);
           }
         } else window.alert(res.message);
@@ -243,16 +243,24 @@ const LoginScreen = () => {
           </View>
 
           {/* style={{textAlign: 'center'}} */}
-          <View style={{alignItems: "center"}}>
+          <View style={{ alignItems: "center" }}>
             <Toggle
               value={toggleValue}
               onPress={(newState) => setToggleValue(newState)}
               leftComponent={
-                <Text style={{fontFamily: "QuicksandSemiBold"}}>
+                <Text
+                  style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
+                >
                   {t("buyer")}
                 </Text>
               }
-              rightComponent={<Text>{t("seller")}</Text>}
+              rightComponent={
+                <Text
+                  style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
+                >
+                  {t("seller")}
+                </Text>
+              }
               trackBarStyle={{
                 borderColor: "#f7e2e2",
                 backgroundColor: "#f7e2e2",
@@ -298,9 +306,9 @@ const LoginScreen = () => {
                     onPress={() => setViewPassword(!viewPassword)}
                   >
                     {viewPassword ? (
-                      <EyeSlashIcon size={20} color="gray" /> 
+                      <EyeSlashIcon size={20} color="gray" />
                     ) : (
-                      <EyeIcon size={20} color="gray" /> 
+                      <EyeIcon size={20} color="gray" />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -378,12 +386,12 @@ const LoginScreen = () => {
                   <View style={styles.noteContainer}>
                     <Text style={styles.noteText}>
                       {t("note_register_seller")}
-                      <TouchableOpacity onPress={navigateToSellerRegister}>
-                        <Text style={styles.registerSeller}>
-                          {t("click_register_seller")}
-                        </Text>
-                      </TouchableOpacity>
                     </Text>
+                    <TouchableOpacity onPress={navigateToSellerRegister}>
+                      <Text style={styles.registerSeller}>
+                        {t("click_register_seller")}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </Animated.View>
@@ -528,9 +536,9 @@ const LoginScreen = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => setVisible(false)} // Close modal
-                    style={{marginTop: wp(5), alignSelf: "center"}}
+                    style={{ marginTop: wp(5), alignSelf: "center" }}
                   >
-                    <Text style={{color: "red", fontSize: wp(4)}}>
+                    <Text style={{ color: "red", fontSize: wp(4) }}>
                       {t("close")}
                     </Text>
                   </TouchableOpacity>
@@ -658,11 +666,13 @@ const styles = StyleSheet.create({
   noteText: {
     fontSize: wp(3.5),
     textAlign: "justify",
+    // textDecorationLine: "underline",
     fontFamily: "QuicksandSemiBold",
     color: "#000",
   },
   registerSeller: {
     fontFamily: "QuicksandBold",
+    textDecorationLine: "underline",
     fontSize: wp(4),
     color: "#d53c46",
   },
@@ -749,39 +759,37 @@ const styles = StyleSheet.create({
 });
 export default LoginScreen;
 
+// async function handleLogin() {
+//   await axios
+//     .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
+//       email: buyerEmail,
+//       pwd: password,
+//       isSeller:false
+//     })
+//     .then((res) => {
+//       console.log(res.status);
+//       if (res.status === 200) {
+//         const customer = res.data.user;
+//         console.log(customer);
+//         try {
+//           AsyncStorage.setItem("loginstate", "true");
+//           AsyncStorage.setItem("userEmail", email);
+//           AsyncStorage.setItem("customerId", customer.customerId);
+//           AsyncStorage.setItem("companyname", customer.CompanyName);
+//           AsyncStorage.setItem("phone", customer.phoneNo);
+//           AsyncStorage.setItem("gst", customer.gstNo);
+//           AsyncStorage.setItem("email", customer.Email);
+//           AsyncStorage.setItem("token", res.data.token);
+//         } catch (e) {
+//           // saving error
+//           console.error(e);
+//         }
 
-
-  // async function handleLogin() {
-  //   await axios
-  //     .post("https://erp-backend-new-plqp.onrender.com/b2b/login", {
-  //       email: buyerEmail,
-  //       pwd: password,
-  //       isSeller:false
-  //     })
-  //     .then((res) => {
-  //       console.log(res.status);
-  //       if (res.status === 200) {
-  //         const customer = res.data.user;
-  //         console.log(customer);
-  //         try {
-  //           AsyncStorage.setItem("loginstate", "true");
-  //           AsyncStorage.setItem("userEmail", email);
-  //           AsyncStorage.setItem("customerId", customer.customerId);
-  //           AsyncStorage.setItem("companyname", customer.CompanyName);
-  //           AsyncStorage.setItem("phone", customer.phoneNo);
-  //           AsyncStorage.setItem("gst", customer.gstNo);
-  //           AsyncStorage.setItem("email", customer.Email);
-  //           AsyncStorage.setItem("token", res.data.token);
-  //         } catch (e) {
-  //           // saving error
-  //           console.error(e);
-  //         }
-
-  //         navigation.navigate("Home");
-  //       } else window.alert(res.message);
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error);
-  //       return;
-  //     });
-  // }
+//         navigation.navigate("Home");
+//       } else window.alert(res.message);
+//     })
+//     .catch((error) => {
+//       window.alert(error);
+//       return;
+//     });
+// }
