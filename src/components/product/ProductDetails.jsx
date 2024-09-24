@@ -217,7 +217,7 @@ const ProductDetails = ({ route }) => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar style="dark" backgroundColor={colors} />
+          <StatusBar style="light"/>
           <ScrollView style={styles.mainContainer}>
             <View style={styles.productDetailsContainer}>
               <View style={styles.headerOfProductDetails}>

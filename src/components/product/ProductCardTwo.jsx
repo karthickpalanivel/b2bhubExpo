@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   styleImage: {
     width: "80%",
     height: 120,
-    borderRadius: 10,
+    borderRadius: wp(2.5),
     padding: 10,
     marginTop: "15%",
   },
