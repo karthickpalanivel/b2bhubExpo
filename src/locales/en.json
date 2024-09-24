@@ -273,5 +273,7 @@
 
   "gujarat": "Gujarat",
   "verify_otp": "Verify OTP",
-  "ok": "OK"
+  "ok": "OK",
+
+  "exit_app": "Exit App"
 }

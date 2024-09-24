@@ -29,11 +29,10 @@ import {
   ChevronLeftIcon,
   EyeIcon,
   EyeSlashIcon,
-  ArrowRightStartOnRectangleIcon
+  ArrowRightStartOnRectangleIcon,
 } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
-
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -233,119 +232,64 @@ const LoginScreen = () => {
       {isLoading ? (
         <AppLoading />
       ) : (
-        <ScrollView style={styles.container}>
-          {/* Add logo */}
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("../../assets/B2BlogoRounded.png")}
-              style={styles.logo}
-            />
-          </View>
+        <>
+          <ScrollView style={styles.container}>
+            {/* Add logo */}
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("../../assets/B2BlogoRounded.png")}
+                style={styles.logo}
+              />
+            </View>
 
-          {/* style={{textAlign: 'center'}} */}
-          <View style={{ alignItems: "center" }}>
-            <Toggle
-              value={toggleValue}
-              onPress={(newState) => setToggleValue(newState)}
-              leftComponent={
-                <Text
-                  style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
-                >
-                  {t("buyer")}
-                </Text>
-              }
-              rightComponent={
-                <Text
-                  style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
-                >
-                  {t("seller")}
-                </Text>
-              }
-              trackBarStyle={{
-                borderColor: "#f7e2e2",
-                backgroundColor: "#f7e2e2",
-                justifyContent: "center",
-              }}
-              trackBar={{
-                borderWidth: 2,
-                width: wp(70),
-              }}
-              thumbButton={{
-                width: wp(35),
-                radius: wp(10),
-                activeBackgroundColor: "#fff",
-                inActiveBackgroundColor: "#fff",
-              }}
-            />
-          </View>
-          {!toggleValue ? (
-            <>
-              <View style={styles.loginCard}>
-                <Text style={styles.title}>{t("buyer_login")}</Text>
-
-                <Text style={styles.inputName}>{t("email")}</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder={t("email")}
-                  keyboardType="email-address"
-                  value={buyerEmail}
-                  onChangeText={(text) => setBuyerEmail(text)}
-                />
-
-                <Text style={styles.inputName}>{t("password")}</Text>
-                <View style={styles.passwordContainer}>
-                  <TextInput
-                    style={styles.passwordInput}
-                    placeholder={t("password")}
-                    secureTextEntry={viewPassword}
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}
-                  />
-                  <TouchableOpacity
-                    style={styles.eyeIcon}
-                    onPress={() => setViewPassword(!viewPassword)}
+            {/* style={{textAlign: 'center'}} */}
+            <View style={{ alignItems: "center" }}>
+              <Toggle
+                value={toggleValue}
+                onPress={(newState) => setToggleValue(newState)}
+                leftComponent={
+                  <Text
+                    style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
                   >
-                    {viewPassword ? (
-                      <EyeSlashIcon size={20} color="gray" />
-                    ) : (
-                      <EyeIcon size={20} color="gray" />
-                    )}
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                  style={styles.forgetPassword}
-                  onPress={navigateToForgotPassword}
-                >
-                  <Text style={styles.forget}>{t("forgot_password")} ?</Text>
-                </TouchableOpacity>
-
-                {/* Submit Button */}
-                <TouchableOpacity
-                  style={styles.submitButton}
-                  onPress={() => handleLogin()}
-                >
-                  <Text style={styles.submitButtonText}>{t("login")}</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          ) : (
-            <>
-              <Animated.View
-                entering={FadeInRight.delay(50)
-                  .duration(1500)
-                  .springify()
-                  .damping(12)}
-              >
+                    {t("buyer")}
+                  </Text>
+                }
+                rightComponent={
+                  <Text
+                    style={{ fontFamily: "QuicksandSemiBold", fontSize: wp(4) }}
+                  >
+                    {t("seller")}
+                  </Text>
+                }
+                trackBarStyle={{
+                  borderColor: "#f7e2e2",
+                  backgroundColor: "#f7e2e2",
+                  justifyContent: "center",
+                }}
+                trackBar={{
+                  borderWidth: 2,
+                  width: wp(70),
+                }}
+                thumbButton={{
+                  width: wp(35),
+                  radius: wp(10),
+                  activeBackgroundColor: "#fff",
+                  inActiveBackgroundColor: "#fff",
+                }}
+              />
+            </View>
+            {!toggleValue ? (
+              <>
                 <View style={styles.loginCard}>
-                  <Text style={styles.title}>{t("seller_login")}</Text>
+                  <Text style={styles.title}>{t("buyer_login")}</Text>
 
                   <Text style={styles.inputName}>{t("email")}</Text>
                   <TextInput
                     style={styles.input}
                     placeholder={t("email")}
                     keyboardType="email-address"
-                    value={sellerEmail}
-                    onChangeText={(text) => setSellerEmail(text)}
+                    value={buyerEmail}
+                    onChangeText={(text) => setBuyerEmail(text)}
                   />
 
                   <Text style={styles.inputName}>{t("password")}</Text>
@@ -354,17 +298,17 @@ const LoginScreen = () => {
                       style={styles.passwordInput}
                       placeholder={t("password")}
                       secureTextEntry={viewPassword}
-                      value={sellerPassword}
-                      onChangeText={(text) => setSellerPassword(text)}
+                      value={password}
+                      onChangeText={(text) => setPassword(text)}
                     />
                     <TouchableOpacity
                       style={styles.eyeIcon}
                       onPress={() => setViewPassword(!viewPassword)}
                     >
                       {viewPassword ? (
-                        <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                        <EyeSlashIcon size={20} color="gray" />
                       ) : (
-                        <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                        <EyeIcon size={20} color="gray" />
                       )}
                     </TouchableOpacity>
                   </View>
@@ -378,175 +322,246 @@ const LoginScreen = () => {
                   {/* Submit Button */}
                   <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={() => handleSellerSubmit()}
+                    onPress={() => handleLogin()}
                   >
                     <Text style={styles.submitButtonText}>{t("login")}</Text>
                   </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              <>
+                <Animated.View
+                  entering={FadeInRight.delay(50)
+                    .duration(1500)
+                    .springify()
+                    .damping(12)}
+                >
+                  <View style={styles.loginCard}>
+                    <Text style={styles.title}>{t("seller_login")}</Text>
 
-                  <View style={styles.noteContainer}>
-                    <Text style={styles.noteText}>
-                      {t("note_register_seller")}
+                    <Text style={styles.inputName}>{t("email")}</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder={t("email")}
+                      keyboardType="email-address"
+                      value={sellerEmail}
+                      onChangeText={(text) => setSellerEmail(text)}
+                    />
+
+                    <Text style={styles.inputName}>{t("password")}</Text>
+                    <View style={styles.passwordContainer}>
+                      <TextInput
+                        style={styles.passwordInput}
+                        placeholder={t("password")}
+                        secureTextEntry={viewPassword}
+                        value={sellerPassword}
+                        onChangeText={(text) => setSellerPassword(text)}
+                      />
+                      <TouchableOpacity
+                        style={styles.eyeIcon}
+                        onPress={() => setViewPassword(!viewPassword)}
+                      >
+                        {viewPassword ? (
+                          <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                        ) : (
+                          <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                      style={styles.forgetPassword}
+                      onPress={navigateToForgotPassword}
+                    >
+                      <Text style={styles.forget}>
+                        {t("forgot_password")} ?
+                      </Text>
+                    </TouchableOpacity>
+
+                    {/* Submit Button */}
+                    <TouchableOpacity
+                      style={styles.submitButton}
+                      onPress={() => handleSellerSubmit()}
+                    >
+                      <Text style={styles.submitButtonText}>{t("login")}</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.noteContainer}>
+                      <Text style={styles.noteText}>
+                        {t("note_register_seller")}
+                      </Text>
+                      <TouchableOpacity onPress={navigateToSellerRegister}>
+                        <Text style={styles.registerSeller}>
+                          {t("click_register_seller")}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Animated.View>
+              </>
+            )}
+            <TouchableOpacity onPress={navigateToRegister}>
+              <Text style={styles.register}>{t("register_a_new_account")}</Text>
+            </TouchableOpacity>
+            {visible ? (
+              <Modal>
+                <View style={styles.modalBackground}>
+                  <View style={styles.modalContent}>
+                    <TouchableOpacity
+                      style={styles.closeButton}
+                      onPress={backToSign}
+                    >
+                      <Text style={styles.closeButtonText}>X</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.modalTitle}>
+                      {t("terms_and_condition")}
                     </Text>
-                    <TouchableOpacity onPress={navigateToSellerRegister}>
-                      <Text style={styles.registerSeller}>
-                        {t("click_register_seller")}
+                    <ScrollView style={styles.scrollView}>
+                      <Text style={styles.termsSentence}>
+                        1.
+                        <Text style={styles.boldSentence}>
+                          {t("introduction")}:
+                        </Text>
+                        {t("seller_tc_1")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        2.{" "}
+                        <Text style={styles.boldSentence}>
+                          {t("definition")}:
+                        </Text>
+                        {t("seller_tc_2")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        3.
+                        <Text style={styles.boldSentence}>
+                          {t("registration_and_account_creation")}:
+                        </Text>
+                        {t("seller_tc_3")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        4.
+                        <Text style={styles.boldSentence}>
+                          {t("product_listings_and_compliance")}:
+                        </Text>
+                        {t("seller_tc_4")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        5.
+                        <Text style={styles.boldSentence}>
+                          {t("pricing_and_payment")}:
+                        </Text>
+                        {t("seller_tc_5")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        6.
+                        <Text style={styles.boldSentence}>
+                          {t("shipping_and_fulfillment")}:
+                        </Text>
+                        {t("seller_tc_6")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        7.
+                        <Text style={styles.boldSentence}>
+                          {t("returns_and_refunds")}:
+                        </Text>
+                        {t("seller_tc_7")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        8.
+                        <Text style={styles.boldSentence}>
+                          {t("intellectual_property")}:
+                        </Text>
+                        {t("seller_tc_8")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        9.
+                        <Text style={styles.boldSentence}>
+                          {t("seller_conduct")}:
+                        </Text>
+                        {t("seller_tc_9")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        10.
+                        <Text style={styles.boldSentence}>
+                          {t("limitation_of_liability")}:
+                        </Text>
+                        {t("seller_tc_10")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        11.
+                        <Text style={styles.boldSentence}>
+                          {t("termination_and_account_suspension")}:
+                        </Text>
+                        {t("seller_tc_11")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        12.
+                        <Text style={styles.boldSentence}>
+                          {t("governing_law")}:
+                        </Text>
+                        {t("seller_tc_12")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        13.
+                        <Text style={styles.boldSentence}>
+                          {" "}
+                          {t("amendments")}:{" "}
+                        </Text>
+                        {t("seller_tc_13")}
+                      </Text>
+                      <Text style={styles.termsSentence}>
+                        14.
+                        <Text style={styles.boldSentence}>
+                          {t("contact_information")}:
+                        </Text>
+                        {t("seller_tc_14")}
+                      </Text>
+                    </ScrollView>
+                    <View style={styles.checkboxContainer}>
+                      <CustomCheckBox
+                        value={isChecked}
+                        onValueChange={setIsChecked}
+                      />
+                      <Text style={styles.checkboxLabel}>
+                        {t("seller_tc_15")}
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity
+                      style={[
+                        styles.button,
+                        isChecked ? styles.buttonActive : styles.buttonDisabled,
+                      ]}
+                      onPress={handleComplete}
+                      disabled={!isChecked}
+                    >
+                      <Text style={styles.buttonText}>{t("complete")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => setVisible(false)} // Close modal
+                      style={{ marginTop: wp(5), alignSelf: "center" }}
+                    >
+                      <Text style={{ color: "red", fontSize: wp(4) }}>
+                        {t("close")}
                       </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-              </Animated.View>
-            </>
-          )}
-          <TouchableOpacity onPress={navigateToRegister}>
-            <Text style={styles.register}>{t("register_a_new_account")}</Text>
-          </TouchableOpacity>
-          {visible ? (
-            <Modal>
-              <View style={styles.modalBackground}>
-                <View style={styles.modalContent}>
-                  <TouchableOpacity
-                    style={styles.closeButton}
-                    onPress={backToSign}
-                  >
-                    <Text style={styles.closeButtonText}>X</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.modalTitle}>
-                    {t("terms_and_condition")}
-                  </Text>
-                  <ScrollView style={styles.scrollView}>
-                    <Text style={styles.termsSentence}>
-                      1.
-                      <Text style={styles.boldSentence}>
-                        {t("introduction")}:
-                      </Text>
-                      {t("seller_tc_1")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      2.{" "}
-                      <Text style={styles.boldSentence}>
-                        {t("definition")}:
-                      </Text>
-                      {t("seller_tc_2")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      3.
-                      <Text style={styles.boldSentence}>
-                        {t("registration_and_account_creation")}:
-                      </Text>
-                      {t("seller_tc_3")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      4.
-                      <Text style={styles.boldSentence}>
-                        {t("product_listings_and_compliance")}:
-                      </Text>
-                      {t("seller_tc_4")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      5.
-                      <Text style={styles.boldSentence}>
-                        {t("pricing_and_payment")}:
-                      </Text>
-                      {t("seller_tc_5")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      6.
-                      <Text style={styles.boldSentence}>
-                        {t("shipping_and_fulfillment")}:
-                      </Text>
-                      {t("seller_tc_6")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      7.
-                      <Text style={styles.boldSentence}>
-                        {t("returns_and_refunds")}:
-                      </Text>
-                      {t("seller_tc_7")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      8.
-                      <Text style={styles.boldSentence}>
-                        {t("intellectual_property")}:
-                      </Text>
-                      {t("seller_tc_8")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      9.
-                      <Text style={styles.boldSentence}>
-                        {t("seller_conduct")}:
-                      </Text>
-                      {t("seller_tc_9")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      10.
-                      <Text style={styles.boldSentence}>
-                        {t("limitation_of_liability")}:
-                      </Text>
-                      {t("seller_tc_10")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      11.
-                      <Text style={styles.boldSentence}>
-                        {t("termination_and_account_suspension")}:
-                      </Text>
-                      {t("seller_tc_11")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      12.
-                      <Text style={styles.boldSentence}>
-                        {t("governing_law")}:
-                      </Text>
-                      {t("seller_tc_12")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      13.
-                      <Text style={styles.boldSentence}>
-                        {" "}
-                        {t("amendments")}:{" "}
-                      </Text>
-                      {t("seller_tc_13")}
-                    </Text>
-                    <Text style={styles.termsSentence}>
-                      14.
-                      <Text style={styles.boldSentence}>
-                        {t("contact_information")}:
-                      </Text>
-                      {t("seller_tc_14")}
-                    </Text>
-                  </ScrollView>
-                  <View style={styles.checkboxContainer}>
-                    <CustomCheckBox
-                      value={isChecked}
-                      onValueChange={setIsChecked}
-                    />
-                    <Text style={styles.checkboxLabel}>
-                      {t("seller_tc_15")}
-                    </Text>
-                  </View>
-
-                  <TouchableOpacity
-                    style={[
-                      styles.button,
-                      isChecked ? styles.buttonActive : styles.buttonDisabled,
-                    ]}
-                    onPress={handleComplete}
-                    disabled={!isChecked}
-                  >
-                    <Text style={styles.buttonText}>{t("complete")}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => setVisible(false)} // Close modal
-                    style={{ marginTop: wp(5), alignSelf: "center" }}
-                  >
-                    <Text style={{ color: "red", fontSize: wp(4) }}>
-                      {t("close")}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-          ) : null}
-        </ScrollView>
+              </Modal>
+            ) : null}
+          </ScrollView>
+          <View style={styles.exitAppPosition}>
+            <View style={{ alignItems: "center" }}>
+              <ArrowRightStartOnRectangleIcon
+                strokeWidth={wp(0.2)}
+                color={"white"}
+                size={hp(4)}
+              />
+              <TouchableOpacity style={styles.exitAppContainer}>
+                <Text>{t("exit_app")}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
       )}
     </>
   );
@@ -624,6 +639,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: wp(2.5),
   },
+
   eyeIcon: {
     padding: wp(2.5),
   },
@@ -755,6 +771,21 @@ const styles = StyleSheet.create({
   },
   checkmark: {
     color: "#fff",
+  },
+
+  exitAppPosition: {
+    position: "absolute",
+    bottom: wp(5),
+    right: wp(5),
+  },
+  exitAppContainer: {
+    width: wp(25),
+    marginTop: wp(1),
+    height: wp(7),
+    backgroundColor: "white",
+    borderRadius: wp(99),
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 export default LoginScreen;
