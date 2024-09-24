@@ -554,7 +554,7 @@ const LoginScreen = () => {
               </Modal>
             ) : null}
           </ScrollView>
-          <View style={styles.exitAppPosition}>
+          {/* <View style={styles.exitAppPosition}>
             <Pressable style={{ alignItems: "center" }} onPress={exitApp}>
               <ArrowRightStartOnRectangleIcon
                 strokeWidth={wp(0.2)}
@@ -565,7 +565,7 @@ const LoginScreen = () => {
                 <Text>{t("exit_app")}</Text>
               </View>
             </Pressable>
-          </View>
+          </View> */}
         </>
       )}
     </>
