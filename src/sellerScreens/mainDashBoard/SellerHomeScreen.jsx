@@ -25,6 +25,8 @@ import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../hooks/LanguageContext";
 import { LanguageIcon, XCircleIcon } from "react-native-heroicons/outline";
 import LanguageList from '../../language/LanguageList.json'
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
@@ -110,7 +112,7 @@ const SellerHomeScreen = () => {
             <View>
               <TouchableOpacity>
                 <XCircleIcon
-                  size={wp(8)}
+                  size={wp(10)}
                   color="white"
                   style={styles.iconX}
                   onPress={hide}
@@ -145,7 +147,7 @@ const SellerHomeScreen = () => {
       ) : (
         <>
           <StatusBar style="dark" backgroundColor="#fff" />
-          <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+          <ScrollView contentContainerStyle={styles.container} >
             <View>
               <View style={styles.header}>
                 <View>
@@ -158,10 +160,13 @@ const SellerHomeScreen = () => {
                     style={{ flexDirection: "row", alignItems: "center" }}
                     onPress={show}
                   >
-                    <LanguageIcon size={hp(2.8)} color={"orange"} />
+                    <LanguageIcon size={hp(2.8)} color={colors} />
                     <Text style={{ fontSize: wp(3.4), marginLeft: wp(1), fontFamily: "QuicksandSemiBold" }}>{yourLanguage}</Text>
                   </TouchableOpacity>
+
+                 
                 </View>
+                
                 {/* <Image
                   source={{
                     uri: "https://res.cloudinary.com/dve3s278t/image/upload/v1726223190/bc9fd4bd-de9b-4555-976c-8360576c6708_l9xbwx.jpg",
@@ -182,8 +187,18 @@ const SellerHomeScreen = () => {
                   </TouchableOpacity>
                   <Text>{t("logout")}</Text>
                 </View>
+               
+              </View>
+              <View>
+              <TouchableOpacity
+              style={styles.addProductContainer}
+              onPress={navigationToAddProduct}
+            >
+              <Text style={styles.addProductText}>{t("add_new_product")}</Text>
+            </TouchableOpacity>
               </View>
               <LanguageModal visible={languageModel} />
+
 
               
               <View style={styles.cardsContainer}>
@@ -225,16 +240,14 @@ const SellerHomeScreen = () => {
                   </Text>
                 </View> */}
               </View>
+              
             </View>
+            
 
             <ProductDisplay />
+           
 
-            <TouchableOpacity
-              style={styles.addProductContainer}
-              onPress={navigationToAddProduct}
-            >
-              <Text style={styles.addProductText}>{t("add_new_product")}</Text>
-            </TouchableOpacity>
+            
           </ScrollView>
         </>
       )}
@@ -244,10 +257,11 @@ const SellerHomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+   
     marginTop: wp(5),
     padding: wp("5%"),
-    backgroundColor: "#FFFFF9",
+    backgroundColor: backgrounds,
+    marginBottom:wp(5)
   },
   header: {
     flexDirection: "row",
@@ -307,14 +321,12 @@ const styles = StyleSheet.create({
     paddingVertical: wp(0.2),
     paddingHorizontal: wp(4),
     height: wp(12),
-    backgroundColor: "orange",
+    backgroundColor: "#283C63",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 999,
     elevation: 2,
-    position: "absolute",
-    bottom: wp(10),
-    right: wp(10),
+    margin:wp(5),
   },
   addProductText: {
     color: "white",
@@ -337,9 +349,11 @@ const styles = StyleSheet.create({
 
   languageModalContainer: {
     width: wp(80),
-    backgroundColor: "orange",
+    backgroundColor: colors,
     elevation: 4,
     borderRadius: wp(3),
+    borderColor:backgrounds,
+    borderWidth:wp(0.5)
   },
 
   iconX: {
@@ -352,6 +366,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: hp(2),
     borderRadius: 4,
+    borderTopColor:backgrounds,
+    borderTopWidth:wp(0.1)
   },
 
   languageText: {

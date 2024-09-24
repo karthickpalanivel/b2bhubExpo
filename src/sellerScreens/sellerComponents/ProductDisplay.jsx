@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Pressable,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
@@ -23,6 +24,8 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+
+
 
 const products = [
   {
@@ -189,18 +192,17 @@ const ProductDisplay = () => {
 
   const EditModal = () => {};
 
-  const DeleteModal = ({ visible }) => {
-    <Modal>
-      <SafeAreaView>
-        <View>
-          <View>
-            <XCircleIcon />
-          </View>
-          <Text></Text>
-        </View>
-      </SafeAreaView>
-    </Modal>;
-  };
+  
+  const handleDlete=()=>{
+    setDeleteModal(true)
+  }
+  const handleYes=()=>{
+    setDeleteModal(false)
+    Alert.alert("Deleted","Successfully product deleted")
+  }
+  const handleNo=()=>{
+    setDeleteModal(false)
+  }
 
   return (
     <>
@@ -211,7 +213,6 @@ const ProductDisplay = () => {
           <StatusBar style="dark" backgroundColor="#fff" />
           <ScrollView
             style={styles.mainContainer}
-            showsVerticalScrollIndicator={false}
           >
             {data.map((product) => (
               <View style={styles.subMainContainer}>
@@ -226,13 +227,36 @@ const ProductDisplay = () => {
                     />
                     <View style={styles.buttonContainer}>
                       <TouchableOpacity style={styles.editButton}>
-                        <Text style={styles.buttonText}>{t("edit")}</Text>
+                        <Text style={styles.editText}>{t("edit")}</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.deleteButton}>
+                      <TouchableOpacity style={styles.deleteButton} onPress={handleDlete}>
                         <Text style={styles.buttonText}>{t("delete")}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
+                  {deleteModal ?(<>
+                     <Modal
+                         transparent={true}
+                         animationType="fade"
+                        >
+                          <View style={styles.modalBackground}>
+                          <View style={styles.modalContainer}>
+                   
+                           <Text style={styles.successTitle}>Delete Product</Text>
+                          <Text style={styles.message}>Do you want to delete the Product?</Text>
+          
+                         <View style={styles.btnContainer}>
+                         <TouchableOpacity style={styles.btn} onPress={handleYes}>
+                      <Text style={styles.btnText}>Yes</Text>
+                      </TouchableOpacity>
+                <TouchableOpacity style={styles.cancelBtn} onPress={handleNo}>
+                   <Text style={styles.cancelBtnText}>No</Text>
+                </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+       </>):null}
 
                   {/* Product Details */}
                   <View style={styles.detailsContainer}>
@@ -287,6 +311,7 @@ const styles = StyleSheet.create({
   mainContainer1: {
     flex: 1,
     marginTop: wp(5),
+   
   },
   subMainContainer: {
     flex: 1,
@@ -295,7 +320,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    backgroundColor: "#729EDB",
+    backgroundColor: "#EA5455",
     borderRadius: wp(4),
     padding: wp(3),
     elevation: 5,
@@ -339,25 +364,92 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
   },
   editButton: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#A1C398",
     paddingVertical: hp(1),
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
     marginRight: wp(2),
+    marginVertical:hp(1),
   },
   deleteButton: {
-    backgroundColor: "#4574B3",
+    backgroundColor: "#FCF8F3",
     paddingVertical: hp(1),
     paddingHorizontal: wp(4),
     borderRadius: wp(2),
+    marginRight: wp(2),
+    marginVertical:hp(1),
   },
   buttonText: {
     fontSize: wp(4),
-    color: "white",
+    color:"#EA5455" ,
     // fontWeight: 'bold',
     fontFamily: "QuicksandSemiBold",
     textAlign: "center",
   },
-});
+  editText:{
+   
+      fontSize: wp(4),
+      color:"white" ,
+      // fontWeight: 'bold',
+      fontFamily: "QuicksandSemiBold",
+      textAlign: "center",
+    },
+    modalBackground: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Semi-transparent background
+    },
+    modalContainer: {
+  
+      width: '80%',
+      padding: 20,
+      backgroundColor: 'white',
+      borderRadius: 10,
+      alignItems: 'center',
+    },
+  successTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  btn: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: "#EA5455",
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  btnText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  cancelBtn: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: '#ccc',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  cancelBtnText: {
+    color: '#333',
+  }
+  
+}
+);
 
 export default ProductDisplay;

@@ -36,6 +36,8 @@ import {
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
+const colors="#E84A5F";
+const backgrounds="#FCF8F3";
 
 const ProductDetailsForm = () => {
   const [productName, setProductName] = useState("");
@@ -64,8 +66,8 @@ const ProductDetailsForm = () => {
       if (detail.quantity && pricing) {
         const quantityInKg =
           units === "1KG"
-            ? parseFloat(detail.quantity)
-            : parseFloat(detail.quantity) * 1000; // Convert to KG if it's in tons
+            ? parseFloat(detail.quantity)* 1000
+            : parseFloat(detail.quantity) ; // Convert to KG if it's in tons
         return sum + quantityInKg * parseFloat(pricing);
       }
       return sum;
@@ -269,7 +271,7 @@ const ProductDetailsForm = () => {
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar backgroundColor="#fff" style="dark"></StatusBar>
+          <StatusBar backgroundColor={backgrounds} style="dark"></StatusBar>
           <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
               <TouchableOpacity
@@ -299,7 +301,7 @@ const ProductDetailsForm = () => {
                         style={styles.xContainer}
                         onPress={() => setIsUploadVisible(false)}
                       >
-                        <XMarkIcon size={hp(3)} color="#2196F3" />
+                        <XMarkIcon size={hp(3)} color={colors} />
                       </TouchableOpacity>
                       <View style={styles.cancel}>
                         <Text
@@ -319,7 +321,7 @@ const ProductDetailsForm = () => {
                           <CameraIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("camera")}
@@ -332,7 +334,7 @@ const ProductDetailsForm = () => {
                           <PhotoIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("gallery")}
@@ -348,7 +350,7 @@ const ProductDetailsForm = () => {
                           <TrashIcon
                             width={wp("13%")}
                             height={hp("10%")}
-                            color="#2196F3"
+                            color={colors}
                           />
                           <Text style={{fontFamily: "QuicksandSemiBold"}}>
                             {t("remove")}
@@ -368,21 +370,25 @@ const ProductDetailsForm = () => {
                         style={styles.uploadedImage}
                       />
                     ) : (
-                      <PhotoIcon
+                     <View>
+                       <PhotoIcon
                         width={wp("8%")}
                         height={hp("8%")}
-                        color="#2196F3"
+                        color={colors}
                       />
+                      <TouchableOpacity onPress={() => uploadImage()}>
+                      <View>
+                        <Text>Upload</Text>
+                      </View>
+                    </TouchableOpacity>
+                     </View>
                     )}
                   </TouchableOpacity>
                 )}
+                
               </View>
 
-              <TouchableOpacity onPress={() => uploadImage()}>
-                <View>
-                  <Text>Upload</Text>
-                </View>
-              </TouchableOpacity>
+              
 
               {/* Product Details Form */}
               <View style={styles.formContainer}>
@@ -506,7 +512,7 @@ const ProductDetailsForm = () => {
                   <CalendarIcon
                     width={wp("5%")}
                     height={hp("4%")}
-                    color="#2196F3"
+                    color={colors}
                     marginLeft={wp(42)}
                   />
                 </TouchableOpacity>
@@ -539,7 +545,7 @@ const ProductDetailsForm = () => {
                       <Picker
                         selectedValue={detail.type}
                         style={[
-                          {borderColor: "#2196F3"},
+                          {borderColor: colors},
                           styles.packageTypePicker,
                         ]}
                         onValueChange={(itemValue) => {
@@ -581,7 +587,7 @@ const ProductDetailsForm = () => {
                         <TrashIcon
                           width={wp("5%")}
                           height={hp("5%")}
-                          color="#2196F3"
+                          color={colors}
                         />
                       </TouchableOpacity>
                     )}
@@ -631,7 +637,7 @@ const ProductDetailsForm = () => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    backgroundColor: "#FFFFF1",
+    backgroundColor: backgrounds,
   },
   container: {
     marginTop: wp(5),
@@ -643,7 +649,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
     marginVertical: wp(3),
     fontFamily: "QuicksandSemiBold",
-    color: "#2196F3",
+    color: colors,
     textAlign: "center",
   },
   subHeader: {
@@ -661,7 +667,7 @@ const styles = StyleSheet.create({
     width: wp("40%"),
     height: wp("40%"),
     borderRadius: wp("5%"),
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
@@ -696,7 +702,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderRadius: wp("2%"),
     marginBottom: hp("1.5%"),
     padding: wp("2%"),
@@ -716,7 +722,7 @@ const styles = StyleSheet.create({
   },
   pickerTypeContainer: {
     marginRight: 5,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderWidth: 1,
     height: hp(6),
     borderRadius: 3,
@@ -729,7 +735,7 @@ const styles = StyleSheet.create({
   quantityInput: {
     width: wp(30),
     marginRight: 2,
-    borderColor: "#2196F3",
+    borderColor: colors,
     padding: wp(2),
     borderWidth: 1,
     borderRadius: 4,
@@ -743,7 +749,7 @@ const styles = StyleSheet.create({
     width: wp("7%"),
     height: wp("7%"),
     borderWidth: 2,
-    borderColor: "#2196F3",
+    borderColor: colors,
     justifyContent: "center",
     alignItems: "center",
     marginRight: wp("3%"),
@@ -757,7 +763,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#2196F3",
+    borderColor: colors,
     borderRadius: wp("2%"),
     paddingHorizontal: wp("3%"),
     paddingVertical: hp("1.5%"),
@@ -780,7 +786,7 @@ const styles = StyleSheet.create({
   addButton: {
     marginTop: hp("1.5%"),
     paddingVertical: hp("1.5%"),
-    backgroundColor: "#2196F3",
+    backgroundColor: colors,
     borderRadius: wp("2%"),
     alignItems: "center",
   },
@@ -792,7 +798,7 @@ const styles = StyleSheet.create({
   submitButton: {
     marginTop: hp("3%"),
     paddingVertical: hp("2%"),
-    backgroundColor: "#2196F3",
+    backgroundColor: colors,
     borderRadius: wp("2%"),
     alignItems: "center",
   },
