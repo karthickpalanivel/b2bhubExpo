@@ -271,13 +271,21 @@ const ProductDetailsForm = ({ route }) => {
     setValidity(currentDate);
   };
 
-  const formatDate = (date) => {
+  const formatDate = (dateInput) => {
+    // Convert string input into a Date object if it's not already
+    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  
+    // Check if the date is valid
+    if (isNaN(date)) {
+      return "Invalid Date";
+    }
+  
+    // Format the date as DD-MM-YYYY
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    return `${day < 10 ? `0${day}` : day}-${
-      month < 10 ? `0${month}` : month
-    }-${year}`;
+    
+    return `${day < 10 ? `0${day}` : day}-${month < 10 ? `0${month}` : month}-${year}`;
   };
 
   const addPackageDetail = () => {
