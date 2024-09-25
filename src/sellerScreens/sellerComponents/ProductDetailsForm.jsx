@@ -218,50 +218,55 @@ const ProductDetailsForm = ({ route }) => {
       });
       setIsLoading(false);
     }
-    const { product } = route.params;
 
-    if (product) {
-      setCustomerCategory(product?.category);
-      setCustomerId(product?.customerId);
-      setDescription(product?.description);
-      product.isApproved == 1 && setApproved(1);
-      product.isPublished == 1 && setPublished(1);
-      product.isOrganic == 1 && setIsOrganic(1);
-      setMoisture(product?.moisture);
-      setPackageDetails([
-        { type: product.packaging.type, quantity: product.packaging.quantity },
-      ]);
-      setPricing(product?.price);
-      setProductId(product?.productId);
-      setProductName(product?.productName);
-      setProductType(product?.productType);
-      setShelfLife(product?.shelfLife);
-
-      setImage(product?.productImg);
-      setValidity(product?.validity);
-      setUnits(product?.units);
-      console.log(
-        customerId,
-        customerCategory,
-        description,
-        isApproved,
-        isPublished,
-        moisture,
-        pricing,
-        packageDetails,
-        productId,
-        productName,
-        productType,
-        shelfLife,
-        image,
-        validity,
-        units
-      );
+    if (route?.params) {
+       const { product } = route?.params;
+        if (product) {
+        setCustomerCategory(product?.category);
+        setCustomerId(product?.customerId);
+        setDescription(product?.description);
+        product.isApproved == 1 && setApproved(1);
+        product.isPublished == 1 && setPublished(1);
+        product.isOrganic == 1 && setIsOrganic(1);
+        setMoisture(product?.moisture);
+        setPackageDetails([
+          { type: product.packaging.type, quantity: product.packaging.quantity },
+        ]);
+        setPricing(product?.price);
+        setProductId(product?.productId);
+        setProductName(product?.productName);
+        setProductType(product?.productType);
+        setShelfLife(product?.shelfLife);
+  
+        setImage(product?.productImg);
+        setValidity(product?.validity);
+        setUnits(product?.units);
+        console.log(
+          customerId,
+          customerCategory,
+          description,
+          isApproved,
+          isPublished,
+          moisture,
+          pricing,
+          packageDetails,
+          productId,
+          productName,
+          productType,
+          shelfLife,
+          image,
+          validity,
+          units
+        );
+      }
     }
+   
+
+    
 
     const availableProductData = {};
 
-    console.log(product);
+    // console.log(product);
     loadFonts();
   }, []);
 

@@ -1,37 +1,40 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, {
+  useEffect,
+  useState
+} from "react";
+import { StyleSheet } from "react-native";
 
 //Screens
-import HomeScreen from "../screens/HomeScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
 import ProductDetails from "../components/product/ProductDetails";
+import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
+import PdfGeneration from "../components/InVoice/PdfGeneration";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import PaymentSummary from "../components/product/Payment";
+import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
+import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
+import LoginScreen from "../screens/OauthScreen/LoginScreen";
+import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
+import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
+import ShopDetails from "../screens/OauthScreen/ShopDetails";
+import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
+import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
 import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
 import AccountSettings from "../screens/ProfileScreenContains/AccountSettings";
 import DeliveryScreen from "../screens/ProfileScreenContains/DeliveryScreen";
+import EditScreen from "../screens/ProfileScreenContains/EditScreen";
 import OffersRewards from "../screens/ProfileScreenContains/OffersRewards";
+import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
 import PaymentShippingScreen from "../screens/ProfileScreenContains/PaymentShippingScreen";
 import SettingsScreen from "../screens/ProfileScreenContains/SettingsScreen";
-import EditScreen from "../screens/ProfileScreenContains/EditScreen";
-import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
-import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
-import LoginScreen from "../screens/OauthScreen/LoginScreen";
-import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
-import ShopDetails from "../screens/OauthScreen/ShopDetails";
-import PaymentSummary from "../components/product/Payment";
-import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
-import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
-import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
-import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
-import PdfGeneration from "../components/InVoice/PdfGeneration";
 import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
+import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
-import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
-import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
 import ProductDetailsForm from "../sellerScreens/sellerComponents/ProductDetailsForm";
 
 //variables
