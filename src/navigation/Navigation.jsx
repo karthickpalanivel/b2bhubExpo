@@ -1,61 +1,77 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, {
+  useEffect,
+  useState
+} from "react";
+import { StyleSheet } from "react-native";
 
 //Screens
-import HomeScreen from "../screens/HomeScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
 import ProductDetails from "../components/product/ProductDetails";
+import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
+import PdfGeneration from "../components/InVoice/PdfGeneration";
+import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
+import PaymentSummary from "../components/product/Payment";
+import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
+import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
+import LoginScreen from "../screens/OauthScreen/LoginScreen";
+import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
+import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
+import ShopDetails from "../screens/OauthScreen/ShopDetails";
+import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
+import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
 import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
 import AccountSettings from "../screens/ProfileScreenContains/AccountSettings";
 import DeliveryScreen from "../screens/ProfileScreenContains/DeliveryScreen";
+import EditScreen from "../screens/ProfileScreenContains/EditScreen";
 import OffersRewards from "../screens/ProfileScreenContains/OffersRewards";
+import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
 import PaymentShippingScreen from "../screens/ProfileScreenContains/PaymentShippingScreen";
 import SettingsScreen from "../screens/ProfileScreenContains/SettingsScreen";
-import EditScreen from "../screens/ProfileScreenContains/EditScreen";
-import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
-import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
-import LoginScreen from "../screens/OauthScreen/LoginScreen";
-import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
-import ShopDetails from "../screens/OauthScreen/ShopDetails";
-import PaymentSummary from "../components/product/Payment";
-import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
-import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
-import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
-import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
-import PdfGeneration from "../components/InVoice/PdfGeneration";
 import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
+import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
-import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
-import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
 import ProductDetailsForm from "../sellerScreens/sellerComponents/ProductDetailsForm";
-
 
 //variables
 const Stack = createNativeStackNavigator();
 
 //functions
 export default function Navigation() {
-  const [onBoardingCompleted, setOnBoardingCompleted] = useState(false);
+  const [onBoardingCompleted, setOnBoardingCompleted] = useState(null);
   const [buyerLogin, setBuyerLogin] = useState(false);
   const [sellerLogin, setSellerLogin] = useState(false);
 
+  useEffect(() => {
+    alreadyOnBoarded();
+  }, []);
+
+  const alreadyOnBoarded = async () => {
+    let onBoard = await getItem("onboraded");
+    if (onBoard == 1) {
+      setOnBoardingCompleted(false);
+    } else {
+      setOnBoardingCompleted(true);
+    }
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-      >
-        {/* <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} /> */}
-
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
+        {onBoardingCompleted == true ? (
+          <Stack.Screen
+            name="onBoardScreenOne"
+            component={OnBoardingScreenOne}
+          />
+        ) : null}
+
         {/* Onboarding Screens */}
-
-
 
         {/* App loader */}
 
@@ -108,7 +124,7 @@ export default function Navigation() {
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />
         <Stack.Screen name="ModifyProduct" component={ModifyProductList} />
         <Stack.Screen name="SellerProfile" component={SellerProfile} />
-        <Stack.Screen name="SellerProductEdit" component={ProductDetailsForm}/>
+        <Stack.Screen name="SellerProductEdit" component={ProductDetailsForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );

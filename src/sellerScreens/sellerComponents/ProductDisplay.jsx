@@ -27,7 +27,7 @@ import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { useFocusEffect } from "@react-navigation/native";
 
-
+import { useNavigation } from "@react-navigation/native";
 
 const products = [
   {
