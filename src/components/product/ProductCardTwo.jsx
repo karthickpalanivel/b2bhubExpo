@@ -91,7 +91,7 @@ const ProductCardTwo = ({ props }) => {
 
                 props.name,
 
-                gradeAUnit.PricePerUnit?.toFixed(2),
+                gradeAUnit.PricePerUnit.toFixed(2),
 
                 props.location,
 
@@ -137,7 +137,7 @@ const ProductCardTwo = ({ props }) => {
             </View> */}
                 <View>
                   <Text style={styles.offerPrice}>
-                    ₹{gradeAUnit.PricePerUnit.toFixed(2)}/ {t("kg")}
+                    ₹{gradeAUnit?.PricePerUnit?.toFixed(2)}/ {t("kg")}
                   </Text>
                 </View>
               </View>

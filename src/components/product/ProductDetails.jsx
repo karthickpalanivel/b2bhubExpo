@@ -181,15 +181,14 @@ const ProductDetails = ({ route }) => {
   const backgroundColor = memberShipBackgroundColor();
 
   const translatedCategory = (key) => {
-    if(key === 'Imported') return t('imported');
-    if(key === 'Desi') return t('desi');
-    if(key === 'Polished') return t('polished');
-    if(key === 'Unpolished') return t('unpolished');
-    if(key === 'Mysore') return t('mysore');
-    if(key === 'Fatka') return t('fatka');
-    if(key === 'Gold') return t('gold');
-    if(key === 'Premium') return t('premium');
-
+    if (key === "Imported") return t("imported");
+    if (key === "Desi") return t("desi");
+    if (key === "Polished") return t("polished");
+    if (key === "Unpolished") return t("unpolished");
+    if (key === "Mysore") return t("mysore");
+    if (key === "Fatka") return t("fatka");
+    if (key === "Gold") return t("gold");
+    if (key === "Premium") return t("premium");
   };
 
   const translatedProductName = () => {
@@ -199,13 +198,13 @@ const ProductDetails = ({ route }) => {
     if (productDetails.productName == "GramDal") return t("gram_dal");
   };
 
-  
-
-  const combinedName = () =>{
-    return translatedCategory(productDetails.productType) + " " + translatedProductName()
-  }
-
-  
+  const combinedName = () => {
+    return (
+      translatedCategory(productDetails.productType) +
+      " " +
+      translatedProductName()
+    );
+  };
 
   const translatingLocation = () => {};
 
@@ -229,7 +228,9 @@ const ProductDetails = ({ route }) => {
                     color={colors}
                   />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>{productDetails.productName}</Text>
+                <Text style={styles.headerText}>
+                  {productDetails.productName}
+                </Text>
               </View>
               <View style={styles.detailsContainer}>
                 <View>
@@ -241,7 +242,7 @@ const ProductDetails = ({ route }) => {
                 <View style={styles.textContainer}>
                   <View>
                     <Text style={styles.productName}>
-                    {translatedProductName()}
+                      {translatedProductName()}
                     </Text>
                   </View>
                   <View>
@@ -262,8 +263,7 @@ const ProductDetails = ({ route }) => {
                   <Text style={styles.productLocation}>
                     {productDetails.productLocation}
                   </Text>
-                  <Text style={styles.productLocation}>
-                                      </Text>
+                  <Text style={styles.productLocation}></Text>
 
                   {/* <Text>{productDetails.productCategory}</Text> */}
                 </View>
@@ -371,11 +371,27 @@ const ProductDetails = ({ route }) => {
               onRequestClose={() => setModalVisible(false)}
               animationType="slide"
             >
+              <TouchableOpacity
+                style={styles.modelIconsBack}
+                onPress={() => {
+                  // navigation.goBack();
+                  setModalVisible(false);
+                }}
+              >
+                <ChevronLeftIcon
+                  size={hp(3.5)}
+                  strokeWidth={4.5}
+                  color={colors}
+                />
+              </TouchableOpacity>
               <View style={styles.modalBackground}>
                 <View style={styles.modalContent}>
                   <TouchableOpacity
                     style={styles.closeButton}
-                    onPress={() => setModalVisible(false)}
+                    onPress={() => {
+                      setModalVisible(false);
+                      // navigation.goBack();
+                    }}
                   >
                     <XCircleIcon size={hp(3)} color={"black"} />
                   </TouchableOpacity>
@@ -452,7 +468,7 @@ const ProductDetails = ({ route }) => {
             >
               <TermsAndConditionsModal
                 visible={termsVisible}
-                onClose={() => navigation.goBack()}
+                onClose={() => setTermsVisible(false)}
                 currentOrderPrice={totalPrice}
                 totalAmount={totalAmount}
                 productName={productDetails.productName}
@@ -512,6 +528,21 @@ const styles = StyleSheet.create({
     borderColor: "black",
     marginHorizontal: wp(2),
     backgroundColor: "#fff",
+  },
+
+  modelIconsBack: {
+    position: "absolute",
+    top: hp(1),
+    left: wp(1),
+    width: hp(5.7),
+    padding: wp(2),
+    marginLeft: hp(3),
+    borderRadius: 9999,
+    borderWidth: 0.1,
+    borderColor: "black",
+    marginHorizontal: wp(2),
+    backgroundColor: "#fff",
+    zIndex: 500,
   },
 
   headerText: {
@@ -676,29 +707,32 @@ const styles = StyleSheet.create({
 
   closeButton: {
     position: "absolute",
-    top: 10,
-    right: 10,
-    padding: 10,
+    top: wp(2.5),
+    right: wp(2.5),
+    padding: wp(2.5),
+    zIndex: 200,
   },
 
   modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
+    fontSize: wp(4.5),
+    // fontWeight: "bold",
+    fontFamily: "QuicksandBold",
+    marginBottom: wp(3.5),
   },
 
   picker: {
-    height: 50,
+    height: wp(12.5),
     width: "100%",
-    marginBottom: 15,
+    marginBottom: wp(3.5),
   },
 
   input: {
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
-    marginBottom: 15,
+    marginBottom: wp(3.5),
     paddingVertical: 5,
-    fontSize: 16,
+    fontSize: wp(4),
+    fontFamily: "QuicksandSemiBold",
   },
 
   continueButton: {
@@ -710,6 +744,8 @@ const styles = StyleSheet.create({
 
   continueButtonText: {
     fontSize: 16,
+    fontFamily: "QuicksandSemiBold",
+
     color: "#fff",
     fontWeight: "bold",
   },
@@ -723,13 +759,15 @@ const styles = StyleSheet.create({
 
   paymentButtonText: {
     fontSize: 16,
+    fontFamily: "QuicksandSemiBold",
     color: "#fff",
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 
   closeButtonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "QuicksandSemiBold",
+    // fontWeight: "bold",
     color: "#333",
   },
 
@@ -750,6 +788,7 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     fontSize: 16,
+    fontFamily: "QuicksandSemiBold",
     color: "#333",
   },
 
