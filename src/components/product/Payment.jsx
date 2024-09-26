@@ -23,6 +23,7 @@ import PdfGeneration from "../InVoice/PdfGeneration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import generateInvoice from "../InVoice/GenerateInvoice"
 const colors="#E84A5F";
 const backgrounds="#FCF8F3";
 
@@ -209,22 +210,40 @@ const PaymentSummary = ({ route }) => {
       invoiceUrl,
     });
 
+    const getInvoiceData = (invoiceId) => ({
+      invoiceId: invoiceId,
+      name: companyName,
+      address1: addressOne,
+      address2: addressTwo,
+      city: city,
+      state: state,
+      landmark: landmark,
+      pincode: zipCode,
+      gst_no: gstNo,
+      product_name: productSummary.productName,
+      product_type: productSummary.grade,
+      product_quantity: productSummary.quantity,
+      total_amount: productSummary.totalAmount,
+      unitprice: productSummary.totalAmount / productSummary.quantity,
+    });
+
     const handleConfirmOrder = async () => {
       const orderUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+      const token1 = await AsyncStorage.getItem("token");
       setProceedPaymentText("Processing...");
-  
+      
         try {
           const invoiceIdRequest = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId",
             {},
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${token1}`,
                 "Content-Type": "application/json",
               },
             }
           );
-          const invoiceUrl = await PdfGeneration(
+          const invoiceUrl = await generateInvoice(
             getInvoiceData(invoiceIdRequest.data[0].invoiceId)
           );
           const orderDetails = getOrderDetails(
@@ -234,13 +253,12 @@ const PaymentSummary = ({ route }) => {
           console.log("orrder sample data", orderDetails);
           await axios.post(orderUrl, orderDetails, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${token1}`,
               "Content-Type": "application/json",
             },
           });
           setProceedPaymentText("Thanks For Business");
           setIsOrderSuccessful(true);
-          setModelOpen(true);
   
           console.log("Order Confirmed and email sent");
         } catch (error) {
