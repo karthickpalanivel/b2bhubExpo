@@ -23,7 +23,7 @@ import PdfGeneration from "../InVoice/PdfGeneration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-import generateInvoice from "../InVoice/GenerateInvoice"
+
 const colors="#E84A5F";
 const backgrounds="#FCF8F3";
 
@@ -195,7 +195,7 @@ const PaymentSummary = ({ route }) => {
       address2: addressTwo,
       city: city,
       state: state,
-      email: buyerInfo.email,
+      email: email,
       landmark: landmark,
       zip_code: zipCode,
       gst_no: gstNo,
@@ -243,7 +243,7 @@ const PaymentSummary = ({ route }) => {
               },
             }
           );
-          const invoiceUrl = await generateInvoice(
+          const invoiceUrl = await PdfGeneration(
             getInvoiceData(invoiceIdRequest.data[0].invoiceId)
           );
           const orderDetails = getOrderDetails(
