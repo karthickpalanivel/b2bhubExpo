@@ -140,6 +140,8 @@ const ProductCard = ({ props, index }) => {
   const gradeAUnit = props.costPerUnit[0];
   const typesOfProduct = props.costPerUnit[0].grade.split(" ")[0];
   console.log(typesOfProduct);
+  
+  
   const ProductModal = ({ visible }) => {
     <Modal
       transparent={true}

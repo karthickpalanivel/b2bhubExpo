@@ -134,20 +134,25 @@ const TermsAndConditionsModal = ({
     <>
       {isLoading ? (
         <AppLoaderAnimation />
-      ) : isVisible ? (
+      ) : visible ? (
         <View style={styles.modalBackground}>
           <TouchableOpacity
             style={styles.modelIconsBack}
             onPress={() => {
-              setVisisble(false);
+              visible = false;
               navigation.goBack();
-
             }}
           >
             <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={colors} />
           </TouchableOpacity>
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => {
+                !visible
+                // navigation.goBack();
+              }}
+            >
               <XCircleIcon color="black" />
             </TouchableOpacity>
             <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
@@ -256,7 +261,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: "flex-end",
-    zIndex: 200,
+    zIndex: 300,
   },
   closeButtonText: {
     fontSize: wp(5),

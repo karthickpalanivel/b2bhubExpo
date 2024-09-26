@@ -42,6 +42,8 @@ import * as Font from "expo-font";
 import { useTranslation } from "react-i18next";
 import LanguageList from "../language/LanguageList.json";
 import { useLanguage } from "../hooks/LanguageContext";
+
+
 const colors="#E84A5F";
 const backgrounds="#FCF8F3";
 
@@ -149,6 +151,10 @@ const ProfileScreen = () => {
     changeLanguage(LanguageList[lng].shortName);
     hide();
   };
+
+  const languageName = (languageShortName) =>{
+    return 
+  }
 
   const LanguageModal = ({ visible }) => {
     return (
