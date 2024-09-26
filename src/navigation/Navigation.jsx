@@ -118,7 +118,7 @@ export default function Navigation() {
         <Stack.Screen name="PasswordEdit" component={PasswordEditScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="paymentSummary" component={PaymentSummary} />
-        <Stack.Screen name="Invoice" component={PdfGeneration} />
+        {/* <Stack.Screen name="Invoice" component={PdfGeneration} /> */}
 
         {/* Sellers Screens */}
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />

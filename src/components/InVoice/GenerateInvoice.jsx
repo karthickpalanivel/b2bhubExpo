@@ -327,9 +327,10 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
+
 const GeneratePayslips = async (invoicedata) => {
   console.log(
-    "invoive data.............................................................."
+    "invoive data .............................................................."
   );
   console.log(invoicedata);
 
@@ -340,7 +341,6 @@ const GeneratePayslips = async (invoicedata) => {
     const options = { day: "numeric", month: "short", year: "2-digit" };
     return date.toLocaleDateString("en-GB", options);
   }
-
   const invoiceId = invoicedata.invoiceId;
   const name = invoicedata.name;
   const address1 = invoicedata.address1;
@@ -371,8 +371,8 @@ const GeneratePayslips = async (invoicedata) => {
   };
 
   function convertToWords() {
-    let amount = parseFloat(document.getElementById("amount").value);
-    let words = numberToWords(amount);
+    var amount = parseFloat(document.getElementById("amount").value);
+    var words = numberToWords(amount);
     document.getElementById("amount_in_words").value = "INR " + words + " Only";
   }
   // function getCurrentDate() {
@@ -406,9 +406,9 @@ const GeneratePayslips = async (invoicedata) => {
   }
 
   function numberToWords(amount) {
-    let words = "";
-    let fraction = Math.round((amount - Math.floor(amount)) * 100);
-    let units = [
+    var words = "";
+    var fraction = Math.round((amount - Math.floor(amount)) * 100);
+    var units = [
       "Zero",
       "One",
       "Two",
@@ -420,7 +420,7 @@ const GeneratePayslips = async (invoicedata) => {
       "Eight",
       "Nine",
     ];
-    let teens = [
+    var teens = [
       "Eleven",
       "Twelve",
       "Thirteen",
@@ -431,7 +431,7 @@ const GeneratePayslips = async (invoicedata) => {
       "Eighteen",
       "Nineteen",
     ];
-    let tens = [
+    var tens = [
       "Ten",
       "Twenty",
       "Thirty",
@@ -442,11 +442,11 @@ const GeneratePayslips = async (invoicedata) => {
       "Eighty",
       "Ninety",
     ];
-    let thousands = ["", "Thousand", "Lakh", "Crore"];
+    var thousands = ["", "Thousand", "Lakh", "Crore"];
 
     function convertChunk(num) {
-      let str = "";
-      let hundred = Math.floor(num / 100);
+      var str = "";
+      var hundred = Math.floor(num / 100);
       num = num % 100;
       if (hundred > 0) {
         str += units[hundred] + " Hundred ";
@@ -454,7 +454,7 @@ const GeneratePayslips = async (invoicedata) => {
       if (num > 10 && num < 20) {
         str += teens[num - 11] + " ";
       } else {
-        let ten = Math.floor(num / 10);
+        var ten = Math.floor(num / 10);
         num = num % 10;
         if (ten > 0) {
           str += tens[ten - 1] + " ";
@@ -469,11 +469,11 @@ const GeneratePayslips = async (invoicedata) => {
     if (amount === 0) {
       words = "Zero";
     } else {
-      let crore = Math.floor(amount / 10000000);
-      let lakh = Math.floor((amount % 10000000) / 100000);
-      let thousand = Math.floor((amount % 100000) / 1000);
-      let hundred = Math.floor((amount % 1000) / 100);
-      let remainder = amount % 100;
+      var crore = Math.floor(amount / 10000000);
+      var lakh = Math.floor((amount % 10000000) / 100000);
+      var thousand = Math.floor((amount % 100000) / 1000);
+      var hundred = Math.floor((amount % 1000) / 100);
+      var remainder = amount % 100;
 
       if (crore > 0) {
         words += convertChunk(crore) + " Crore ";
@@ -501,13 +501,13 @@ const GeneratePayslips = async (invoicedata) => {
 
   const htmlContent = `
     <div id="printdf" style="background-color: #f5f5f5; width: fit-content; min-height: 320mm; margin-left: auto; margin-right: auto;">
-     <div style="font-family: Arial, sans-serif; font-size: 6px; line-height:1; margin: 0; padding: 0;">
+     <div style="font-family: Arial, sans-serif; font-size: 4px; line-height:1; margin: 0; padding: 0;">
 
 	<div style="width: 100%; margin: 0 auto;border:1px solid #000;padding:6px;">
 		<center>
 			<h1>Invoice Note</h1>
 		</center>
-		<table border="1px" width="100%" style="border-width:1px;border-color:black,border-collapse: collapse;">
+		<table border="1px" width="95%" style="border-width:1px;border-color:black,border-collapse: collapse;">
 			<tr>
 				<td rowspan="3" style="border-right: none;border-bottom:none;line-height: 1.5;padding: 2px 0px 2px 2px;"><strong>VTS ENTERPRISES INDIA PVT
 						LTD</strong><br>
@@ -519,16 +519,16 @@ const GeneratePayslips = async (invoicedata) => {
 					STATE NAME : TAMIL NADU, CODE : 33
 				</td>
 				<td style="border-right: none;border-bottom:none;padding: 2px;">Credit Note No. ${invoiceId.replace(
-          "B2BINV",
-          ""
-        )}</td>
+    "B2BINV",
+    ""
+  )}</td>
 				<td style="border-right: none;border-bottom:none;padding: 2px;">Dated: ${getCurrentDate()}</td>
 			</tr>
 			<tr>
 				<td style="border-right: none;border-bottom:none;font-weight: bold; padding: 2px;">Invoice No.: ${invoiceId.replace(
-          "B2B",
-          ""
-        )} <br><br>Date:${getCurrentDate()}</td>
+    "B2B",
+    ""
+  )} <br><br>Date:${getCurrentDate()}</td>
 				<td style="border-right: none;border-bottom:none;padding: 2px;">Other Reference</td>
 			</tr>
 			<tr>
@@ -545,16 +545,16 @@ const GeneratePayslips = async (invoicedata) => {
             GSTIN/UIN: ${gst_no.toUpperCase()}<br>
             State Name: ${state.toUpperCase()}, Code: 33
         </td>
-				<td style="border-right: none;border-bottom:none;padding: auto">Dispatched Doc No.</td>
-				<td style="border-right: none;border-bottom:none;padding: auto"></td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Dispatched Doc No.</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"></td>
 			</tr>
 			<tr>
-				<td style="border-right: none;border-bottom:none;padding: auto">Buyer’s Order No.</td>
-				<td style="border-right: none;border-bottom:none;padding: auto">Dated</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Buyer’s Order No.</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px">Dated</td>
 			</tr>
 			<tr>
-				<td style="border-right: none;border-bottom:none;padding: auto">Dispatched through</td>
-				<td style="border-right: none;border-bottom:none;font-weight: bold;padding: auto;">CHENNAI</td>
+				<td style="border-right: none;border-bottom:none;padding: 2px"> Dispatched through</td>
+				<td style="border-right: none;border-bottom:none;font-weight: bold;padding: 2px;">CHENNAI</td>
 			</tr>
 			<tr>
 			</tr>
@@ -568,13 +568,13 @@ const GeneratePayslips = async (invoicedata) => {
             GSTIN/UIN: ${gst_no.toUpperCase()}<br>
             State Name: ${state.toUpperCase()}, Code: 33
         </td>
-				<td colspan="2" style="border-right: none;border-bottom:none;padding: auto;">Terms & Conditions</td>
+				<td colspan="2" style="border-right: none;border-bottom:none;padding: 2px;">Terms & Conditions</td>
 			</tr>
 		</table>
 		<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
 		</div>
 
-		<table border="1px" style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+		<table border="1px" style="width: 95%; border-collapse: collapse; margin-bottom: 10px;">
 			<thead>
 				<tr>
 					<th style="border-right: none;border-bottom:none;padding: 5px; text-align: left;">S.No.</th>
@@ -592,18 +592,18 @@ const GeneratePayslips = async (invoicedata) => {
 					<td style="border-right: none;border-bottom:none;padding: 5px;">${product_type} </td>
 					<td style="border-right: none;border-bottom:none;padding: 5px;">${product_quantity} TONNES</td>
 					<td style="border-right: none;border-bottom:none;padding: 5px;">₹ ${formatIndianNumber(
-            parseInt(unitprice)
-          )}.00</td>
+    parseInt(unitprice)
+  )}.00</td>
 					<td style="border-right: none;border-bottom:none;padding: 5px;">TONNE</td>
 					<td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
-            parseInt(total_amount)
-          )}</td>
+    parseInt(total_amount)
+  )}</td>
 				</tr>				
 				<tr>
 					<td style="border-right: none;border-bottom:none;padding: 5px;" colspan="5">Total (GST Exempted)</td>
 					<td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
-            parseInt(total_amount)
-          )}</td>
+    parseInt(total_amount)
+  )}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -611,7 +611,7 @@ const GeneratePayslips = async (invoicedata) => {
 
 		<div style="display: flex;flex-direction: column; justify-content: space-between;">
       <strong>GST Exempted</strong>
-			<table border="1px" style="width: 100%; border-collapse: collapse; margin-bottom: 6px;">
+			<table border="1px" style="width: 95%; border-collapse: collapse; margin-bottom: 3px;margin-top:2px">
                 <tr>
                     <th style="border-right: none;border-bottom:none;padding: 5px;">HSN/SAC</th>
                     <th style="border-right: none;border-bottom:none;padding: 5px;">CGST @ 0.0%</th>
@@ -627,16 +627,16 @@ const GeneratePayslips = async (invoicedata) => {
                     <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
                     <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">0.00</td>
                     <td style="border-right: none;border-bottom:none;padding: 5px; text-align: right;">${formatIndianNumber(
-                      total_amount
-                    )}.00</td>
+    total_amount
+  )}.00</td>
                 </tr>
             </table>
             
 			<div style="border:none;padding:6px  3px;">
 				Total Amount (in words):<br><br>
 				<strong style="margin-top:7px;">INR ${numberToWords(
-          total_amount
-        ).toUpperCase()} ONLY</strong><br><br>
+    total_amount
+  ).toUpperCase()} ONLY</strong><br><br>
 				<strong>Company’s Bank Details :</strong><br>
 				Bank Name: PUNJAB NATIONAL BANK<br>
 				A/C No.: 3940002100057010<br>
@@ -644,18 +644,18 @@ const GeneratePayslips = async (invoicedata) => {
 				Branch : Tiruvanmiyur,CHENNAI<br>
 			</div>
 		</div>
-		<div style="border:none; padding: 3px; margin-bottom: 4px;">
+		<div style="border:none; padding: 3px; margin-bottom: 3px;">
 			<strong>Declaration :</strong><br><br>
 			We declare that this invoice shows the actual price of the goods described and that all particulars are true
 			and correct.<br>
 		</div>
 		<hr>
-		<div style="text-align: right;">
+		<div  style="text-align: right;width:95%">
 			<strong>For VTS ENTERPRISES INDIA PVT LTD</strong><br><br><br>
 			Authorised Signatory
 		</div>
 	</div>
-  </div>
+</div>
     </div>
   `;
 
@@ -667,7 +667,7 @@ const GeneratePayslips = async (invoicedata) => {
 
   const element = document.getElementById("printdf");
 
-  const canvas = await html2canvas(element, { scale: 2.5 });
+  const canvas = await html2canvas(element, { scale: 3 });
   const imgData = canvas.toDataURL("image/png");
 
   const pdf = new jsPDF({
@@ -682,7 +682,7 @@ const GeneratePayslips = async (invoicedata) => {
   pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, "FAST");
 
   const pdfBlob = pdf.output("blob");
-  
+
   const formData = new FormData();
   formData.append("file", pdfBlob, "invoice");
   formData.append("upload_preset", "payslips");
