@@ -6,6 +6,7 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import RNHTMLtoPDF from "react-native-html-to-pdf";
 
+
 const PdfGeneration = ({ invoicedata }) => {
   const [pdfContent, setPdfContent] = useState(null);
 
@@ -340,24 +341,27 @@ const PdfGeneration = ({ invoicedata }) => {
     </div>
   `;
 
-  // function getCurrentDateWithoutTime() {
-  //   const today = new Date();
-  //   const day = String(today.getDate()).padStart(2, "0");
-  //   const month = String(today.getMonth() + 1).padStart(2, "0");
-  //   const year = today.getFullYear();
-  //   return `${day}-${month}-${year}`;
-  // }
+  function getCurrentDateWithoutTime() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+
   const generatePdf = async () => {
     try {
       const options = {
-        html: html,
-        fileName: `invoice${pid}`,
-        base64: false,
+        html,
+        fileName: 'Invoice',
+        directory: 'Documents',
       };
 
-      const file = await printToFileAsync(options);
 
-      await shareAsync(file.uri);
+      let file = await RNHTMLtoPDF.convert(options);
+  
+      await Sharing.shareAsync(file.filePath);
     } catch (err) {
       console.error("Error generating or sharing pdf", err);
     }
