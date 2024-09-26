@@ -1,4 +1,3 @@
-
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import {
@@ -24,8 +23,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 // CustomCheckBox Component
 export const CustomCheckBox = ({ value, onValueChange }) => (
@@ -54,8 +53,8 @@ const PaymentSummary = ({ route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
   const [isOrderSuccess, setIsOrderSuccess] = useState(false);
-  const [proceedPaymentText, setProceedPaymentText] = useState("Pre Book Order");
-
+  const [proceedPaymentText, setProceedPaymentText] =
+    useState("Pre Book Order");
 
   const navigation = useNavigation();
 
@@ -110,17 +109,14 @@ const PaymentSummary = ({ route }) => {
   AsyncStorage.getItem("companyname")
     .then((value) => {
       if (value !== null) {
-
         //console.log("Value:", value);
         setCompanyName(value);
       } else {
-
         console.log("No value found");
         setCompanyName("");
       }
     })
     .catch((error) => {
-
       console.error("Error:", error);
     });
   AsyncStorage.getItem("gst")
@@ -152,17 +148,14 @@ const PaymentSummary = ({ route }) => {
       }
     })
     .catch((error) => {
-
       console.error("Error:", error);
     });
   AsyncStorage.getItem("phone")
     .then((value) => {
       if (value !== null) {
-
         //console.log("Value:", value);
         setPhoneNo(value);
       } else {
-
         console.log("No value found");
         setPhoneNo("");
       }
@@ -278,6 +271,7 @@ const PaymentSummary = ({ route }) => {
     );
   };
 
+
   const translatedProductName = () => {
     if (productSummary.productName == "ToorDal") return t("toor_dal");
     if (productSummary.productName == "MoongDal") return t("moong_dal");
@@ -306,7 +300,9 @@ const PaymentSummary = ({ route }) => {
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("product_name")}</Text>
-                <Text style={styles.tableCell}>{productSummary.productName}</Text>
+                <Text style={styles.tableCell}>
+                  {productSummary.productName}
+                </Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("total_price")}</Text>
@@ -317,7 +313,7 @@ const PaymentSummary = ({ route }) => {
               <View style={styles.tableRow}>
                 <Text style={styles.tableCell}>{t("quantity")}</Text>
                 <Text style={styles.tableCell}>
-                 {productSummary.productQuantity} {t('tonnes')}
+                  {productSummary.productQuantity} {t("tonnes")}
                 </Text>
               </View>
               <View style={styles.tableRow}>
@@ -450,10 +446,11 @@ const PaymentSummary = ({ route }) => {
             </Text>
             <Text style={styles.cardContent}>{t("samples_can_be_sent")} </Text>
 
-            <Pressable onPress={()=>handleConfirmOrder()} style={styles.preBookContainer}>
-              <Text style={styles.preBookText}>
-                {proceedPaymentText}
-              </Text>
+            <Pressable
+              onPress={() => handleConfirmOrder()}
+              style={styles.preBookContainer}
+            >
+              <Text style={styles.preBookText}>{proceedPaymentText}</Text>
             </Pressable>
           </View>
         </ScrollView>
