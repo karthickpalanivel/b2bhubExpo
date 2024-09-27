@@ -31,9 +31,13 @@ import {
   EyeIcon,
   EyeSlashIcon,
   ArrowRightStartOnRectangleIcon,
+  LanguageIcon
 } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
+import LanguageSelectionModal from "../../components/modals/LanguageSelectionModal";
+import LanguageList from "../../language/LanguageList.json";
+import { useLanguage } from "../../hooks/LanguageContext";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -58,6 +62,11 @@ const LoginScreen = () => {
   const [viewPassword, setViewPassword] = useState(true);
   //const [email, setEmail] = useState('');
   const [sellerEmail, setSellerEmail] = useState("");
+
+  //Language Modals Hooks
+  const { language, changeLanguage } = useLanguage;
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  // const [Language, setLanguage] = useState(LanguageList[language].nativeName);
 
   const { t } = useTranslation();
 
@@ -89,8 +98,8 @@ const LoginScreen = () => {
 
   const handleSellerSubmit = async () => {
     if (sellerEmail && sellerPassword) {
-      console.log("Email:", sellerEmail);
-      console.log("Password:", sellerPassword);
+      // console.log("Email:", sellerEmail);
+      // console.log("Password:", sellerPassword);
 
       const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
       console.log("====================================");
@@ -227,9 +236,9 @@ const LoginScreen = () => {
     }, [])
   );
 
-  const exitApp = () =>{
+  const exitApp = () => {
     BackHandler.exitApp();
-  }
+  };
 
   return (
     <>
@@ -240,11 +249,17 @@ const LoginScreen = () => {
         <>
           <ScrollView style={styles.container}>
             {/* Add logo */}
-            <View style={styles.logoContainer}>
-              <Image
-                source={require("../../assets/B2BlogoRounded.png")}
-                style={styles.logo}
-              />
+            <View>
+              <View />
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../assets/B2BlogoRounded.png")}
+                  style={styles.logo}
+                />
+              </View>
+              <View>
+                <LanguageIcon size={wp(4)}/>
+              </View>
             </View>
 
             {/* style={{textAlign: 'center'}} */}

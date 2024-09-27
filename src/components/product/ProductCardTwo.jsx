@@ -163,16 +163,16 @@ export default ProductCardTwo;
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: wp(90),
     backgroundColor: "#Fffff2",
-    borderRadius: 10,
-    marginHorizontal: "5%",
+    borderRadius: wp(2.5),
+    marginHorizontal: wp(1.25),
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: "2%",
+    marginVertical: wp(0.5),
   },
   ratingStyles: {
-    width: "40%",
+    width: wp(10),
     height: wp(6),
     resizeMode: "contain",
   },
@@ -194,24 +194,23 @@ const styles = StyleSheet.create({
   },
   ratingImage: {
     flexDirection: "row",
-
     alignItems: "center",
     marginVertical: "3%",
   },
   inStock: {
     color: "green",
     backgroundColor: "#DCFF9C",
-    marginRight: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 3,
+    marginRight: wp(2.5),
+    paddingVertical: wp(1.25),
+    paddingHorizontal: wp(2.5),
+    borderRadius: wp(0.75),
   },
   outOfStock: {
     color: "red",
     backgroundColor: "#FFB9B9",
-    paddingVertical: 5,
-    paddingHorizontal: 8,
-    borderRadius: 3,
+    paddingVertical: wp(1.25),
+    paddingHorizontal: wp(2),
+    borderRadius: wp(0.75),
   },
   mrpPrice: {
     textAlign: "right",
@@ -220,14 +219,14 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
   icon: {
-    fontSize: 24,
+    fontSize: wp(6),
     color: "black",
   },
   styleImage: {
     width: "80%",
     height: 120,
     borderRadius: wp(2.5),
-    padding: 10,
+    padding: wp(2.5),
     marginTop: "15%",
   },
   imageContainer: {
@@ -240,18 +239,18 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontFamily: "QuicksandSemiBold",
-    fontSize: 18,
+    fontSize: wp(4.5),
     color: "black",
   },
   order: {
-    fontSize: 15,
+    fontSize: wp(3.75),
     textAlign: "center",
     marginBottom: "5%",
     borderWidth: 0.2,
     borderColor: "blue",
     width: "70%",
     padding: 5,
-    borderRadius: 100,
+    borderRadius: wp(100),
     backgroundColor: btn,
     color: "white",
     marginTop: "5%",

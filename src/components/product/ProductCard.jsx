@@ -140,8 +140,7 @@ const ProductCard = ({ props, index }) => {
   const gradeAUnit = props.costPerUnit[0];
   const typesOfProduct = props.costPerUnit[0].grade.split(" ")[0];
   console.log(typesOfProduct);
-  
-  
+
   const ProductModal = ({ visible }) => {
     <Modal
       transparent={true}
@@ -309,19 +308,37 @@ const ProductCard = ({ props, index }) => {
                 <Text style={styles.offerPrice}>{t("kg")}</Text>
               </View>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <MapPinIcon
-                size={wp(5)}
-                color={"black"}
-                style={{ marginLeft: "4%" }}
-              />
-              <Text style={styles.locationText}>{props.location}</Text>
-            </View>
+            {props.location ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <MapPinIcon
+                  size={wp(5)}
+                  color={"black"}
+                  style={{ marginLeft: "4%" }}
+                />
+                <Text style={styles.locationText}>{props.location}</Text>
+              </View>
+            ) : (
+              <>
+                {/* <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <MapPinIcon
+                    size={wp(5)}
+                    color={"black"}
+                    style={{ marginLeft: "4%" }}
+                  />
+                  <Text style={styles.locationText}>{t("imported")}</Text>
+                </View> */}
+              </>
+            )}
             {props.category && (
               <View
                 style={[

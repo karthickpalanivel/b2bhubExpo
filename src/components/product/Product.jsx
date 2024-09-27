@@ -25,7 +25,7 @@ export default function Product({
   const [isLoading, setIsLoading] = useState(true);
 
   // console.log("====================================");
-  // console.log(products);
+  console.log(products);
   // console.log("====================================");
   const { t } = useTranslation();
   useEffect(() => {

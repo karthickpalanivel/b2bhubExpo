@@ -247,23 +247,30 @@ const ProductDetails = ({ route }) => {
                   </View>
                   <View>
                     <Text style={styles.productPrice}>
-                      {productDetails.productPrice} / {t("kg")}
+                      ₹ {productDetails.productPrice} / {t("kg")}
                     </Text>
                   </View>
-                  <View style={styles.locationContainer}>
-                    <MapPinIcon
-                      size={hp(3)}
-                      color={"white"}
-                      style={styles.mapIcon}
-                    />
-                    <View>
-                      <Text style={styles.locationLabel}>{t("location")}</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.productLocation}>
-                    {productDetails.productLocation}
-                  </Text>
-                  <Text style={styles.productLocation}></Text>
+                  {productDetails.productLocation && (
+                    <>
+                      <View style={styles.locationContainer}>
+                        <MapPinIcon
+                          size={hp(3)}
+                          color={"white"}
+                          style={styles.mapIcon}
+                        />
+                        <Text style={styles.productLocation}>
+                          {productDetails.productLocation}
+                        </Text>
+                        {/* <View>
+                          <Text style={styles.locationLabel}>
+                            {t("location")}
+                          </Text>
+                        </View> */}
+                      </View>
+
+                      {/* <Text style={styles.productLocation}></Text> */}
+                    </>
+                  )}
 
                   {/* <Text>{productDetails.productCategory}</Text> */}
                 </View>
@@ -286,10 +293,19 @@ const ProductDetails = ({ route }) => {
                       <></>
                     )}
                   </View>
-                  <View style={styles.qualityTextContainer}>
-                    <Text style={styles.premiumProduct}>
-                      {t("premium_quality_product")}
-                    </Text>
+                  <View
+                    style={[
+                      styles.qualityTextContainer,
+                      productDetails.productCategory == null && {
+                        marginLeft: wp(10),
+                      },
+                    ]}
+                  >
+                    {productDetails.productCategory != null && (
+                      <Text style={styles.premiumProduct}>
+                        {t("premium_quality_product")}
+                      </Text>
+                    )}
                     <TouchableOpacity
                       style={styles.orderNowContainer}
                       onPress={() => setModalVisible(true)}
@@ -580,6 +596,8 @@ const styles = StyleSheet.create({
 
   locationContainer: {
     flexDirection: "row",
+    marginRight: wp(10),
+    alignItems: "center",
   },
 
   qualityContainer: {
@@ -590,6 +608,7 @@ const styles = StyleSheet.create({
   qualityTextContainer: {
     marginHorizontal: wp(2),
     marginVertical: hp(1),
+    alignItems: "center",
   },
 
   productName: {
@@ -624,7 +643,8 @@ const styles = StyleSheet.create({
 
   premiumProduct: {
     width: wp(80),
-    textAlign: "left",
+    textAlign: "center",
+    // marginLeft: wp(10),
     fontFamily: "QuicksandSemiBold",
     fontSize: wp(4.5),
     color: "white",

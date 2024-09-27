@@ -27,7 +27,6 @@ import {
   TruckIcon,
   ArrowLeftIcon,
 } from "react-native-heroicons/outline";
-import MasonryList from "@react-native-seoul/masonry-list";
 import {
   IdentificationIcon,
   EnvelopeIcon,
@@ -48,6 +47,7 @@ const colors="#E84A5F";
 const backgrounds="#FCF8F3";
 
 const ProfileScreen = () => {
+
   const navigation = useNavigation();
 
   const [companyName, setCompanyName] = useState("Your Company");
@@ -68,7 +68,6 @@ const ProfileScreen = () => {
       });
       setIsLoading(false);
     }
-
     loadFonts();
   }, []);
 
@@ -498,6 +497,7 @@ const styles = StyleSheet.create({
     borderColor:backgrounds,
     borderWidth:wp(0.5)
   },
+
   languageText: {
     fontSize: hp(2.5),
     color: "white",
@@ -505,20 +505,21 @@ const styles = StyleSheet.create({
     borderColor: "white",
     fontFamily: "QuicksandSemiBold",
   },
+
   languageContainer: {
     alignItems: "center",
     padding: hp(2),
     borderRadius: 4,
     borderTopColor:backgrounds,
     borderTopWidth:wp(0.1)
-
-    
   },
+
   iconX: {
     position: "absolute",
     right: -10,
     top: -10,
   },
+
   headerContainer: {
     paddingHorizontal: "5%",
     flexDirection: "row",

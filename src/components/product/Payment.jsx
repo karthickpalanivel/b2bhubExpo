@@ -180,86 +180,90 @@ const PaymentSummary = ({ route }) => {
       console.error("Error:", error);
     });
 
-    const getOrderDetails = (invoiceUrl, invoiceId) => ({
-      invoiceId: invoiceId,
-      companyname: companyName,
-      phone_no: phoneNo,
-      address1: addressOne,
-      address2: addressTwo,
-      city: city,
-      state: state,
-      email: email,
-      landmark: landmark,
-      zip_code: zipCode,
-      gst_no: gstNo,
-      requested_sample: requestSample,
-      product_name: productSummary.productName,
-      product_type: productSummary.grade,
-      product_quantity: productSummary.quantity,
-      total_amount: productSummary.totalAmount,
-      payment_status: false,
-      delivery_status: false,
-      payment_verified: false,
-      invoiceUrl,
-    });
+  const getOrderDetails = (invoiceUrl, invoiceId) => ({
+    invoiceId: invoiceId,
+    companyname: companyName,
+    phone_no: phoneNo,
+    address1: addressOne,
+    address2: addressTwo,
+    city: city,
+    state: state,
+    email: email,
+    landmark: landmark,
+    zip_code: zipCode,
+    gst_no: gstNo,
+    requested_sample: requestSample,
+    product_name: productSummary.productName,
+    product_type: productSummary.grade,
+    product_quantity: productSummary.quantity,
+    total_amount: productSummary.totalAmount,
+    payment_status: false,
+    delivery_status: false,
+    payment_verified: false,
+    invoiceUrl,
+  });
 
-    const getInvoiceData = (invoiceId) => ({
-      invoiceId: invoiceId,
-      name: companyName,
-      address1: addressOne,
-      address2: addressTwo,
-      city: city,
-      state: state,
-      landmark: landmark,
-      pincode: zipCode,
-      gst_no: gstNo,
-      product_name: productSummary.productName,
-      product_type: productSummary.grade,
-      product_quantity: productSummary.quantity,
-      total_amount: productSummary.totalAmount,
-      unitprice: productSummary.totalAmount / productSummary.quantity,
-    });
+  const getInvoiceData = (invoiceId) => ({
+    invoiceId: invoiceId,
+    name: companyName,
+    address1: addressOne,
+    address2: addressTwo,
+    city: city,
+    state: state,
+    landmark: landmark,
+    pincode: zipCode,
+    gst_no: gstNo,
+    product_name: productSummary.productName,
+    product_type: productSummary.grade,
+    product_quantity: productSummary.quantity,
+    total_amount: productSummary.totalAmount,
+    unitprice: productSummary.totalAmount / productSummary.quantity,
+  });
 
-    const handleConfirmOrder = async () => {
-      const orderUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
-      const token1 = await AsyncStorage.getItem("token");
-      setProceedPaymentText("Processing...");
-      
-        try {
-          const invoiceIdRequest = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token1}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const invoiceUrl = await PdfGeneration(
-            getInvoiceData(invoiceIdRequest.data[0].invoiceId)
-          );
-          const orderDetails = getOrderDetails(
-            invoiceUrl,
-            invoiceIdRequest.data[0].invoiceId
-          );
-          console.log("orrder sample data", orderDetails);
-          await axios.post(orderUrl, orderDetails, {
-            headers: {
-              Authorization: `Bearer ${token1}`,
-              "Content-Type": "application/json",
-            },
-          });
-          setProceedPaymentText("Thanks For Business");
-          setIsOrderSuccessful(true);
-  
-          console.log("Order Confirmed and email sent");
-        } catch (error) {
-          console.error("Error processing the order:", error);
-          setProceedPaymentText("Failed. Try Again");
+  const handleConfirmOrder = async () => {
+    const orderUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+    const token1 = await AsyncStorage.getItem("token");
+    setProceedPaymentText("Processing...");
+
+    try {
+      const invoiceIdRequest = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId",
+        {
+          headers: {
+            Authorization: `Bearer ${token1}`,
+            "Content-Type": "application/json",
+          },
         }
-     
-    };
+      );
+      console.log(
+        "---------------------------------------------------------",
+        invoiceIdRequest.data[0].invoiceId
+      );
+
+      const invoiceUrl = await PdfGeneration(
+        getInvoiceData(invoiceIdRequest.data.invoiceId),
+        testingButton(invoiceIdRequest.data)
+      );
+      const orderDetails = getOrderDetails(
+        invoiceUrl,
+        invoiceIdRequest.data[0].invoiceId
+      );
+      console.log("orrder sample data", orderDetails);
+      await axios.post(orderUrl, orderDetails, {
+        headers: {
+          Authorization: `Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+      });
+      setProceedPaymentText("Thanks For Business");
+      setIsOrderSuccess(true);
+
+      console.log("Order Confirmed and email sent");
+    } catch (error) {
+      console.error("Error processing the order:", error);
+      setProceedPaymentText("Failed. Try Again");
+    }
+  };
   const goBack = () => {
     navigation.goBack();
   };
@@ -271,12 +275,20 @@ const PaymentSummary = ({ route }) => {
     );
   };
 
-
   const translatedProductName = () => {
     if (productSummary.productName == "ToorDal") return t("toor_dal");
     if (productSummary.productName == "MoongDal") return t("moong_dal");
     if (productSummary.productName == "UradDal") return t("urad_dal");
     if (productSummary.productName == "GramDal") return t("gram_dal");
+  };
+
+  // const invoiceData = invoiceIdRequest.data;
+
+  const testingButton = (invoiceId) => {
+    console.log(
+      "---------------------------------------------------------",
+      invoiceId
+    );
   };
 
   return (
@@ -445,6 +457,10 @@ const PaymentSummary = ({ route }) => {
               **{t("conditions_apply")}
             </Text>
             <Text style={styles.cardContent}>{t("samples_can_be_sent")} </Text>
+
+            <Pressable style={styles.preBookContainer} onPress={testingButton}>
+              <Text style={styles.preBookText}>Testing Button</Text>
+            </Pressable>
 
             <Pressable
               onPress={() => handleConfirmOrder()}
