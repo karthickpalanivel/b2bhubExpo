@@ -27,6 +27,7 @@
     "expo-linear-gradient": "~13.0.2",
     "expo-print": "~13.0.1",
     "expo-sharing": "~12.0.1",
+    "expo-splash-screen": "~0.27.6",
     "expo-status-bar": "~1.12.1",
     "heroicons": "^2.1.5",
     "i18next": "^23.15.1",
@@ -53,8 +54,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-toggle-element": "^2.0.1",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-x-carousel": "^1.0.1",
-    "expo-splash-screen": "~0.27.6"
+    "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

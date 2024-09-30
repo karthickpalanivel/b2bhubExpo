@@ -1,196 +1,133 @@
-import React, { useState, useEffect } from "react";
-import { printToFileAsync } from "expo-print";
-import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
-import RNHTMLtoPDF from "react-native-html-to-pdf";
-import axios from "axios";
+export const invoiceDataCopy = {}
 
-const PdfGeneration = ({ invoicedata }) => {
-  const {
-    invoiceId,
-    name,
-    address1,
-    address2,
-    city,
-    state,
-    landmark,
-    pincode,
-    gst_no,
-    product_id,
-    product_name,
-    product_type,
-    product_quantity,
-    total_amount,
-    unitprice,
-  } = invoicedata;
+const formatIndianNumber = (num) => {
+  const numStr = num.toString();
+  const lastThree = numStr.substring(numStr.length - 3);
+  const otherNumbers = numStr.substring(0, numStr.length - 3);
+  if (otherNumbers !== "") {
+    return `${otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",")},${lastThree}`;
+  } else {
+    return lastThree;
+  }
+};
 
-  // const product_id = invoicedata.product_id;
-  // // const email = "vts@vts.com";
-  // // const mobile = "+91 6380254179";
-  // const invoiceId = invoicedata.invoiceId;
-  // const name = invoicedata.name;
-  // const address1 = invoicedata.address1;
-  // const address2 = invoicedata.address2;
-  // const city = invoicedata.city;
-  // const state = invoicedata.state;
-  // const landmark = invoicedata.landmark;
-  // const pincode = invoicedata.pincode;
-  // const gst_no = invoicedata.gst_no;
-  // const product_name = invoicedata.product_name;
-  // const product_type = invoicedata.product_type;
-  // const product_quantity = invoicedata.product_quantity;
-  // const amount = invoicedata.total_amount;
-  // const unitprice = invoicedata.unitPrice;
+function getCurrentDate() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[today.getMonth()];
+  const year = today.getFullYear();
+  return `${day}-${month}-${year}`;
+}
 
-  useEffect(() => {
-    setTimeout(() => generatePdf, 100);
-  }, []);
+function numberToWords(amount) {
+  var words = "";
+  var fraction = Math.round((amount - Math.floor(amount)) * 100);
+  var units = [
+    "Zero",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+  ];
+  var teens = [
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
+  ];
+  var tens = [
+    "Ten",
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety",
+  ];
+  var thousands = ["", "Thousand", "Lakh", "Crore"];
 
-  // const logo = (
-  //   <Image
-  //     source={require("../../assets/B2BlogoRounded.png")}
-  //     size={{ width: 50, height: 50 }}
-  //   />
-  // );
-
-  // const pnb = (
-  //   <Image
-  //     source={require("../../assets/pnbLogo.png")}
-  //     size={{ width: 50, height: 50 }}
-  //   />
-  // );
-
-  const formatIndianNumber = (num) => {
-    const numStr = num.toString();
-    const lastThree = numStr.substring(numStr.length - 3);
-    const otherNumbers = numStr.substring(0, numStr.length - 3);
-    if (otherNumbers !== "") {
-      return `${otherNumbers.replace(
-        /\B(?=(\d{2})+(?!\d))/g,
-        ","
-      )},${lastThree}`;
-    } else {
-      return lastThree;
+  function convertChunk(num) {
+    var str = "";
+    var hundred = Math.floor(num / 100);
+    num = num % 100;
+    if (hundred > 0) {
+      str += units[hundred] + " Hundred ";
     }
-  };
-
-  function getCurrentDate() {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, "0");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const month = monthNames[today.getMonth()];
-    const year = today.getFullYear();
-    return `${day}-${month}-${year}`;
+    if (num > 10 && num < 20) {
+      str += teens[num - 11] + " ";
+    } else {
+      var ten = Math.floor(num / 10);
+      num = num % 10;
+      if (ten > 0) {
+        str += tens[ten - 1] + " ";
+      }
+      if (num > 0) {
+        str += units[num] + " ";
+      }
+    }
+    return str.trim();
   }
 
-  function numberToWords(amount) {
-    var words = "";
-    var fraction = Math.round((amount - Math.floor(amount)) * 100);
-    var units = [
-      "Zero",
-      "One",
-      "Two",
-      "Three",
-      "Four",
-      "Five",
-      "Six",
-      "Seven",
-      "Eight",
-      "Nine",
-    ];
-    var teens = [
-      "Eleven",
-      "Twelve",
-      "Thirteen",
-      "Fourteen",
-      "Fifteen",
-      "Sixteen",
-      "Seventeen",
-      "Eighteen",
-      "Nineteen",
-    ];
-    var tens = [
-      "Ten",
-      "Twenty",
-      "Thirty",
-      "Forty",
-      "Fifty",
-      "Sixty",
-      "Seventy",
-      "Eighty",
-      "Ninety",
-    ];
-    var thousands = ["", "Thousand", "Lakh", "Crore"];
+  if (amount === 0) {
+    words = "Zero";
+  } else {
+    var crore = Math.floor(amount / 10000000);
+    var lakh = Math.floor((amount % 10000000) / 100000);
+    var thousand = Math.floor((amount % 100000) / 1000);
+    var hundred = Math.floor((amount % 1000) / 100);
+    var remainder = amount % 100;
 
-    function convertChunk(num) {
-      var str = "";
-      var hundred = Math.floor(num / 100);
-      num = num % 100;
-      if (hundred > 0) {
-        str += units[hundred] + " Hundred ";
-      }
-      if (num > 10 && num < 20) {
-        str += teens[num - 11] + " ";
-      } else {
-        var ten = Math.floor(num / 10);
-        num = num % 10;
-        if (ten > 0) {
-          str += tens[ten - 1] + " ";
-        }
-        if (num > 0) {
-          str += units[num] + " ";
-        }
-      }
-      return str.trim();
+    if (crore > 0) {
+      words += convertChunk(crore) + " Crore ";
     }
-
-    if (amount === 0) {
-      words = "Zero";
-    } else {
-      var crore = Math.floor(amount / 10000000);
-      var lakh = Math.floor((amount % 10000000) / 100000);
-      var thousand = Math.floor((amount % 100000) / 1000);
-      var hundred = Math.floor((amount % 1000) / 100);
-      var remainder = amount % 100;
-
-      if (crore > 0) {
-        words += convertChunk(crore) + " Crore ";
-      }
-      if (lakh > 0) {
-        words += convertChunk(lakh) + " Lakh ";
-      }
-      if (thousand > 0) {
-        words += convertChunk(thousand) + " Thousand ";
-      }
-      if (hundred > 0) {
-        words += convertChunk(hundred) + " Hundred ";
-      }
-      if (remainder > 0) {
-        words += convertChunk(remainder);
-      }
+    if (lakh > 0) {
+      words += convertChunk(lakh) + " Lakh ";
     }
-
-    if (fraction > 0) {
-      words += " and " + fraction + "/100";
+    if (thousand > 0) {
+      words += convertChunk(thousand) + " Thousand ";
     }
-
-    return words.trim();
+    if (hundred > 0) {
+      words += convertChunk(hundred) + " Hundred ";
+    }
+    if (remainder > 0) {
+      words += convertChunk(remainder);
+    }
   }
-  html = `
+
+  if (fraction > 0) {
+    words += " and " + fraction + "/100";
+  }
+
+  return words.trim();
+}
+
+export const htmlContent = `
     <div id="printdf" style="background-color: #f5f5f5; width: fit-content; min-height: 320mm; margin-left: auto; margin-right: auto;">
      <div style="font-family: Arial, sans-serif; font-size: 4px; line-height:1; margin: 0; padding: 0;">
 
@@ -349,64 +286,3 @@ const PdfGeneration = ({ invoicedata }) => {
 </div>
     </div>
   `;
-
-  // function getCurrentDateWithoutTime() {
-  //   const today = new Date();
-  //   const day = String(today.getDate()).padStart(2, "0");
-  //   const month = String(today.getMonth() + 1).padStart(2, "0");
-  //   const year = today.getFullYear();
-  //   return `${day}-${month}-${year}`;
-  // }
-
-  const generatePdf = async () => {
-    // let options = {
-    //   html: htmlContent,
-    //   fileName: `invoice_${invoiceId}`,
-    //   directory: "Documents",
-    // };
-
-    try {
-      let options = {
-        html: htmlContent,
-        fileName: `invoice_${invoiceId}`,
-        directory: "Documents",
-      };
-
-      const pdf = await RNHTMLtoPDF.convert(options); //RNFS
-
-      console.log("PDF Generated at:", pdf.filePath);
-
-      const localUri = `${FileSystem.documentDirectory}invoice_${invoiceId}.pdf`;
-      await FileSystem.moveAsync({
-        from: pdf.filePath,
-        to: localUri,
-      });
-
-      console.log("PDF saved at:", localUri);
-      const formData = new FormData();
-      formData.append("file", {
-        uri: localUri,
-        type: "application/pdf",
-        name: `invoice_${invoiceId}.pdf`,
-      });
-
-      // formData.append("orderDetails", JSON.stringify(orderDetails));
-      const uploadUrl =
-        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
-      const response = await axios.post(uploadUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      const fileUrl = response.data.fileUrl;
-      console.log("File uploaded to backend. URL:", fileUrl);
-
-      return fileUrl;
-    } catch (error) {
-      console.log("Error generatinguploading PDF:", error);
-      throw error;
-    }
-  };
-};
-export default PdfGeneration;

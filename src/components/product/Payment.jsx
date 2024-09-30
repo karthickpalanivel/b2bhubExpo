@@ -15,7 +15,8 @@ import {
 } from "react-native-responsive-screen";
 
 import * as Font from "expo-font";
-
+import { invoiceDataCopy } from "../InVoice/htmlContent";
+import { htmlContent } from "../InVoice/htmlContent";
 import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import PdfGeneration from "../InVoice/PdfGeneration";
@@ -38,6 +39,7 @@ export const CustomCheckBox = ({ value, onValueChange }) => (
 
 // PaymentSummary Component
 const PaymentSummary = ({ route }) => {
+  const [invoiceUniqueId, setInvoiceUniqueId] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [orderId, setOrderId] = useState(1);
   const [phoneNo, setPhoneNo] = useState("");
@@ -62,8 +64,8 @@ const PaymentSummary = ({ route }) => {
 
   // console.log(productSummary);
   useEffect(() => {
-    console.log("Payment Page");
-    console.log(productSummary);
+    // console.log("Payment Page");
+    // console.log(productSummary);
   }, []);
 
   const { t } = useTranslation();
@@ -85,10 +87,12 @@ const PaymentSummary = ({ route }) => {
     };
     setIsOrderSuccess(true);
     console.log(orderItems);
-    setTimeout(() => {
-      navigation.navigate("Sucessfull");
-    }, 5000);
+    // setTimeout(() => {
+    //   navigation.navigate("Sucessfull");
+    // }, 5000);
   };
+
+  isOrderSuccess && orderPlaced();
   // const { productSummary } = route.params;
   // console.log("payment screen print");
   // console.log(productSummary);
@@ -193,6 +197,7 @@ const PaymentSummary = ({ route }) => {
     zip_code: zipCode,
     gst_no: gstNo,
     requested_sample: requestSample,
+    product_id: productSummary.productId,
     product_name: productSummary.productName,
     product_type: productSummary.grade,
     product_quantity: productSummary.quantity,
@@ -203,58 +208,73 @@ const PaymentSummary = ({ route }) => {
     invoiceUrl,
   });
 
-  const getInvoiceData = (invoiceId) => ({
-    invoiceId: invoiceId,
-    name: companyName,
-    address1: addressOne,
-    address2: addressTwo,
-    city: city,
-    state: state,
-    landmark: landmark,
-    pincode: zipCode,
-    gst_no: gstNo,
-    product_name: productSummary.productName,
-    product_type: productSummary.grade,
-    product_quantity: productSummary.quantity,
-    total_amount: productSummary.totalAmount,
-    unitprice: productSummary.totalAmount / productSummary.quantity,
-  });
+  async function getInvoiceId() {
+    const token1 = await AsyncStorage.getItem("token");
+    const uri = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId";
+    await axios
+      .post(uri, {
+        headers: {
+          Authorization: `Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("====================================");
+        // console.log(res.data[0].invoiceId); invoice ID captured here....
+        setInvoiceUniqueId(res.data[0].invoiceId);
+        console.log("====================================");
+      });
+  }
 
   const handleConfirmOrder = async () => {
     const orderUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
     const token1 = await AsyncStorage.getItem("token");
-    setProceedPaymentText("Processing...");
+    setProceedPaymentText("pending...");
 
     try {
-      const invoiceIdRequest = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId",
-        {
-          headers: {
-            Authorization: `Bearer ${token1}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(
-        "---------------------------------------------------------",
-        invoiceIdRequest.data[0].invoiceId
-      );
+      // console.log("testing try");
+      const uri =
+        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId";
+      const invoiceIdRequest = await axios.post(uri, {
+        headers: {
+          Authorization: `Bearer ${token1}`,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(invoiceIdRequest)
 
-      const invoiceUrl = await PdfGeneration(
-        getInvoiceData(invoiceIdRequest.data.invoiceId),
-        testingButton(invoiceIdRequest.data)
-      );
-      const orderDetails = getOrderDetails(
-        invoiceUrl,
-        invoiceIdRequest.data[0].invoiceId
-      );
-      console.log("orrder sample data", orderDetails);
+      const getInvoiceData = {
+        invoiceId: invoiceUniqueId,
+        name: companyName,
+        address1: addressOne,
+        address2: addressTwo,
+        city: city,
+        state: state,
+        landmark: landmark,
+        pincode: zipCode,
+        gst_no: gstNo,
+        product_id: productSummary.productId,
+        product_name: productSummary.productName,
+        product_type: productSummary.grade,
+        product_quantity: productSummary.quantity,
+        total_amount: productSummary.totalAmount,
+        unitprice: productSummary.totalAmount / productSummary.quantity,
+      };
+
+      console.log(getInvoiceData);
+
+      const invoiceUrl = PdfGeneration(getInvoiceData);
+
+      console.log("got url");
+      const orderDetails = getOrderDetails(invoiceUrl, invoiceUniqueId);
+      console.log("order sample data", orderDetails);
       await axios.post(orderUrl, orderDetails, {
         headers: {
           Authorization: `Bearer ${token1}`,
           "Content-Type": "application/json",
         },
       });
+
       setProceedPaymentText("Thanks For Business");
       setIsOrderSuccess(true);
 
@@ -280,15 +300,6 @@ const PaymentSummary = ({ route }) => {
     if (productSummary.productName == "MoongDal") return t("moong_dal");
     if (productSummary.productName == "UradDal") return t("urad_dal");
     if (productSummary.productName == "GramDal") return t("gram_dal");
-  };
-
-  // const invoiceData = invoiceIdRequest.data;
-
-  const testingButton = (invoiceId) => {
-    console.log(
-      "---------------------------------------------------------",
-      invoiceId
-    );
   };
 
   return (
@@ -458,9 +469,9 @@ const PaymentSummary = ({ route }) => {
             </Text>
             <Text style={styles.cardContent}>{t("samples_can_be_sent")} </Text>
 
-            <Pressable style={styles.preBookContainer} onPress={testingButton}>
+            {/* <Pressable style={styles.preBookContainer} onPress={testingButton}>
               <Text style={styles.preBookText}>Testing Button</Text>
-            </Pressable>
+            </Pressable> */}
 
             <Pressable
               onPress={() => handleConfirmOrder()}
