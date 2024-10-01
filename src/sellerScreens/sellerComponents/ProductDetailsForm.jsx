@@ -19,7 +19,7 @@ import {
 } from "react-native";
 import {
   CalendarIcon,
-  CheckIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
 } from "react-native-heroicons/outline";
 import {
@@ -37,6 +37,7 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ModalSelector from 'react-native-modal-selector'
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
@@ -50,13 +51,13 @@ const ProductDetailsForm = ({ route }) => {
   const [isPublished, setPublished] = useState(0);
   const [isApproved, setApproved] = useState(0);
   const [pricing, setPricing] = useState("");
-  const [units, setUnits] = useState("Select Unit");
-  const [moisture, setMoisture] = useState("Select Moisture");
-  const [shelfLife, setShelfLife] = useState("Select Shelf Life");
+  const [units, setUnits] = useState("");
+  const [moisture, setMoisture] = useState("");
+  const [shelfLife, setShelfLife] = useState("");
   const [validity, setValidity] = useState(new Date());
   const [description, setDescription] = useState("");
   const [packageDetails, setPackageDetails] = useState([
-    { type: "Select Package Type", quantity: "" },
+    { type: "Select Package", quantity: "0" },
   ]);
 
   const packageDict = packageDetails.reduce((acc, pkg) => {
@@ -81,7 +82,7 @@ const ProductDetailsForm = ({ route }) => {
     const total = packageDetails.reduce((sum, detail) => {
       if (detail.quantity && pricing) {
         const quantityInKg =
-          units === "1KG"
+          units === "KG"
             ? parseFloat(detail.quantity) * 1000
             : parseFloat(detail.quantity); // Convert to KG if it's in tons
         return sum + quantityInKg * parseFloat(pricing);
@@ -90,6 +91,7 @@ const ProductDetailsForm = ({ route }) => {
     }, 0);
     setTotalValue(total);
   };
+console.log(units);
 
   // console.log("imageurl" + imageUrl);
 
@@ -104,7 +106,7 @@ const ProductDetailsForm = ({ route }) => {
       validity &&
       description &&
       packageDetails.every(
-        (item) => item.type !== "Select Package Type" && item.quantity
+        (item) => item.type !== "Select Package" && item.quantity
       )
     ) {
       console.log(
@@ -127,7 +129,7 @@ const ProductDetailsForm = ({ route }) => {
       setMoisture("Select Moisture");
       setShelfLife("Select Shelf Life");
       setValidity(new Date());
-      setPackageDetails([{ type: "Select Package Type", quantity: "" }]);
+      setPackageDetails([{ type: "Select Package", quantity: "" }]);
       setImage(null);
     } else {
       Alert.alert("Enter every field");
@@ -220,46 +222,31 @@ const ProductDetailsForm = ({ route }) => {
     }
 
     if (route?.params) {
-       const { product } = route?.params;
-        if (product) {
-        setCustomerCategory(product?.category);
-        setCustomerId(product?.customerId);
-        setDescription(product?.description);
-        product.isApproved == 1 && setApproved(1);
-        product.isPublished == 1 && setPublished(1);
-        product.isOrganic == 1 && setIsOrganic(1);
-        setMoisture(product?.moisture);
-        setPackageDetails([
-          { type: product.packaging.type, quantity: product.packaging.quantity },
-        ]);
-        setPricing(product?.price);
-        setProductId(product?.productId);
-        setProductName(product?.productName);
-        setProductType(product?.productType);
-        setShelfLife(product?.shelfLife);
-  
-        setImage(product?.productImg);
-        setValidity(product?.validity);
-        setUnits(product?.units);
-        console.log(
-          customerId,
-          customerCategory,
-          description,
-          isApproved,
-          isPublished,
-          moisture,
-          pricing,
-          packageDetails,
-          productId,
-          productName,
-          productType,
-          shelfLife,
-          image,
-          validity,
-          units
-        );
+      const { product } = route?.params;
+      console.log(route?.params)
+      if (product) {
+        setCustomerCategory(product?.category || "");  // Fallback to empty string
+        setCustomerId(product?.customerId || "");
+        setDescription(product?.description || "");
+        setApproved(product?.isApproved === 1 ? 1 : 0);
+        setPublished(product?.isPublished === 1 ? 1 : 0);
+        setIsOrganic(product?.isOrganic === 1 ? 1 : 0);
+        setMoisture(product?.moisture || "");
+        setPackageDetails([{
+          type: product?.packaging?.type || "",
+          quantity: product?.packaging?.quantity || "",
+        }]);
+        setPricing(product?.price || "");
+        setProductId(product?.productId || "");
+        setProductName(product?.productName || "");  // Fallback to empty string
+        setProductType(product?.productType || "");
+        setShelfLife(product?.shelfLife || "");
+        setImage(product?.productImg || "");
+        setValidity(product?.validity || "");
+        setUnits(product?.units || "");
       }
     }
+    
    
 
     
@@ -296,7 +283,7 @@ const ProductDetailsForm = ({ route }) => {
   const addPackageDetail = () => {
     setPackageDetails((prevDetails) => [
       ...prevDetails,
-      { type: "Select Package Type", quantity: "" },
+      { type: "Select Package", quantity: "0" },
     ]);
   };
 
@@ -512,43 +499,68 @@ const ProductDetailsForm = ({ route }) => {
                   {t("product_details_form")}
                 </Text>
 
-                {/* Product Name */}
-                <Text style={styles.pickerLabel}>{t("product_name")}:</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={productName}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => {
-                      setProductName(itemValue);
-                      setProductType(""); // Reset product type when product name changes
-                    }}
-                  >
-                    <Picker.Item label="Select Product" value="" />
-                    <Picker.Item label={t("toor_dal")} value="turdal" />
-                    <Picker.Item label={t("moong_dal")} value="moongdal" />
-                    <Picker.Item label={t("urad_dal")} value="uraddal" />
-                    <Picker.Item label={t("gram_dal")} value="gramdal" />
-                  </Picker>
-                </View>
-                {/* Product Type*/}
-                <Text style={styles.pickerLabel}>Product Type:</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={productType}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setProductType(itemValue)}
-                    enabled={!!productName} // Disable if no product is selected
-                  >
-                    <Picker.Item label="Select Product Type" value="" />
-                    {availableProductTypes.map((type, index) => (
-                      <Picker.Item
-                        key={index}
-                        label={type}
-                        value={type.toLowerCase()}
-                      />
-                    ))}
-                  </Picker>
-                </View>
+                
+              {/* Product Name */}
+  <ModalSelector
+    data={[
+      { key: 1, label: t("select_product"), value: "" },
+      { key: 2, label: t("toor_dal"), value: "turdal" },
+      { key: 3, label: t("moong_dal"), value: "moongdal" },
+      { key: 4, label: t("urad_dal"), value: "uraddal" },
+      { key: 5, label: t("gram_dal"), value: "gramdal" },
+    ]}
+
+    onChange={(option) => {
+      setProductName(option.value);
+      setProductType(""); // Reset product type when product name changes
+    }}
+    optionTextStyle={{ color: "white" }}
+    cancelStyle={{ display: "none" }}
+    selectStyle={styles.selectStyle}
+    optionContainerStyle={styles.modalStyle}
+    overlayStyle={styles.overlayStyle}
+      >
+         <FloatingLabelInput
+                  label={t("product_name")}
+                  value={productName}
+                  onChangeText={setDescription}
+                  width={wp(29)}
+                  fontsize={wp(3.5)}
+                />
+      </ModalSelector>
+   
+
+
+
+
+{/* Product Type */}
+  <ModalSelector
+    data={[
+      { key: 1, label: t("select_product_type"), value: "" },
+      ...availableProductTypes.map((type, index) => ({
+        key: index + 2,
+        label: type,
+        value: type.toLowerCase(),
+      })),
+    ]}
+    initValue={t("select_product_type")}
+    onChange={(option) => setProductType(option.value)}
+    optionTextStyle={{ color: "white" }}
+    cancelStyle={{ display: "none" }}
+    selectStyle={styles.selectStyle}
+    optionContainerStyle={styles.modalStyle}
+    overlayStyle={styles.overlayStyle}
+    disabled={!productName} // Disable if no product is selected
+  >
+    
+    <FloatingLabelInput
+                  label={"Product Type"}
+                  value={productType}
+                  width={wp(29)}
+                  fontsize={wp(3.5)}
+                />
+  </ModalSelector>
+
 
                 {/* Pricing */}
                 <FloatingLabelInput
@@ -558,66 +570,94 @@ const ProductDetailsForm = ({ route }) => {
                     setPricing(text);
                     calculateTotalValue();
                   }}
-                  width={wp(20)}
+                  width={wp(17)}
                   keyboardType="numeric"
                 />
 
                 {/* Units */}
-                <Text style={styles.pickerLabel}>{t("units")}:</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={units}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setUnits(itemValue)}
-                  >
-                    <Picker.Item label="Select Unit" value="" />
-                    <Picker.Item label={`1${t("kg")}`} value="1KG" />
-                    <Picker.Item label="1 ton" value="1ton" />
-                  </Picker>
-                </View>
+                  <ModalSelector
+                      data={[
+                        { key: 1, label: "Select Unit" },
+                        { key: 2, label: "KG" },
+                        { key: 3, label: "Tons" },
+                      ]}
+                      
+                      onChange={(option) => setUnits(option.label)}
+                      //style={styles.modalSelector}
+                      optionTextStyle={{color:"white"}}
+                      cancelStyle={{display:"none"}}
+                      selectStyle={styles.selectStyle}
+                      optionContainerStyle ={styles.modalStyle}
+                      overlayStyle={styles.overlayStyle}
+                      
+                    >
+                    <FloatingLabelInput
+                  label={"Unit"}
+                  value={units}
+                  onChangeText={setDescription}
+                  width={wp(10.5)}
+                  fontsize={wp(4.5)}
+                />
+                    
+                    </ModalSelector>
+
 
                 {/* Moisture */}
-                <Text style={styles.pickerLabel}>{t("moisture")}:</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={moisture}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setMoisture(itemValue)}
-                  >
-                    <Picker.Item
-                      label={`${t("select")} ${t("moisture")}`}
-                      value="Select Moisture"
-                    />
-                    <Picker.Item label="10%" value="10%" />
-                    <Picker.Item label="20%" value="20%" />
-                    <Picker.Item label="30%" value="30%" />
-                    <Picker.Item label="40%" value="40%" />
-                  </Picker>
-                </View>
+                <ModalSelector
+                      data={[
+                        { key: 1, label: "Wet" },
+                        { key: 2, label: "Dry" },
+                        { key: 3, label: "Normal" },
+                      ]}
+                      
+                      onChange={(option) =>setMoisture(option.label)}
+                      //style={styles.modalSelector}
+                      optionTextStyle={{color:"white"}}
+                      cancelStyle={{display:"none"}}
+                      selectStyle={styles.selectStyle}
+                      optionContainerStyle ={styles.modalStyle}
+                      overlayStyle={styles.overlayStyle}
+                      
+                    >
+                    <FloatingLabelInput
+                  label={"Moisture"}
+                  value={moisture}
+                  onChangeText={setMoisture}
+                  width={wp(20)}
+                  fontsize={wp(4.5)}
+                />
+                    
+                    </ModalSelector>
 
                 {/* Shelf Life */}
-                <Text style={styles.pickerLabel}>{t("shelf_life")}:</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={shelfLife}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setShelfLife(itemValue)}
-                  >
-                    <Picker.Item
-                      label={`${t("select")} ${t("shelf_life")}`}
-                      value="Select Shelf Life"
-                      style={{ fontFamily: "QuicksandSemiBold" }}
-                    />
-                    <Picker.Item
-                      label={`1 ${t("month")}`}
-                      value="1 month"
-                      style={{ fontFamily: "QuicksandSemiBold" }}
-                    />
-                    <Picker.Item label={`3 ${t("month")}`} value="3 months" />
-                    <Picker.Item label={`6 ${t("month")}`} value="6 months" />
-                    <Picker.Item label={`1 ${t("year")}`} value="1 year" />
-                  </Picker>
-                </View>
+                <ModalSelector
+                      data={[
+                        { key: 1, label: "1 month" },
+                        { key: 2, label: "2 month" },
+                        { key: 3, label: "3 month" },
+                        { key: 4, label: "1 year" },
+                      ]}
+                      
+                      onChange={(option) =>setShelfLife(option.label)}
+                      //style={styles.modalSelector}
+                      optionTextStyle={{color:"white"}}
+                      cancelStyle={{display:"none"}}
+                      selectStyle={styles.selectStyle}
+                      optionContainerStyle ={styles.modalStyle}
+                      overlayStyle={styles.overlayStyle}
+                      
+                    >
+                    <FloatingLabelInput
+                  label={"Shelf Life"}
+                  value={shelfLife}
+                  onChangeText={setShelfLife}
+                  width={wp(25)}
+                  fontsize={wp(2.5)}
+                />
+                   
+
+                    
+                    </ModalSelector>
 
                 {/* Validity */}
                 <TouchableOpacity
@@ -657,43 +697,49 @@ const ProductDetailsForm = ({ route }) => {
                 </Text>
                 {packageDetails.map((detail, index) => (
                   <View key={index} style={styles.packageDetailContainer}>
-                    <View style={styles.pickerTypeContainer}>
-                      <Picker
-                        selectedValue={detail.type}
-                        style={[
-                          { borderColor: colors },
-                          styles.packageTypePicker,
-                        ]}
-                        onValueChange={(itemValue) => {
-                          const updatedDetails = [...packageDetails];
-                          updatedDetails[index].type = itemValue;
-                          setPackageDetails(updatedDetails);
-                        }}
-                      >
-                        <Picker.Item
-                          label={t("select")}
-                          value="Select Package Type"
-                        />
-                        <Picker.Item label={t("unpacked")} value="Unpacked" />
-                        <Picker.Item label={`1 ${t("kg")}`} value="1KG" />
-                        <Picker.Item label={`5 ${t("kg")}`} value="5KG" />
-                        <Picker.Item label={`25 ${t("kg")}`} value="25KG" />
-                        <Picker.Item label={`50 ${t("kg")}`} value="50KG" />
-                      </Picker>
-                    </View>
-                    <TextInput
-                      placeholder={t("tonnes") + t("quantity")}
-                      value={detail.quantity}
-                      onChangeText={(value) => {
+                   
+                    <ModalSelector
+                        data={[
+                             { key: 1, label: t("unpacked"), value: "Unpacked" },
+                             { key: 2, label: `1 ${t("kg")}`, value: "1KG" },
+                             { key: 3, label: `5 ${t("kg")}`, value: "5KG" },
+                             { key: 4, label: `25 ${t("kg")}`, value: "25KG" },
+                             { key: 5, label: `50 ${t("kg")}`, value: "50KG" },
+                            ]}
+                        onChange={(option) => {
                         const updatedDetails = [...packageDetails];
-                        updatedDetails[index].quantity = value;
+                        updatedDetails[index].type = option.value; // Use option.value instead of label to update type
                         setPackageDetails(updatedDetails);
-                        calculateTotalValue();
-                      }}
-                      width={wp(20)}
-                      keyboardType="numeric"
-                      style={styles.quantityInput}
-                    />
+                         }}
+                          optionTextStyle={{ color: "white" }}
+                          cancelStyle={{ display: "none" }}
+                          selectStyle={styles.selectStyle}
+                          optionContainerStyle={styles.modalStyle}
+                          overlayStyle={styles.overlayStyle}
+                        >
+                   <FloatingLabelInput
+                  label={"Type"}  
+                  value={packageDetails[index].type}
+                  onChangeText={setPackageDetails}
+                  width={wp(17)}
+                  fontsize={wp(4.5)}
+                  />
+                </ModalSelector>
+                  
+                <FloatingLabelInput
+                  label={ "Quantity "}
+                  value={detail.quantity}
+                  onChangeText={(value) => {
+                    const updatedDetails = [...packageDetails];
+                    updatedDetails[index].quantity = value;
+                    setPackageDetails(updatedDetails);
+                    calculateTotalValue();
+                    }}
+                  width={wp(19)}
+                   keyboardType="numeric"
+                   fontsize={wp(0.2)}
+/>
+
 
                     {index > 0 && (
                       <TouchableOpacity
@@ -701,6 +747,7 @@ const ProductDetailsForm = ({ route }) => {
                         onPress={() => removePackageDetail(index)}
                       >
                         <TrashIcon
+                        marginTop={wp(5)}
                           width={wp("5%")}
                           height={hp("5%")}
                           color={colors}
@@ -816,6 +863,28 @@ const styles = StyleSheet.create({
     color: "#555",
     marginBottom: hp("0.5%"),
   },
+  modalSelector: {
+    borderWidth: wp(0.5),
+    borderColor: '#E84A5F', // Set border color
+    borderRadius: wp(2),
+    marginBottom: wp(2),
+    width:wp(79)
+  },
+  selectStyle: {
+    padding: wp(4),
+    justifyContent: "center",
+    alignItems: "flex-start",
+    backgroundColor: '#FFFFF', // Optional background color for selected item
+    borderWidth: 0, // Remove border
+  },
+  overlayStyle: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay background
+  },
+  modalStyle: {
+   
+    backgroundColor: colors, // Set modal background color to red
+    borderRadius: wp(5), // Optional: add border radius to the modal
+  },
   pickerContainer: {
     borderWidth: 1,
     borderColor: colors,
@@ -833,8 +902,7 @@ const styles = StyleSheet.create({
   packageDetailRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
-    width: "100%",
+    marginBottom: wp(2),
   },
   pickerTypeContainer: {
     marginRight: 5,
@@ -848,14 +916,7 @@ const styles = StyleSheet.create({
   packageTypePicker: {
     width: wp(40),
   },
-  quantityInput: {
-    width: wp(30),
-    marginRight: 2,
-    borderColor: colors,
-    padding: wp(2),
-    borderWidth: 1,
-    borderRadius: 4,
-  },
+ 
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -883,7 +944,7 @@ const styles = StyleSheet.create({
     borderRadius: wp("2%"),
     paddingHorizontal: wp("3%"),
     paddingVertical: hp("1.5%"),
-    marginBottom: hp("1.5%"),
+    marginBottom: hp("1.5%"),      
   },
   packageDetailsTitle: {
     fontSize: wp("5%"),
@@ -893,8 +954,9 @@ const styles = StyleSheet.create({
   },
   packageDetailContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    marginBottom: hp("1%"),
+    justifyContent:"space-around",
+    marginBottom: hp("0.5%"),
+    
   },
   removeButton: {
     marginLeft: wp("3%"),
