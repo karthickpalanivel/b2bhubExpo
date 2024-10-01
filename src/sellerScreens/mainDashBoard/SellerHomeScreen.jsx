@@ -243,14 +243,8 @@ const SellerHomeScreen = () => {
                   </Text>
                 </View> */}
               </View>
-              
             </View>
-            
-
             <ProductDisplay />
-           
-
-            
           </View>
         </>
       )}

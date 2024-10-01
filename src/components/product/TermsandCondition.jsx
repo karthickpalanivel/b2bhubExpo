@@ -15,6 +15,8 @@ import * as Font from "expo-font";
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
+
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
@@ -40,7 +42,7 @@ const TermsAndConditionsModal = ({
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isVisible, setVisisble] = useState(visible);
   const navigation = useNavigation();
 
   // Object.entries(finalDetails).forEach((key, objects) => {
@@ -63,8 +65,7 @@ const TermsAndConditionsModal = ({
       currentOrderPrice: currentOrderPrice,
       productId: productId,
       productQuantity: productQuantity,
-      productType: productType.split(" ")[0],
-      
+      productType: productType?.split(" ")[0],
     };
 
     const typeOfProduct = productSummaryDetails.productType;
@@ -76,7 +77,7 @@ const TermsAndConditionsModal = ({
     );
 
     const translatedCategory = (key) => {
-      return t(key).split(" ")[0];
+      return t(key)?.split(" ")[0];
     };
 
     const translatedProductName = () => {
@@ -135,8 +136,23 @@ const TermsAndConditionsModal = ({
         <AppLoaderAnimation />
       ) : visible ? (
         <View style={styles.modalBackground}>
+          <TouchableOpacity
+            style={styles.modelIconsBack}
+            onPress={() => {
+              visible = false;
+              navigation.goBack();
+            }}
+          >
+            <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={colors} />
+          </TouchableOpacity>
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => {
+                !visible
+                // navigation.goBack();
+              }}
+            >
               <XCircleIcon color="black" />
             </TouchableOpacity>
             <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
@@ -245,6 +261,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: "flex-end",
+    zIndex: 300,
   },
   closeButtonText: {
     fontSize: wp(5),
@@ -281,6 +298,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  modelIconsBack: {
+    position: "absolute",
+    top: hp(1),
+    left: wp(1),
+    width: hp(5.7),
+    padding: wp(2),
+    marginLeft: hp(3),
+    borderRadius: 9999,
+    borderWidth: 0.1,
+    borderColor: "black",
+    marginHorizontal: wp(2),
+    backgroundColor: "#fff",
+    zIndex: 500,
+  },
+
   checkboxChecked: {
     backgroundColor: colors,
     borderWidth: 2,

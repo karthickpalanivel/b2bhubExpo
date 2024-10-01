@@ -35,8 +35,8 @@ import { CompanyData } from "../data/CompanyData";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import { useTranslation } from "react-i18next";
 import { Banner } from "react-native-paper";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -96,14 +96,16 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
-  AsyncStorage.getItem("customerId")
+  AsyncStorage.getItem("token")
     .then((value) => {
       if (value !== null) {
         // Value was found, do something with it
-        //console.log("Value:", value);
+        console.log("____________________________________________________");
+        console.log("token ID:", value);
+        console.log("____________________________________________________");
       } else {
         // No value found
-        //console.log("No value found");
+        // console.log("No value found");
       }
     })
     .catch((error) => {
@@ -434,9 +436,9 @@ const styles = StyleSheet.create({
     width: wp(100),
     fontFamily: "QuicksandSemiBold",
     color: colors,
-    textDecorationColor:colors,
-    textDecorationLine:"underline",
-    textDecorationStyle:"dotted",
+    textDecorationColor: colors,
+    textDecorationLine: "underline",
+    textDecorationStyle: "dotted",
   },
 
   headerContainer: {
@@ -464,7 +466,7 @@ const styles = StyleSheet.create({
     width: wp(100),
     fontSize: hp(3),
     fontFamily: "QuicksandSemiBold",
-    color:colors,
+    color: colors,
   },
 
   searchBarText: {
