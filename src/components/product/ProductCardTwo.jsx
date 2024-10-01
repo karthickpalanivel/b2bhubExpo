@@ -91,7 +91,7 @@ const ProductCardTwo = ({ props }) => {
 
                 props.name,
 
-                gradeAUnit.PricePerUnit.toFixed(2),
+                gradeAUnit?.PricePerUnit?.toFixed(2),
 
                 props.location,
 
@@ -137,7 +137,7 @@ const ProductCardTwo = ({ props }) => {
             </View> */}
                 <View>
                   <Text style={styles.offerPrice}>
-                    ₹{gradeAUnit?.PricePerUnit?.toFixed(2)}/ {t("kg")}
+                    ₹{gradeAUnit?.PricePerUnit?.toFixed(2)}/{t("kg")}
                   </Text>
                 </View>
               </View>
@@ -163,13 +163,14 @@ export default ProductCardTwo;
 
 const styles = StyleSheet.create({
   container: {
+    marginLeft: wp(5),
     width: wp(90),
     backgroundColor: "#Fffff2",
     borderRadius: wp(2.5),
     marginHorizontal: wp(1.25),
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: wp(0.5),
+    marginVertical: wp(2),
   },
   ratingStyles: {
     width: wp(10),

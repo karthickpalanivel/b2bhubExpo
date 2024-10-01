@@ -26,15 +26,7 @@ import axios from "axios";
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
-// CustomCheckBox Component
-export const CustomCheckBox = ({ value, onValueChange }) => (
-  <TouchableOpacity
-    style={[styles.checkbox, value && styles.checkboxChecked]}
-    onPress={() => onValueChange(!value)}
-  >
-    {value && <Text style={styles.checkmark}>✓</Text>}
-  </TouchableOpacity>
-);
+
 
 // PaymentSummary Component
 const PaymentSummary = ({ route }) => {
@@ -59,13 +51,23 @@ const PaymentSummary = ({ route }) => {
 
   const navigation = useNavigation();
 
+  // CustomCheckBox Component
+  const CustomCheckBox = ({ value, onValueChange }) => (
+    <TouchableOpacity
+      style={[styles.checkbox, value && styles.checkboxChecked]}
+      onPress={() => onValueChange(!value)}
+    >
+      {value && <Text style={styles.checkmark}>✓</Text>}
+    </TouchableOpacity>
+  );
+  
   const { productSummary } = route.params;
 
   // console.log(productSummary);
-  useEffect(() => {
+  // useEffect(() => {
     // console.log("Payment Page");
     // console.log(productSummary);
-  }, []);
+  // }, []);
 
   const { t } = useTranslation();
 

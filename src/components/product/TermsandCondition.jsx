@@ -121,6 +121,7 @@ const TermsAndConditionsModal = ({
 
   const handleComplete = () => {
     if (isChecked) {
+      visible = false;
       console.log(productSummary);
       navigation.navigate("paymentSummary", { productSummary: productSummary });
     } else {
@@ -149,7 +150,7 @@ const TermsAndConditionsModal = ({
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
-                !visible
+                !visible;
                 // navigation.goBack();
               }}
             >

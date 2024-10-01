@@ -1,9 +1,16 @@
-import React, { useEffect } from "react";
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import * as FileSystem from "expo-file-system"
-import * as Sharing from "expo-sharing";
+import { Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import RNHTMLtoPDF from "react-native-html-to-pdf";
+import * as FileSystem from "expo-file-system";
+import * as Print from "expo-print";
 
-const PdfGeneration = async (invoicedata) => {
+const PdfGeneration = ({ invoicedata }) => {
+  const [selectedPrinter, setSelectedPrinter] = useState();
+  // useEffect(() => {
+  //   print();
+  //   printToFile();
+  // }, []);
+
   const {
     invoiceId,
     name,
@@ -312,50 +319,98 @@ const PdfGeneration = async (invoicedata) => {
     </div>
   `;
 
-  const generateInvoice = async () =>{
-    try{
-      console.lot(`entering try`)
-      let options = {
-        html: html,
-        fileName: `invoice_${invoiceId}`,
-        directory: "Documents"
-      }
-      let pdf = await RNHTMLtoPDF.convert(options)
-      console.log('pdf generated');
+  const print = async () => {
+    // On iOS/android prints the given html. On web prints the HTML from the current page.
+    await Print.printAsync({
+      html,
+      printerUrl: selectedPrinter?.url,
+    });
 
+    selectPrinter();
+  };
 
-      const localuri = `${FileSystem.documentDirectory}invoice_${invoiceId}.pdf`
+  const printToFile = async () => {
+    const { uri } = await Print.printToFileAsync({ html });
+    console.log("File has been saved to:", uri);
+    await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
 
-      console.log("Local Uri",localuri)
-
-      await FileSystem.moveAsync({
-        from: pdf.path,
-        to: localuri,
-      })
-
+    try {
       const formData = new FormData();
-      formData.append('file', {
-        uri: localuri,
+      formData.append("file", {
+        uri: uri,
         type: "application/pdf",
         name: `invoice_${invoiceId}.pdf`,
-      })
-
-      const uploadUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+      });
+      const uploadUrl =
+        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
 
       const response = await axios.post(uploadUrl, formData, {
         headers: {
-          "Content-type" : "multipart/form-data",
-        }
+          "Content-type": "multipart/form-data",
+        },
       });
-
-      const fileUrl= response.data.fileUrl;
+      const fileUrl = response.data.fileUrl;
       console.log(fileUrl);
-
-    } catch(err) {
-      console.log("Error on generating PDF: \n\n", err);
-      throw err;
+      return fileUrl;
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
+  const selectPrinter = async () => {
+    const printer = await Print.selectPrinterAsync();
+    setSelectedPrinter(printer);
+  };
+
+  // return (
+  //   return fileUrl;
+  // )
+
+  return <>{(print(), printToFile())}</>;
 };
 
 export default PdfGeneration;
+
+// const generateInvoice = async () =>{
+//   try{
+//     console.lot(`entering try`)
+//     let options = {
+//       html: html,
+//       fileName: `invoice_${invoiceId}`,
+//       directory: "Documents"
+//     }
+//     let pdf = await RNHTMLtoPDF.convert(options)
+//     console.log('pdf generated');
+
+//     const localuri = `${FileSystem.documentDirectory}invoice_${invoiceId}.pdf`
+
+//     console.log("Local Uri",localuri)
+
+//     await FileSystem.moveAsync({
+//       from: pdf.path,
+//       to: localuri,
+//     })
+
+// const formData = new FormData();
+// formData.append('file', {
+//   uri: localuri,
+//   type: "application/pdf",
+//   name: `invoice_${invoiceId}.pdf`,
+// })
+
+// const uploadUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+
+// const response = await axios.post(uploadUrl, formData, {
+//   headers: {
+//     "Content-type" : "multipart/form-data",
+//   }
+// });
+
+// const fileUrl= response.data.fileUrl;
+// console.log(fileUrl);
+
+//   } catch(err) {
+//     console.log("Error on generating PDF: \n\n", err);
+//     throw err;
+//   }
+// }

@@ -281,7 +281,8 @@ const ProductDetails = ({ route }) => {
               <View>
                 <View style={styles.qualityContainer}>
                   <View>
-                    {productDetails.productCategory == "PLATINUM" ? (
+                    {productDetails.productCategory == "PLATINUM" ||
+                    productDetails.productCategory == "GOLD" ? (
                       <>
                         <Entypo
                           name="price-ribbon"
