@@ -15,7 +15,8 @@ import {
 } from "react-native-responsive-screen";
 
 import * as Font from "expo-font";
-
+// import { invoiceDataCopy } from "../InVoice/htmlContent";
+// import { htmlContent } from "../InVoice/htmlContent";
 import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import PdfGeneration from "../InVoice/PdfGeneration";

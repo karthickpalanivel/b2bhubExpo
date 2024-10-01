@@ -41,6 +41,14 @@ import ModalSelector from 'react-native-modal-selector'
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
+
+
+
+
+
+
+
+
 const ProductDetailsForm = ({ route }) => {
   const [isProduct, setIsProduct] = useState({});
   const [productName, setProductName] = useState("");
@@ -297,36 +305,59 @@ console.log(units);
     setIsUploadVisible(true);
   };
 
-  const uploadImage = async (imageUri) => {
-    const formData = new FormData();
 
-    formData.append("file", {
-      uri: imageUri,
-      type: "image/jpeg", // or the actual MIME type of the image
-      name: "upload.jpg",
-    });
-    formData.append("upload_preset", "ml_default"); // Add your upload preset
-    formData.append("cloud_name", "dalzs7bc2"); // Add your cloud name if necessary
 
+
+
+  // const uploadImage = async (imageUri) => {
+  //   const formData = new FormData();
+
+  //   formData.append("file", {
+  //     uri: imageUri,
+  //     type: "image/jpeg", // or the actual MIME type of the image
+  //     name: "upload.jpg",
+  //   });
+  //   formData.append("upload_preset", "ml_default"); // Add your upload preset
+  //   formData.append("cloud_name", "dalzs7bc2"); // Add your cloud name if necessary
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload",
+  //       formData
+  //     );
+
+  //     if (response.data.secure_url) {
+  //       setImageUrl(response.data.secure_url); // Store the image URL
+  //       console.log("upload succesfull" + response.data.secure_url);
+
+  //       Alert.alert("Upload successful", "Image has been uploaded!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Upload error", error);
+  //     Alert.alert("Upload failed", "Something went wrong during the upload.");
+  //   } finally {
+  //     // setUploading(false);
+  //   }
+  // };
+
+  async function uploadImage(uri){
     try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dalzs7bc2/image/upload",
-        formData
-      );
-
-      if (response.data.secure_url) {
-        setImageUrl(response.data.secure_url); // Store the image URL
-        console.log("upload succesfull" + response.data.secure_url);
-
-        Alert.alert("Upload successful", "Image has been uploaded!");
-      }
+      const uploadParams = {
+        public_id: 'testing', // Replace with your desired public ID
+        file: uri,
+      };
+  
+      const response = await Cloudinary.v2.uploader.upload(uploadParams);
+      console.log('Image uploaded successfully:', response.url);
+      // Handle the uploaded image URL as needed
     } catch (error) {
-      console.error("Upload error", error);
-      Alert.alert("Upload failed", "Something went wrong during the upload.");
-    } finally {
-      // setUploading(false);
+      console.error('Error uploading image:', error);
     }
-  };
+  }
+
+  console.log('====================================');
+  console.log(image);
+  console.log('====================================');
 
   const handleImageSelection = async (mode) => {
     try {
@@ -491,6 +522,7 @@ console.log(units);
                     )}
                   </TouchableOpacity>
                 )}
+                <TouchableOpacity onPress={()=>uploadImage()}><Text>upload</Text></TouchableOpacity>
               </View>
 
               {/* Product Details Form */}
