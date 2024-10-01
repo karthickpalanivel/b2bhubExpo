@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { printToFileAsync } from "expo-print";
-import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
+import React, { useEffect } from "react";
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import * as FileSystem from "expo-file-system"
 import * as Sharing from "expo-sharing";
-import RNHTMLtoPDF from "react-native-html-to-pdf";
-import axios from "axios";
 
-const PdfGeneration = ({ invoicedata }) => {
+const PdfGeneration = async (invoicedata) => {
   const {
     invoiceId,
     name,
@@ -24,42 +21,6 @@ const PdfGeneration = ({ invoicedata }) => {
     total_amount,
     unitprice,
   } = invoicedata;
-
-  // const product_id = invoicedata.product_id;
-  // // const email = "vts@vts.com";
-  // // const mobile = "+91 6380254179";
-  // const invoiceId = invoicedata.invoiceId;
-  // const name = invoicedata.name;
-  // const address1 = invoicedata.address1;
-  // const address2 = invoicedata.address2;
-  // const city = invoicedata.city;
-  // const state = invoicedata.state;
-  // const landmark = invoicedata.landmark;
-  // const pincode = invoicedata.pincode;
-  // const gst_no = invoicedata.gst_no;
-  // const product_name = invoicedata.product_name;
-  // const product_type = invoicedata.product_type;
-  // const product_quantity = invoicedata.product_quantity;
-  // const amount = invoicedata.total_amount;
-  // const unitprice = invoicedata.unitPrice;
-
-  useEffect(() => {
-    setTimeout(() => generatePdf, 100);
-  }, []);
-
-  // const logo = (
-  //   <Image
-  //     source={require("../../assets/B2BlogoRounded.png")}
-  //     size={{ width: 50, height: 50 }}
-  //   />
-  // );
-
-  // const pnb = (
-  //   <Image
-  //     source={require("../../assets/pnbLogo.png")}
-  //     size={{ width: 50, height: 50 }}
-  //   />
-  // );
 
   const formatIndianNumber = (num) => {
     const numStr = num.toString();
@@ -98,9 +59,9 @@ const PdfGeneration = ({ invoicedata }) => {
   }
 
   function numberToWords(amount) {
-    var words = "";
-    var fraction = Math.round((amount - Math.floor(amount)) * 100);
-    var units = [
+    let words = "";
+    let fraction = Math.round((amount - Math.floor(amount)) * 100);
+    let units = [
       "Zero",
       "One",
       "Two",
@@ -112,7 +73,7 @@ const PdfGeneration = ({ invoicedata }) => {
       "Eight",
       "Nine",
     ];
-    var teens = [
+    let teens = [
       "Eleven",
       "Twelve",
       "Thirteen",
@@ -123,7 +84,7 @@ const PdfGeneration = ({ invoicedata }) => {
       "Eighteen",
       "Nineteen",
     ];
-    var tens = [
+    let tens = [
       "Ten",
       "Twenty",
       "Thirty",
@@ -134,11 +95,11 @@ const PdfGeneration = ({ invoicedata }) => {
       "Eighty",
       "Ninety",
     ];
-    var thousands = ["", "Thousand", "Lakh", "Crore"];
+    let thousands = ["", "Thousand", "Lakh", "Crore"];
 
     function convertChunk(num) {
-      var str = "";
-      var hundred = Math.floor(num / 100);
+      let str = "";
+      let hundred = Math.floor(num / 100);
       num = num % 100;
       if (hundred > 0) {
         str += units[hundred] + " Hundred ";
@@ -146,7 +107,7 @@ const PdfGeneration = ({ invoicedata }) => {
       if (num > 10 && num < 20) {
         str += teens[num - 11] + " ";
       } else {
-        var ten = Math.floor(num / 10);
+        let ten = Math.floor(num / 10);
         num = num % 10;
         if (ten > 0) {
           str += tens[ten - 1] + " ";
@@ -161,11 +122,11 @@ const PdfGeneration = ({ invoicedata }) => {
     if (amount === 0) {
       words = "Zero";
     } else {
-      var crore = Math.floor(amount / 10000000);
-      var lakh = Math.floor((amount % 10000000) / 100000);
-      var thousand = Math.floor((amount % 100000) / 1000);
-      var hundred = Math.floor((amount % 1000) / 100);
-      var remainder = amount % 100;
+      let crore = Math.floor(amount / 10000000);
+      let lakh = Math.floor((amount % 10000000) / 100000);
+      let thousand = Math.floor((amount % 100000) / 1000);
+      let hundred = Math.floor((amount % 1000) / 100);
+      let remainder = amount % 100;
 
       if (crore > 0) {
         words += convertChunk(crore) + " Crore ";
@@ -190,6 +151,7 @@ const PdfGeneration = ({ invoicedata }) => {
 
     return words.trim();
   }
+
   html = `
     <div id="printdf" style="background-color: #f5f5f5; width: fit-content; min-height: 320mm; margin-left: auto; margin-right: auto;">
      <div style="font-family: Arial, sans-serif; font-size: 4px; line-height:1; margin: 0; padding: 0;">
@@ -350,63 +312,50 @@ const PdfGeneration = ({ invoicedata }) => {
     </div>
   `;
 
-  // function getCurrentDateWithoutTime() {
-  //   const today = new Date();
-  //   const day = String(today.getDate()).padStart(2, "0");
-  //   const month = String(today.getMonth() + 1).padStart(2, "0");
-  //   const year = today.getFullYear();
-  //   return `${day}-${month}-${year}`;
-  // }
-
-  const generatePdf = async () => {
-    // let options = {
-    //   html: htmlContent,
-    //   fileName: `invoice_${invoiceId}`,
-    //   directory: "Documents",
-    // };
-
-    try {
+  const generateInvoice = async () =>{
+    try{
+      console.lot(`entering try`)
       let options = {
-        html: htmlContent,
+        html: html,
         fileName: `invoice_${invoiceId}`,
-        directory: "Documents",
-      };
+        directory: "Documents"
+      }
+      let pdf = await RNHTMLtoPDF.convert(options)
+      console.log('pdf generated');
 
-      const pdf = await RNHTMLtoPDF.convert(options); //RNFS
 
-      console.log("PDF Generated at:", pdf.filePath);
+      const localuri = `${FileSystem.documentDirectory}invoice_${invoiceId}.pdf`
 
-      const localUri = `${FileSystem.documentDirectory}invoice_${invoiceId}.pdf`;
+      console.log("Local Uri",localuri)
+
       await FileSystem.moveAsync({
-        from: pdf.filePath,
-        to: localUri,
-      });
+        from: pdf.path,
+        to: localuri,
+      })
 
-      console.log("PDF saved at:", localUri);
       const formData = new FormData();
-      formData.append("file", {
-        uri: localUri,
+      formData.append('file', {
+        uri: localuri,
         type: "application/pdf",
         name: `invoice_${invoiceId}.pdf`,
-      });
+      })
 
-      // formData.append("orderDetails", JSON.stringify(orderDetails));
-      const uploadUrl =
-        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+      const uploadUrl = `${process.env.REACT_APP_BACKEND_URL}` + "/sales/addorder";
+
       const response = await axios.post(uploadUrl, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-type" : "multipart/form-data",
+        }
       });
 
-      const fileUrl = response.data.fileUrl;
-      console.log("File uploaded to backend. URL:", fileUrl);
+      const fileUrl= response.data.fileUrl;
+      console.log(fileUrl);
 
-      return fileUrl;
-    } catch (error) {
-      console.log("Error generatinguploading PDF:", error);
-      throw error;
+    } catch(err) {
+      console.log("Error on generating PDF: \n\n", err);
+      throw err;
     }
-  };
+  }
 };
+
 export default PdfGeneration;

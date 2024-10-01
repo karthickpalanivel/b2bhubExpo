@@ -42,7 +42,7 @@ const ProductDetails = ({ route }) => {
 
   //modal
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalQuantity, setModalQuantity] = useState(100);
+  const [modalQuantity, setModalQuantity] = useState(25);
   const [showSummary, setShowSummary] = useState(false);
   const [termsVisible, setTermsVisible] = useState(false);
   const [modalTermVisible, setModalTermVisible] = useState(false);

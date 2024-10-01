@@ -76,14 +76,14 @@ const ProductCard = ({
             <Modal transparent={true} animationType="fade">
               <View style={styles.modalBackground}>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.successTitle}>Delete Product</Text>
+                  <Text style={styles.successTitle}>{t('delete_product')}</Text>
                   <Text style={styles.message}>
                     Do you want to delete the Product?
                   </Text>
 
                   <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.btn} onPress={handleDelete}>
-                      <Text style={styles.btnText}>Yes</Text>
+                      <Text style={styles.btnText}>{t('yes')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.cancelBtn}

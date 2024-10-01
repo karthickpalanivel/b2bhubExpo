@@ -15,8 +15,7 @@ import {
 } from "react-native-responsive-screen";
 
 import * as Font from "expo-font";
-import { invoiceDataCopy } from "../InVoice/htmlContent";
-import { htmlContent } from "../InVoice/htmlContent";
+
 import { StatusBar } from "expo-status-bar";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import PdfGeneration from "../InVoice/PdfGeneration";
@@ -233,14 +232,14 @@ const PaymentSummary = ({ route }) => {
 
     try {
       // console.log("testing try");
-      const uri =
-        `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId";
-      const invoiceIdRequest = await axios.post(uri, {
-        headers: {
-          Authorization: `Bearer ${token1}`,
-          "Content-Type": "application/json",
-        },
-      });
+      // const uri =
+      //   `${process.env.REACT_APP_BACKEND_URL}` + "/sales/getInoivceId";
+      // const invoiceIdRequest = await axios.post(uri, {
+      //   headers: {
+      //     Authorization: `Bearer ${token1}`,
+      //     "Content-Type": "application/json",
+      //   },
+      // });
       // console.log(invoiceIdRequest)
 
       const getInvoiceData = {
