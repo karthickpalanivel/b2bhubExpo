@@ -99,6 +99,9 @@ const SignUpScreen = () => {
   const navigateToLogin = () => {
     navigation.goBack();
   };
+  const navigateToTerms= () => {
+    navigation.navigate("Terms")
+  };
 
   const validatePan = (pan) => {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -291,7 +294,7 @@ const SignUpScreen = () => {
               </View>
 
               <Text style={styles.registering}>{t("accept_terms")}</Text>
-              <TouchableOpacity style={styles.tcContainer}>
+              <TouchableOpacity style={styles.tcContainer} onPress={navigateToTerms}>
                 <Text style={[styles.registering, { color: "#D53C46" }]}>
                   {t("terms_condition")}
                 </Text>

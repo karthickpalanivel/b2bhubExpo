@@ -341,6 +341,7 @@ const GeneratePayslips = async (invoicedata) => {
     const options = { day: "numeric", month: "short", year: "2-digit" };
     return date.toLocaleDateString("en-GB", options);
   }
+  
   const invoiceId = invoicedata.invoiceId;
   const name = invoicedata.name;
   const address1 = invoicedata.address1;
@@ -375,6 +376,7 @@ const GeneratePayslips = async (invoicedata) => {
     var words = numberToWords(amount);
     document.getElementById("amount_in_words").value = "INR " + words + " Only";
   }
+
   // function getCurrentDate() {
   //     const today = new Date();
   //     const day = String(today.getDate()).padStart(2, '0');
@@ -442,6 +444,7 @@ const GeneratePayslips = async (invoicedata) => {
       "Eighty",
       "Ninety",
     ];
+    
     var thousands = ["", "Thousand", "Lakh", "Crore"];
 
     function convertChunk(num) {

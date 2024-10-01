@@ -36,6 +36,7 @@ import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList"
 import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
 import ProductDetailsForm from "../sellerScreens/sellerComponents/ProductDetailsForm";
+import TermsAndCondition from "../screens/OauthScreen/TermsAndCondition";
 
 //variables
 const Stack = createNativeStackNavigator();
@@ -112,6 +113,7 @@ export default function Navigation() {
           name="PaymentShippingDetails"
           component={PaymentShippingScreen}
         />
+        <Stack.Screen name="Terms" component={TermsAndCondition} />
 
         <Stack.Screen name="SignUpShopDetails" component={ShopDetails} />
         <Stack.Screen name="EditScreen" component={EditScreen} />
