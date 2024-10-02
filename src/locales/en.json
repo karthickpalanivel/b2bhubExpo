@@ -201,7 +201,7 @@
   "welcome_to_b2b_hub_india": "Welcome to B2B Hub India",
   "select_language": "Select Language",
   "register_a_new_account": "Register a new Account",
-  
+
   "welcome": "Welcome",
   "active_product": "Active Product",
   "total_order": "Total Order",
@@ -244,7 +244,7 @@
   "open": "Open",
   "premium_quality_product": "Premium Quality Product",
   "grade": "Grade",
-  
+
   "delete_product": "Delete Product",
   "total_quantity": "Total Quantity",
   "delete_confirmation": "Do you want to delete the Product?",
@@ -276,7 +276,7 @@
   "ok": "OK",
 
   "exit_app": "Exit App",
-  
+
   "fatka": "Fatka",
   "imported": "Imported",
   "polished": "Polished",
@@ -285,63 +285,55 @@
   "mysore": "Mysore",
   "black": "Black",
   "premium": "Premium",
-   "definition":"Definition",
-   "Registration_and_Account_Creation":"Registration and Account Creation",
-   "Product_Listings_and_Compliance":"Product Listings and Compliance",
-   "Pricing_and_Payments":"Pricing and Payments",
-   "Shipping_and_Fulfillment":"Shipping and Fulfillment",
-   "Intellectual_Property":"Intellectual Property",
-   "Seller_Conduct":"Seller Conduct",
-   "Termination_and_Account_Suspension":"Termination and Account Suspension",
-   "Governing_Law":"Governing Law",
-   "Amendments":"Amendments",
-   
 
-  "seller_into":"These Terms and Conditions govern the use of the B2B Hub platform by sellers. By registering and selling products through B2B Hub, you agree to these terms and conditions as outlined below.",
-  "seller_definition":"Seller  refers to the individual or business entity offering products for sale on the B2B Hub platform, and B2B Hub refers to the platform operator. The term Products refers to any goods listed for sale by the Seller on the platform.",
-  "seller_regi":"Sellers must create an account to list products on B2B Hub. By registering, you confirm that you are authorized to sell products and conduct business on behalf of your entity.",
-   "seller_Product_Listings":"Sellers are responsible for ensuring that their product listings are accurate, complete, and comply with applicable laws. B2B Hub reserves the right to remove non-compliant listings.",
-   "seller_Pricing_and_Payments":"Sellers set the prices for their products. Transactions must adhere to B2B Hub’s payment policies. Sellers will receive payment according to the payment schedule, and fees may be deducted as applicable.",
-   "seller_Shipping_and_Fulfillment":"Sellers are responsible for the timely fulfillment of orders. Products must be shipped according to the terms agreed at the time of sale.",
-   "seller_Returns_and_Refunds":"Sellers must clearly define return and refund policies. Disputes may be addressed directly with buyers or involve B2B Hub at its discretion.",
-   "seller_ Intellectual_Property":"Sellers retain ownership of intellectual property but grant B2B Hub a non-exclusive license for promotional purposes.",
-    "seller_Conduct":"Professional conduct is mandatory on B2B Hub. Fraudulent or unethical activity may result in account suspension or termination.",
-    "seller_Termination":"B2B Hub reserves the right to suspend or terminate seller accounts for violations of these terms or other policies.",
-    "seller_Governing_Law":"These terms are governed by the laws of India - Chennai.",
-    "seller_Amendments":"B2B Hub reserves the right to modify these Terms and Conditions. Continued use of the platform constitutes acceptance of the revised terms.",
-    "seller_Contact":"For any questions or concerns, please contact B2B Hub at [+91 7305096473].",
+  "Registration_and_Account_Creation": "Registration and Account Creation",
+  "Product_Listings_and_Compliance": "Product Listings and Compliance",
+  "Pricing_and_Payments": "Pricing and Payments",
+  "Shipping_and_Fulfillment": "Shipping and Fulfillment",
+  "Intellectual_Property": "Intellectual Property",
+  "Seller_Conduct": "Seller Conduct",
+  "Termination_and_Account_Suspension": "Termination and Account Suspension",
+  "Governing_Law": "Governing Law",
+  "Amendments": "Amendments",
 
-    "Important":"Important",
-    "Violation":"Violating any of the above rules will result in severe actions, including permanent account suspension and legal consequences where applicable. Sellers are mandated to adhere to all policies strictly.",
-    "buyer_intro":"These Terms and Conditions govern the use of the B2B Hub platform by buyers. By purchasing products through B2B Hub, you agree to these terms and conditions as outlined below.",
-    "buyer_def":"Buyer refers to the individual or business entity purchasing products on the B2B Hub platform, and B2B Hub refers to the platform operator. The term Products refers to any goods listed for sale on the platform.",
-    "account_Creation":"Account Creation",
-    "user_account":"Buyers must create an account to purchase products on B2B Hub. By registering, you confirm that you are authorized to make purchases and conduct business on behalf of your entity.",
-    "Product_Purchases_and_Payment":"Product Purchases and Payment",
-    "user_product":"Buyers are responsible for ensuring the accuracy of the products they purchase, including quantities and specifications. Payments must be made using supported methods and according to the terms agreed upon at the time of purchase.",
-    "Pricing":"Pricing",
-    "user_Pricing":"Prices for products are set by sellers and may be subject to change. Taxes, shipping costs, and other charges will be clearly presented during checkout.",
-    "Shipping_and_Delivery":"Shipping and Delivery",
-    "user_Shipping":"Sellers are responsible for shipping products to the address provided by the Buyer. Buyers must provide accurate shipping information. B2B Hub is not responsible for delays caused by the seller or third-party shipping services.",
-    "Returns_and_Refunds":"Returns and Refunds",
-    "user_return":"Each seller has their own return and refund policies. Buyers agree to these policies when making a purchase. Any disputes should be first addressed with the Seller, but B2B Hub may intervene if necessary.",
-    "user_intellectual":"Buyers agree not to use any product images, descriptions, or other content on the platform for commercial purposes without permission from B2B Hub or the Seller.",
-    "Buyer_Conduct":"Buyer Conduct",
-    "user_Buyer_Conduct":" Buyers are expected to conduct themselves professionally when making purchases on B2B Hub. Fraudulent or unethical behavior may result in account suspension.",
-    "user_limit":"B2B Hub is not liable for any indirect damages arising from your use of the platform. Liability is limited to the amount of fees paid by the Buyer for using the platform.",
-    "Dispute_Resolution":"Dispute Resolution",
-    "user_dispute":" In case of disputes between Buyers and Sellers, B2B Hub may act as a mediator at its discretion. Both Buyers and Sellers agree to cooperate with B2B Hub’s resolution process.",
-    "user_term":"B2B Hub reserves the right to suspend or terminate any Buyer account for violations of these terms. Buyers may also terminate their accounts, but outstanding orders must be completed.",
-    "Termination_of_Account":"Termination of Account",
+  "seller_into": "These Terms and Conditions govern the use of the B2B Hub platform by sellers. By registering and selling products through B2B Hub, you agree to these terms and conditions as outlined below.",
+  "seller_definition": "Seller  refers to the individual or business entity offering products for sale on the B2B Hub platform, and B2B Hub refers to the platform operator. The term Products refers to any goods listed for sale by the Seller on the platform.",
+  "seller_regi": "Sellers must create an account to list products on B2B Hub. By registering, you confirm that you are authorized to sell products and conduct business on behalf of your entity.",
+  "seller_Product_Listings": "Sellers are responsible for ensuring that their product listings are accurate, complete, and comply with applicable laws. B2B Hub reserves the right to remove non-compliant listings.",
+  "seller_Pricing_and_Payments": "Sellers set the prices for their products. Transactions must adhere to B2B Hub’s payment policies. Sellers will receive payment according to the payment schedule, and fees may be deducted as applicable.",
+  "seller_Shipping_and_Fulfillment": "Sellers are responsible for the timely fulfillment of orders. Products must be shipped according to the terms agreed at the time of sale.",
+  "seller_Returns_and_Refunds": "Sellers must clearly define return and refund policies. Disputes may be addressed directly with buyers or involve B2B Hub at its discretion.",
+  "seller_ Intellectual_Property": "Sellers retain ownership of intellectual property but grant B2B Hub a non-exclusive license for promotional purposes.",
+  "seller_Conduct": "Professional conduct is mandatory on B2B Hub. Fraudulent or unethical activity may result in account suspension or termination.",
+  "seller_Termination": "B2B Hub reserves the right to suspend or terminate seller accounts for violations of these terms or other policies.",
+  "seller_Governing_Law": "These terms are governed by the laws of India - Chennai.",
+  "seller_Amendments": "B2B Hub reserves the right to modify these Terms and Conditions. Continued use of the platform constitutes acceptance of the revised terms.",
+  "seller_Contact": "For any questions or concerns, please contact B2B Hub at [+91 7305096473].",
 
-    "buyer_imp":"Non-compliance with the rules may result in severe actions, including account suspension and legal actions. Buyers must adhere to all policies strictly."
-       
-       
+  "Important": "Important",
+  "Violation": "Violating any of the above rules will result in severe actions, including permanent account suspension and legal consequences where applicable. Sellers are mandated to adhere to all policies strictly.",
+  "buyer_intro": "These Terms and Conditions govern the use of the B2B Hub platform by buyers. By purchasing products through B2B Hub, you agree to these terms and conditions as outlined below.",
+  "buyer_def": "Buyer refers to the individual or business entity purchasing products on the B2B Hub platform, and B2B Hub refers to the platform operator. The term Products refers to any goods listed for sale on the platform.",
+  "account_Creation": "Account Creation",
+  "user_account": "Buyers must create an account to purchase products on B2B Hub. By registering, you confirm that you are authorized to make purchases and conduct business on behalf of your entity.",
+  "Product_Purchases_and_Payment": "Product Purchases and Payment",
+  "user_product": "Buyers are responsible for ensuring the accuracy of the products they purchase, including quantities and specifications. Payments must be made using supported methods and according to the terms agreed upon at the time of purchase.",
+  "Pricing": "Pricing",
+  "user_Pricing": "Prices for products are set by sellers and may be subject to change. Taxes, shipping costs, and other charges will be clearly presented during checkout.",
+  "Shipping_and_Delivery": "Shipping and Delivery",
+  "user_Shipping": "Sellers are responsible for shipping products to the address provided by the Buyer. Buyers must provide accurate shipping information. B2B Hub is not responsible for delays caused by the seller or third-party shipping services.",
+  "Returns_and_Refunds": "Returns and Refunds",
+  "user_return": "Each seller has their own return and refund policies. Buyers agree to these policies when making a purchase. Any disputes should be first addressed with the Seller, but B2B Hub may intervene if necessary.",
+  "user_intellectual": "Buyers agree not to use any product images, descriptions, or other content on the platform for commercial purposes without permission from B2B Hub or the Seller.",
+  "Buyer_Conduct": "Buyer Conduct",
+  "user_Buyer_Conduct": " Buyers are expected to conduct themselves professionally when making purchases on B2B Hub. Fraudulent or unethical behavior may result in account suspension.",
+  "user_limit": "B2B Hub is not liable for any indirect damages arising from your use of the platform. Liability is limited to the amount of fees paid by the Buyer for using the platform.",
+  "Dispute_Resolution": "Dispute Resolution",
+  "user_dispute": " In case of disputes between Buyers and Sellers, B2B Hub may act as a mediator at its discretion. Both Buyers and Sellers agree to cooperate with B2B Hub’s resolution process.",
+  "user_term": "B2B Hub reserves the right to suspend or terminate any Buyer account for violations of these terms. Buyers may also terminate their accounts, but outstanding orders must be completed.",
+  "Termination_of_Account": "Termination of Account",
 
-        
-
-
-       
-       
-        
+  "buyer_imp": "Non-compliance with the rules may result in severe actions, including account suspension and legal actions. Buyers must adhere to all policies strictly.",
+  "go_home": "Go Home",
+  "go_back": "Go Back"
 }
