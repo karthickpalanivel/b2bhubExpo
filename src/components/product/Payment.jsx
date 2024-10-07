@@ -27,8 +27,6 @@ import axios from "axios";
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
-
-
 // PaymentSummary Component
 const PaymentSummary = ({ route }) => {
   const [invoiceUniqueId, setInvoiceUniqueId] = useState("");
@@ -49,6 +47,7 @@ const PaymentSummary = ({ route }) => {
   const [isOrderSuccess, setIsOrderSuccess] = useState(false);
   const [proceedPaymentText, setProceedPaymentText] =
     useState("Pre Book Order");
+    const [printer, setPrinter] = useState();
 
   const navigation = useNavigation();
 
@@ -61,13 +60,13 @@ const PaymentSummary = ({ route }) => {
       {value && <Text style={styles.checkmark}>✓</Text>}
     </TouchableOpacity>
   );
-  
+
   const { productSummary } = route.params;
 
   // console.log(productSummary);
   // useEffect(() => {
-    // console.log("Payment Page");
-    // console.log(productSummary);
+  // console.log("Payment Page");
+  // console.log(productSummary);
   // }, []);
 
   const { t } = useTranslation();
@@ -224,6 +223,7 @@ const PaymentSummary = ({ route }) => {
         console.log("====================================");
         // console.log(res.data[0].invoiceId); invoice ID captured here....
         setInvoiceUniqueId(res.data[0].invoiceId);
+        console.log(invoiceUniqueId);
         console.log("====================================");
       });
   }
@@ -244,7 +244,7 @@ const PaymentSummary = ({ route }) => {
       //   },
       // });
       // console.log(invoiceIdRequest)
-
+      getInvoiceId();
       const getInvoiceData = {
         invoiceId: invoiceUniqueId,
         name: companyName,
@@ -263,9 +263,10 @@ const PaymentSummary = ({ route }) => {
         unitprice: productSummary.totalAmount / productSummary.quantity,
       };
 
+
       console.log(getInvoiceData);
 
-      const invoiceUrl = PdfGeneration(getInvoiceData);
+      const invoiceUrl = PdfGeneration(getInvoiceData, printer, setPrinter); //<PdfGeneration invoicedata={getInvoiceData} />;
 
       console.log("got url");
       const orderDetails = getOrderDetails(invoiceUrl, invoiceUniqueId);
@@ -287,6 +288,10 @@ const PaymentSummary = ({ route }) => {
     }
   };
   const goBack = () => {
+    navigation.navigate("Home");
+  };
+
+  const navigateToHome = () => {
     navigation.navigate("Home");
   };
 
@@ -313,10 +318,16 @@ const PaymentSummary = ({ route }) => {
           <StatusBar backgroundColor="white" />
           {/* Total Price Card */}
           <View style={styles.headerContainer}>
-            <TouchableOpacity onPress={goBack} style={styles.icon}>
+            <TouchableOpacity
+              onPress={navigateToHome}
+              style={{
+                alignItems: "center",
+                flexDirection: "row",
+              }}
+            >
               <ArrowLeftIcon color={colors} size={hp(3)} strokeWidth={2} />
+              <Text style={styles.goback}>{t("go_home")}</Text>
             </TouchableOpacity>
-            <Text style={styles.goback}>{t("go_back_for_changes")}</Text>
           </View>
           <View style={styles.card}>
             <View>
@@ -595,13 +606,11 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
-    width: hp(30),
+    width: hp(20),
     marginBottom: wp(5),
     padding: wp(3),
     backgroundColor: "white",
     borderRadius: 9999,
-    alignItems: "center",
-    flexDirection: "row",
   },
   goback: {
     fontSize: wp(4),
