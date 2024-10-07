@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -11,15 +11,16 @@ import {
   Alert,
   Modal,
 } from "react-native";
-import axios from 'axios'
-import { useNavigation } from "@react-navigation/native";
-import { Picker } from "@react-native-picker/picker";
+import axios from "axios";
+import {useNavigation} from "@react-navigation/native";
+import {Picker} from "@react-native-picker/picker";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
-import { useTranslation } from "react-i18next";
+import {ChevronLeftIcon} from "react-native-heroicons/outline";
+import {useTranslation} from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SellerRegistration = () => {
   const [city, setCity] = useState("");
@@ -32,10 +33,11 @@ const SellerRegistration = () => {
   const [categoryModal, setCategotyModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sucessModalVisible, setSucessModalVisible] = useState(false);
+  const [token, setToken] = useState("")
 
   const navigation = useNavigation();
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const validateEmail = (inputEmail) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,47 +56,77 @@ const SellerRegistration = () => {
 
   const handleRegister = () => {
     // Example: Send the OTP to the user's email and store the OTP sent by the server
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/reqToUpgradeSeller";
-    axios.post(url, { email: email })
-          .then((res) => {
-            console.log("-----------", res.data.message);
-            setOtpSent(true);
-
-          })
-          .catch((err) => {
-            if (err.status === 404) {
-              toast.error("Email Not Found  ", { position: "top-center" });
-            } else {
-              toast.error("Error Sending OTP", { position: "top-center" });
-            }
-          });
+    const url =
+      `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/reqToUpgradeSeller";
+    axios
+      .post(url, {email: email})
+      .then((res) => {
+        console.log("-----------", res.data.message);
+        setGetOtp(true);
+      })
+      .catch((err) => {
+        if (err.status === 404) {
+          Alert.alert("Email Not Found" + err);
+        } else if (err.status === 409) {
+          Alert.alert("Email is already registered");
+        } else if (err.status === 500) {
+          Alert.alert("You're not created you B2B account, please Register");
+        } else {
+          Alert.alert("Error Sending OTP" + err);
+        }
+      });
     console.log(city);
     console.log(email);
     // Simulate the server sending OTP, store it for later comparison
     const generatedOtp = "1234"; // Simulated OTP sent by the server
     setServerOtp(generatedOtp);
-    setGetOtp(true); // Show OTP input field
-    Alert.alert("OTP Sent", "An OTP has been sent to your email.");
+     // Show OTP input field
   };
 
   const handleOtpChange = (text) => {
     setOTP(text);
   };
 
-  const handleOtp = () => {
-    if (Otp === serverOtp) {
-      Alert.alert("OTP Verified", "An OTP has been verified.");
-      setTimeout(() => {
+  const handleOtp = async () => {
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/upgradeToSeller";
+      const res = await axios.put(url, { otp: Otp, email: email });
+      if (res.status === 200) {
+        AsyncStorage.setItem("token", res.data.token);
+        setToken(res.data.token)
         setCategotyModal(true);
-      }, 2500);
-    } else {
-      setOtpError("Invalid OTP");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const handleCategory = () => {
     setCategotyModal(false);
     setSucessModalVisible(true);
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/subcribe";
+    axios
+      .put(
+        url,
+        { category: selectedCategory, location: city },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        if(res.status == 200){
+          Alert.alert("Registered as Seller Successfully");
+          navigation.navigate("Login");
+        }
+        
+      })
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error Registering as Seller");
+      });
   };
 
   const goBack = () => {
@@ -130,7 +162,7 @@ const SellerRegistration = () => {
 
         <View>
           <Text style={styles.inputName}>
-            <Text style={{ color: "#d53c46" }}>**</Text>{" "}
+            <Text style={{color: "#d53c46"}}>**</Text>{" "}
             {t("enter_your_location")}
           </Text>
           <View style={styles.pickerContainer}>
@@ -183,7 +215,7 @@ const SellerRegistration = () => {
               onPress={handleOtp} // Call your OTP verification function here
               disabled={!isOtpValid} // Disable the button if the form is not valid
             >
-              <Text style={styles.submitButtonText}>Verify OTP</Text>
+              <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
           </>
         ) : (
@@ -213,7 +245,7 @@ const SellerRegistration = () => {
                   ]}
                   onPress={() => setSelectedCategory("platinum")}
                 >
-                  <View style={{ flexDirection: "row" }}>
+                  <View style={{flexDirection: "row"}}>
                     <Image
                       source={require("../../assets/sellerCategory/platinum.png")}
                       style={styles.img}
@@ -237,7 +269,7 @@ const SellerRegistration = () => {
                   ]}
                   onPress={() => setSelectedCategory("gold")}
                 >
-                  <View style={{ flexDirection: "row" }}>
+                  <View style={{flexDirection: "row"}}>
                     <Image
                       source={require("../../assets/sellerCategory/gold.png")}
                       style={styles.img}

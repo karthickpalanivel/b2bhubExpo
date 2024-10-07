@@ -67,7 +67,7 @@ const ProductDisplay = () => {
   const [token, settoken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
-  const [apiCalled, setApiCalled] = useState(false);
+  
   const [deleteModal, setDeleteModal] = useState(false);
 
   // useFocusEffect(
@@ -75,18 +75,18 @@ const ProductDisplay = () => {
   //    setApiCalled(false)
   //   }, [apiCalled])
   // );
-
+  const [apiCalled, setApiCalled] = useState(false);
   useEffect(() => {
     const fetchDataFromAsyncStorageAndCallApi = async () => {
       try {
-        // Step 1: Get the item from AsyncStorage
+        
         const token1 = await AsyncStorage.getItem("token");
         const customerId1 = await AsyncStorage.getItem("customerId");
 
         // console.log(token1 + customerId1);
 
         if (token1 && customerId1) {
-          // Step 2: Call API only if it hasn't been called before
+         
           if (!apiCalled) {
             try {
               const url =
@@ -130,7 +130,7 @@ const ProductDisplay = () => {
       }
     };
 
-    fetchDataFromAsyncStorageAndCallApi(); // Call this function only once in useEffect
+    fetchDataFromAsyncStorageAndCallApi(); 
   }, [apiCalled]);
 
   useEffect(() => {

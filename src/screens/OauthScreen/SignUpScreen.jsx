@@ -5,6 +5,7 @@ import axios from "axios";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import {
+  Alert,
   BackHandler,
   Dimensions,
   Image,
@@ -25,11 +26,16 @@ import {
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 const { width } = Dimensions.get("window");
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUpScreen = () => {
   const [termsModal, setTermsModal] = useState(false);
+  const [signuptext,  setsignuptext] = useState("sign_up")
   const { t } = useTranslation();
+  
   async function HandleSignup() {
+    if(email && panNumber && gstNumber && phone && companyName && password){
+      setsignuptext("Signing Up...")
     const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/customer-registration";
     await axios
       .post(
@@ -51,8 +57,9 @@ const SignUpScreen = () => {
           console.log(customer);
           try {
             AsyncStorage.setItem("loginstate", "true");
+            AsyncStorage.setItem("token", res.data.token);
             AsyncStorage.setItem("userEmail", email);
-            AsyncStorage.setItem("customerId", customer.customerId);
+            AsyncStorage.setItem("customerId", res.data.customerId);
             AsyncStorage.setItem("companyname", customer.CompanyName);
             AsyncStorage.setItem("phone", customer.phoneNo);
             AsyncStorage.setItem("gst", customer.gstNo);
@@ -69,6 +76,10 @@ const SignUpScreen = () => {
         window.alert(error);
         return;
       });
+    } else {
+      Alert.alert("Please fill the Details Completely")
+    }
+    
   }
 
   useEffect(() => {
@@ -305,7 +316,7 @@ const SignUpScreen = () => {
                   style={styles.button}
                   onPress={() => HandleSignup()}
                 >
-                  <Text style={styles.buttonText}>{t("sign_up")}</Text>
+                  <Text style={styles.buttonText}>{t(signuptext)}</Text>
                 </TouchableOpacity>
               </View>
             </View>
