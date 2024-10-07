@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-
+import { printAsync, printToFileAsync } from "expo-print";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import {
@@ -28,6 +28,10 @@ import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PdfGeneration from "../InVoice/PdfGeneration";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+
+const colors = "#EF5A6F";
+const backgrounds = "#FCF8F3";
+
 const OrderCard = ({ props }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [uploadDetails, setUploadDetails] = useState(true);
@@ -107,66 +111,77 @@ const OrderCard = ({ props }) => {
       >
         <SafeAreaView style={styles.fill}>
           <View style={styles.inputContainer}>
-            <View>
-              <TouchableOpacity>
-                <XCircleIcon size={wp(8)} style={styles.icon} onPress={hide} />
-              </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <View>
                 <Text style={styles.modalText}>
-                  Product Name: {productName}
+                  {t("product_name")}: {productName}
                 </Text>
-              </View>
-              <View>
+
                 <Text style={styles.modalText}>
-                  Product Price: ₹ {productPrice}
+                  {t("product") + " " + t("price")}: ₹ {productPrice}
                 </Text>
-              </View>
-              <View>
+
                 <Text style={styles.modalText}>
-                  Product Quantity: {productQuantity} ton
+                  {t("product") + " " + t("quantity")}: {productQuantity} ton
                 </Text>
               </View>
-              <View style={{ marginTop: hp(3) }}>
-                <Text>Account Number</Text>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={(text) => setAccountNumber(text)}
-                  placeholderTextColor={"#4870F4"}
+              <TouchableOpacity style={{ zIndex: 700 }}>
+                <XCircleIcon
+                  size={wp(8)}
+                  style={styles.icon}
+                  onPress={() => hide}
                 />
-              </View>
-              <View>
-                <Text>Transaction ID</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ marginTop: hp(3) }}>
+              <Text style={styles.inputLabel}>{t("account_number")}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setAccountNumber(text)}
+                placeholderTextColor={"grey"}
+                placeholder={t("account_number")}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputLabel}>{t("transaction_id")}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setTransactionId(text)}
+                placeholderTextColor={"grey"}
+                placeholder={t("transaction_id")}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputLabel}>{t("transaction_date")}</Text>
+              <TouchableOpacity>
                 <TextInput
                   style={styles.textInput}
                   onChangeText={(text) => setTransactionId(text)}
-                  placeholderTextColor={"#4870F4"}
+                  placeholderTextColor={"grey"}
+                  placeholder={t("transaction_date")}
                 />
-              </View>
-              <View>
-                <Text>Transaction Date</Text>
-                <TouchableOpacity>
-                  <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setTransactionId(text)}
-                    placeholderTextColor={"#4870F4"}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text>Amount</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={productPrice}
-                  disable
-                  placeholderTextColor={"#4870F4"}
-                />
-              </View>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={styles.inputLabel}>{t("amount")}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={productPrice}
+                disable
+                placeholder={t("amount")}
+              />
             </View>
             <TouchableOpacity
               onPress={changeValue}
               style={styles.conformContainer}
             >
-              <Text style={styles.conformText}>confirm</Text>
+              <Text style={styles.conformText}>{t("confirm")}</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -191,7 +206,9 @@ const OrderCard = ({ props }) => {
           >
             <>
               <View style={styles.container}>
-                <Text style={styles.productText}>{props.product_name}</Text>
+                <Text style={styles.productText}>
+                  {t("product_name")} : {props.product_name}
+                </Text>
                 <Text style={styles.productText}>
                   {t("date")}: {props.date_of_order}
                 </Text>
@@ -208,99 +225,62 @@ const OrderCard = ({ props }) => {
                 {t("price")}: ₹{props.total_amount}
               </Text>
 
-              {props.payment_status === 1 && props.payment_verified === 1 ? (
-                <View style={styles.container}>
+              <View style={styles.container}>
+                <TouchableOpacity style={styles.iconContainer}>
+                  <EyeIcon size={wp(5)} color={"#4870F4"} />
+                  <Text style={styles.documentText}>{t("invoice")}</Text>
+                </TouchableOpacity>
+                {props.payment_status ? (
+                  <>
+                    {props.payment_verified ? (
+                      <>
+                        {props.deliveryStatus ? (
+                          <>
+                            <Text style={styles.completed}>
+                              ✅{t("completed")}
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <Text style={styles.completed}>
+                              🚚{t("shipped")}
+                            </Text>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <Text style={styles.process}>⏱️{t("under_process")}</Text>
+                    )}
+                  </>
+                ) : (
                   <View>
-                    <TouchableOpacity style={styles.iconContainer}>
-                      <EyeIcon size={wp(5)} color={"#4870F4"} />
-                      <Text style={styles.documentText}>{t("invoice")}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconContainer}>
-                      <EyeIcon size={wp(5)} color={"#4870F4"} />
-                      <Text style={styles.documentText}>Receipt</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                    <Text style={styles.completed}>✅{t("completed")}</Text>
-                  </View>
-                </View>
-              ) : (
-                <></>
-              )}
-              {props.payment_status === 2 && props.payment_verified === 0 ? (
-                <View style={styles.container}>
-                  <TouchableOpacity style={styles.iconContainer}>
-                    <EyeIcon size={wp(5)} color={"#4870F4"} />
-                    <Text style={styles.documentText}>{t("invoice")}</Text>
-                  </TouchableOpacity>
-                  <View>
-                    <Text style={styles.process}>⏱️{t("under_process")}</Text>
-                  </View>
-                </View>
-              ) : (
-                <></>
-              )}
-              {props.payment_status === 3 && props.payment_verified === 0 ? (
-                <>
-                  <View style={styles.container}>
-                    <View>
-                      <TouchableOpacity style={styles.iconContainer}>
-                        <EyeIcon size={wp(5)} color={"#4870F4"} />
-                        <Text style={styles.documentText}>{t("invoice")}</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
+                    {uploadDetails ? (
+                      <View style={{ width: wp(50)}}>
+                        <TouchableOpacity
+                          style={styles.iconContainer}
+                          onPress={() => showModal()}
+                        >
+                          <DocumentIcon size={wp(5)} color={"#E64242"} />
+                          <Text style={styles.document}>
+                            {t("upload_payment_details")}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <>
+                        <Text style={styles.document}>
+                          {t("our_team_will_update_your_status")}
+                        </Text>
+                      </>
+                    )}
+                    <View style={{width: wp(45), marginVertical: wp(2)}}>
                       <Text style={styles.pending}>
                         ⌛{t("payment_pending")}
                       </Text>
                     </View>
                   </View>
-                  {uploadDetails ? (
-                    <TouchableOpacity
-                      style={styles.iconContainer}
-                      onPress={() => showModal()}
-                    >
-                      <DocumentIcon size={wp(5)} color={"#E64242"} />
-                      <Text style={styles.document}>
-                        {t("upload_payment_details")}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <>
-                      <Text style={styles.document}>
-                        {t("our_team_will_update_your_status")}{" "}
-                      </Text>
-                    </>
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
-              {props.payment_status === 4 && props.payment_verified === 0 ? (
-                <View style={styles.container}>
-                  <View>
-                    {/* <TouchableOpacity style={styles.iconContainer}>
-                <EyeIcon size={wp(5)} color={"#4870F4"} />
-                <Text style={styles.documentText}>{t('invoice')}</Text>
-              </TouchableOpacity> */}
-                    {uploadDetails ? (
-                      <></>
-                    ) : (
-                      <>
-                        <Text style={styles.document}>
-                          Our Team will update your Order status
-                        </Text>
-                      </>
-                    )}
-                  </View>
-                  <View>
-                    <Text style={styles.pending}>☹️{t('rejected')}</Text>
-                  </View>
-                </View>
-              ) : (
-                <></>
-              )}
-
+                )}
+              </View>
               <PaymentDetailsModal
                 visible={modalVisible}
                 productName={props.product_name}
@@ -386,6 +366,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp(90),
     height: hp(60),
+    // backgroundColor: "rgba(0,0,0,0.5)",
   },
   textInput: {
     marginBottom: hp(2),
@@ -396,7 +377,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginLeft: wp(10),
     borderWidth: 1,
-    borderColor: "#4870F4",
+    borderColor: colors,
     elevation: 1,
     borderRadius: wp(1),
     width: wp(90),
@@ -404,15 +385,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   icon: {
-    position: "absolute",
-    right: 0,
-    color: "#4870F4",
+    // position: "absolute",
+    // right: 0,
+    color: colors,
+    zIndex: 600,
   },
   conformContainer: {
     marginTop: hp(2),
     marginLeft: wp(1),
     width: wp(25),
-    backgroundColor: "#4870F4",
+    backgroundColor: colors,
     padding: wp(3),
     borderRadius: 10,
   },
@@ -427,4 +409,188 @@ const styles = StyleSheet.create({
     fontSize: hp(2.2),
     fontFamily: "QuicksandSemiBold",
   },
+  inputLabel: {
+    marginBottom: wp(2),
+  },
 });
+
+/*
+
+{props.payment_status === true &&
+              props.payment_verified === true ? (
+                <View style={styles.container}>
+                  <View>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>{t("invoice")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>Receipt</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <Text style={styles.completed}>✅{t("completed")}</Text>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+              {props.payment_status === true &&
+              props.payment_verified === false ? (
+                <View style={styles.container}>
+                  <TouchableOpacity
+                    style={[styles.iconContainer, { alignItems: "center" }]}
+                  >
+                    <EyeIcon size={wp(5)} color={"#4870F4"} />
+                    <Text style={styles.documentText}>{t("invoice")}</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.process}>⏱️{t("under_process")}</Text>
+                </View>
+              ) : (
+                <></>
+              )}
+              {props.payment_status === false &&
+              props.payment_verified === false ? (
+                <>
+                  <View style={styles.container}>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>{t("invoice")}</Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.pending}>⌛{t("payment_pending")}</Text>
+                  </View>
+
+                  {uploadDetails ? (
+                    <TouchableOpacity
+                      style={styles.iconContainer}
+                      onPress={() => showModal()}
+                    >
+                      <DocumentIcon size={wp(5)} color={"#E64242"} />
+                      <Text style={styles.document}>
+                        {t("upload_payment_details")}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <Text style={styles.document}>
+                        {t("our_team_will_update_your_status")}
+                      </Text>
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+              {props.payment_status === false &&
+              props.payment_verified === true ? (
+                <View style={styles.container}>
+                  <View>
+                    <TouchableOpacity style={styles.iconContainer}>
+                      <EyeIcon size={wp(5)} color={"#4870F4"} />
+                      <Text style={styles.documentText}>{t("invoice")}</Text>
+                    </TouchableOpacity>
+                    {uploadDetails ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Text style={styles.document}>
+                          Our Team will update your Order status
+                        </Text>
+                      </>
+                    )}
+                  </View>
+                  <View>
+                    <Text style={styles.pending}>☹️{t("rejected")}</Text>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+
+
+
+
+
+
+
+                      <SafeAreaView style={styles.fill}>
+          <View style={styles.inputContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.modalText}>
+                {t("product_name")}: {productName}
+              </Text>
+
+              <Text style={styles.modalText}>
+                {t("product") + " " + t("price")}: ₹ {productPrice}
+              </Text>
+
+              <Text style={styles.modalText}>
+                {t("product") + " " + t("quantity")}:{" "}
+                {productQuantity + t("tonnes")}
+              </Text>
+
+              <TouchableOpacity style={{ zIndex: 500 }}>
+                <XCircleIcon
+                  size={wp(8)}
+                  style={styles.icon}
+                  onPress={() => hide}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ marginTop: hp(3) }}>
+              <Text>{t("account_number")}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setAccountNumber(text)}
+                placeholderTextColor={colors}
+                placeholder={t("account_number")}
+              />
+            </View>
+            <View>
+              <Text>{t("transaction_id")}</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => setTransactionId(text)}
+                placeholderTextColor={colors}
+                placeholder={t("transaction_id")}
+              />
+            </View>
+            <View>
+              <Text>{t("transaction_date")}</Text>
+              <TouchableOpacity>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={(text) => setTransactionId(text)}
+                  placeholderTextColor={colors}
+                  placeholder={t("transaction_date")}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text>{t("amount")}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={productPrice}
+                disable
+                placeholderTextColor={colors}
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={changeValue}
+              style={styles.conformContainer}
+            >
+              <Text style={styles.conformText}>{t("conform")}</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+
+*/

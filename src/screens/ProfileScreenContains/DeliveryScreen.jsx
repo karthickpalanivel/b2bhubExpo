@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: backgrounds,
     alignItems: "center",
+    marginBottom: wp(6)
   },
 
   floatNavigationContainer: {

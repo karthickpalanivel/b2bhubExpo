@@ -53,19 +53,6 @@ const HomeScreen = () => {
 
   const hide = () => setModalVisible(false);
 
-  useEffect(() => {
-    async function loadFonts() {
-      await Font.loadAsync({
-        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
-        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
-        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
-        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
-      });
-      setIsLoading(false);
-    }
-    loadFonts();
-  }, []);
-
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -88,11 +75,6 @@ const HomeScreen = () => {
       });
       setIsLoading(false);
     }
-
-    // setTimeout(() => {
-    //   setBuyersLoginContent(false);
-    // }, 10000);
-
     loadFonts();
   }, []);
 
@@ -442,8 +424,7 @@ const styles = StyleSheet.create({
 
   punchOne: {
     fontSize: hp(3.8),
-    fontFamily: "",
-
+    fontFamily: "QuicksandSemiBold",
     color: "#475569",
   },
 

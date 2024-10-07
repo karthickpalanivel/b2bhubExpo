@@ -14,7 +14,7 @@ export default function WelcomeScreen() {
   const ringOnePadding = useSharedValue(0);
   const ringTwoPadding = useSharedValue(0);
   const navigation = useNavigation();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [loggedin, setloggedin] = useState("false");
   console.log(loggedin);
 
@@ -39,6 +39,16 @@ export default function WelcomeScreen() {
   }
 
   useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+    loadFonts();
     ringOnePadding.value = 0;
     ringTwoPadding.value = 0;
     setTimeout(
@@ -52,21 +62,37 @@ export default function WelcomeScreen() {
 
     setTimeout(() => navigationScreen(), 2500);
   }, []);
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Animated.View style={[styles.outerRing, {padding: ringOnePadding}]}>
-        <Animated.View style={[styles.innerRing, {padding: ringTwoPadding}]}>
-          <Image source={require("../assets/logo.png")} style={styles.image} />
-        </Animated.View>
-      </Animated.View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.business, {fontSize: 25}]}>
-          Make your business trading
-        </Text>
-        <Text style={[styles.business, {fontSize: 30}]}>Easier with us!</Text>
-      </View>
-    </View>
+    <>
+      {isLoading ? (
+        <></>
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="light" />
+          <Animated.View
+            style={[styles.outerRing, { padding: ringOnePadding }]}
+          >
+            <Animated.View
+              style={[styles.innerRing, { padding: ringTwoPadding }]}
+            >
+              <Image
+                source={require("../assets/logo.png")}
+                style={styles.image}
+              />
+            </Animated.View>
+          </Animated.View>
+          <View style={styles.textContainer}>
+            <Text style={[styles.business, { fontSize: 25 }]}>
+              Make your business trading
+            </Text>
+            <Text style={[styles.business, { fontSize: 30 }]}>
+              Easier with us!
+            </Text>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
