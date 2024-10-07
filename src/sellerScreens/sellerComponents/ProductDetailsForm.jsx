@@ -43,12 +43,6 @@ const backgrounds = "#FCF8F3";
 
 
 
-
-
-
-
-
-
 const ProductDetailsForm = ({ route }) => {
   const [isProduct, setIsProduct] = useState({});
   const [productName, setProductName] = useState("");
