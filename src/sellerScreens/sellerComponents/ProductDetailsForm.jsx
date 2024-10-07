@@ -49,6 +49,8 @@ const backgrounds = "#FCF8F3";
 
 
 
+
+
 const ProductDetailsForm = ({ route }) => {
   const [isProduct, setIsProduct] = useState({});
   const [productName, setProductName] = useState("");
@@ -67,6 +69,7 @@ const ProductDetailsForm = ({ route }) => {
   const [packageDetails, setPackageDetails] = useState([
     { type: "Select Package", quantity: "0" },
   ]);
+  const [source, setsource] = useState(null)
 
   const packageDict = packageDetails.reduce((acc, pkg) => {
     if (pkg.type && pkg.quantity) {
@@ -388,6 +391,7 @@ console.log(units);
         });
       }
       if (!result.canceled) {
+       // Update the image state with the selected image URI
         setIsUploadVisible(false);
         const uri = result.assets[0].uri;
         const type = result.assets[0].type;
@@ -397,7 +401,6 @@ console.log(units);
         console.log('====================================');
         console.log(source);
         console.log('====================================');
-        
       }
     } catch (error) {
       console.error(error);

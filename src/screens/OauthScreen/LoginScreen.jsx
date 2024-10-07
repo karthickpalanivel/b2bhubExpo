@@ -25,7 +25,7 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
-import AppLoading from "expo-app-loading";
+
 import {
   ChevronLeftIcon,
   EyeIcon,
@@ -38,6 +38,7 @@ import Animated, { FadeInRight } from "react-native-reanimated";
 import LanguageSelectionModal from "../../components/modals/LanguageSelectionModal";
 import LanguageList from "../../language/LanguageList.json";
 import { useLanguage } from "../../hooks/LanguageContext";
+import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
 const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -249,7 +250,7 @@ const LoginScreen = () => {
     <>
       <StatusBar style={"light"} />
       {isLoading ? (
-        <AppLoading />
+        <AppLoaderAnimation />
       ) : (
         <>
           <ScrollView style={styles.container}>

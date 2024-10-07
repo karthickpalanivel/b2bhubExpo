@@ -20,14 +20,13 @@
     "@react-navigation/native-stack": "^6.11.0",
     "axios": "^1.7.7",
     "expo": "~51.0.28",
-    "expo-app-loading": "^2.1.1",
     "expo-font": "~12.0.9",
     "expo-image-picker": "^15.0.7",
     "expo-linear-gradient": "~13.0.2",
     "expo-print": "~13.0.1",
     "expo-sharing": "~12.0.1",
-    "expo-splash-screen": "~0.27.6",
     "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.26",
     "heroicons": "^2.1.5",
     "i18next": "^23.15.1",
     "lottie-react-native": "^6.7.2",
@@ -49,8 +48,7 @@
     "react-native-screens": "3.31.1",
     "react-native-toggle-element": "^2.0.1",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-x-carousel": "^1.0.1",
-    "expo-updates": "~0.25.26"
+    "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
+import {useNavigation} from "@react-navigation/native";
+import {StatusBar} from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {Image, StyleSheet, Text, View} from "react-native";
+import Animated, {useSharedValue, withSpring} from "react-native-reanimated";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -17,27 +17,26 @@ export default function WelcomeScreen() {
 
   const [loggedin, setloggedin] = useState("false");
   console.log(loggedin);
-  
 
-    function navigationScreen(){
-      
-      AsyncStorage.getItem("loginstate")
-    .then((value) => {
-      if (value !== null && value == "true") {
-        // Value was found, do something with it
-        //console.log("Value:", value);
-        navigation.navigate("Home")
-      } else {
-        navigation.navigate("Login")
-        // No value found
-        //console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      // Error retrieving value
-      console.error("Error:", error);
-    });
-    }
+  async function navigationScreen() {
+    await AsyncStorage.getItem("loginstate")
+      .then((value) => {
+        if (value !== null && value == "true") {
+          // Value was found, do something with it
+          //console.log("Value:", value);
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Login");
+          // No value found
+          //console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        // Error retrieving value
+        console.error("Error:", error);
+        navigation.navigate("Login");
+      });
+  }
 
   useEffect(() => {
     ringOnePadding.value = 0;
@@ -51,23 +50,21 @@ export default function WelcomeScreen() {
       300
     );
 
-    
-
     setTimeout(() => navigationScreen(), 2500);
   }, []);
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Animated.View style={[styles.outerRing, { padding: ringOnePadding }]}>
-        <Animated.View style={[styles.innerRing, { padding: ringTwoPadding }]}>
+      <Animated.View style={[styles.outerRing, {padding: ringOnePadding}]}>
+        <Animated.View style={[styles.innerRing, {padding: ringTwoPadding}]}>
           <Image source={require("../assets/logo.png")} style={styles.image} />
         </Animated.View>
       </Animated.View>
       <View style={styles.textContainer}>
-        <Text style={[styles.business, { fontSize: 25 }]}>
+        <Text style={[styles.business, {fontSize: 25}]}>
           Make your business trading
         </Text>
-        <Text style={[styles.business, { fontSize: 30 }]}>Easier with us!</Text>
+        <Text style={[styles.business, {fontSize: 30}]}>Easier with us!</Text>
       </View>
     </View>
   );
@@ -89,7 +86,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-
   },
   outerRing: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",

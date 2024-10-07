@@ -96,38 +96,23 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
-  AsyncStorage.getItem("token")
-    .then((value) => {
-      if (value !== null) {
-        // Value was found, do something with it
-        console.log("____________________________________________________");
-        console.log("token ID:", value);
-        console.log("____________________________________________________");
-      } else {
-        // No value found
-        // console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      // Error retrieving value
-      console.error("Error:", error);
-    });
 
-  AsyncStorage.getItem("companyname")
-    .then((value) => {
-      if (value !== null) {
-        setcompanyName(value);
-        // Value was found, do something with it
-        //console.log("Value:", value);
-      } else {
-        // No value found
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      // Error retrieving value
-      console.error("Error:", error);
-    });
+
+  // AsyncStorage.getItem("companyname")
+  //   .then((value) => {
+  //     if (value !== null) {
+  //       setcompanyName(value);
+  //       // Value was found, do something with it
+  //       //console.log("Value:", value);
+  //     } else {
+  //       // No value found
+  //       console.log("No value found");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // Error retrieving value
+  //     console.error("Error:", error);
+  //   });
 
   const profileScreen = () => {
     navigation.navigate("Profile");
