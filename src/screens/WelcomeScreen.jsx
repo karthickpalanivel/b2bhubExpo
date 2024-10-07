@@ -14,32 +14,40 @@ export default function WelcomeScreen() {
   const ringOnePadding = useSharedValue(0);
   const ringTwoPadding = useSharedValue(0);
   const navigation = useNavigation();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [loggedin, setloggedin] = useState("false");
   console.log(loggedin);
-  
 
-    function navigationScreen(){
-      
-      AsyncStorage.getItem("loginstate")
-    .then((value) => {
-      if (value !== null && value == "true") {
-        // Value was found, do something with it
-        //console.log("Value:", value);
-        navigation.navigate("Home")
-      } else {
-        navigation.navigate("Login")
-        // No value found
-        //console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      // Error retrieving value
-      console.error("Error:", error);
-    });
-    }
+  function navigationScreen() {
+    AsyncStorage.getItem("loginstate")
+      .then((value) => {
+        if (value !== null && value == "true") {
+          // Value was found, do something with it
+          //console.log("Value:", value);
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Login");
+          // No value found
+          //console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        // Error retrieving value
+        console.error("Error:", error);
+      });
+  }
 
   useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+    loadFonts();
     ringOnePadding.value = 0;
     ringTwoPadding.value = 0;
     setTimeout(
@@ -51,25 +59,39 @@ export default function WelcomeScreen() {
       300
     );
 
-    
-
     setTimeout(() => navigationScreen(), 2500);
   }, []);
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Animated.View style={[styles.outerRing, { padding: ringOnePadding }]}>
-        <Animated.View style={[styles.innerRing, { padding: ringTwoPadding }]}>
-          <Image source={require("../assets/logo.png")} style={styles.image} />
-        </Animated.View>
-      </Animated.View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.business, { fontSize: 25 }]}>
-          Make your business trading
-        </Text>
-        <Text style={[styles.business, { fontSize: 30 }]}>Easier with us!</Text>
-      </View>
-    </View>
+    <>
+      {isLoading ? (
+        <></>
+      ) : (
+        <View style={styles.container}>
+          <StatusBar style="light" />
+          <Animated.View
+            style={[styles.outerRing, { padding: ringOnePadding }]}
+          >
+            <Animated.View
+              style={[styles.innerRing, { padding: ringTwoPadding }]}
+            >
+              <Image
+                source={require("../assets/logo.png")}
+                style={styles.image}
+              />
+            </Animated.View>
+          </Animated.View>
+          <View style={styles.textContainer}>
+            <Text style={[styles.business, { fontSize: 25 }]}>
+              Make your business trading
+            </Text>
+            <Text style={[styles.business, { fontSize: 30 }]}>
+              Easier with us!
+            </Text>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -89,7 +111,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-
   },
   outerRing: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
