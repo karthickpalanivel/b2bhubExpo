@@ -340,19 +340,27 @@ console.log(units);
   //   }
   // };
 
-  async function uploadImage(uri){
-    try {
-      const uploadParams = {
-        public_id: 'testing', // Replace with your desired public ID
-        file: uri,
-      };
-  
-      const response = await Cloudinary.v2.uploader.upload(uploadParams);
-      console.log('Image uploaded successfully:', response.url);
-      // Handle the uploaded image URL as needed
-    } catch (error) {
-      console.error('Error uploading image:', error);
+  function uploadImage(photo){
+   const data = new FormData;
+   data.append('file',photo);
+   data.append("upload_preset","_Dalpicsonly")
+   data.append("cloud_name","dbesmy2df")
+   fetch("https://api.cloudinary.com/v1_1/dbesmy2df/image/upload",{
+    method: 'POST',
+    body: data,
+    headers:{
+      "Accept":"application/json",
+      "Content-Type":"multipart/form/data"
     }
+   }).then( res => res.json())
+   .then(data => {
+    setImage(data.uri);
+    console.log('==================data uri==================');
+    console.log(data.uri);
+    console.log('====================================');
+   }).catch(err => {
+    Alert.alert(err + "error while uploading")
+   })
   }
 
   console.log('====================================');
@@ -380,8 +388,16 @@ console.log(units);
         });
       }
       if (!result.canceled) {
-        setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
+        const uri = result.assets[0].uri;
+        const type = result.assets[0].type;
+        const name = result.assets[0].fileName;
+        const source = {uri,type,name}
+        uploadImage(source)
+        console.log('====================================');
+        console.log(source);
+        console.log('====================================');
+        
       }
     } catch (error) {
       console.error(error);
@@ -513,7 +529,7 @@ console.log(units);
                           height={hp("8%")}
                           color={colors}
                         />
-                        <TouchableOpacity onPress={() => uploadImage()}>
+                        <TouchableOpacity >
                           <View>
                             <Text>Upload</Text>
                           </View>
@@ -522,7 +538,7 @@ console.log(units);
                     )}
                   </TouchableOpacity>
                 )}
-                <TouchableOpacity onPress={()=>uploadImage()}><Text>upload</Text></TouchableOpacity>
+                <TouchableOpacity ><Text>upload</Text></TouchableOpacity>
               </View>
 
               {/* Product Details Form */}

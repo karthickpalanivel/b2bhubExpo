@@ -11,6 +11,7 @@ import {
   Alert,
   Modal,
 } from "react-native";
+import axios from 'axios'
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import {
@@ -53,6 +54,20 @@ const SellerRegistration = () => {
 
   const handleRegister = () => {
     // Example: Send the OTP to the user's email and store the OTP sent by the server
+    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/b2b/reqToUpgradeSeller";
+    axios.post(url, { email: email })
+          .then((res) => {
+            console.log("-----------", res.data.message);
+            setOtpSent(true);
+
+          })
+          .catch((err) => {
+            if (err.status === 404) {
+              toast.error("Email Not Found  ", { position: "top-center" });
+            } else {
+              toast.error("Error Sending OTP", { position: "top-center" });
+            }
+          });
     console.log(city);
     console.log(email);
     // Simulate the server sending OTP, store it for later comparison

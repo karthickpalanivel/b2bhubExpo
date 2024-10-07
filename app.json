@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "B2B hub India",
-    "slug": "B2B hub India",
+    "slug": "B2B_hub_India",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,10 +15,16 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-        
       },
       "package": "com.vts.B2BHubIndia"
     },
@@ -27,7 +33,11 @@
     },
     "plugins": [
       "expo-font"
-      
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "528edbf2-6de1-4c55-a26f-15eac032687b"
+      }
+    }
   }
 }

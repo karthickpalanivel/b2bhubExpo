@@ -287,7 +287,7 @@ const PaymentSummary = ({ route }) => {
     }
   };
   const goBack = () => {
-    navigation.goBack();
+    navigation.navigate("Home");
   };
 
   const gstCalculatedPrice = () => {

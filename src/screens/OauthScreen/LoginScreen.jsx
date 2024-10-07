@@ -55,6 +55,7 @@ const LoginScreen = () => {
   const [showForgot, setShowForgot] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [logintext, setLogintext] = useState("login")
   // const [showPassword, setShowpassword] = useState(true);
   const [toggleValue, setToggleValue] = useState(false); //false->buyer,true->seller
   const [sellerPassword, setSellerPassword] = useState("");
@@ -97,6 +98,7 @@ const LoginScreen = () => {
   }, []);
 
   const handleSellerSubmit = async () => {
+    setLogintext("Logging in...")
     if (sellerEmail && sellerPassword) {
       // console.log("Email:", sellerEmail);
       // console.log("Password:", sellerPassword);
@@ -114,6 +116,7 @@ const LoginScreen = () => {
         .then((res) => {
           console.log(res.status);
           if (res.status === 200) {
+            setLogintext("Login")
             const customer = res.data.user;
             console.log(customer);
             navigation.navigate("SellerHome");
@@ -142,6 +145,7 @@ const LoginScreen = () => {
   };
 
   async function handleLogin() {
+    setLogintext("Logging in...")
     const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
     console.log("====================================");
     console.log(url);
@@ -155,6 +159,7 @@ const LoginScreen = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
+          setLogintext("Login")
           const customer = res.data.user;
           console.log(customer);
           navigation.navigate("Home");
@@ -344,7 +349,7 @@ const LoginScreen = () => {
                     style={styles.submitButton}
                     onPress={() => handleLogin()}
                   >
-                    <Text style={styles.submitButtonText}>{t("login")}</Text>
+                    <Text style={styles.submitButtonText}>{t(logintext)}</Text>
                   </TouchableOpacity>
                 </View>
               </>
@@ -402,7 +407,7 @@ const LoginScreen = () => {
                       style={styles.submitButton}
                       onPress={() => handleSellerSubmit()}
                     >
-                      <Text style={styles.submitButtonText}>{t("login")}</Text>
+                      <Text style={styles.submitButtonText}>{t(logintext)}</Text>
                     </TouchableOpacity>
 
                     <View style={styles.noteContainer}>
