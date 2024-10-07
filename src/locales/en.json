@@ -335,5 +335,10 @@
 
   "buyer_imp": "Non-compliance with the rules may result in severe actions, including account suspension and legal actions. Buyers must adhere to all policies strictly.",
   "go_home": "Go Home",
-  "go_back": "Go Back"
+  "go_back": "Go Back",
+  "shipped": "Shipped",
+  "confirm": "Confirm",
+  "transaction_date": "Transaction Date",
+  "amount": "Amount",
+  "transaction_id": "Transaction ID"
 }

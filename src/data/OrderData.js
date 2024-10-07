@@ -6,7 +6,7 @@ export const orderData = [
     companyname: "ABC solutions",
     customerId: "B2BCID0002",
     date_of_order: "09/09/2024",
-    deliveryStatus: 0,
+    deliveryStatus: true,
     email: "saisudhakiransobila@gmail.com",
     gst_no: "jaksdaslkkdlkj343",
     invoiceUrl:
@@ -15,8 +15,8 @@ export const orderData = [
     orderId: "B2BHUB0006",
     paymentUrl:
       "https://res.cloudinary.com/dtgnotkh7/image/upload/v1725940757/pnw9p4yemlta9x2mblgd.pdf",
-    payment_status: 1,
-    payment_verified: 1,
+    payment_status: true,
+    payment_verified: true,
     phone_no: "8985919149",
     productId: "B2BPID0001",
     product_name: "MoongDal",
@@ -35,7 +35,7 @@ export const orderData = [
     companyname: "ABC solutions",
     customerId: "B2BCID0002",
     date_of_order: "09/09/2024",
-    deliveryStatus: 0,
+    deliveryStatus: false,
     email: "saisudhakiransobila@gmail.com",
     gst_no: "jaksdaslkkdlkj343",
     invoiceUrl:
@@ -44,8 +44,8 @@ export const orderData = [
     orderId: "B2BHUB0006",
     paymentUrl:
       "https://res.cloudinary.com/dtgnotkh7/image/upload/v1725940757/pnw9p4yemlta9x2mblgd.pdf",
-    payment_status: 2,
-    payment_verified: 0,
+    payment_status: true,
+    payment_verified: false,
     phone_no: "8985919149",
     productId: "B2BPID0001",
     product_name: "MoongDal",
@@ -63,7 +63,7 @@ export const orderData = [
     companyname: "ABC solutions",
     customerId: "B2BCID0002",
     date_of_order: "09/09/2024",
-    deliveryStatus: 0,
+    deliveryStatus: false,
     email: "saisudhakiransobila@gmail.com",
     gst_no: "jaksdaslkkdlkj343",
     invoiceUrl:
@@ -72,8 +72,8 @@ export const orderData = [
     orderId: "B2BHUB0006",
     paymentUrl:
       "https://res.cloudinary.com/dtgnotkh7/image/upload/v1725940757/pnw9p4yemlta9x2mblgd.pdf",
-    payment_status: 3,
-    payment_verified: 0,
+    payment_status: false,
+    payment_verified: false,
     phone_no: "8985919149",
     productId: "B2BPID0001",
     product_name: "MoongDal",
@@ -91,7 +91,7 @@ export const orderData = [
     companyname: "ABC solutions",
     customerId: "B2BCID0002",
     date_of_order: "09/09/2024",
-    deliveryStatus: 0,
+    deliveryStatus: false,
     email: "saisudhakiransobila@gmail.com",
     gst_no: "jaksdaslkkdlkj343",
     invoiceUrl:
@@ -100,8 +100,8 @@ export const orderData = [
     orderId: "B2BHUB0006",
     paymentUrl:
       "https://res.cloudinary.com/dtgnotkh7/image/upload/v1725940757/pnw9p4yemlta9x2mblgd.pdf",
-    payment_status: 4,
-    payment_verified: 0,
+    payment_status: false,
+    payment_verified: true,
     phone_no: "8985919149",
     productId: "B2BPID0001",
     product_name: "MoongDal",
