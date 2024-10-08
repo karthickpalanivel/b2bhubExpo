@@ -74,6 +74,7 @@ const OnBoardingScreenOne = () => {
   }, []);
 
   const navigation = useNavigation();
+  
   const handleOnCompleteOnBoard = () => {
     navigation.navigate("SignUp");
   };

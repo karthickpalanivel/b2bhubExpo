@@ -220,11 +220,11 @@ const PaymentSummary = ({ route }) => {
         },
       })
       .then((res) => {
-        console.log("====================================");
+        // console.log("====================================");
         // console.log(res.data[0].invoiceId); invoice ID captured here....
         setInvoiceUniqueId(res.data[0].invoiceId);
-        console.log(invoiceUniqueId);
-        console.log("====================================");
+        // console.log(invoiceUniqueId);
+        // console.log("====================================");
       });
   }
 
@@ -264,7 +264,7 @@ const PaymentSummary = ({ route }) => {
       };
 
 
-      console.log(getInvoiceData);
+      // console.log(getInvoiceData);
 
       const invoiceUrl = PdfGeneration(getInvoiceData, printer, setPrinter); //<PdfGeneration invoicedata={getInvoiceData} />;
 
@@ -288,7 +288,7 @@ const PaymentSummary = ({ route }) => {
     }
   };
   const goBack = () => {
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   const navigateToHome = () => {

@@ -8,6 +8,7 @@ import {
   Pressable,
   TextInput,
   Modal,
+  Platform
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -550,7 +551,7 @@ const styles = StyleSheet.create({
 
   modelIconsBack: {
     position: "absolute",
-    top: hp(1),
+    top: Platform.OS === "android" ? hp(1) : hp(5),
     left: wp(1),
     width: hp(5.7),
     padding: wp(2),

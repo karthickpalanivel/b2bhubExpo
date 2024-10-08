@@ -10,8 +10,8 @@ import {
 } from "react-native-responsive-screen";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { useTranslation } from "react-i18next";
-const btn="#E84A5F";
-const backgrounds="#FCF8F3";
+const btn = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const ProductCardTwo = ({ props }) => {
   const { t } = useTranslation();
@@ -148,7 +148,9 @@ const ProductCardTwo = ({ props }) => {
                     style={styles.icon}
                     fill="green"
                   />
-                  <Text style={styles.order}>{t("show_product")}</Text>
+                  <View style={styles.order}>
+                    <Text style={styles.orderText}>{t("show_product")}</Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -244,18 +246,21 @@ const styles = StyleSheet.create({
     color: "black",
   },
   order: {
-    fontSize: wp(3.75),
-    textAlign: "center",
     marginBottom: "5%",
     borderWidth: 0.2,
-    borderColor: "blue",
+
     width: "70%",
     padding: 5,
-    borderRadius: wp(100),
+    borderRadius: 999,
     backgroundColor: btn,
-    color: "white",
+
     marginTop: "5%",
-    fontFamily: "Quicksand Bold",
+  },
+  orderText: {
+    fontSize: wp(3.75),
+    textAlign: "center",
+    color: "white",
+    fontFamily: "QuicksandBold",
   },
   cartBtns: {
     width: "100%",

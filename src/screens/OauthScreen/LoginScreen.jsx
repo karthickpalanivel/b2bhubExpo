@@ -51,6 +51,10 @@ export const CustomCheckBox = ({ value, onValueChange }) => (
 
 const LoginScreen = () => {
   const { t } = useTranslation();
+  //Language Modals Hooks
+  const { language, changeLanguage } = useLanguage;
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  // const [Language, setLanguage] = useState(LanguageList[language].nativeName);
 
   const [buyerEmail, setBuyerEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,12 +70,6 @@ const LoginScreen = () => {
   const [viewPassword, setViewPassword] = useState(true);
   //const [email, setEmail] = useState('');
   const [sellerEmail, setSellerEmail] = useState("");
-
-  //Language Modals Hooks
-  const { language, changeLanguage } = useLanguage;
-  const [languageModalVisible, setLanguageModalVisible] = useState(false);
-  // const [Language, setLanguage] = useState(LanguageList[language].nativeName);
-
 
   const navigation = useNavigation();
 
@@ -182,6 +180,7 @@ const LoginScreen = () => {
       })
       .catch((error) => {
         window.alert(error);
+        setLogintext(t("login"));
         return;
       });
   }
@@ -256,7 +255,12 @@ const LoginScreen = () => {
         <>
           <ScrollView style={styles.container}>
             {/* Add logo */}
-            <View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
               <View />
               <View style={styles.logoContainer}>
                 <Image
@@ -264,12 +268,18 @@ const LoginScreen = () => {
                   style={styles.logo}
                 />
               </View>
-              <View>
-                <LanguageIcon size={wp(4)} />
+              <View
+                style={{
+                  marginLeft: wp(10),
+                }}
+              >
+                <LanguageIcon size={wp(4)} color={"white"} />
+                <Text style={{ color: "white", fontSize: wp(3) }}>
+                  {LanguageList[language]}
+                </Text>
               </View>
             </View>
 
-            {/* style={{textAlign: 'center'}} */}
             <View style={{ alignItems: "center" }}>
               <Toggle
                 value={toggleValue}

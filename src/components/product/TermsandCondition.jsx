@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Platform
+  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -44,7 +44,7 @@ const TermsAndConditionsModal = ({
   const [isChecked, setIsChecked] = useState(false);
   const [productSummary, setProductSummary] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [isVisible, setVisisble] = useState(visible);
+  // const [isVisible, setVisisble] = useState(visible);
   const navigation = useNavigation();
 
   // Object.entries(finalDetails).forEach((key, objects) => {
@@ -123,7 +123,8 @@ const TermsAndConditionsModal = ({
 
   const handleComplete = () => {
     if (isChecked) {
-      setVisible(false);
+      setVisible((current) => !current);
+
       // console.log(productSummary);
       navigation.navigate("paymentSummary", { productSummary: productSummary });
     } else {
@@ -144,7 +145,7 @@ const TermsAndConditionsModal = ({
             onPress={() => {
               // visible = false;
               // navigation.goBack();
-              setVisible(false)
+              setVisible((current) => !current);
             }}
           >
             <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={colors} />
@@ -153,7 +154,7 @@ const TermsAndConditionsModal = ({
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
-                setVisible(false)
+                setVisible((current) => !current);
                 // !visible;
                 // navigation.goBack();
               }}
