@@ -78,23 +78,30 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
+  useEffect(()=>{
+     async function getItems(){
+      AsyncStorage.getItem("companyname")
+      .then((value) => {
+        if (value !== null) {
+          setcompanyName(value);
+          // Value was found, do something with it
+          console.log("Value:", value);
+        } else {
+          // No value found
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        // Error retrieving value
+        console.error("Error:", error);
+      });
+     }
+     getItems()
+  }, [])
 
 
-  // AsyncStorage.getItem("companyname")
-  //   .then((value) => {
-  //     if (value !== null) {
-  //       setcompanyName(value);
-  //       // Value was found, do something with it
-  //       //console.log("Value:", value);
-  //     } else {
-  //       // No value found
-  //       console.log("No value found");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     // Error retrieving value
-  //     console.error("Error:", error);
-  //   });
+
+  
 
   const profileScreen = () => {
     navigation.navigate("Profile");
