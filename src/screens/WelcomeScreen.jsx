@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
+import {useNavigation} from "@react-navigation/native";
+import {StatusBar} from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {Image, StyleSheet, Text, View} from "react-native";
+import Animated, {useSharedValue, withSpring} from "react-native-reanimated";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -18,8 +18,8 @@ export default function WelcomeScreen() {
   const [loggedin, setloggedin] = useState("false");
   console.log(loggedin);
 
-  function navigationScreen() {
-    AsyncStorage.getItem("loginstate")
+  async function navigationScreen() {
+    await AsyncStorage.getItem("loginstate")
       .then((value) => {
         if (value !== null && value == "true") {
           // Value was found, do something with it
@@ -34,6 +34,7 @@ export default function WelcomeScreen() {
       .catch((error) => {
         // Error retrieving value
         console.error("Error:", error);
+        navigation.navigate("Login");
       });
   }
 
