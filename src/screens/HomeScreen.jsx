@@ -35,7 +35,7 @@ import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../data/CompanyData";
 import FloatingNavigationButton from "../components/button/FloatingNavigationButton";
 import { useTranslation } from "react-i18next";
-import { Banner } from "react-native-paper";
+
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 

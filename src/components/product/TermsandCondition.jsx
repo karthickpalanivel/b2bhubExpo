@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Platform
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -141,8 +142,9 @@ const TermsAndConditionsModal = ({
           <TouchableOpacity
             style={styles.modelIconsBack}
             onPress={() => {
-              visible = false;
-              navigation.goBack();
+              // visible = false;
+              // navigation.goBack();
+              setVisible(false)
             }}
           >
             <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={colors} />
@@ -151,7 +153,8 @@ const TermsAndConditionsModal = ({
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
-                !visible;
+                setVisible(false)
+                // !visible;
                 // navigation.goBack();
               }}
             >
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
 
   modelIconsBack: {
     position: "absolute",
-    top: hp(1),
+    top: Platform.OS === "android" ? hp(1) : hp(5),
     left: wp(1),
     width: hp(5.7),
     padding: wp(2),
