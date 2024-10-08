@@ -77,29 +77,39 @@ const ProfileScreen = () => {
     // console.log("Logout button clicked");
   };
 
-  AsyncStorage.getItem("companyname")
-    .then((value) => {
-      if (value !== null) {
-        setCompanyName(value);
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  
+  useEffect(()=>{
+    async function getItems(){
+      AsyncStorage.getItem("companyname")
+      .then((value) => {
+        if (value !== null) {
+          setCompanyName(value);
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  
+    AsyncStorage.getItem("phone")
+      .then((value) => {
+        if (value !== null) {
+          setPhone(value);
+        } else {
+          console.log("No value found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    }
+    getItems()
+ }, [])
 
-  AsyncStorage.getItem("phone")
-    .then((value) => {
-      if (value !== null) {
-        setPhone(value);
-      } else {
-        console.log("No value found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+
+
+  
 
   const goback = () => {
     navigation.navigate("Home");
