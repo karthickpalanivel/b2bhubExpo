@@ -5,11 +5,13 @@ import {
   View,
   Modal,
   SafeAreaView,
+  Linking,
   TextInput,
+
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { printAsync, printToFileAsync } from "expo-print";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import {
@@ -36,6 +38,20 @@ const OrderCard = ({ props }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [uploadDetails, setUploadDetails] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
+        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
+        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
+        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
+      });
+      setIsLoading(false);
+    }
+    loadFonts();
+  }, []);
+
+  const { t } = useTranslation();
 
   const show = () => setModalVisible(true);
   const hide = () => setModalVisible(false);
@@ -49,20 +65,19 @@ const OrderCard = ({ props }) => {
     show();
   };
 
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    async function loadFonts() {
-      await Font.loadAsync({
-        Quicksand: require("../../assets/fonts/Quicksand Regular.ttf"),
-        QuicksandBold: require("../../assets/fonts/Quicksand Bold.ttf"),
-        QuicksandSemiBold: require("../../assets/fonts/Quicksand SemiBold.ttf"),
-        QuicksandLight: require("../../assets/fonts/Quicksand Light.ttf"),
-      });
-      setIsLoading(false);
+  const PdfResource = props.invoiceUrl;
+  const openInvoice = async () => {
+    try{
+      const canOpen = await Linking.canOpenURL(PdfResource);
+      if(!canOpen){
+        Alert.alert('Error on opening PDF links');
+        throw new Error("Error occured");
+      }
+      await Linking.openURL(PdfResource);
+    } catch (err){
+      console.log("Error on opening PDF : ", err)
     }
-    loadFonts();
-  }, []);
+  };
 
   const PaymentDetailsModal = ({
     visible,
@@ -226,7 +241,10 @@ const OrderCard = ({ props }) => {
               </Text>
 
               <View style={styles.container}>
-                <TouchableOpacity style={styles.iconContainer}>
+                <TouchableOpacity
+                  style={styles.iconContainer}
+                  onPress={openInvoice}
+                >
                   <EyeIcon size={wp(5)} color={"#4870F4"} />
                   <Text style={styles.documentText}>{t("invoice")}</Text>
                 </TouchableOpacity>
@@ -255,7 +273,7 @@ const OrderCard = ({ props }) => {
                 ) : (
                   <View>
                     {uploadDetails ? (
-                      <View style={{ width: wp(50)}}>
+                      <View style={{ width: wp(50) }}>
                         <TouchableOpacity
                           style={styles.iconContainer}
                           onPress={() => showModal()}
@@ -273,7 +291,7 @@ const OrderCard = ({ props }) => {
                         </Text>
                       </>
                     )}
-                    <View style={{width: wp(45), marginVertical: wp(2)}}>
+                    <View style={{ width: wp(45), marginVertical: wp(2) }}>
                       <Text style={styles.pending}>
                         ⌛{t("payment_pending")}
                       </Text>
@@ -412,6 +430,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     marginBottom: wp(2),
   },
+
 });
 
 /*
