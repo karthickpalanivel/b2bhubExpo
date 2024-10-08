@@ -31,7 +31,7 @@ import {
   EyeIcon,
   EyeSlashIcon,
   ArrowRightStartOnRectangleIcon,
-  LanguageIcon
+  LanguageIcon,
 } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
@@ -40,7 +40,7 @@ import LanguageList from "../../language/LanguageList.json";
 import { useLanguage } from "../../hooks/LanguageContext";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 
-const CustomCheckBox = ({ value, onValueChange }) => (
+export const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
     style={[styles.checkbox, value && styles.checkboxChecked]}
     onPress={() => onValueChange(!value)}
@@ -50,13 +50,15 @@ const CustomCheckBox = ({ value, onValueChange }) => (
 );
 
 const LoginScreen = () => {
+  const { t } = useTranslation();
+
   const [buyerEmail, setBuyerEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowpassword] = useState(true);
   const [showForgot, setShowForgot] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
-  const [logintext, setLogintext] = useState("login")
+  const [logintext, setLogintext] = useState(t("login"));
   // const [showPassword, setShowpassword] = useState(true);
   const [toggleValue, setToggleValue] = useState(false); //false->buyer,true->seller
   const [sellerPassword, setSellerPassword] = useState("");
@@ -70,7 +72,6 @@ const LoginScreen = () => {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   // const [Language, setLanguage] = useState(LanguageList[language].nativeName);
 
-  const { t } = useTranslation();
 
   const navigation = useNavigation();
 
@@ -99,15 +100,15 @@ const LoginScreen = () => {
   }, []);
 
   const handleSellerSubmit = async () => {
-    setLogintext("Logging in...")
+    setLogintext(t("processing"));
     if (sellerEmail && sellerPassword) {
       // console.log("Email:", sellerEmail);
       // console.log("Password:", sellerPassword);
 
       const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
-      console.log("====================================");
-      console.log(url);
-      console.log("====================================");
+      // console.log("====================================");
+      // console.log(url);
+      // console.log("====================================");
       await axios
         .post(url, {
           email: sellerEmail,
@@ -117,9 +118,9 @@ const LoginScreen = () => {
         .then((res) => {
           console.log(res.status);
           if (res.status === 200) {
-            setLogintext("Login")
+            setLogintext(t("login"));
             const customer = res.data.user;
-            console.log(customer);
+            // console.log(customer);
             navigation.navigate("SellerHome");
             try {
               AsyncStorage.setItem("loginstate", "false");
@@ -146,11 +147,11 @@ const LoginScreen = () => {
   };
 
   async function handleLogin() {
-    setLogintext("Logging in...")
+    setLogintext(t("processing"));
     const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/login";
-    console.log("====================================");
-    console.log(url);
-    console.log("====================================");
+    // console.log("====================================");
+    // console.log(url);
+    // console.log("====================================");
     await axios
       .post(url, {
         email: buyerEmail,
@@ -160,7 +161,7 @@ const LoginScreen = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
-          setLogintext("Login")
+          setLogintext(t("login"));
           const customer = res.data.user;
           console.log(customer);
           navigation.navigate("Home");
@@ -264,7 +265,7 @@ const LoginScreen = () => {
                 />
               </View>
               <View>
-                <LanguageIcon size={wp(4)}/>
+                <LanguageIcon size={wp(4)} />
               </View>
             </View>
 
@@ -408,7 +409,9 @@ const LoginScreen = () => {
                       style={styles.submitButton}
                       onPress={() => handleSellerSubmit()}
                     >
-                      <Text style={styles.submitButtonText}>{t(logintext)}</Text>
+                      <Text style={styles.submitButtonText}>
+                        {t(logintext)}
+                      </Text>
                     </TouchableOpacity>
 
                     <View style={styles.noteContainer}>

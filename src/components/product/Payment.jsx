@@ -268,9 +268,9 @@ const PaymentSummary = ({ route }) => {
 
       const invoiceUrl = PdfGeneration(getInvoiceData, printer, setPrinter); //<PdfGeneration invoicedata={getInvoiceData} />;
 
-      console.log("got url");
+      // console.log("got url");
       const orderDetails = getOrderDetails(invoiceUrl, invoiceUniqueId);
-      console.log("order sample data", orderDetails);
+      // console.log("order sample data", orderDetails);
       await axios.post(orderUrl, orderDetails, {
         headers: {
           Authorization: `Bearer ${token1}`,

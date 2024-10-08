@@ -139,7 +139,7 @@ const ProductCard = ({ props, index }) => {
   const backgroundColor = memberShipBackgroundColor();
   const gradeAUnit = props.costPerUnit[0];
   const typesOfProduct = props.costPerUnit[0].grade.split(" ")[0];
-  console.log(typesOfProduct);
+  // console.log(typesOfProduct);
 
   const ProductModal = ({ visible }) => {
     <Modal
@@ -275,11 +275,6 @@ const ProductCard = ({ props, index }) => {
               ];
 
               onMoreDetails(productArray);
-
-              // Object.entries(productArray).forEach(([key, value]) => {
-              //   console.log(key + " : " + value + " ");
-              // });
-              // modalVisible = true;
             }}
           >
             <Image

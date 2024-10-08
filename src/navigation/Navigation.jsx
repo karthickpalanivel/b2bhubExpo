@@ -12,7 +12,6 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 
-import PdfGeneration from "../components/InVoice/PdfGeneration";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import PaymentSummary from "../components/product/Payment";
 import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";

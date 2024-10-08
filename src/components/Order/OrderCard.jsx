@@ -5,12 +5,13 @@ import {
   View,
   Modal,
   SafeAreaView,
+  ScrollView,
   Linking,
   TextInput,
-
   Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { LinearGradient } from "expo-linear-gradient";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -30,6 +31,7 @@ import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PdfGeneration from "../InVoice/PdfGeneration";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = "#EF5A6F";
 const backgrounds = "#FCF8F3";
@@ -64,18 +66,18 @@ const OrderCard = ({ props }) => {
     hide();
     show();
   };
-
+  const navigation = useNavigation();
   const PdfResource = props.invoiceUrl;
   const openInvoice = async () => {
-    try{
+    try {
       const canOpen = await Linking.canOpenURL(PdfResource);
-      if(!canOpen){
-        Alert.alert('Error on opening PDF links');
+      if (!canOpen) {
+        Alert.alert("Error on opening PDF links");
         throw new Error("Error occured");
       }
       await Linking.openURL(PdfResource);
-    } catch (err){
-      console.log("Error on opening PDF : ", err)
+    } catch (err) {
+      console.log("Error on opening PDF : ", err);
     }
   };
 
@@ -124,82 +126,102 @@ const OrderCard = ({ props }) => {
         onRequestClose={hide}
         transparent
       >
-        <SafeAreaView style={styles.fill}>
-          <View style={styles.inputContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <View>
-                <Text style={styles.modalText}>
-                  {t("product_name")}: {productName}
-                </Text>
+        <ScrollView style={styles.fill}>
+          {/* <TouchableOpacity
+            style={styles.backContainer}
+            onPress={() => setModalVisible(false)}
+          >
+            <ChevronLeftIcon
+              size={wp(4)}
+              color={colors}
+              zIndex={500}
+              strokeWidth={wp(1)}
+              style={{ flexBasis: "flex-start" }}
+            />
+          </TouchableOpacity> */}
+          <SafeAreaView
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: hp(90),
+            }}
+          >
+            <View style={styles.inputContainer}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text style={styles.modalText}>
+                    {t("product_name")}: {productName}
+                  </Text>
 
-                <Text style={styles.modalText}>
-                  {t("product") + " " + t("price")}: ₹ {productPrice}
-                </Text>
+                  <Text style={styles.modalText}>
+                    {t("product") + " " + t("price")}: ₹ {productPrice}
+                  </Text>
 
-                <Text style={styles.modalText}>
-                  {t("product") + " " + t("quantity")}: {productQuantity} ton
-                </Text>
+                  <Text style={styles.modalText}>
+                    {t("product") + " " + t("quantity")}: {productQuantity} ton
+                  </Text>
+                </View>
+                <TouchableOpacity style={{ zIndex: 700 }}>
+                  <XCircleIcon
+                    size={wp(8)}
+                    style={styles.icon}
+                    onPress={() => setModalVisible(false)}
+                  />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={{ zIndex: 700 }}>
-                <XCircleIcon
-                  size={wp(8)}
-                  style={styles.icon}
-                  onPress={() => hide}
-                />
-              </TouchableOpacity>
-            </View>
 
-            <View style={{ marginTop: hp(3) }}>
-              <Text style={styles.inputLabel}>{t("account_number")}</Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={(text) => setAccountNumber(text)}
-                placeholderTextColor={"grey"}
-                placeholder={t("account_number")}
-              />
-            </View>
-            <View>
-              <Text style={styles.inputLabel}>{t("transaction_id")}</Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={(text) => setTransactionId(text)}
-                placeholderTextColor={"grey"}
-                placeholder={t("transaction_id")}
-              />
-            </View>
-            <View>
-              <Text style={styles.inputLabel}>{t("transaction_date")}</Text>
-              <TouchableOpacity>
+              <View style={{ marginTop: hp(3) }}>
+                <Text style={styles.inputLabel}>{t("account_number")}</Text>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={(text) => setAccountNumber(text)}
+                  placeholderTextColor={"grey"}
+                  placeholder={t("account_number")}
+                />
+              </View>
+              <View>
+                <Text style={styles.inputLabel}>{t("transaction_id")}</Text>
                 <TextInput
                   style={styles.textInput}
                   onChangeText={(text) => setTransactionId(text)}
                   placeholderTextColor={"grey"}
-                  placeholder={t("transaction_date")}
+                  placeholder={t("transaction_id")}
                 />
+              </View>
+              <View>
+                <Text style={styles.inputLabel}>{t("transaction_date")}</Text>
+                <TouchableOpacity>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => setTransactionId(text)}
+                    placeholderTextColor={"grey"}
+                    placeholder={t("transaction_date")}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Text style={styles.inputLabel}>{t("amount")}</Text>
+                <TextInput
+                  style={styles.textInput}
+                  value={productPrice}
+                  disable
+                  placeholder={t("amount")}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={changeValue}
+                style={styles.conformContainer}
+              >
+                <Text style={styles.conformText}>{t("confirm")}</Text>
               </TouchableOpacity>
             </View>
-            <View>
-              <Text style={styles.inputLabel}>{t("amount")}</Text>
-              <TextInput
-                style={styles.textInput}
-                value={productPrice}
-                disable
-                placeholder={t("amount")}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={changeValue}
-              style={styles.conformContainer}
-            >
-              <Text style={styles.conformText}>{t("confirm")}</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+          </SafeAreaView>
+        </ScrollView>
       </Modal>
     );
   };
@@ -354,6 +376,7 @@ const styles = StyleSheet.create({
     color: "#E64242",
     marginHorizontal: wp(1),
     fontFamily: "QuicksandSemiBold",
+    textAlign: "left",
   },
   pending: {
     color: "#E64242",
@@ -379,12 +402,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: wp(3),
   },
   fill: {
-    position: "absolute",
-    bottom: hp(10),
-    alignItems: "center",
-    width: wp(90),
-    height: hp(60),
-    // backgroundColor: "rgba(0,0,0,0.5)",
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   textInput: {
     marginBottom: hp(2),
@@ -393,8 +412,8 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
   },
   inputContainer: {
-    marginLeft: wp(10),
     borderWidth: 1,
+
     borderColor: colors,
     elevation: 1,
     borderRadius: wp(1),
@@ -406,7 +425,6 @@ const styles = StyleSheet.create({
     // position: "absolute",
     // right: 0,
     color: colors,
-    zIndex: 600,
   },
   conformContainer: {
     marginTop: hp(2),
@@ -430,7 +448,16 @@ const styles = StyleSheet.create({
   inputLabel: {
     marginBottom: wp(2),
   },
-
+  backContainer: {
+    width: wp(10),
+    height: wp(10),
+    marginTop: hp(3),
+    marginLeft: wp(5),
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: wp(999),
+  },
 });
 
 /*

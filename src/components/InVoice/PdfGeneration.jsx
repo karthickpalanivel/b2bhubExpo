@@ -343,7 +343,7 @@ const PdfGeneration = ({ getInvoiceData, printer, setPrinter }) => {
         },
       });
       const fileUrl = response.data.fileUrl;
-      console.log(fileUrl);
+      // console.log(fileUrl);
       return fileUrl;
     } catch (error) {
       console.log(error);

@@ -32,6 +32,7 @@ const CustomCheckBox = ({ value, onValueChange }) => (
 const TermsAndConditionsModal = ({
   visible,
   onClose,
+  setVisible,
   productId,
   currentOrderPrice,
   totalAmount,
@@ -72,9 +73,9 @@ const TermsAndConditionsModal = ({
 
     setProductSummary(productSummaryDetails);
 
-    console.log(
-      "Product Summary Details Name: " + JSON.stringify(productSummaryDetails)
-    );
+    // console.log(
+    //   "Product Summary Details Name: " + JSON.stringify(productSummaryDetails)
+    // );
 
     const translatedCategory = (key) => {
       return t(key)?.split(" ")[0];
@@ -96,7 +97,7 @@ const TermsAndConditionsModal = ({
       );
     };
 
-    console.log(combinedName().toLowerCase());
+    // console.log(combinedName().toLowerCase());
 
     productSummaryDetails.productName = combinedName().toLowerCase();
   }, []);
@@ -121,8 +122,8 @@ const TermsAndConditionsModal = ({
 
   const handleComplete = () => {
     if (isChecked) {
-      visible = false;
-      console.log(productSummary);
+      setVisible(false);
+      // console.log(productSummary);
       navigation.navigate("paymentSummary", { productSummary: productSummary });
     } else {
       alert("Please agree to the terms and conditions.");

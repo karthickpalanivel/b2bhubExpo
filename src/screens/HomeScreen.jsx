@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   RefreshControl,
+  Platform,
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -78,23 +79,17 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
-
-
-  // AsyncStorage.getItem("companyname")
-  //   .then((value) => {
-  //     if (value !== null) {
-  //       setcompanyName(value);
-  //       // Value was found, do something with it
-  //       //console.log("Value:", value);
-  //     } else {
-  //       // No value found
-  //       console.log("No value found");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     // Error retrieving value
-  //     console.error("Error:", error);
-  //   });
+  AsyncStorage.getItem("companyname")
+    .then((value) => {
+      if (value !== null) {
+        setcompanyName(value);
+      } else {
+        console.log("No value found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
   const profileScreen = () => {
     navigation.navigate("Profile");
@@ -404,8 +399,8 @@ const styles = StyleSheet.create({
     fontFamily: "QuicksandSemiBold",
     color: colors,
     textDecorationColor: colors,
-    textDecorationLine: "underline",
-    textDecorationStyle: "dotted",
+    textDecorationLine: Platform.OS === "ios" ? "" : "underline",
+    // textDecorationStyle: "dotted",
   },
 
   headerContainer: {

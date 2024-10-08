@@ -49,14 +49,14 @@ const backgrounds="#FCF8F3";
 const ProfileScreen = () => {
 
   const navigation = useNavigation();
-
+  const { language, changeLanguage } = useLanguage();
   const [companyName, setCompanyName] = useState("Your Company");
   const [phone, setPhone] = useState("9856743210");
   const [modalVisible, setModalVisible] = useState(false);
-  const [yourLanguage, setYourLanguage] = useState("English");
+  const [yourLanguage, setYourLanguage] = useState(LanguageList[language].nativeName);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const { language, changeLanguage } = useLanguage();
+  
 
   useEffect(() => {
     async function loadFonts() {

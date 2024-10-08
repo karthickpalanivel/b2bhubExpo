@@ -42,7 +42,7 @@ const ProductDetails = ({ route }) => {
 
   //modal
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalQuantity, setModalQuantity] = useState(25);
+  const [modalQuantity, setModalQuantity] = useState(100);
   const [showSummary, setShowSummary] = useState(false);
   const [termsVisible, setTermsVisible] = useState(false);
   const [modalTermVisible, setModalTermVisible] = useState(false);
@@ -485,6 +485,7 @@ const ProductDetails = ({ route }) => {
             >
               <TermsAndConditionsModal
                 visible={termsVisible}
+                setVisible={setTermsVisible}
                 onClose={() => setTermsVisible(false)}
                 currentOrderPrice={totalPrice}
                 totalAmount={totalAmount}
