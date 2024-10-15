@@ -17,14 +17,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-import {
-  XCircleIcon,
-  UserCircleIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  DocumentIcon,
-  CreditCardIcon,
-} from "react-native-heroicons/outline";
+
 
 import { useTranslation } from "react-i18next";
 
@@ -33,9 +26,14 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import { CompanyData } from "../../data/CompanyData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingNavigationButton from "../../components/button/FloatingNavigationButton";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import Feather from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 
-const colors="#EF5A6F";
-const backgrounds="#FCF8F3";
+const colors = "#EF5A6F";
+const backgrounds = "#FCF8F3";
 
 export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
   const [visible, setVisible] = useState(false);
@@ -79,7 +77,8 @@ export const DetailsBar = ({ topic, value, setValue, screen, edit }) => {
           <View style={styles.inputContainer}>
             <View>
               <TouchableOpacity>
-                <XCircleIcon
+                <Feather
+                  name="x-circle"
                   size={wp(8)}
                   color="white"
                   style={styles.icon}
@@ -188,12 +187,13 @@ const AccountSettings = () => {
         <>
           <View>
             <ProfileHeaderLayout header="Accounts" />
-            <ScrollView style={{backgroundColor: backgrounds,height:wp(200)}}>
+            <ScrollView
+              style={{ backgroundColor: backgrounds, height: wp(200) }}
+            >
               <View
                 style={{
                   alignItems: "center",
                   marginTop: hp(5),
-                  
                 }}
               >
                 <View style={styles.profileImageContainer}>
@@ -218,9 +218,11 @@ const AccountSettings = () => {
                       setValue={setCompanyName}
                       edit={false}
                     />
-                    <UserCircleIcon
+
+                    <EvilIcons
+                      name="user"
                       style={styles.AccountsIcons}
-                      size={wp(10)}
+                      size={wp(12)}
                       strokeWidth={1}
                     />
                   </View>
@@ -229,10 +231,10 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      borderTopColor:backgrounds,
-                      borderBottomColor:backgrounds,
-                      borderTopWidth:wp(0.5),
-                      borderBottomWidth:wp(0.5)
+                      borderTopColor: backgrounds,
+                      borderBottomColor: backgrounds,
+                      borderTopWidth: wp(0.5),
+                      borderBottomWidth: wp(0.5),
                     }}
                   >
                     <DetailsBar
@@ -241,7 +243,8 @@ const AccountSettings = () => {
                       setValue={setPhone}
                       edit={false}
                     />
-                    <PhoneIcon
+                    <Feather
+                      name="phone"
                       style={styles.AccountsIcons}
                       size={wp(10)}
                       strokeWidth={1}
@@ -260,7 +263,8 @@ const AccountSettings = () => {
                       setValue={setEmail}
                       edit={false}
                     />
-                    <EnvelopeIcon
+                    <AntDesign
+                      name="mail"
                       style={styles.AccountsIcons}
                       size={wp(10)}
                       strokeWidth={1}
@@ -271,11 +275,10 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      borderTopColor:backgrounds,
-                      borderBottomColor:backgrounds,
-                      borderTopWidth:wp(0.5),
-                      borderBottomWidth:wp(0.5)
-
+                      borderTopColor: backgrounds,
+                      borderBottomColor: backgrounds,
+                      borderTopWidth: wp(0.5),
+                      borderBottomWidth: wp(0.5),
                     }}
                   >
                     <DetailsBar
@@ -284,7 +287,8 @@ const AccountSettings = () => {
                       setValue={setGstNumber}
                       edit={false}
                     />
-                    <DocumentIcon
+                    <Ionicons
+                      name="document-outline"
                       style={styles.AccountsIcons}
                       size={wp(10)}
                       strokeWidth={1}
@@ -296,9 +300,6 @@ const AccountSettings = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
-                     
-                      
-
                     }}
                   >
                     <DetailsBar
@@ -307,7 +308,8 @@ const AccountSettings = () => {
                       setValue={setPanNumber}
                       edit={false}
                     />
-                    <CreditCardIcon
+                    <Entypo
+                      name="credit-card"
                       style={styles.AccountsIcons}
                       size={wp(10)}
                       strokeWidth={1}

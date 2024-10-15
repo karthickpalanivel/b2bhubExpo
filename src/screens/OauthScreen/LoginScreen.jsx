@@ -17,7 +17,6 @@ import axios from "axios";
 import Toggle from "react-native-toggle-element";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { XCircleIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
 import {
   widthPercentageToDP as wp,
@@ -26,19 +25,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import {
-  ChevronLeftIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  ArrowRightStartOnRectangleIcon,
-  LanguageIcon,
-} from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import Animated, { FadeInRight } from "react-native-reanimated";
-import LanguageSelectionModal from "../../components/modals/LanguageSelectionModal";
 import LanguageList from "../../language/LanguageList.json";
 import { useLanguage } from "../../hooks/LanguageContext";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
+import Feather from "react-native-vector-icons/Feather";
 
 export const CustomCheckBox = ({ value, onValueChange }) => (
   <TouchableOpacity
@@ -137,6 +129,7 @@ const LoginScreen = () => {
         })
         .catch((error) => {
           window.alert(error);
+          setLogintext(t("login"));
           return;
         });
     } else {
@@ -273,7 +266,7 @@ const LoginScreen = () => {
                   marginLeft: wp(10),
                 }}
               >
-                <LanguageIcon size={wp(4)} color={"white"} />
+                <></>
                 <Text style={{ color: "white", fontSize: wp(3) }}>
                   {LanguageList[language]}
                 </Text>
@@ -343,9 +336,9 @@ const LoginScreen = () => {
                       onPress={() => setViewPassword(!viewPassword)}
                     >
                       {viewPassword ? (
-                        <EyeSlashIcon size={20} color="gray" />
+                        <Feather name="eye-off" size={wp(5)} color="gray" />
                       ) : (
-                        <EyeIcon size={20} color="gray" />
+                        <Feather name="eye" size={wp(5)} color="gray" />
                       )}
                     </TouchableOpacity>
                   </View>
@@ -399,9 +392,9 @@ const LoginScreen = () => {
                         onPress={() => setViewPassword(!viewPassword)}
                       >
                         {viewPassword ? (
-                          <EyeSlashIcon size={20} color="gray" /> // Heroicon for "eye-off"
+                          <Feather name="eye-off" size={wp(5)} color="gray" /> // Heroicon for "eye-off"
                         ) : (
-                          <EyeIcon size={20} color="gray" /> // Heroicon for "eye"
+                          <Feather name="eye" size={wp(5)} color="gray" /> // Heroicon for "eye"
                         )}
                       </TouchableOpacity>
                     </View>

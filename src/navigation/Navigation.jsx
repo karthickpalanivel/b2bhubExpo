@@ -14,23 +14,21 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import PaymentSummary from "../components/product/Payment";
-import SearchBarScreen from "../screens/HomePageScreens/SearchBarScreen";
+
+//Authentication screens
 import ForgotPasswordScreen from "../screens/OauthScreen/ForgotPasswordScreen";
 import LoginScreen from "../screens/OauthScreen/LoginScreen";
 import OTPAndPasswordScreen from "../screens/OauthScreen/OTPAndPasswordScreen";
 import SellerRegistration from "../screens/OauthScreen/SellerRegistration";
-import ShopDetails from "../screens/OauthScreen/ShopDetails";
 import SignUpScreen from "../screens/OauthScreen/SignUpScreen";
+
 import OnBoardingScreenOne from "../screens/OnBoardingScreens/OnBoardingScreenOne";
-import OrderScreen from "../screens/OrderScreen";
 import OrderSuccessful from "../screens/OrderSuccessful";
+
 import AccountSettings from "../screens/ProfileScreenContains/AccountSettings";
 import DeliveryScreen from "../screens/ProfileScreenContains/DeliveryScreen";
-import EditScreen from "../screens/ProfileScreenContains/EditScreen";
-import OffersRewards from "../screens/ProfileScreenContains/OffersRewards";
-import PasswordEditScreen from "../screens/ProfileScreenContains/PasswordEditScreen";
-import PaymentShippingScreen from "../screens/ProfileScreenContains/PaymentShippingScreen";
-import SettingsScreen from "../screens/ProfileScreenContains/SettingsScreen";
+
+//seller screens
 import ModifyProductList from "../sellerScreens/mainDashBoard/ModifyProductList";
 import SellerHomeScreen from "../sellerScreens/mainDashBoard/SellerHomeScreen";
 import SellerProfile from "../sellerScreens/mainDashBoard/SellerProfile";
@@ -79,47 +77,36 @@ export default function Navigation() {
 
         {/* Bottom Navbar Screens */}
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Orders" component={OrderScreen} />
 
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Sucessfull" component={OrderSuccessful} />
 
-        <Stack.Screen name="Search Bar" component={SearchBarScreen} />
 
         {/* Authentication Page */}
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        {/* <Stack.Screen name="EntryShopDetails" component={ShopDetails} /> */}
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen
           name="OtpConformScreen"
           component={OTPAndPasswordScreen}
         />
+
         <Stack.Screen
           name="sellerRegistration"
           component={SellerRegistration}
         />
+
         {/* other screens */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
-        {/* <Stack.Screen name="Notifications" component={NotificationScreen} /> */}
 
         {/* Profile Screen navigation */}
         <Stack.Screen name="AccountDetails" component={AccountSettings} />
         <Stack.Screen name="DeliveryDetails" component={DeliveryScreen} />
-        <Stack.Screen name="OfferRewardsDetails" component={OffersRewards} />
-        <Stack.Screen
-          name="PaymentShippingDetails"
-          component={PaymentShippingScreen}
-        />
+
         <Stack.Screen name="Terms" component={TermsAndCondition} />
 
-        <Stack.Screen name="SignUpShopDetails" component={ShopDetails} />
-        <Stack.Screen name="EditScreen" component={EditScreen} />
-        <Stack.Screen name="PasswordEdit" component={PasswordEditScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="paymentSummary" component={PaymentSummary} />
-        {/* <Stack.Screen name="Invoice" component={PdfGeneration} /> */}
 
         {/* Sellers Screens */}
         <Stack.Screen name="SellerHome" component={SellerHomeScreen} />

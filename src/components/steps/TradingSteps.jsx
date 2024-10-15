@@ -14,7 +14,6 @@ import {
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { ArrowRightIcon } from "react-native-heroicons/outline";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import * as Font from "expo-font";
 const TradingSteps = () => {
@@ -52,11 +51,7 @@ const TradingSteps = () => {
             style={{ marginHorizontal: "3%" }}
             showsHorizontalScrollIndicator={false}
           >
-            {/* <View style={styles.scrollContainer}>
-          <Text style={styles.scrollText}>Scroll</Text>
-          <ArrowRightIcon name="arrowright" style={styles.icon} />
-        </View> */}
-
+            
             <Pressable style={styles.imageSteps}>
               <Image
                 source={require("../../assets/steps/firstStep.png")}
@@ -64,9 +59,7 @@ const TradingSteps = () => {
               />
               <Text style={styles.textPort}>Register</Text>
             </Pressable>
-            {/* <View style={styles.scrollContainer}>
-              <ArrowRightIcon name="arrowright" style={styles.icon} />
-            </View> */}
+         
 
             <Pressable style={styles.imageSteps}>
               <Image
@@ -75,9 +68,7 @@ const TradingSteps = () => {
               />
               <Text style={styles.textPort}>Select Item</Text>
             </Pressable>
-            {/* <View style={styles.scrollContainer}>
-              <ArrowRightIcon name="arrowright" style={styles.icon} />
-            </View> */}
+
             <Pressable style={styles.imageSteps}>
               <Image
                 source={require("../../assets/steps/thirdStep.png")}

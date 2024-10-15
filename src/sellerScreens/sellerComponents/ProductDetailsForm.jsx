@@ -17,17 +17,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  CalendarIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-} from "react-native-heroicons/outline";
-import {
-  CameraIcon,
-  PhotoIcon,
-  TrashIcon,
-  XMarkIcon,
-} from "react-native-heroicons/solid";
+
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import Entypo from "react-native-vector-icons/Entypo";
+import Feather from "react-native-vector-icons/Feather";
+
 import Modal from "react-native-modal";
 import {
   heightPercentageToDP as hp,
@@ -37,11 +31,9 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 import FloatingLabelInput from "./FloatingLabelInput";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ModalSelector from 'react-native-modal-selector'
+import ModalSelector from "react-native-modal-selector";
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
-
-
 
 const ProductDetailsForm = ({ route }) => {
   const [isProduct, setIsProduct] = useState({});
@@ -61,7 +53,7 @@ const ProductDetailsForm = ({ route }) => {
   const [packageDetails, setPackageDetails] = useState([
     { type: "Select Package", quantity: "0" },
   ]);
-  const [source, setsource] = useState(null)
+  const [source, setsource] = useState(null);
 
   const packageDict = packageDetails.reduce((acc, pkg) => {
     if (pkg.type && pkg.quantity) {
@@ -94,7 +86,7 @@ const ProductDetailsForm = ({ route }) => {
     }, 0);
     setTotalValue(total);
   };
-console.log(units);
+  console.log(units);
 
   // console.log("imageurl" + imageUrl);
 
@@ -226,22 +218,24 @@ console.log(units);
 
     if (route?.params) {
       const { product } = route?.params;
-      console.log(route?.params)
+      console.log(route?.params);
       if (product) {
-        setCustomerCategory(product?.category || "");  // Fallback to empty string
+        setCustomerCategory(product?.category || ""); // Fallback to empty string
         setCustomerId(product?.customerId || "");
         setDescription(product?.description || "");
         setApproved(product?.isApproved === 1 ? 1 : 0);
         setPublished(product?.isPublished === 1 ? 1 : 0);
         setIsOrganic(product?.isOrganic === 1 ? 1 : 0);
         setMoisture(product?.moisture || "");
-        setPackageDetails([{
-          type: product?.packaging?.type || "",
-          quantity: product?.packaging?.quantity || "",
-        }]);
+        setPackageDetails([
+          {
+            type: product?.packaging?.type || "",
+            quantity: product?.packaging?.quantity || "",
+          },
+        ]);
         setPricing(product?.price || "");
         setProductId(product?.productId || "");
-        setProductName(product?.productName || "");  // Fallback to empty string
+        setProductName(product?.productName || ""); // Fallback to empty string
         setProductType(product?.productType || "");
         setShelfLife(product?.shelfLife || "");
         setImage(product?.productImg || "");
@@ -249,10 +243,6 @@ console.log(units);
         setUnits(product?.units || "");
       }
     }
-    
-   
-
-    
 
     const availableProductData = {};
 
@@ -268,19 +258,22 @@ console.log(units);
 
   const formatDate = (dateInput) => {
     // Convert string input into a Date object if it's not already
-    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
-  
+    const date =
+      typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+
     // Check if the date is valid
     if (isNaN(date)) {
       return "Invalid Date";
     }
-  
+
     // Format the date as DD-MM-YYYY
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    
-    return `${day < 10 ? `0${day}` : day}-${month < 10 ? `0${month}` : month}-${year}`;
+
+    return `${day < 10 ? `0${day}` : day}-${
+      month < 10 ? `0${month}` : month
+    }-${year}`;
   };
 
   const addPackageDetail = () => {
@@ -299,10 +292,6 @@ console.log(units);
   const uploadModel = () => {
     setIsUploadVisible(true);
   };
-
-
-
-
 
   // const uploadImage = async (imageUri) => {
   //   const formData = new FormData();
@@ -335,32 +324,34 @@ console.log(units);
   //   }
   // };
 
-  function uploadImage(photo){
-   const data = new FormData;
-   data.append('file',photo);
-   data.append("upload_preset","_Dalpicsonly")
-   data.append("cloud_name","dbesmy2df")
-   fetch("https://api.cloudinary.com/v1_1/dbesmy2df/image/upload",{
-    method: 'POST',
-    body: data,
-    headers:{
-      "Accept":"application/json",
-      "Content-Type":"multipart/form/data"
-    }
-   }).then( res => res.json())
-   .then(data => {
-    setImage(data.uri);
-    console.log('==================data uri==================');
-    console.log(data.uri);
-    console.log('====================================');
-   }).catch(err => {
-    Alert.alert(err + "error while uploading")
-   })
+  function uploadImage(photo) {
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "_Dalpicsonly");
+    data.append("cloud_name", "dbesmy2df");
+    fetch("https://api.cloudinary.com/v1_1/dbesmy2df/image/upload", {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form/data",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImage(data.uri);
+        console.log("==================data uri==================");
+        console.log(data.uri);
+        console.log("====================================");
+      })
+      .catch((err) => {
+        Alert.alert(err + "error while uploading");
+      });
   }
 
-  console.log('====================================');
+  console.log("====================================");
   console.log(image);
-  console.log('====================================');
+  console.log("====================================");
 
   const handleImageSelection = async (mode) => {
     try {
@@ -383,16 +374,16 @@ console.log(units);
         });
       }
       if (!result.canceled) {
-       // Update the image state with the selected image URI
+        // Update the image state with the selected image URI
         setIsUploadVisible(false);
         const uri = result.assets[0].uri;
         const type = result.assets[0].type;
         const name = result.assets[0].fileName;
-        const source = {uri,type,name}
-        uploadImage(source)
-        console.log('====================================');
+        const source = { uri, type, name };
+        uploadImage(source);
+        console.log("====================================");
         console.log(source);
-        console.log('====================================');
+        console.log("====================================");
       }
     } catch (error) {
       console.error(error);
@@ -419,17 +410,17 @@ console.log(units);
         <AppLoaderAnimation />
       ) : (
         <>
-          <StatusBar backgroundColor={backgrounds} style="dark"></StatusBar>
+          <StatusBar backgroundColor={backgrounds} style="dark"/>
           <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={navigateToSellerHome}
               >
-                <ChevronLeftIcon
-                  size={wp(5)}
-                  color={"black"}
-                  strokeWidth={wp(1.5)}
+                <Entypo
+                  name="chevron-thin-left"
+                  size={hp(3)}
+                  color={"#d53c46"}
                 />
               </TouchableOpacity>
               {/* Header */}
@@ -449,7 +440,7 @@ console.log(units);
                         style={styles.xContainer}
                         onPress={() => setIsUploadVisible(false)}
                       >
-                        <XMarkIcon size={hp(3)} color={colors} />
+                        <Feather name="x-circle" size={hp(3)} color={colors} />
                       </TouchableOpacity>
                       <View style={styles.cancel}>
                         <Text
@@ -466,9 +457,11 @@ console.log(units);
                           style={styles.modalContent}
                           onPress={() => handleImageSelection("camera")}
                         >
-                          <CameraIcon
+                          <EvilIcons
+                            name="camera"
                             width={wp("13%")}
-                            height={hp("10%")}
+                            height={hp("7%")}
+                            size={wp(15)}
                             color={colors}
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
@@ -479,9 +472,11 @@ console.log(units);
                           style={styles.modalContent}
                           onPress={() => handleImageSelection("gallery")}
                         >
-                          <PhotoIcon
+                          <EvilIcons
+                            name="image"
                             width={wp("13%")}
-                            height={hp("10%")}
+                            height={hp("7%")}
+                            size={wp(15)}
                             color={colors}
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
@@ -495,9 +490,11 @@ console.log(units);
                             setIsUploadVisible(false);
                           }}
                         >
-                          <TrashIcon
+                          <EvilIcons
+                            name="trash"
                             width={wp("13%")}
-                            height={hp("10%")}
+                            height={hp("7%")}
+                            size={wp(15)}
                             color={colors}
                           />
                           <Text style={{ fontFamily: "QuicksandSemiBold" }}>
@@ -519,12 +516,14 @@ console.log(units);
                       />
                     ) : (
                       <View>
-                        <PhotoIcon
-                          width={wp("8%")}
-                          height={hp("8%")}
+                        <EvilIcons
+                          name="image"
+                          width={wp("13%")}
+                          height={hp("7%")}
+                          size={wp(15)}
                           color={colors}
                         />
-                        <TouchableOpacity >
+                        <TouchableOpacity>
                           <View>
                             <Text>Upload</Text>
                           </View>
@@ -533,7 +532,9 @@ console.log(units);
                     )}
                   </TouchableOpacity>
                 )}
-                <TouchableOpacity ><Text>upload</Text></TouchableOpacity>
+                <TouchableOpacity>
+                  <Text>upload</Text>
+                </TouchableOpacity>
               </View>
 
               {/* Product Details Form */}
@@ -542,68 +543,60 @@ console.log(units);
                   {t("product_details_form")}
                 </Text>
 
-                
-              {/* Product Name */}
-  <ModalSelector
-    data={[
-      { key: 1, label: t("select_product"), value: "" },
-      { key: 2, label: t("toor_dal"), value: "turdal" },
-      { key: 3, label: t("moong_dal"), value: "moongdal" },
-      { key: 4, label: t("urad_dal"), value: "uraddal" },
-      { key: 5, label: t("gram_dal"), value: "gramdal" },
-    ]}
+                {/* Product Name */}
+                <ModalSelector
+                  data={[
+                    { key: 1, label: t("select_product"), value: "" },
+                    { key: 2, label: t("toor_dal"), value: "turdal" },
+                    { key: 3, label: t("moong_dal"), value: "moongdal" },
+                    { key: 4, label: t("urad_dal"), value: "uraddal" },
+                    { key: 5, label: t("gram_dal"), value: "gramdal" },
+                  ]}
+                  onChange={(option) => {
+                    setProductName(option.value);
+                    setProductType(""); // Reset product type when product name changes
+                  }}
+                  optionTextStyle={{ color: "white" }}
+                  cancelStyle={{ display: "none" }}
+                  selectStyle={styles.selectStyle}
+                  optionContainerStyle={styles.modalStyle}
+                  overlayStyle={styles.overlayStyle}
+                >
+                  <FloatingLabelInput
+                    label={t("product_name")}
+                    value={productName}
+                    onChangeText={setDescription}
+                    width={wp(29)}
+                    fontsize={wp(3.5)}
+                  />
+                </ModalSelector>
 
-    onChange={(option) => {
-      setProductName(option.value);
-      setProductType(""); // Reset product type when product name changes
-    }}
-    optionTextStyle={{ color: "white" }}
-    cancelStyle={{ display: "none" }}
-    selectStyle={styles.selectStyle}
-    optionContainerStyle={styles.modalStyle}
-    overlayStyle={styles.overlayStyle}
-      >
-         <FloatingLabelInput
-                  label={t("product_name")}
-                  value={productName}
-                  onChangeText={setDescription}
-                  width={wp(29)}
-                  fontsize={wp(3.5)}
-                />
-      </ModalSelector>
-   
-
-
-
-
-{/* Product Type */}
-  <ModalSelector
-    data={[
-      { key: 1, label: t("select_product_type"), value: "" },
-      ...availableProductTypes.map((type, index) => ({
-        key: index + 2,
-        label: type,
-        value: type.toLowerCase(),
-      })),
-    ]}
-    initValue={t("select_product_type")}
-    onChange={(option) => setProductType(option.value)}
-    optionTextStyle={{ color: "white" }}
-    cancelStyle={{ display: "none" }}
-    selectStyle={styles.selectStyle}
-    optionContainerStyle={styles.modalStyle}
-    overlayStyle={styles.overlayStyle}
-    disabled={!productName} // Disable if no product is selected
-  >
-    
-    <FloatingLabelInput
-                  label={"Product Type"}
-                  value={productType}
-                  width={wp(29)}
-                  fontsize={wp(3.5)}
-                />
-  </ModalSelector>
-
+                {/* Product Type */}
+                <ModalSelector
+                  data={[
+                    { key: 1, label: t("select_product_type"), value: "" },
+                    ...availableProductTypes.map((type, index) => ({
+                      key: index + 2,
+                      label: type,
+                      value: type.toLowerCase(),
+                    })),
+                  ]}
+                  initValue={t("select_product_type")}
+                  onChange={(option) => setProductType(option.value)}
+                  optionTextStyle={{ color: "white" }}
+                  cancelStyle={{ display: "none" }}
+                  selectStyle={styles.selectStyle}
+                  optionContainerStyle={styles.modalStyle}
+                  overlayStyle={styles.overlayStyle}
+                  disabled={!productName} // Disable if no product is selected
+                >
+                  <FloatingLabelInput
+                    label={"Product Type"}
+                    value={productType}
+                    width={wp(29)}
+                    fontsize={wp(3.5)}
+                  />
+                </ModalSelector>
 
                 {/* Pricing */}
                 <FloatingLabelInput
@@ -618,89 +611,77 @@ console.log(units);
                 />
 
                 {/* Units */}
-                  <ModalSelector
-                      data={[
-                        { key: 1, label: "Select Unit" },
-                        { key: 2, label: "KG" },
-                        { key: 3, label: "Tons" },
-                      ]}
-                      
-                      onChange={(option) => setUnits(option.label)}
-                      //style={styles.modalSelector}
-                      optionTextStyle={{color:"white"}}
-                      cancelStyle={{display:"none"}}
-                      selectStyle={styles.selectStyle}
-                      optionContainerStyle ={styles.modalStyle}
-                      overlayStyle={styles.overlayStyle}
-                      
-                    >
-                    <FloatingLabelInput
-                  label={"Unit"}
-                  value={units}
-                  onChangeText={setDescription}
-                  width={wp(10.5)}
-                  fontsize={wp(4.5)}
-                />
-                    
-                    </ModalSelector>
-
+                <ModalSelector
+                  data={[
+                    { key: 1, label: "Select Unit" },
+                    { key: 2, label: "KG" },
+                    { key: 3, label: "Tons" },
+                  ]}
+                  onChange={(option) => setUnits(option.label)}
+                  //style={styles.modalSelector}
+                  optionTextStyle={{ color: "white" }}
+                  cancelStyle={{ display: "none" }}
+                  selectStyle={styles.selectStyle}
+                  optionContainerStyle={styles.modalStyle}
+                  overlayStyle={styles.overlayStyle}
+                >
+                  <FloatingLabelInput
+                    label={"Unit"}
+                    value={units}
+                    onChangeText={setDescription}
+                    width={wp(10.5)}
+                    fontsize={wp(4.5)}
+                  />
+                </ModalSelector>
 
                 {/* Moisture */}
                 <ModalSelector
-                      data={[
-                        { key: 1, label: "Wet" },
-                        { key: 2, label: "Dry" },
-                        { key: 3, label: "Normal" },
-                      ]}
-                      
-                      onChange={(option) =>setMoisture(option.label)}
-                      //style={styles.modalSelector}
-                      optionTextStyle={{color:"white"}}
-                      cancelStyle={{display:"none"}}
-                      selectStyle={styles.selectStyle}
-                      optionContainerStyle ={styles.modalStyle}
-                      overlayStyle={styles.overlayStyle}
-                      
-                    >
-                    <FloatingLabelInput
-                  label={"Moisture"}
-                  value={moisture}
-                  onChangeText={setMoisture}
-                  width={wp(20)}
-                  fontsize={wp(4.5)}
-                />
-                    
-                    </ModalSelector>
+                  data={[
+                    { key: 1, label: "Wet" },
+                    { key: 2, label: "Dry" },
+                    { key: 3, label: "Normal" },
+                  ]}
+                  onChange={(option) => setMoisture(option.label)}
+                  //style={styles.modalSelector}
+                  optionTextStyle={{ color: "white" }}
+                  cancelStyle={{ display: "none" }}
+                  selectStyle={styles.selectStyle}
+                  optionContainerStyle={styles.modalStyle}
+                  overlayStyle={styles.overlayStyle}
+                >
+                  <FloatingLabelInput
+                    label={"Moisture"}
+                    value={moisture}
+                    onChangeText={setMoisture}
+                    width={wp(20)}
+                    fontsize={wp(4.5)}
+                  />
+                </ModalSelector>
 
                 {/* Shelf Life */}
                 <ModalSelector
-                      data={[
-                        { key: 1, label: "1 month" },
-                        { key: 2, label: "2 month" },
-                        { key: 3, label: "3 month" },
-                        { key: 4, label: "1 year" },
-                      ]}
-                      
-                      onChange={(option) =>setShelfLife(option.label)}
-                      //style={styles.modalSelector}
-                      optionTextStyle={{color:"white"}}
-                      cancelStyle={{display:"none"}}
-                      selectStyle={styles.selectStyle}
-                      optionContainerStyle ={styles.modalStyle}
-                      overlayStyle={styles.overlayStyle}
-                      
-                    >
-                    <FloatingLabelInput
-                  label={"Shelf Life"}
-                  value={shelfLife}
-                  onChangeText={setShelfLife}
-                  width={wp(25)}
-                  fontsize={wp(2.5)}
-                />
-                   
-
-                    
-                    </ModalSelector>
+                  data={[
+                    { key: 1, label: "1 month" },
+                    { key: 2, label: "2 month" },
+                    { key: 3, label: "3 month" },
+                    { key: 4, label: "1 year" },
+                  ]}
+                  onChange={(option) => setShelfLife(option.label)}
+                  //style={styles.modalSelector}
+                  optionTextStyle={{ color: "white" }}
+                  cancelStyle={{ display: "none" }}
+                  selectStyle={styles.selectStyle}
+                  optionContainerStyle={styles.modalStyle}
+                  overlayStyle={styles.overlayStyle}
+                >
+                  <FloatingLabelInput
+                    label={"Shelf Life"}
+                    value={shelfLife}
+                    onChangeText={setShelfLife}
+                    width={wp(25)}
+                    fontsize={wp(2.5)}
+                  />
+                </ModalSelector>
 
                 {/* Validity */}
                 <TouchableOpacity
@@ -708,10 +689,10 @@ console.log(units);
                   onPress={() => setShowDatePicker(true)}
                 >
                   <Text>{formatDate(validity)}</Text>
-                  <CalendarIcon
-                    width={wp("5%")}
-                    height={hp("4%")}
+                  <EvilIcons
+                    name="calendar"
                     color={colors}
+                    size={hp(4)}
                     marginLeft={wp(42)}
                   />
                 </TouchableOpacity>
@@ -740,59 +721,58 @@ console.log(units);
                 </Text>
                 {packageDetails.map((detail, index) => (
                   <View key={index} style={styles.packageDetailContainer}>
-                   
                     <ModalSelector
-                        data={[
-                             { key: 1, label: t("unpacked"), value: "Unpacked" },
-                             { key: 2, label: `1 ${t("kg")}`, value: "1KG" },
-                             { key: 3, label: `5 ${t("kg")}`, value: "5KG" },
-                             { key: 4, label: `25 ${t("kg")}`, value: "25KG" },
-                             { key: 5, label: `50 ${t("kg")}`, value: "50KG" },
-                            ]}
-                        onChange={(option) => {
+                      data={[
+                        { key: 1, label: t("unpacked"), value: "Unpacked" },
+                        { key: 2, label: `1 ${t("kg")}`, value: "1KG" },
+                        { key: 3, label: `5 ${t("kg")}`, value: "5KG" },
+                        { key: 4, label: `25 ${t("kg")}`, value: "25KG" },
+                        { key: 5, label: `50 ${t("kg")}`, value: "50KG" },
+                      ]}
+                      onChange={(option) => {
                         const updatedDetails = [...packageDetails];
                         updatedDetails[index].type = option.value; // Use option.value instead of label to update type
                         setPackageDetails(updatedDetails);
-                         }}
-                          optionTextStyle={{ color: "white" }}
-                          cancelStyle={{ display: "none" }}
-                          selectStyle={styles.selectStyle}
-                          optionContainerStyle={styles.modalStyle}
-                          overlayStyle={styles.overlayStyle}
-                        >
-                   <FloatingLabelInput
-                  label={"Type"}  
-                  value={packageDetails[index].type}
-                  onChangeText={setPackageDetails}
-                  width={wp(17)}
-                  fontsize={wp(4.5)}
-                  />
-                </ModalSelector>
-                  
-                <FloatingLabelInput
-                  label={ "Quantity "}
-                  value={detail.quantity}
-                  onChangeText={(value) => {
-                    const updatedDetails = [...packageDetails];
-                    updatedDetails[index].quantity = value;
-                    setPackageDetails(updatedDetails);
-                    calculateTotalValue();
-                    }}
-                  width={wp(19)}
-                   keyboardType="numeric"
-                   fontsize={wp(0.2)}
-/>
+                      }}
+                      optionTextStyle={{ color: "white" }}
+                      cancelStyle={{ display: "none" }}
+                      selectStyle={styles.selectStyle}
+                      optionContainerStyle={styles.modalStyle}
+                      overlayStyle={styles.overlayStyle}
+                    >
+                      <FloatingLabelInput
+                        label={"Type"}
+                        value={packageDetails[index].type}
+                        onChangeText={setPackageDetails}
+                        width={wp(17)}
+                        fontsize={wp(4.5)}
+                      />
+                    </ModalSelector>
 
+                    <FloatingLabelInput
+                      label={"Quantity "}
+                      value={detail.quantity}
+                      onChangeText={(value) => {
+                        const updatedDetails = [...packageDetails];
+                        updatedDetails[index].quantity = value;
+                        setPackageDetails(updatedDetails);
+                        calculateTotalValue();
+                      }}
+                      width={wp(19)}
+                      keyboardType="numeric"
+                      fontsize={wp(0.2)}
+                    />
 
                     {index > 0 && (
                       <TouchableOpacity
                         style={styles.removeButton}
                         onPress={() => removePackageDetail(index)}
                       >
-                        <TrashIcon
-                        marginTop={wp(5)}
-                          width={wp("5%")}
-                          height={hp("5%")}
+                        <EvilIcons
+                          name="trash"
+                          width={wp("13%")}
+                          height={hp("7%")}
+                          size={wp(15)}
                           color={colors}
                         />
                       </TouchableOpacity>
@@ -908,23 +888,22 @@ const styles = StyleSheet.create({
   },
   modalSelector: {
     borderWidth: wp(0.5),
-    borderColor: '#E84A5F', // Set border color
+    borderColor: "#E84A5F", // Set border color
     borderRadius: wp(2),
     marginBottom: wp(2),
-    width:wp(79)
+    width: wp(79),
   },
   selectStyle: {
     padding: wp(4),
     justifyContent: "center",
     alignItems: "flex-start",
-    backgroundColor: '#FFFFF', // Optional background color for selected item
+    backgroundColor: "#FFFFF", // Optional background color for selected item
     borderWidth: 0, // Remove border
   },
   overlayStyle: {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay background
   },
   modalStyle: {
-   
     backgroundColor: colors, // Set modal background color to red
     borderRadius: wp(5), // Optional: add border radius to the modal
   },
@@ -959,7 +938,7 @@ const styles = StyleSheet.create({
   packageTypePicker: {
     width: wp(40),
   },
- 
+
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -987,7 +966,7 @@ const styles = StyleSheet.create({
     borderRadius: wp("2%"),
     paddingHorizontal: wp("3%"),
     paddingVertical: hp("1.5%"),
-    marginBottom: hp("1.5%"),      
+    marginBottom: hp("1.5%"),
   },
   packageDetailsTitle: {
     fontSize: wp("5%"),
@@ -997,9 +976,8 @@ const styles = StyleSheet.create({
   },
   packageDetailContainer: {
     flexDirection: "row",
-    justifyContent:"space-around",
+    justifyContent: "space-around",
     marginBottom: hp("0.5%"),
-    
   },
   removeButton: {
     marginLeft: wp("3%"),
@@ -1037,6 +1015,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: wp(6),
   },
   xContainer: {

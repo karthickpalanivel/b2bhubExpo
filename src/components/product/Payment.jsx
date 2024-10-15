@@ -18,7 +18,8 @@ import * as Font from "expo-font";
 // import { invoiceDataCopy } from "../InVoice/htmlContent";
 // import { htmlContent } from "../InVoice/htmlContent";
 import { StatusBar } from "expo-status-bar";
-import { ArrowLeftIcon } from "react-native-heroicons/outline";
+import AntDesign from "react-native-vector-icons/AntDesign";
+
 import PdfGeneration from "../InVoice/PdfGeneration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
@@ -47,7 +48,7 @@ const PaymentSummary = ({ route }) => {
   const [isOrderSuccess, setIsOrderSuccess] = useState(false);
   const [proceedPaymentText, setProceedPaymentText] =
     useState("Pre Book Order");
-    const [printer, setPrinter] = useState();
+  const [printer, setPrinter] = useState();
 
   const navigation = useNavigation();
 
@@ -263,7 +264,6 @@ const PaymentSummary = ({ route }) => {
         unitprice: productSummary.totalAmount / productSummary.quantity,
       };
 
-
       // console.log(getInvoiceData);
 
       const invoiceUrl = PdfGeneration(getInvoiceData, printer, setPrinter); //<PdfGeneration invoicedata={getInvoiceData} />;
@@ -325,7 +325,12 @@ const PaymentSummary = ({ route }) => {
                 flexDirection: "row",
               }}
             >
-              <ArrowLeftIcon color={colors} size={hp(3)} strokeWidth={2} />
+              <AntDesign
+                name="arrowleft"
+                color={colors}
+                size={hp(3)}
+                strokeWidth={2}
+              />
               <Text style={styles.goback}>{t("go_home")}</Text>
             </TouchableOpacity>
           </View>

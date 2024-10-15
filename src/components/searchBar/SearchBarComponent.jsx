@@ -10,7 +10,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { ArrowLeftIcon, ChevronLeftIcon } from "react-native-heroicons/outline";
+import Entypo from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 
 const SearchBarComponent = () => {
@@ -25,7 +25,8 @@ const SearchBarComponent = () => {
   return (
     <View style={{ alignItems: "center" }}>
       <TouchableOpacity style={styles.icon}>
-        <ChevronLeftIcon
+        <Entypo
+          name="chevron-thin-left"
           size={hp(4.4)}
           strokeWidth={wp(0.4)}
           color={"grey"}

@@ -13,13 +13,9 @@ import {
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import * as Font from "expo-font";
-import {
-  MapPinIcon,
-  LanguageIcon,
-  XCircleIcon,
-} from "react-native-heroicons/solid";
+
+import Feather from "react-native-vector-icons/Feather";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -79,30 +75,26 @@ const HomeScreen = () => {
     loadFonts();
   }, []);
 
-  useEffect(()=>{
-     async function getItems(){
+  useEffect(() => {
+    async function getItems() {
       AsyncStorage.getItem("companyname")
-      .then((value) => {
-        if (value !== null) {
-          setcompanyName(value);
-          // Value was found, do something with it
-          console.log("Value:", value);
-        } else {
-          // No value found
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        // Error retrieving value
-        console.error("Error:", error);
-      });
-     }
-     getItems()
-  }, [])
-
-
-
-  
+        .then((value) => {
+          if (value !== null) {
+            setcompanyName(value);
+            // Value was found, do something with it
+            console.log("Value:", value);
+          } else {
+            // No value found
+            console.log("No value found");
+          }
+        })
+        .catch((error) => {
+          // Error retrieving value
+          console.error("Error:", error);
+        });
+    }
+    getItems();
+  }, []);
 
   const profileScreen = () => {
     navigation.navigate("Profile");
@@ -160,7 +152,8 @@ const HomeScreen = () => {
           <View style={styles.languageModalContainer}>
             <View>
               <TouchableOpacity>
-                <XCircleIcon
+                <Feather
+                  name="x-circle"
                   size={wp(8)}
                   color="black"
                   style={styles.iconX}
@@ -217,7 +210,7 @@ const HomeScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="auto" backgroundColor={backgrounds} />
+          <StatusBar style="dark" backgroundColor={"#fff"} />
           <LanguageModal visible={modalVisible} setVisible={setModalVisible} />
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -311,22 +304,6 @@ const HomeScreen = () => {
             <Text>Lottie icon</Text>
               </View> */}
             </View>
-
-            {/* Search bar */}
-            {/* <Pressable
-              style={styles.searchBarContainer}
-              onPress={() => navigation.navigate("Search Bar")}
-            >
-              <Text style={styles.searchBarText}>Search</Text>
-
-              <TouchableOpacity style={styles.searchIconContainer}>
-                <MagnifyingGlassIcon
-                  size={hp(2.5)}
-                  strokeWidth={3}
-                  color="grey"
-                />
-              </TouchableOpacity>
-            </Pressable> */}
             <BannerOne />
 
             <Categories

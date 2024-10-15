@@ -13,7 +13,6 @@ import {
   Alert,
   RefreshControl
 } from "react-native";
-import { XCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,

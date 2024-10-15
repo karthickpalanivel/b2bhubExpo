@@ -1,9 +1,6 @@
 import {
   StyleSheet,
-  Text,
-  View,
   TouchableOpacity,
-  Pressable,
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";

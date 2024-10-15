@@ -13,11 +13,10 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import * as Font from "expo-font";
-import { XCircleIcon } from "react-native-heroicons/outline";
+import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
-
+import Entypo from "react-native-vector-icons/Entypo";
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
@@ -148,7 +147,12 @@ const TermsAndConditionsModal = ({
               setVisible((current) => !current);
             }}
           >
-            <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color={colors} />
+            <Entypo
+              name="chevron-thin-left"
+              size={hp(3.5)}
+              strokeWidth={4.5}
+              color={colors}
+            />
           </TouchableOpacity>
           <View style={styles.modalContent}>
             <TouchableOpacity
@@ -159,7 +163,7 @@ const TermsAndConditionsModal = ({
                 // navigation.goBack();
               }}
             >
-              <XCircleIcon color="black" />
+              <Feather color="black" size={wp(3)} name="x-circle" />
             </TouchableOpacity>
             <Text style={styles.modalTitle}>{t("terms_and_condition")}: </Text>
             <ScrollView style={styles.scrollView}>

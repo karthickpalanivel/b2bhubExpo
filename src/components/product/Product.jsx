@@ -5,7 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
+
+import Entypo from "react-native-vector-icons/Entypo";
 import ProductCard from "./ProductCard";
 import Loading from "../../loading/Loading";
 import { ProductData } from "../../data/ProductData";
@@ -13,8 +14,8 @@ import * as Font from "expo-font";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 export default function Product({
   category,
@@ -29,7 +30,7 @@ export default function Product({
   // console.log("====================================");
   const { t } = useTranslation();
   useEffect(() => {
-    const url = `${process.env.REACT_APP_BACKEND_URL}`+"/admin/getProducts";
+    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/admin/getProducts";
     axios
       .post(url, {})
       .then((response) => {
@@ -55,7 +56,6 @@ export default function Product({
     loadFonts();
   }, []);
 
-  
   const handlePress = () => {
     setProductActiveData(t("exclusive_products"));
   };
@@ -78,7 +78,8 @@ export default function Product({
                 ""
               ) : (
                 <View style={styles.iconContainer}>
-                  <ChevronLeftIcon
+                  <Entypo
+                    name="left"
                     size={hp(3.5)}
                     strokeWidth={wp(0.8)}
                     color={"#475569"}

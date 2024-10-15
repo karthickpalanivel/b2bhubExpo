@@ -19,20 +19,13 @@ import {
 } from "react-native-responsive-screen";
 import { CompanyData } from "../data/CompanyData";
 
-import {
-  BuildingOffice2Icon,
-  CogIcon,
-  XCircleIcon,
-  GiftIcon,
-  TruckIcon,
-  ArrowLeftIcon,
-} from "react-native-heroicons/outline";
-import {
-  IdentificationIcon,
-  EnvelopeIcon,
-  ChevronRightIcon,
-  LanguageIcon,
-} from "react-native-heroicons/outline";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Entypo from "react-native-vector-icons/Entypo";
+
 import { useNavigation } from "@react-navigation/native";
 import AppLoaderAnimation from "../components/loaders/AppLoaderAnimation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -42,21 +35,20 @@ import { useTranslation } from "react-i18next";
 import LanguageList from "../language/LanguageList.json";
 import { useLanguage } from "../hooks/LanguageContext";
 
-
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const ProfileScreen = () => {
-
   const navigation = useNavigation();
   const { language, changeLanguage } = useLanguage();
   const [companyName, setCompanyName] = useState("Your Company");
   const [phone, setPhone] = useState("9856743210");
   const [modalVisible, setModalVisible] = useState(false);
-  const [yourLanguage, setYourLanguage] = useState(LanguageList[language].nativeName);
+  const [yourLanguage, setYourLanguage] = useState(
+    LanguageList[language].nativeName
+  );
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  
 
   useEffect(() => {
     async function loadFonts() {
@@ -77,39 +69,34 @@ const ProfileScreen = () => {
     // console.log("Logout button clicked");
   };
 
-  
-  useEffect(()=>{
-    async function getItems(){
+  useEffect(() => {
+    async function getItems() {
       AsyncStorage.getItem("companyname")
-      .then((value) => {
-        if (value !== null) {
-          setCompanyName(value);
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  
-    AsyncStorage.getItem("phone")
-      .then((value) => {
-        if (value !== null) {
-          setPhone(value);
-        } else {
-          console.log("No value found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((value) => {
+          if (value !== null) {
+            setCompanyName(value);
+          } else {
+            console.log("No value found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      AsyncStorage.getItem("phone")
+        .then((value) => {
+          if (value !== null) {
+            setPhone(value);
+          } else {
+            console.log("No value found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-    getItems()
- }, [])
-
-
-
-  
+    getItems();
+  }, []);
 
   const goback = () => {
     navigation.navigate("Home");
@@ -161,9 +148,9 @@ const ProfileScreen = () => {
     hide();
   };
 
-  const languageName = (languageShortName) =>{
-    return 
-  }
+  const languageName = (languageShortName) => {
+    return;
+  };
 
   const LanguageModal = ({ visible }) => {
     return (
@@ -176,12 +163,12 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.safeAreaContent}>
           <View style={styles.languageModalContainer}>
             <View>
-              <TouchableOpacity>
-                <XCircleIcon
+              <TouchableOpacity onPress={hide}>
+                <Feather
+                  name="x-circle"
                   size={wp(8)}
-                  color="white"
+                  color={"white"}
                   style={styles.iconX}
-                  onPress={hide}
                 />
               </TouchableOpacity>
 
@@ -250,15 +237,11 @@ const ProfileScreen = () => {
         <AppLoaderAnimation />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="light" backgroundColor={colors}/>
+          <StatusBar style="light" backgroundColor={colors} />
           <ScrollView>
             <View style={styles.headerContainer}>
               <TouchableOpacity style={styles.iconButton} onPress={goback}>
-                <ArrowLeftIcon
-                  size={hp(2.5)}
-                  strokeWidth={4.5}
-                  color={"#fff"}
-                />
+                <Entypo name="chevron-thin-left" size={hp(3)} color={"#fff"} />
               </TouchableOpacity>
               <View>
                 <View
@@ -268,7 +251,7 @@ const ProfileScreen = () => {
                     marginBottom: "5%",
                   }}
                 >
-                  <BuildingOffice2Icon color={"white"} size={hp(5)} />
+                  <FontAwesome name="building-o" size={wp(8)} color={"white"} />
                   <Text style={styles.companyName}>{companyName}</Text>
                 </View>
                 <View>
@@ -296,10 +279,15 @@ const ProfileScreen = () => {
                 onPress={() => navigation.navigate("AccountDetails")}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <IdentificationIcon color={colors} size={hp(5)} />
+                  <FontAwesome
+                    name="drivers-license-o"
+                    color={colors}
+                    size={hp(4)}
+                  />
                   <Text style={styles.contextName}>{t("accounts")}</Text>
                 </View>
-                <ChevronRightIcon
+                <AntDesign
+                  name="right"
                   color={colors}
                   size={hp(2.5)}
                   strokeWidth={4.5}
@@ -316,10 +304,15 @@ const ProfileScreen = () => {
                 onPress={() => navigation.navigate("DeliveryDetails")}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <TruckIcon color={colors} size={hp(5)} />
+                  <MaterialCommunityIcons
+                    name="truck-outline"
+                    color={colors}
+                    size={hp(5)}
+                  />
                   <Text style={styles.contextName}>{t("orders")}</Text>
                 </View>
-                <ChevronRightIcon
+                <AntDesign
+                  name="right"
                   color={colors}
                   size={hp(2.5)}
                   strokeWidth={4.5}
@@ -426,7 +419,7 @@ const ProfileScreen = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <EnvelopeIcon size={hp(5)} color={colors} />
+                <AntDesign name="mail" size={hp(5)} color={colors} />
                 <Text style={styles.contextName}>{t("mail_us")}</Text>
               </View>
               <TouchableOpacity
@@ -445,7 +438,7 @@ const ProfileScreen = () => {
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <LanguageIcon size={hp(5)} color={colors} />
+                  <Entypo name="language" size={hp(5)} color={colors} />
                   <View>
                     <Text style={styles.languageSelect}>{t("language")}</Text>
                     <Text style={styles.language}>{yourLanguage}</Text>
@@ -482,7 +475,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:backgrounds,
+    backgroundColor: backgrounds,
   },
   safeAreaContent: {
     flex: 1,
@@ -501,11 +494,11 @@ const styles = StyleSheet.create({
   },
   languageModalContainer: {
     width: wp(80),
-    backgroundColor:colors,
+    backgroundColor: colors,
     elevation: 4,
     borderRadius: wp(3),
-    borderColor:backgrounds,
-    borderWidth:wp(0.5)
+    borderColor: backgrounds,
+    borderWidth: wp(0.5),
   },
 
   languageText: {
@@ -520,8 +513,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: hp(2),
     borderRadius: 4,
-    borderTopColor:backgrounds,
-    borderTopWidth:wp(0.1)
+    borderTopColor: backgrounds,
+    borderTopWidth: wp(0.1),
   },
 
   iconX: {

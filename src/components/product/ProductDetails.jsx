@@ -8,7 +8,7 @@ import {
   Pressable,
   TextInput,
   Modal,
-  Platform
+  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -22,15 +22,14 @@ import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import FloatingNavigationButton from "../button/FloatingNavigationButton";
 import * as Font from "expo-font";
 import ProductCardTwo from "./ProductCardTwo";
-import {
-  ChevronLeftIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-} from "react-native-heroicons/outline";
-import { MapPinIcon } from "react-native-heroicons/solid";
-import { useTranslation } from "react-i18next";
+
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
+
+import { useTranslation } from "react-i18next";
 import TermsAndConditionsModal from "./TermsandCondition";
 import { useScrollToTop } from "@react-navigation/native";
 const colors = "#E84A5F";
@@ -223,7 +222,8 @@ const ProductDetails = ({ route }) => {
                   style={styles.iconBackButton}
                   onPress={goback}
                 >
-                  <ChevronLeftIcon
+                  <Entypo
+                    name="chevron-left"
                     size={hp(3.5)}
                     strokeWidth={4.5}
                     color={colors}
@@ -254,7 +254,8 @@ const ProductDetails = ({ route }) => {
                   {productDetails.productLocation && (
                     <>
                       <View style={styles.locationContainer}>
-                        <MapPinIcon
+                        <FontAwesome
+                          name="map-marker"
                           size={hp(3)}
                           color={"white"}
                           style={styles.mapIcon}
@@ -327,8 +328,9 @@ const ProductDetails = ({ route }) => {
                 <View>
                   {productDetails.productIsOrganic == 1 ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon
-                        size={hp(3)}
+                      <MaterialCommunityIcons
+                        name="check-decagram-outline"
+                        size={hp(2.5)}
                         color={"white"}
                         style={styles.verifiedIcon}
                       />
@@ -340,8 +342,9 @@ const ProductDetails = ({ route }) => {
 
                   {productDetails.productSpeciality ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon
-                        size={hp(3)}
+                     <MaterialCommunityIcons
+                        name="check-decagram-outline"
+                        size={hp(2.5)}
                         color={"white"}
                         style={styles.verifiedIcon}
                       />
@@ -355,8 +358,9 @@ const ProductDetails = ({ route }) => {
                 <View>
                   {productDetails.productQualityAvailable ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon
-                        size={hp(3)}
+                      <MaterialCommunityIcons
+                        name="check-decagram-outline"
+                        size={hp(2.5)}
                         color={"white"}
                         style={styles.verifiedIcon}
                       />
@@ -371,8 +375,9 @@ const ProductDetails = ({ route }) => {
 
                   {productDetails.productMoisture ? (
                     <View style={styles.verifedDescription}>
-                      <CheckCircleIcon
-                        size={hp(3)}
+                      <MaterialCommunityIcons
+                        name="check-decagram-outline"
+                        size={hp(2.5)}
                         color={"white"}
                         style={styles.verifiedIcon}
                       />
@@ -396,11 +401,12 @@ const ProductDetails = ({ route }) => {
                   setModalVisible(false);
                 }}
               >
-                <ChevronLeftIcon
-                  size={hp(3.5)}
-                  strokeWidth={4.5}
-                  color={colors}
-                />
+                 <Entypo
+                    name="chevron-left"
+                    size={hp(3.5)}
+                    strokeWidth={4.5}
+                    color={colors}
+                  />
               </TouchableOpacity>
               <View style={styles.modalBackground}>
                 <View style={styles.modalContent}>
@@ -411,7 +417,7 @@ const ProductDetails = ({ route }) => {
                       // navigation.goBack();
                     }}
                   >
-                    <XCircleIcon size={hp(3)} color={"black"} />
+                    <Feather name="x-circle" size={hp(3)} color={"black"} />
                   </TouchableOpacity>
                   {!showSummary ? (
                     <>
@@ -629,6 +635,7 @@ const styles = StyleSheet.create({
 
   mapIcon: {
     color: "white",
+    marginRight: wp(3),
   },
 
   locationLabel: {

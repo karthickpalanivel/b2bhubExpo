@@ -13,18 +13,19 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
-import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
-import { useTranslation } from "react-i18next";
 
-const OTPAndPasswordScreen = ({route}) => {
-  const [otp, setOtp] = useState(["", "", "", "","",""]);
+import { useTranslation } from "react-i18next";
+import Feather from "react-native-vector-icons/Feather";
+
+const OTPAndPasswordScreen = ({ route }) => {
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isOtpValid, setIsOtpValid] = useState(null);
   const [otpVerified, setOtpVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPasswrod, setShowPassword] = useState(true);
 
-  const {email} = route.params;
+  const { email } = route.params;
   const handleShowPassword = () => {
     setShowPassword(!showPasswrod);
   };
@@ -46,22 +47,19 @@ const OTPAndPasswordScreen = ({route}) => {
     }
   };
 
-
   const handleEmailSubmit = async () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
-      const res = await axios.post(url, {email});
-      setOriginalOtp(res.data.otp.toString()); 
-      console.log('====================================');
+      const res = await axios.post(url, { email });
+      setOriginalOtp(res.data.otp.toString());
+      console.log("====================================");
       console.log(originalOtp);
-      console.log('====================================');
-      Alert.alert('OTP sent to your email!');
+      console.log("====================================");
+      Alert.alert("OTP sent to your email!");
     } catch (error) {
-      Alert.alert('Failed to send OTP');
+      Alert.alert("Failed to send OTP");
     }
   };
-
-  
 
   const validateOtp = () => {
     const enteredOtp = otp.join("");
@@ -77,32 +75,35 @@ const OTPAndPasswordScreen = ({route}) => {
     if (newPassword === confirmPassword && newPassword.length >= 8) {
       Alert.alert("Success", "Password changed successfully!");
       try {
-  
         // Send the entered OTP along with other data to the backend for verification and password reset
-        await axios.put(`${process.env.REACT_APP_BACKEND_URL}` +"/b2b/resetpassword", {
-          email,
-          otp, // Send the entered OTP
-          newPassword,
-          confirmPassword,
-        });
+        await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/resetpassword",
+          {
+            email,
+            otp, // Send the entered OTP
+            newPassword,
+            confirmPassword,
+          }
+        );
         console.log({
           email,
           otp, // Send the entered OTP
           password,
           confirmPassword,
         });
-        
+
         //toast.success('Password changed successfully!', { position: "top-center" });
-  
+
         // Redirect to login after success
         setTimeout(() => {
           navigation.navigate("Login");
         }, 3000);
       } catch (error) {
-        toast.error('Failed to change password or OTP is incorrect', { position: "top-center" });
+        toast.error("Failed to change password or OTP is incorrect", {
+          position: "top-center",
+        });
         console.log(error);
       }
-      
     } else if (newPassword.length < 8) {
       Alert.alert("Error", "Passwords must be more than 8!");
     } else {
@@ -111,10 +112,6 @@ const OTPAndPasswordScreen = ({route}) => {
   };
 
   const { t } = useTranslation();
-
-
-
-
 
   return (
     <View style={styles.container}>
@@ -160,13 +157,19 @@ const OTPAndPasswordScreen = ({route}) => {
               />
               <TouchableOpacity onPress={handleShowPassword}>
                 {showPasswrod ? (
-                  <EyeSlashIcon
+                  <Feather
+                    name="eye-off"
                     size={wp(5)}
                     color={"grey"}
                     style={styles.eyeIcon}
                   />
                 ) : (
-                  <EyeIcon size={wp(5)} color={"grey"} style={styles.eyeIcon} />
+                  <Feather
+                    name="eye"
+                    size={wp(5)}
+                    color={"grey"}
+                    style={styles.eyeIcon}
+                  />
                 )}
               </TouchableOpacity>
             </View>
@@ -181,13 +184,19 @@ const OTPAndPasswordScreen = ({route}) => {
               />
               <TouchableOpacity onPress={handleShowPassword}>
                 {showPasswrod ? (
-                  <EyeSlashIcon
+                  <Feather
+                    name="eye-off"
                     size={wp(5)}
                     color={"grey"}
                     style={styles.eyeIcon}
                   />
                 ) : (
-                  <EyeIcon size={wp(5)} color={"grey"} style={styles.eyeIcon} />
+                  <Feather
+                    name="eye"
+                    size={wp(5)}
+                    color={"grey"}
+                    style={styles.eyeIcon}
+                  />
                 )}
               </TouchableOpacity>
             </View>

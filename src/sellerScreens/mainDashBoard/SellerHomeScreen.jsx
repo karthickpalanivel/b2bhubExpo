@@ -19,14 +19,17 @@ import {
 import ProductDisplay from "../sellerComponents/ProductDisplay";
 import * as Font from "expo-font";
 import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
-import { ArrowRightStartOnRectangleIcon } from "react-native-heroicons/outline";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../hooks/LanguageContext";
-import { LanguageIcon, XCircleIcon } from "react-native-heroicons/outline";
-import LanguageList from '../../language/LanguageList.json'
-const colors="#E84A5F";
-const backgrounds="#FCF8F3";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+
+import LanguageList from "../../language/LanguageList.json";
+const colors = "#E84A5F";
+const backgrounds = "#FCF8F3";
 
 const SellerHomeScreen = () => {
   const navigation = useNavigation();
@@ -98,9 +101,7 @@ const SellerHomeScreen = () => {
       //console.error("Error:", error);
     });
 
-    const arrayValues = () =>{
-
-    }
+  const arrayValues = () => {};
 
   const LanguageModal = ({ visible }) => {
     return (
@@ -111,34 +112,35 @@ const SellerHomeScreen = () => {
           onRequestClose={hide}
           transparent
         >
-        <SafeAreaView style={styles.safeAreaContent}>
-          <View style={styles.languageModalContainer}>
-            <View>
-              <TouchableOpacity>
-                <XCircleIcon
-                  size={wp(10)}
-                  color="white"
-                  style={styles.iconX}
-                  onPress={hide}
-                />
-              </TouchableOpacity>
+          <SafeAreaView style={styles.safeAreaContent}>
+            <View style={styles.languageModalContainer}>
+              <View>
+                <TouchableOpacity>
+                  <Feather
+                    name="x-circle"
+                    size={wp(10)}
+                    color="white"
+                    style={styles.iconX}
+                    onPress={hide}
+                  />
+                </TouchableOpacity>
 
-              <FlatList
-                data={Object.keys(LanguageList)}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.languageContainer}
-                    onPress={() => changeLng(item)}
-                  >
-                    <Text style={styles.languageText}>
-                      {LanguageList[item].nativeName}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
+                <FlatList
+                  data={Object.keys(LanguageList)}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.languageContainer}
+                      onPress={() => changeLng(item)}
+                    >
+                      <Text style={styles.languageText}>
+                        {LanguageList[item].nativeName}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
             </View>
-          </View>
-        </SafeAreaView>
+          </SafeAreaView>
         </Modal>
       </>
     );
@@ -151,7 +153,7 @@ const SellerHomeScreen = () => {
       ) : (
         <>
           <StatusBar style="dark" backgroundColor="#fff" />
-          <View style={styles.container} >
+          <View style={styles.container}>
             <View>
               <View style={styles.header}>
                 <View>
@@ -163,13 +165,19 @@ const SellerHomeScreen = () => {
                     style={{ flexDirection: "row", alignItems: "center" }}
                     onPress={show}
                   >
-                    <LanguageIcon size={hp(2.8)} color={colors} />
-                    <Text style={{ fontSize: wp(3.4), marginLeft: wp(1), fontFamily: "QuicksandSemiBold" }}>{yourLanguage}</Text>
+                    <Ionicons name="language" size={hp(2.8)} color={colors} />
+                    <Text
+                      style={{
+                        fontSize: wp(3.4),
+                        marginLeft: wp(1),
+                        fontFamily: "QuicksandSemiBold",
+                      }}
+                    >
+                      {yourLanguage}
+                    </Text>
                   </TouchableOpacity>
-
-                 
                 </View>
-                
+
                 {/* <Image
                   source={{
                     uri: "https://res.cloudinary.com/dve3s278t/image/upload/v1726223190/bc9fd4bd-de9b-4555-976c-8360576c6708_l9xbwx.jpg",
@@ -181,7 +189,8 @@ const SellerHomeScreen = () => {
                     style={{ alignItems: "center" }}
                     onPress={handleLogout}
                   >
-                    <ArrowRightStartOnRectangleIcon
+                    <FontAwesome6
+                      name="arrow-right-from-bracket"
                       color={"#333"}
                       size={wp(8)}
                       strokeWidth={wp(0.3)}
@@ -190,20 +199,19 @@ const SellerHomeScreen = () => {
                   </TouchableOpacity>
                   <Text>{t("logout")}</Text>
                 </View>
-               
               </View>
               <View>
-              <TouchableOpacity
-              style={styles.addProductContainer}
-              onPress={navigationToAddProduct}
-            >
-              <Text style={styles.addProductText}>{t("add_new_product")}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.addProductContainer}
+                  onPress={navigationToAddProduct}
+                >
+                  <Text style={styles.addProductText}>
+                    {t("add_new_product")}
+                  </Text>
+                </TouchableOpacity>
               </View>
               <LanguageModal visible={languageModel} />
 
-
-              
               <View style={styles.cardsContainer}>
                 {/* <View style={[styles.card, { backgroundColor: "#A3D8A2" }]}>
                   <Text style={styles.cardTitle}>{t("active_product")}</Text>
@@ -258,7 +266,7 @@ const styles = StyleSheet.create({
     marginTop: wp(5),
     padding: wp("5%"),
     backgroundColor: backgrounds,
-    marginBottom:wp(0)
+    marginBottom: wp(0),
   },
   header: {
     flexDirection: "row",
@@ -323,7 +331,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 999,
     elevation: 2,
-    margin:wp(5),
+    margin: wp(5),
   },
   addProductText: {
     color: "white",
@@ -349,8 +357,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors,
     elevation: 4,
     borderRadius: wp(3),
-    borderColor:backgrounds,
-    borderWidth:wp(0.5)
+    borderColor: backgrounds,
+    borderWidth: wp(0.5),
   },
 
   iconX: {
@@ -363,8 +371,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: hp(2),
     borderRadius: 4,
-    borderTopColor:backgrounds,
-    borderTopWidth:wp(0.1)
+    borderTopColor: backgrounds,
+    borderTopWidth: wp(0.1),
   },
 
   languageText: {

@@ -17,7 +17,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import {
   heightPercentageToDP as hp,
@@ -27,59 +26,57 @@ import AppLoaderAnimation from "../../components/loaders/AppLoaderAnimation";
 const { width } = Dimensions.get("window");
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Entypo from "react-native-vector-icons/Entypo";
 
 const SignUpScreen = () => {
   const [termsModal, setTermsModal] = useState(false);
-  const [signuptext,  setsignuptext] = useState("sign_up")
+  const [signuptext, setsignuptext] = useState("sign_up");
   const { t } = useTranslation();
-  
+
   async function HandleSignup() {
-    if(email && panNumber && gstNumber && phone && companyName && password){
-      setsignuptext("Signing Up...")
-    const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/customer-registration";
-    await axios
-      .post(
-        url,
-        {
+    if (email && panNumber && gstNumber && phone && companyName && password) {
+      setsignuptext("Signing Up...");
+      const url =
+        `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/customer-registration";
+      await axios
+        .post(url, {
           Email: email,
           PAN: panNumber,
           gstNo: gstNumber,
           phoneNo: phone,
           CompanyName: companyName,
           Password: password,
-        }
-      )
-      .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
+        })
+        .then((res) => {
           console.log(res.status);
-          const customer = res.data.user;
-          console.log(customer);
-          try {
-            AsyncStorage.setItem("loginstate", "true");
-            AsyncStorage.setItem("token", res.data.token);
-            AsyncStorage.setItem("userEmail", email);
-            AsyncStorage.setItem("customerId", res.data.customerId);
-            AsyncStorage.setItem("companyname", customer.CompanyName);
-            AsyncStorage.setItem("phone", customer.phoneNo);
-            AsyncStorage.setItem("gst", customer.gstNo);
-            AsyncStorage.setItem("email", customer.Email);
-          } catch (e) {
-            // saving error
-            console.error(e);
-          }
+          if (res.status === 200) {
+            console.log(res.status);
+            const customer = res.data.user;
+            console.log(customer);
+            try {
+              AsyncStorage.setItem("loginstate", "true");
+              AsyncStorage.setItem("token", res.data.token);
+              AsyncStorage.setItem("userEmail", email);
+              AsyncStorage.setItem("customerId", res.data.customerId);
+              AsyncStorage.setItem("companyname", customer.CompanyName);
+              AsyncStorage.setItem("phone", customer.phoneNo);
+              AsyncStorage.setItem("gst", customer.gstNo);
+              AsyncStorage.setItem("email", customer.Email);
+            } catch (e) {
+              // saving error
+              console.error(e);
+            }
 
-          navigation.navigate("Home");
-        } else window.alert(res.message);
-      })
-      .catch((error) => {
-        window.alert(error);
-        return;
-      });
+            navigation.navigate("Home");
+          } else window.alert(res.message);
+        })
+        .catch((error) => {
+          window.alert(error);
+          return;
+        });
     } else {
-      Alert.alert("Please fill the Details Completely")
+      Alert.alert("Please fill the Details Completely");
     }
-    
   }
 
   useEffect(() => {
@@ -110,8 +107,8 @@ const SignUpScreen = () => {
   const navigateToLogin = () => {
     navigation.goBack();
   };
-  const navigateToTerms= () => {
-    navigation.navigate("Terms")
+  const navigateToTerms = () => {
+    navigation.navigate("Terms");
   };
 
   const validatePan = (pan) => {
@@ -174,11 +171,7 @@ const SignUpScreen = () => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
               <Pressable onPress={navigateToLogin}>
-                <ChevronLeftIcon
-                  size={hp(3.5)}
-                  color={"white"}
-                  style={styles.icon}
-                />
+                <Entypo name="chevron-thin-left" size={hp(3)} color={"#fff"} />
               </Pressable>
               {/* <Image
                 source={require("../../assets/logo.png")}
@@ -305,7 +298,10 @@ const SignUpScreen = () => {
               </View>
 
               <Text style={styles.registering}>{t("accept_terms")}</Text>
-              <TouchableOpacity style={styles.tcContainer} onPress={navigateToTerms}>
+              <TouchableOpacity
+                style={styles.tcContainer}
+                onPress={navigateToTerms}
+              >
                 <Text style={[styles.registering, { color: "#D53C46" }]}>
                   {t("terms_condition")}
                 </Text>

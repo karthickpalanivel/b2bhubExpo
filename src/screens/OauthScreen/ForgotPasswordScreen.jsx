@@ -13,15 +13,14 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useTranslation } from "react-i18next";
-import axios from 'axios'
-
+import axios from "axios";
+import Entypo from "react-native-vector-icons/Entypo";
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [originalOtp, setOriginalOtp] = useState("")
+  const [originalOtp, setOriginalOtp] = useState("");
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -38,43 +37,40 @@ const ForgotPasswordScreen = () => {
     return emailRegex.test(text);
   };
 
-
   const handleEmailSubmit = async () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
-      const res = await axios.post(url, {email});
-      // setOriginalOtp(res.data.otp); 
+      const res = await axios.post(url, { email });
+      // setOriginalOtp(res.data.otp);
       // console.log('====================================');
-         console.log(res.data);
-         navigation.navigate("OtpConformScreen", {
-          email: email,
-          originalOtp: originalOtp,
-        });
+      console.log(res.data);
+      navigation.navigate("OtpConformScreen", {
+        email: email,
+        originalOtp: originalOtp,
+      });
       // console.log('====================================');
 
-      Alert.alert('OTP sent to your email!');
+      Alert.alert("OTP sent to your email!");
     } catch (error) {
-      Alert.alert('Failed to send OTP'+error);
-      console.log('====================================');
+      Alert.alert("Failed to send OTP" + error);
+      console.log("====================================");
       console.log(error);
-      console.log('====================================');
+      console.log("====================================");
     }
   };
 
-
-
-  const handleSendOTP = async()  => {
+  const handleSendOTP = async () => {
     if (!validateEmail(email)) {
       setIsValidEmail(false);
       Alert.alert(`${t("invalid_email")} \n${t("enter_valid_email")}`);
       try {
         const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/sendOtp";
-        const res = await axios.post(url, {email});
+        const res = await axios.post(url, { email });
         setOriginalOtp(res.data.otp.toString());
         console.log(originalOtp);
         Alert.alert(`${t("otp_sent")} \n${t("otp has been sent to ")}${email}`);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
         navigation.navigate("OtpConformScreen", {
           email: email,
@@ -85,15 +81,16 @@ const ForgotPasswordScreen = () => {
     }
     setIsValidEmail(true);
     // console.log("OTP Sent to:", email);
-    
+
     Alert.alert(`${t("otp_sent")} \n${t("otp_has_been_sent_to ")}${email}`);
-    navigation.navigate("OtpConformScreen",{email: email});
+    navigation.navigate("OtpConformScreen", { email: email });
   };
 
   return (
     <View style={styles.container}>
       <Pressable onPress={goBack} style={styles.goBackContainer}>
-        <ChevronLeftIcon size={hp(3.5)} color={"#D53C46"} strokeWidth={3} />
+        <Entypo name="chevron-thin-left" size={hp(3)} color={"#d53c46"} />
+        {/* d53c46 */}
       </Pressable>
       <View style={styles.content}>
         <View
@@ -120,8 +117,11 @@ const ForgotPasswordScreen = () => {
           )}
         </View>
 
-        <TouchableOpacity onPress={handleEmailSubmit} style={styles.sendOtpButton}>
-          <Text style={styles.sendOtpText}>{t('send_otp')}</Text>
+        <TouchableOpacity
+          onPress={handleEmailSubmit}
+          style={styles.sendOtpButton}
+        >
+          <Text style={styles.sendOtpText}>{t("send_otp")}</Text>
         </TouchableOpacity>
       </View>
     </View>

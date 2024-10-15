@@ -14,14 +14,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import * as Font from "expo-font";
 import Entypo from "react-native-vector-icons/Entypo";
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
-import { MapPinIcon } from "react-native-heroicons/solid";
-import { XCircleIcon } from "react-native-heroicons/outline";
+
 const colors = "#E84A5F";
 const backgrounds = "#FCF8F3";
 
@@ -310,11 +311,12 @@ const ProductCard = ({ props, index }) => {
                   alignItems: "center",
                 }}
               >
-                <MapPinIcon
-                  size={wp(5)}
-                  color={"black"}
-                  style={{ marginLeft: "4%" }}
-                />
+
+                <FontAwesome color={"black"} name="map-marker" style={{
+                  fontSize: wp(5),
+                  marginLeft: "4%",
+                }}/>
+                
                 <Text style={styles.locationText}>{props.location}</Text>
               </View>
             ) : (

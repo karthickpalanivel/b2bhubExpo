@@ -7,12 +7,14 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-const colors="#EF5A6F";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Entypo from "react-native-vector-icons/Entypo";
+
+const colors = "#EF5A6F";
 
 const ProfileHeaderLayout = ({ header }) => {
   const navigation = useNavigation();
@@ -23,7 +25,11 @@ const ProfileHeaderLayout = ({ header }) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={goBack}>
-        <ArrowLeftIcon size={hp(3)} strokeWidth={2} color={"#fff"} />
+        <Entypo
+          name="chevron-thin-left"
+          size={hp(3)}
+          color={"#fff"}
+        />
       </TouchableOpacity>
       <Text style={styles.header}>{header}</Text>
     </View>
@@ -40,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: hp(3),
     paddingLeft: hp(3),
-    backgroundColor:colors,
+    backgroundColor: colors,
     elevation: 3,
   },
   header: {

@@ -11,15 +11,10 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { LinearGradient } from "expo-linear-gradient";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
-import {
-  EyeIcon,
-  DocumentIcon,
-  XCircleIcon,
-} from "react-native-heroicons/solid";
+import Feather from "react-native-vector-icons/Feather";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
   widthPercentageToDP as wp,
@@ -27,8 +22,7 @@ import {
 } from "react-native-responsive-screen";
 import * as Font from "expo-font";
 
-import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
-import PdfGeneration from "../InVoice/PdfGeneration";
+import Animated, { FadeInRight } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import AppLoaderAnimation from "../loaders/AppLoaderAnimation";
 import { useNavigation } from "@react-navigation/native";
@@ -167,7 +161,8 @@ const OrderCard = ({ props }) => {
                   </Text>
                 </View>
                 <TouchableOpacity style={{ zIndex: 700 }}>
-                  <XCircleIcon
+                  <Feather
+                    name="x-circle"
                     size={wp(8)}
                     style={styles.icon}
                     onPress={() => setModalVisible(false)}
@@ -267,7 +262,7 @@ const OrderCard = ({ props }) => {
                   style={styles.iconContainer}
                   onPress={openInvoice}
                 >
-                  <EyeIcon size={wp(5)} color={"#4870F4"} />
+                  <Feather name="eye" size={wp(5)} color={"#4870F4"} />
                   <Text style={styles.documentText}>{t("invoice")}</Text>
                 </TouchableOpacity>
                 {props.payment_status ? (
@@ -300,7 +295,11 @@ const OrderCard = ({ props }) => {
                           style={styles.iconContainer}
                           onPress={() => showModal()}
                         >
-                          <DocumentIcon size={wp(5)} color={"#E64242"} />
+                          <Ionicons
+                            name="document"
+                            size={wp(5)}
+                            color={"#E64242"}
+                          />
                           <Text style={styles.document}>
                             {t("upload_payment_details")}
                           </Text>

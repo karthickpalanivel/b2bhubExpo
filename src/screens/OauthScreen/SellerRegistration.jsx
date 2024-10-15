@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,14 +12,14 @@ import {
   Modal,
 } from "react-native";
 import axios from "axios";
-import {useNavigation} from "@react-navigation/native";
-import {Picker} from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import {ChevronLeftIcon} from "react-native-heroicons/outline";
-import {useTranslation} from "react-i18next";
+
+import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SellerRegistration = () => {
@@ -33,11 +33,11 @@ const SellerRegistration = () => {
   const [categoryModal, setCategotyModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sucessModalVisible, setSucessModalVisible] = useState(false);
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
 
   const navigation = useNavigation();
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const validateEmail = (inputEmail) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,7 +59,7 @@ const SellerRegistration = () => {
     const url =
       `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/reqToUpgradeSeller";
     axios
-      .post(url, {email: email})
+      .post(url, { email: email })
       .then((res) => {
         console.log("-----------", res.data.message);
         setGetOtp(true);
@@ -80,7 +80,7 @@ const SellerRegistration = () => {
     // Simulate the server sending OTP, store it for later comparison
     const generatedOtp = "1234"; // Simulated OTP sent by the server
     setServerOtp(generatedOtp);
-     // Show OTP input field
+    // Show OTP input field
   };
 
   const handleOtpChange = (text) => {
@@ -89,11 +89,12 @@ const SellerRegistration = () => {
 
   const handleOtp = async () => {
     try {
-      const url = `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/upgradeToSeller";
+      const url =
+        `${process.env.REACT_APP_BACKEND_URL}` + "/b2b/upgradeToSeller";
       const res = await axios.put(url, { otp: Otp, email: email });
       if (res.status === 200) {
         AsyncStorage.setItem("token", res.data.token);
-        setToken(res.data.token)
+        setToken(res.data.token);
         setCategotyModal(true);
       }
     } catch (error) {
@@ -117,11 +118,10 @@ const SellerRegistration = () => {
         }
       )
       .then((res) => {
-        if(res.status == 200){
+        if (res.status == 200) {
           Alert.alert("Registered as Seller Successfully");
           navigation.navigate("Login");
         }
-        
       })
       .catch((err) => {
         console.log(err);
@@ -145,7 +145,12 @@ const SellerRegistration = () => {
     <ScrollView style={styles.container}>
       {/* Add logo */}
       <TouchableOpacity style={styles.backButton} onPress={goBack}>
-        <ChevronLeftIcon size={hp(4)} color={"#d53c46"} strokeWidth={wp(1)} />
+        <Entypo
+          name="chevron-thin-left"
+          size={hp(4)}
+          color={"#d53c46"}
+          strokeWidth={wp(1)}
+        />
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
@@ -162,7 +167,7 @@ const SellerRegistration = () => {
 
         <View>
           <Text style={styles.inputName}>
-            <Text style={{color: "#d53c46"}}>**</Text>{" "}
+            <Text style={{ color: "#d53c46" }}>**</Text>{" "}
             {t("enter_your_location")}
           </Text>
           <View style={styles.pickerContainer}>
@@ -245,7 +250,7 @@ const SellerRegistration = () => {
                   ]}
                   onPress={() => setSelectedCategory("platinum")}
                 >
-                  <View style={{flexDirection: "row"}}>
+                  <View style={{ flexDirection: "row" }}>
                     <Image
                       source={require("../../assets/sellerCategory/platinum.png")}
                       style={styles.img}
@@ -269,7 +274,7 @@ const SellerRegistration = () => {
                   ]}
                   onPress={() => setSelectedCategory("gold")}
                 >
-                  <View style={{flexDirection: "row"}}>
+                  <View style={{ flexDirection: "row" }}>
                     <Image
                       source={require("../../assets/sellerCategory/gold.png")}
                       style={styles.img}
