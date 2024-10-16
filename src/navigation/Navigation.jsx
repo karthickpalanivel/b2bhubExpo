@@ -1,10 +1,7 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, {
-  useEffect,
-  useState
-} from "react";
-import { StyleSheet } from "react-native";
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import React, {useEffect, useState} from "react";
+import {StyleSheet} from "react-native";
 
 //Screens
 import ProductDetails from "../components/product/ProductDetails";
@@ -40,34 +37,12 @@ const Stack = createNativeStackNavigator();
 
 //functions
 export default function Navigation() {
-  const [onBoardingCompleted, setOnBoardingCompleted] = useState(null);
-  const [buyerLogin, setBuyerLogin] = useState(false);
-  const [sellerLogin, setSellerLogin] = useState(false);
-
-  useEffect(() => {
-    alreadyOnBoarded();
-  }, []);
-
-  const alreadyOnBoarded = async () => {
-    let onBoard = await getItem("onboraded");
-    if (onBoard == 1) {
-      setOnBoardingCompleted(false);
-    } else {
-      setOnBoardingCompleted(true);
-    }
-  };
-
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
-        {onBoardingCompleted == true ? (
-          <Stack.Screen
-            name="onBoardScreenOne"
-            component={OnBoardingScreenOne}
-          />
-        ) : null}
+        <Stack.Screen name="onBoardScreenOne" component={OnBoardingScreenOne} />
 
         {/* Onboarding Screens */}
 
@@ -80,7 +55,6 @@ export default function Navigation() {
 
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Sucessfull" component={OrderSuccessful} />
-
 
         {/* Authentication Page */}
 

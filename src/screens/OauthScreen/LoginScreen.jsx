@@ -125,10 +125,10 @@ const LoginScreen = () => {
             } catch (e) {
               console.error(e);
             }
-          } else window.alert(res.message);
+          } else Alert.alert(res.message);
         })
         .catch((error) => {
-          window.alert(error);
+          Alert.alert(error);
           setLogintext(t("login"));
           return;
         });
@@ -169,10 +169,10 @@ const LoginScreen = () => {
           } catch (e) {
             console.error(e);
           }
-        } else window.alert(res.message);
+        } else Alert.alert(res.message);
       })
       .catch((error) => {
-        window.alert(error);
+        Alert.alert(error);
         setLogintext(t("login"));
         return;
       });

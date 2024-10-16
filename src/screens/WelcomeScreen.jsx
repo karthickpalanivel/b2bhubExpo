@@ -19,23 +19,35 @@ export default function WelcomeScreen() {
   console.log(loggedin);
 
   async function navigationScreen() {
-    await AsyncStorage.getItem("loginstate")
-      .then((value) => {
-        if (value !== null && value == "true") {
-          // Value was found, do something with it
-          //console.log("Value:", value);
-          navigation.navigate("Home");
+    const getStoredlanguage = async () => {
+      try {
+        const alreadyOnboarded = await AsyncStorage.getItem("onboarded");
+        if (alreadyOnboarded) {
+          await AsyncStorage.getItem("loginstate")
+            .then((value) => {
+              if (value !== null && value == "true") {
+                // Value was found, do something with it
+                //console.log("Value:", value);
+                navigation.navigate("Home");
+              } else {
+                navigation.navigate("Login");
+                // No value found
+                //console.log("No value found");
+              }
+            })
+            .catch((error) => {
+              // Error retrieving value
+              console.error("Error:", error);
+              navigation.navigate("Login");
+            });
         } else {
-          navigation.navigate("Login");
-          // No value found
-          //console.log("No value found");
+          navigation.navigate("onBoardScreenOne")
         }
-      })
-      .catch((error) => {
-        // Error retrieving value
-        console.error("Error:", error);
-        navigation.navigate("Login");
-      });
+      } catch (e) {
+        console.error("Failed to get language from AsyncStroage", e.message);
+      }
+    };
+    getStoredlanguage();
   }
 
   useEffect(() => {
@@ -70,11 +82,9 @@ export default function WelcomeScreen() {
       ) : (
         <View style={styles.container}>
           <StatusBar style="light" />
-          <Animated.View
-            style={[styles.outerRing, { padding: ringOnePadding }]}
-          >
+          <Animated.View style={[styles.outerRing, {padding: ringOnePadding}]}>
             <Animated.View
-              style={[styles.innerRing, { padding: ringTwoPadding }]}
+              style={[styles.innerRing, {padding: ringTwoPadding}]}
             >
               <Image
                 source={require("../assets/logo.png")}
@@ -83,10 +93,10 @@ export default function WelcomeScreen() {
             </Animated.View>
           </Animated.View>
           <View style={styles.textContainer}>
-            <Text style={[styles.business, { fontSize: 25 }]}>
+            <Text style={[styles.business, {fontSize: 25}]}>
               Make your business trading
             </Text>
-            <Text style={[styles.business, { fontSize: 30 }]}>
+            <Text style={[styles.business, {fontSize: 30}]}>
               Easier with us!
             </Text>
           </View>

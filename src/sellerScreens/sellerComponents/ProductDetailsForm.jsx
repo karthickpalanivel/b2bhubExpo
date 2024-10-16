@@ -88,6 +88,9 @@ const ProductDetailsForm = ({ route }) => {
   };
   console.log(units);
 
+
+
+
   // console.log("imageurl" + imageUrl);
 
   const onSubmit = () => {
@@ -324,31 +327,46 @@ const ProductDetailsForm = ({ route }) => {
   //   }
   // };
 
-  function uploadImage(photo) {
-    const data = new FormData();
-    data.append("file", photo);
-    data.append("upload_preset", "_Dalpicsonly");
-    data.append("cloud_name", "dbesmy2df");
-    fetch("https://api.cloudinary.com/v1_1/dbesmy2df/image/upload", {
-      method: "POST",
-      body: data,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form/data",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setImage(data.uri);
-        console.log("==================data uri==================");
-        console.log(data.uri);
-        console.log("====================================");
-      })
-      .catch((err) => {
-        Alert.alert(err + "error while uploading");
-      });
-  }
+  async function uploadImage(uri) {
 
+    // const cleanedBase64 = `data:image/jpeg;base64,${base64Image}`;
+
+
+    let formData = new FormData();
+    formData.append('file', {
+      uri: uri,
+      type: 'image/jpeg', // Adjust according to your image type, or use image/png if needed
+      name: 'upload_image11.jpg', // Name of the image
+    });
+    formData.append('upload_preset', "_Dalpicsonly");
+
+    // const data = new URLSearchParams();
+    // data.append('file', cleanedBase64); // or png
+    // data.append('upload_preset', "_Dalpicsonly");
+    
+    // // Optional: Set a unique public_id (file name)
+    //  data.append('public_id', `newname1${Date.now()}`);  // Set a unique name if needed
+  
+
+    
+
+    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dbesmy2df/image/upload"
+    try {
+      setIsUploading(true)
+      const res = await axios.post(cloudinaryUrl, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      console.log('Uploaded image URL:', res.data.secure_url);
+      setIsUploading(false)
+      setImageUrl(res.data.secure_url)
+      Alert.alert('Image uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  }
   console.log("====================================");
   console.log(image);
   console.log("====================================");
@@ -361,6 +379,8 @@ const ProductDetailsForm = ({ route }) => {
         result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
+          base64: true,
+          quality: 0.5,
           aspect: [1, 1],
           quality: 1,
         });
@@ -369,26 +389,24 @@ const ProductDetailsForm = ({ route }) => {
         result = await ImagePicker.launchCameraAsync({
           cameraType: ImagePicker.CameraType.back,
           allowsEditing: true,
+          base64: true,
+          quality: 0.5,
           aspect: [1, 1],
           quality: 1,
         });
       }
       if (!result.canceled) {
-        // Update the image state with the selected image URI
+        setImage(result.assets[0].uri); // Update the image state with the selected image URI
         setIsUploadVisible(false);
-        const uri = result.assets[0].uri;
-        const type = result.assets[0].type;
-        const name = result.assets[0].fileName;
-        const source = { uri, type, name };
-        uploadImage(source);
-        console.log("====================================");
-        console.log(source);
-        console.log("====================================");
+        uploadImage(result.assets[0].uri)
+        
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+  const data ={}
 
   const calculateTotalQuantity = () => {
     const totalQuantity = packageDetails.reduce((sum, detail) => {
@@ -533,7 +551,7 @@ const ProductDetailsForm = ({ route }) => {
                   </TouchableOpacity>
                 )}
                 <TouchableOpacity>
-                  <Text>upload</Text>
+                  <Text>{imageUrl? "image uploaded successfully" : (isUploading ? "uploading":"please upload image")}</Text>
                 </TouchableOpacity>
               </View>
 

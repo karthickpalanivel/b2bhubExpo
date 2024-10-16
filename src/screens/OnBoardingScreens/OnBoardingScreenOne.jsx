@@ -30,15 +30,6 @@ const OnBoardingScreenOne = () => {
   const { language, changeLanguage } = useLanguage();
   const { t } = useTranslation();
 
-  const storeLanguage = async (selectedLang) => {
-    try {
-      await AsyncStorage.setItem("appLanguage", selectedLang);
-      changeLanguage(selectedLang);
-    } catch (err) {
-      console.error("Failed to save language in AsyncStroage", err);
-    }
-  };
-
 
   useEffect(() => {
     async function loadFonts() {
@@ -53,30 +44,17 @@ const OnBoardingScreenOne = () => {
     loadFonts();
   }, []);
 
-  useEffect(() => {
-    changeLanguage(selectLanguage);
-    storeLanguage(selectLanguage);
-  }, [selectLanguage]);
-
-  useEffect(() => {
-    const getStoredlanguage = async () => {
-      try {
-        const storedLanguage = await AsyncStorage.getItem("appLanguage");
-        if (storedLanguage) {
-          setSelectLanguage(storedLanguage);
-          changeLanguage(storedLanguage);
-        }
-      } catch (e) {
-        console.error("Failed to get language from AsyncStroage", e);
-      }
-    };
-    getStoredlanguage();
-  }, []);
 
   const navigation = useNavigation();
   
-  const handleOnCompleteOnBoard = () => {
-    navigation.navigate("SignUp");
+  const handleOnCompleteOnBoard = async() => {
+    try {
+      await AsyncStorage.setItem("appLanguage", selectLanguage);
+      await AsyncStorage.setItem("onboarded", "true");
+      navigation.navigate("SignUp");
+    } catch (err) {
+      console.error("Failed to save language in AsyncStroage", err.message);
+    }
   };
 
   const DoneButton = ({ ...props }) => {
@@ -127,7 +105,7 @@ const OnBoardingScreenOne = () => {
             containerStyles={{ paddingHorizontal: wp(5) }}
             pages={[
               {
-                backgroundColor: "#FF7262",
+                backgroundColor: "#D53C46",
                 image: (
                   <View style={styles.languageContainer}>
                     <View>
@@ -188,7 +166,7 @@ const OnBoardingScreenOne = () => {
                 subtitle: "",
               },
               {
-                backgroundColor: "#D53C46",
+                backgroundColor: "#FF7262",
                 title: "",
                 image: (
                   <Animated.View

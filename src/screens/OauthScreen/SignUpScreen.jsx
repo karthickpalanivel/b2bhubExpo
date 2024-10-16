@@ -68,10 +68,10 @@ const SignUpScreen = () => {
             }
 
             navigation.navigate("Home");
-          } else window.alert(res.message);
+          } else Alert.alert(res.message);
         })
         .catch((error) => {
-          window.alert(error);
+          Alert.alert(error);
           return;
         });
     } else {
@@ -105,7 +105,7 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
 
   const navigateToLogin = () => {
-    navigation.goBack();
+    navigation.navigate("Login")
   };
   const navigateToTerms = () => {
     navigation.navigate("Terms");
